@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Baetube</string>
+
+    <string name="menu_toolbar_notification">알림</string>
+    <string name="menu_toolbar_search">검색</string>
+    <string name="menu_toolbar_profile">프로필</string>
+
+    <string name="bottom_navigation_home">홈</string>
+    <string name="bottom_navigation_upload">업로드</string>
+    <string name="bottom_navigation_subscribe">구독</string>
+    <string name="bottom_navigation_storage">보관함</string>
+
+    <string name="home_category">카테고리</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
