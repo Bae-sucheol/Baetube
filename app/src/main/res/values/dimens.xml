@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="text_size_small">12dp</dimen>
     <dimen name="text_size_normal">15dp</dimen>
+    <dimen name="text_size_large">18dp</dimen>
 
-    <dimen name="text_padding">4dp</dimen>
-    <dimen name="top_menu_padding_horizontal">15dp</dimen>
+    <dimen name="text_padding">5dp</dimen>
+    <dimen name="text_margin">5dp</dimen>
+    <dimen name="top_menu_padding_horizontal">10dp</dimen>
     <dimen name="top_menu_padding_vertical">5dp</dimen>
+
+    <dimen name="top_menu_corner_radius">8dp</dimen>
+    <dimen name="top_menu_corner_radius_more">15dp</dimen>
+
+    <dimen name="icon_size_option">15dp</dimen>
+    <dimen name="icon_size_small">30dp</dimen>
+    <dimen name="icon_size_normal">50dp</dimen>
+    <dimen name="icon_size_large">70dp</dimen>
+
+    <dimen name="video_thumbnail_height">150dp</dimen>
+    <dimen name="video_info_height">100dp</dimen>
+    <dimen name="video_info_padding">15dp</dimen>
+    <dimen name="video_info_margin">10dp</dimen>
+
 </resources>

@@ -11,6 +11,14 @@
     <string name="bottom_navigation_storage">보관함</string>
 
     <string name="home_category">카테고리</string>
+
+    <!--
+        * 앱바 스크롤 옵션
+    -->
+    <string name="appbar_scroll_behavior" translatable="false">
+        com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior
+    </string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

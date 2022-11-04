@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@color/purple_200"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    app:layout_scrollFlags="scroll|enterAlways">
 
 </androidx.appcompat.widget.Toolbar>

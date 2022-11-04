@@ -1,19 +1,16 @@
 package com.example.baetube.activity;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.baetube.HomeFragment;
+import com.example.baetube.fragment.HomeFragment;
 import com.example.baetube.R;
-import com.example.baetube.StorageFragment;
-import com.example.baetube.SubscribeFragment;
+import com.example.baetube.fragment.StorageFragment;
+import com.example.baetube.fragment.SubscribeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -29,10 +26,6 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // 툴바(액션바)를 설정
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         // 프래그먼트 매니저를 지정
         fragmentManager = getSupportFragmentManager();
@@ -74,21 +67,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_toolbar, menu);
-
-        return true;
-    }
-
-    public boolean onNavigationItemSelected(@NonNull MenuItem item)
-    {
-        return false;
     }
 
 }
