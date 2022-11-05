@@ -1,6 +1,5 @@
 package com.example.baetube.fragment;
 
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,10 +19,9 @@ import android.view.ViewGroup;
 import com.example.baetube.R;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
-import com.example.baetube.recyclerview.adapter.RecyclerVideoViewAdapter;
-import com.example.baetube.recyclerview.item.RecyclerVideoViewItem;
+import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
+import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
-import java.nio.channels.Channel;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
@@ -31,8 +29,8 @@ public class HomeFragment extends Fragment {
     private View view;
 
     private RecyclerView recyclerView;
-    private RecyclerVideoViewAdapter recyclerVideoViewAdapter;
-    private ArrayList<RecyclerVideoViewItem> list = new ArrayList<>();
+    private RecyclerViewVideoAdapter recyclerViewVideoAdapter;
+    private ArrayList<RecyclerViewVideoItem> list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -59,10 +57,10 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.fragment_home_recyclerview);
 
         // 리사이클러뷰 어댑터 객체 생성
-        recyclerVideoViewAdapter = new RecyclerVideoViewAdapter(list);
+        recyclerViewVideoAdapter = new RecyclerViewVideoAdapter(list);
 
         // 리사이클러뷰에 어댑터 설정
-        recyclerView.setAdapter(recyclerVideoViewAdapter);
+        recyclerView.setAdapter(recyclerViewVideoAdapter);
 
         // 리사이클러뷰에 레이아웃 매니저 설정
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -106,7 +104,7 @@ public class HomeFragment extends Fragment {
 
         for(int i = 0; i < 5; i++)
         {
-            RecyclerVideoViewItem item = new RecyclerVideoViewItem();
+            RecyclerViewVideoItem item = new RecyclerViewVideoItem();
 
             ChannelDTO channelDTO = new ChannelDTO();
             VideoDTO videoDTO = new VideoDTO();

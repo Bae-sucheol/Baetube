@@ -1,12 +1,16 @@
 package com.example.baetube.activity;
 
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.baetube.UserDisplay;
 import com.example.baetube.fragment.HomeFragment;
 import com.example.baetube.R;
 import com.example.baetube.fragment.StorageFragment;
@@ -26,6 +30,14 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 디스플레이 사이즈를 구해서 UserDisplay 클래스에 저장한다.
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+
+        display.getSize(size);
+        UserDisplay.setWidth(size.x);
+        UserDisplay.setHeight(size.y);
 
         // 프래그먼트 매니저를 지정
         fragmentManager = getSupportFragmentManager();

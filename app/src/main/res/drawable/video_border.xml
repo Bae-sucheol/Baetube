@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+
+        <shape android:shape="rectangle">
+
+            <solid android:color="@color/top_menu_background"/>
+
+            <corners android:radius="@dimen/video_corner_radius"/>
+
+        </shape>
+
+    </item>
+
+</layer-list>

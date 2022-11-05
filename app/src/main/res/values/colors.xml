@@ -10,5 +10,6 @@
 
     <color name="top_menu_border">#B4B4B4</color>
     <color name="top_menu_background">#E6E6E6</color>
+    <color name="clickable_text_color">#FF0000FF</color>
 
 </resources>

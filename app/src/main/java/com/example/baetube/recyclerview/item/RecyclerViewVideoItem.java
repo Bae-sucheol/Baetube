@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
 
-public class RecyclerVideoViewItem
+public class RecyclerViewVideoItem
 {
     private ChannelDTO channelDTO;
     private VideoDTO videoDTO;

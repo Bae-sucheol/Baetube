@@ -1,27 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="@dimen/video_history_width"
     android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/video_history_margin"
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/recyclerview_video_thumbnail"
+        android:id="@+id/recyclerview_video_history_thumbnail"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/video_thumbnail_height"
-        android:background="@color/top_menu_background"/>
+        android:layout_height="@dimen/video_history_height"
+        android:background="@drawable/video_border"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/video_info_height"
-        android:padding="@dimen/video_info_padding"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/video_history_info_padding"
         android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/recyclerview_video_profile"
-            android:layout_width="@dimen/icon_size_normal"
-            android:layout_height="@dimen/icon_size_normal"
-            android:layout_marginRight="@dimen/video_info_margin"
-            android:background="@drawable/ic_baseline_account_circle_24"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +29,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/recyclerview_video_title"
+                    android:id="@+id/recyclerview_video_history_title"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -58,19 +52,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/recyclerview_video_channel_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="@dimen/text_size_small"/>
-
-                <TextView
-                    android:id="@+id/recyclerview_video_views"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="@dimen/text_size_small"/>
-
-                <TextView
-                    android:id="@+id/recyclerview_video_date"
+                    android:id="@+id/recyclerview_video_history_channel_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="@dimen/text_size_small"/>

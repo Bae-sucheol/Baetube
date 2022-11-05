@@ -11,6 +11,7 @@
 
     <dimen name="top_menu_corner_radius">8dp</dimen>
     <dimen name="top_menu_corner_radius_more">15dp</dimen>
+    <dimen name="video_corner_radius">10dp</dimen>
 
     <dimen name="icon_size_option">15dp</dimen>
     <dimen name="icon_size_small">30dp</dimen>
@@ -21,5 +22,19 @@
     <dimen name="video_info_height">100dp</dimen>
     <dimen name="video_info_padding">15dp</dimen>
     <dimen name="video_info_margin">10dp</dimen>
+
+    <dimen name="subscribe_detail_button_size">80dp</dimen>
+    <dimen name="history_detail_button_size">180dp</dimen>
+
+    <dimen name="storage_history_list_padding">15dp</dimen>
+
+    <dimen name="video_history_width">160dp</dimen>
+    <dimen name="video_history_height">90dp</dimen>
+    <dimen name="video_history_info_height">60dp</dimen>
+    <dimen name="video_history_margin">10dp</dimen>
+    <dimen name="video_history_info_padding">5dp</dimen>
+
+    <dimen name="recyclerview_padding">15dp</dimen>
+    <dimen name="storage_margin">5dp</dimen>
 
 </resources>
