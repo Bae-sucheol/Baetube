@@ -5,16 +5,19 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.baetube.R;
 import com.example.baetube.dto.ChannelDTO;
@@ -24,9 +27,18 @@ import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener
+{
 
     private View view;
+
+    private DrawerLayout drawerLayout;
+
+    private LinearLayout layoutProfile;
+    private LinearLayout layoutAccountManage;
+    private LinearLayout layoutMyChannel;
+    private LinearLayout layoutLogout;
+    private LinearLayout layoutBack;
 
     private RecyclerView recyclerView;
     private RecyclerViewVideoAdapter recyclerViewVideoAdapter;
@@ -50,6 +62,23 @@ public class HomeFragment extends Fragment {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
 
         activity.setSupportActionBar(toolbar);
+
+        // 드로워 레이아웃 요소 찾기
+        drawerLayout = view.findViewById(R.id.fragment_home_drawer);
+
+        // 드로워 메뉴 레이아웃 요소 찾기
+        layoutProfile = view.findViewById(R.id.fragment_home_drawer_profile_layout);
+        layoutAccountManage = view.findViewById(R.id.fragment_home_drawer_account_manage_layout);
+        layoutMyChannel = view.findViewById(R.id.fragment_home_drawer_my_channel_layout);
+        layoutLogout = view.findViewById(R.id.fragment_home_drawer_logout_layout);
+        layoutBack = view.findViewById(R.id.fragment_home_drawer_back_layout);
+
+        // 클릭 리스너 등록
+        layoutProfile.setOnClickListener(this);
+        layoutAccountManage.setOnClickListener(this);
+        layoutMyChannel.setOnClickListener(this);
+        layoutLogout.setOnClickListener(this);
+        layoutBack.setOnClickListener(this);
 
         test();
 
@@ -78,7 +107,7 @@ public class HomeFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        switch(item.getItemId())
+        switch (item.getItemId())
         {
             case R.id.menu_toolbar_notification:
                 //
@@ -89,11 +118,44 @@ public class HomeFragment extends Fragment {
                 break;
 
             case R.id.menu_toolbar_profile:
-                //
+
+                if (!drawerLayout.isDrawerOpen(Gravity.RIGHT))
+                {
+                    drawerLayout.openDrawer(Gravity.RIGHT);
+                }
+
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view)
+    {
+        switch(view.getId())
+        {
+            case R.id.fragment_home_drawer_profile_layout :
+
+                break;
+            case R.id.fragment_home_drawer_account_manage_layout :
+
+                break;
+            case R.id.fragment_home_drawer_my_channel_layout :
+
+                break;
+            case R.id.fragment_home_drawer_logout_layout :
+
+                break;
+            case R.id.fragment_home_drawer_back_layout :
+
+                if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
+                {
+                    drawerLayout.closeDrawer(Gravity.RIGHT);
+                }
+
+                break;
+        }
     }
 
     public void test()
@@ -121,4 +183,5 @@ public class HomeFragment extends Fragment {
         }
 
     }
+
 }

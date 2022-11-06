@@ -1,8 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--
+    * 텍스트 사이즈
+    -->
     <dimen name="text_size_small">12dp</dimen>
-    <dimen name="text_size_normal">15dp</dimen>
+    <dimen name="text_size_medium">15dp</dimen>
     <dimen name="text_size_large">18dp</dimen>
+
+    <!--
+    * 아이콘 사이즈
+    -->
+    <dimen name="icon_size_option">15dp</dimen>
+    <dimen name="icon_size_small">30dp</dimen>
+    <dimen name="icon_size_medium">50dp</dimen>
+    <dimen name="icon_size_large">70dp</dimen>
+
+    <!--
+    * margin 사이즈
+    -->
+    <dimen name="margin_xsmall">5dp</dimen>
+    <dimen name="margin_small">10dp</dimen>
+    <dimen name="margin_medium">15dp</dimen>
+    <dimen name="margin_large">30dp</dimen>
+
+    <!--
+    * padding 사이즈
+    -->
+    <dimen name="padding_xsmall">5dp</dimen>
+    <dimen name="padding_small">10dp</dimen>
+    <dimen name="padding_medium">15dp</dimen>
+    <dimen name="padding_large">30dp</dimen>
+
+    <!--
+    * radius 정도
+    -->
+    <dimen name="radius_xsmall">5dp</dimen>
+    <dimen name="radius_small">8dp</dimen>
+    <dimen name="radius_medium">10dp</dimen>
+    <dimen name="radius_large">15dp</dimen>
+
+    <dimen name="drawer_width">200dp</dimen>
 
     <dimen name="text_padding">5dp</dimen>
     <dimen name="text_margin">5dp</dimen>
@@ -13,10 +50,7 @@
     <dimen name="top_menu_corner_radius_more">15dp</dimen>
     <dimen name="video_corner_radius">10dp</dimen>
 
-    <dimen name="icon_size_option">15dp</dimen>
-    <dimen name="icon_size_small">30dp</dimen>
-    <dimen name="icon_size_normal">50dp</dimen>
-    <dimen name="icon_size_large">70dp</dimen>
+
 
     <dimen name="video_thumbnail_height">150dp</dimen>
     <dimen name="video_info_height">100dp</dimen>
@@ -36,5 +70,7 @@
 
     <dimen name="recyclerview_padding">15dp</dimen>
     <dimen name="storage_margin">5dp</dimen>
+
+    <dimen name="account_menu_margin">100dp</dimen>
 
 </resources>

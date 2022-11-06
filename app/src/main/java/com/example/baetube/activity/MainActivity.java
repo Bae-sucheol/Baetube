@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentManager;
 import com.example.baetube.UserDisplay;
 import com.example.baetube.fragment.HomeFragment;
 import com.example.baetube.R;
+import com.example.baetube.fragment.LoginFragment;
+import com.example.baetube.fragment.SignInFragment;
 import com.example.baetube.fragment.StorageFragment;
 import com.example.baetube.fragment.SubscribeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -43,7 +45,9 @@ public class MainActivity extends AppCompatActivity
         fragmentManager = getSupportFragmentManager();
 
         // 프래그먼트 매니저에 HomeFragment를 추가하고 커밋한다. ( 첫 화면 지정 )
-        fragmentManager.beginTransaction().add(R.id.activity_main_frame, new HomeFragment()).commit();
+        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new HomeFragment()).commit();
+        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new LoginFragment()).commit();
+        fragmentManager.beginTransaction().add(R.id.activity_main_frame, new SignInFragment()).commit();
 
         // 바텀 네비게이션 요소를 findViewById를 사용하여 찾는다.
         bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation);

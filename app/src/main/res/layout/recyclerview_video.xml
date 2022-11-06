@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/recyclerview_video_profile"
-            android:layout_width="@dimen/icon_size_normal"
-            android:layout_height="@dimen/icon_size_normal"
+            android:layout_width="@dimen/icon_size_medium"
+            android:layout_height="@dimen/icon_size_medium"
             android:layout_marginRight="@dimen/video_info_margin"
             android:background="@drawable/ic_baseline_account_circle_24"/>
 
@@ -42,7 +42,7 @@
                     android:maxLines="2"
                     android:ellipsize="end"
                     android:textStyle="bold"
-                    android:textSize="@dimen/text_size_normal" />
+                    android:textSize="@dimen/text_size_medium" />
 
                 <ImageView
                     android:layout_weight="1"
