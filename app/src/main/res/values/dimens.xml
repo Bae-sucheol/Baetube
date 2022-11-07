@@ -73,4 +73,6 @@
 
     <dimen name="account_menu_margin">100dp</dimen>
 
+    <dimen name="subscribe_slide_distance">100dp</dimen>
+
 </resources>

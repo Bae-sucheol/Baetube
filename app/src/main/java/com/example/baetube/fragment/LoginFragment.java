@@ -36,6 +36,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener
         // 액티비티를 구하고 툴바를 적용시킨다.
         AppCompatActivity activity = (AppCompatActivity) getActivity();
 
+        toolbar.setTitle(getString(R.string.fragment_login_toolbar_title));
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

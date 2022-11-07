@@ -5,6 +5,9 @@
     <string name="menu_toolbar_search">검색</string>
     <string name="menu_toolbar_profile">프로필</string>
 
+    <string name="fragment_login_toolbar_title">로그인</string>
+    <string name="fragment_sign_in_toolbar_title">회원가입</string>
+
     <string name="bottom_navigation_home">홈</string>
     <string name="bottom_navigation_upload">업로드</string>
     <string name="bottom_navigation_subscribe">구독</string>

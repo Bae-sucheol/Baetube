@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import com.example.baetube.R;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
-import com.example.baetube.recyclerview.adapter.RecyclerViewSubscribeVerticalAdapter;
+import com.example.baetube.recyclerview.adapter.RecyclerViewSubscribeAdapter;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewSubscribeItem;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
@@ -31,7 +31,7 @@ public class SubscribeFragment extends Fragment
     private View view;
 
     private RecyclerView recyclerViewScribe;
-    private RecyclerViewSubscribeVerticalAdapter recyclerViewSubscribeVerticalAdapter;
+    private RecyclerViewSubscribeAdapter recyclerViewSubscribeAdapter;
     private ArrayList<RecyclerViewSubscribeItem> subscribeList = new ArrayList<>();
 
     private RecyclerView recyclerViewVideo;
@@ -67,10 +67,10 @@ public class SubscribeFragment extends Fragment
         recyclerViewScribe = view.findViewById(R.id.fragment_subscribe_list_recyclerview);
 
         // 리사이클러뷰 어댑터 객체 생성
-        recyclerViewSubscribeVerticalAdapter = new RecyclerViewSubscribeVerticalAdapter(subscribeList);
+        recyclerViewSubscribeAdapter = new RecyclerViewSubscribeAdapter(subscribeList);
 
         // 리사이클러뷰에 어댑터 설정
-        recyclerViewScribe.setAdapter(recyclerViewSubscribeVerticalAdapter);
+        recyclerViewScribe.setAdapter(recyclerViewSubscribeAdapter);
 
         // 리사이클러뷰에 레이아웃 매니저 설정 (가로로 출력)
         recyclerViewScribe.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
@@ -111,6 +111,7 @@ public class SubscribeFragment extends Fragment
             ChannelDTO channelDTO = new ChannelDTO();
 
             item.setChannelDTO(channelDTO);
+            item.setViewType(view.getResources().getInteger(R.integer.view_type_subscribe_vertical));
 
             channelDTO.setName(channel_names[i]);
 

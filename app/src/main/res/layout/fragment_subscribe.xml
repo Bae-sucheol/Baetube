@@ -47,10 +47,10 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_width="@dimen/subscribe_detail_button_size"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="@string/subscribe_detail"
             android:singleLine="true"
-            style="@style/clickable_text_style"/>
+            style="@style/clickable_text_style" />
 
     </LinearLayout>
 

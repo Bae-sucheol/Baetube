@@ -26,6 +26,8 @@
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textColor">@color/clickable_text_color</item>
         <item name="android:padding">@dimen/text_padding</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
     
 </resources>

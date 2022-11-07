@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+    * 리사이클러뷰 뷰 타입
+    -->
+    <integer name="view_type_subscribe_vertical">4</integer>
+    <integer name="view_type_subscribe_horizontal">5</integer>
+
+</resources>

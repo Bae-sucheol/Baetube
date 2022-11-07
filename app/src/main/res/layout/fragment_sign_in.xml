@@ -204,6 +204,7 @@
                     android:textSize="@dimen/text_size_large"/>
 
                 <RadioGroup
+                    android:id="@+id/fragment_sign_in_radio_group_gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -212,6 +213,7 @@
                     android:layout_marginBottom="@dimen/margin_medium">
 
                     <RadioButton
+                        android:id="@+id/fragment_sign_in_radio_gender_male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/sign_in_gender_male"
@@ -222,6 +224,7 @@
                         android:background="@drawable/radio_button_background"/>
 
                     <RadioButton
+                        android:id="@+id/fragment_sign_in_radio_gender_female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/sign_in_gender_female"
@@ -284,6 +287,7 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/fragment_sign_in_button_sign_in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

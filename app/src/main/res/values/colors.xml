@@ -12,7 +12,6 @@
     <color name="top_menu_background">#E6E6E6</color>
     <color name="clickable_text_color">#0050FF</color>
 
-    <color name="button_click_color">#B4B4B4</color>
-    <color name="radio_button_checked_color">#787878</color>
+    <color name="radio_button_checked_color">#B4B4B4</color>
 
 </resources>

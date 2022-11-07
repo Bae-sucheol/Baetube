@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/icon_size_large"
+    android:layout_marginTop="@dimen/margin_small"
+    android:overScrollMode="always"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/recyclerview_subscribe_hide_layout"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:layout_gravity="right"/>
+
+    <LinearLayout
+        android:id="@+id/recyclerview_subscribe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/recyclerview_subscribe_profile"
+            android:layout_width="@dimen/icon_size_large"
+            android:layout_height="@dimen/icon_size_large"
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:background="@drawable/ic_baseline_account_circle_24"/>
+
+        <TextView
+            android:id="@+id/recyclerview_subscribe_channel_name"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:background="@color/top_menu_border"
+            android:singleLine="true" />
+
+    </LinearLayout>
+
+</FrameLayout>

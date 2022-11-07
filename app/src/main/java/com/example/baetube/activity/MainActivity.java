@@ -2,19 +2,18 @@ package com.example.baetube.activity;
 
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MenuItem;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.baetube.fragment.SubscribeDetailFragment;
 import com.example.baetube.UserDisplay;
 import com.example.baetube.fragment.HomeFragment;
 import com.example.baetube.R;
-import com.example.baetube.fragment.LoginFragment;
-import com.example.baetube.fragment.SignInFragment;
 import com.example.baetube.fragment.StorageFragment;
 import com.example.baetube.fragment.SubscribeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -35,11 +34,16 @@ public class MainActivity extends AppCompatActivity
 
         // 디스플레이 사이즈를 구해서 UserDisplay 클래스에 저장한다.
         Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+
+        display.getMetrics(displayMetrics);
+
         Point size = new Point();
 
         display.getSize(size);
         UserDisplay.setWidth(size.x);
         UserDisplay.setHeight(size.y);
+        UserDisplay.setDensity(displayMetrics.density);
 
         // 프래그먼트 매니저를 지정
         fragmentManager = getSupportFragmentManager();
@@ -47,7 +51,8 @@ public class MainActivity extends AppCompatActivity
         // 프래그먼트 매니저에 HomeFragment를 추가하고 커밋한다. ( 첫 화면 지정 )
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new HomeFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new LoginFragment()).commit();
-        fragmentManager.beginTransaction().add(R.id.activity_main_frame, new SignInFragment()).commit();
+        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new SignInFragment()).commit();
+        fragmentManager.beginTransaction().add(R.id.activity_main_frame, new SubscribeDetailFragment()).commit();
 
         // 바텀 네비게이션 요소를 findViewById를 사용하여 찾는다.
         bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation);
