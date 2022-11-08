@@ -13,11 +13,11 @@ import com.example.baetube.R;
 import com.example.baetube.UserDisplay;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.recyclerview.item.RecyclerViewSubscribeItem;
-import com.example.baetube.recyclerview.viewholder.SubscribeVerticalViewHolder;
+import com.example.baetube.recyclerview.viewholder.SubscribeViewHolder;
 
 import java.util.ArrayList;
 
-public class RecyclerViewSubscribeAdapter extends RecyclerView.Adapter<SubscribeVerticalViewHolder> implements OnRecyclerViewClickListener
+public class RecyclerViewSubscribeAdapter extends RecyclerView.Adapter<SubscribeViewHolder> implements OnRecyclerViewClickListener
 {
     private Context context;
     private ArrayList<RecyclerViewSubscribeItem> list = null;
@@ -31,7 +31,7 @@ public class RecyclerViewSubscribeAdapter extends RecyclerView.Adapter<Subscribe
 
     @NonNull
     @Override
-    public SubscribeVerticalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public SubscribeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         if(context == null)
         {
@@ -51,13 +51,13 @@ public class RecyclerViewSubscribeAdapter extends RecyclerView.Adapter<Subscribe
             view = inflater.inflate(R.layout.recyclerview_subscribe_horizontal, parent, false);
         }
 
-        SubscribeVerticalViewHolder viewHolder = new SubscribeVerticalViewHolder(view, onRecyclerViewClickListener);
+        SubscribeViewHolder viewHolder = new SubscribeViewHolder(view, onRecyclerViewClickListener);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SubscribeVerticalViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull SubscribeViewHolder holder, int position)
     {
         RecyclerViewSubscribeItem item = list.get(position);
 
@@ -93,6 +93,15 @@ public class RecyclerViewSubscribeAdapter extends RecyclerView.Adapter<Subscribe
         if(onRecyclerViewClickListener != null)
         {
             onRecyclerViewClickListener.onItemClick(view, position);
+        }
+    }
+
+    @Override
+    public void onItemLongClick(View view, int position)
+    {
+        if(onRecyclerViewClickListener != null)
+        {
+            onRecyclerViewClickListener.onItemLongClick(view, position);
         }
     }
 

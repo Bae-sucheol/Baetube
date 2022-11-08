@@ -9,12 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.R;
-import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.PlaylistDTO;
 import com.example.baetube.recyclerview.item.RecyclerViewPlaylistItem;
-import com.example.baetube.recyclerview.item.RecyclerViewSubscribeItem;
 import com.example.baetube.recyclerview.viewholder.StorageViewHolder;
-import com.example.baetube.recyclerview.viewholder.SubscribeVerticalViewHolder;
 
 import java.util.ArrayList;
 

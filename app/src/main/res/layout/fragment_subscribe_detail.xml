@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,74 +8,85 @@
     tools:context=".fragment.SubscribeDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/fragment_home_appbar"
+        android:id="@+id/fragment_subscribe_detail_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:fitsSystemWindows="true">
 
         <include
-            layout="@layout/toolbar"
+            layout="@layout/toolbar_no_scroll"
             android:id="@+id/toolbar" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scroll_behavior">
 
-        <LinearLayout
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/fragment_subscribe_detail_appbar_under"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:fitsSystemWindows="true">
 
-            <HorizontalScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:background="@color/white">
+                android:orientation="horizontal"
+                android:background="@color/white"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                style="@style/top_menu_style">
 
                 <LinearLayout
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    style="@style/top_menu_style">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/textview_style_normal"
-                        android:text="test"
+                        android:text="@string/subscribe_filter_latest"
                         android:background="@drawable/textview_rounded_rectangle_more"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/textview_style_normal"
-                        android:text="test"
+                        android:text="@string/subscribe_filter_alphabet"
                         android:background="@drawable/textview_rounded_rectangle_more"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/textview_style_normal"
-                        android:text="test"
-                        android:background="@drawable/textview_rounded_rectangle_more"/>
 
                 </LinearLayout>
 
-            </HorizontalScrollView>
+                <TextView
+                    android:id="@+id/fragment_subscribe_detail_button"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/subscribe_detail_button_size"
+                    android:layout_height="match_parent"
+                    style="@style/clickable_text_style"
+                    android:gravity="center"
+                    android:text="@string/subscribe_manage"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/fragment_subscribe_detail_recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_subscribe_detail_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scroll_behavior"/>
 
 
-        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    </ScrollView>
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

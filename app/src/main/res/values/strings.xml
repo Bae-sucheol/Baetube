@@ -7,6 +7,7 @@
 
     <string name="fragment_login_toolbar_title">로그인</string>
     <string name="fragment_sign_in_toolbar_title">회원가입</string>
+    <string name="fragment_subscribe_detail_toolbar_title">채널 목록</string>
 
     <string name="bottom_navigation_home">홈</string>
     <string name="bottom_navigation_upload">업로드</string>
@@ -56,6 +57,16 @@
     <string name="sign_in_phone">전화번호</string>
     <string name="sign_in_phone_hint">전화번호를 - 없이 입력해주세요.</string>
     <string name="sign_in_button_text">회원가입</string>
+
+    <string name="unsubscribe">구독 취소</string>
+
+    <string name="subscribe_filter_latest">최신순</string>
+    <string name="subscribe_filter_alphabet">가나다순</string>
+    <string name="subscribe_manage">관리</string>
+
+    <string name="playlist_detail_text_button_play">재생</string>
+    <string name="playlist_detail_text_button_shuffle">셔플</string>
+    <string name="playlist_detail_text_video">동영상</string>
 
     <!--
         * 앱바 스크롤 옵션

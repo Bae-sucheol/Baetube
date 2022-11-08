@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 
-public class SubscribeVerticalViewHolder extends RecyclerView.ViewHolder
+public class SubscribeViewHolder extends RecyclerView.ViewHolder
 {
     public LinearLayout layout;
     public ImageView profile;
     public TextView channel_name;
 
-    public SubscribeVerticalViewHolder(@NonNull View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
+    public SubscribeViewHolder(@NonNull View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
     {
         super(itemView);
 
@@ -39,5 +39,22 @@ public class SubscribeVerticalViewHolder extends RecyclerView.ViewHolder
                 }
             }
         });
+
+        layout.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view)
+            {
+                int position= getAdapterPosition();
+
+                if(position != RecyclerView.NO_POSITION)
+                {
+                    onRecyclerViewClickListener.onItemLongClick(view, position);
+                }
+
+                return false;
+            }
+        });
+
     }
 }
