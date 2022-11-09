@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.UserDisplay;
+import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.recyclerview.item.RecyclerViewSubscribeItem;
 import com.example.baetube.recyclerview.viewholder.SubscribeViewHolder;
@@ -42,13 +43,19 @@ public class RecyclerViewSubscribeAdapter extends RecyclerView.Adapter<Subscribe
 
         View view;
 
-        if(viewType == (int)context.getResources().getInteger(R.integer.view_type_subscribe_vertical))
+        switch(viewType)
         {
-            view = inflater.inflate(R.layout.recyclerview_subscribe_vertical, parent, false);
-        }
-        else
-        {
-            view = inflater.inflate(R.layout.recyclerview_subscribe_horizontal, parent, false);
+            case ViewType.VIEWTYPE_SUBSCRIBE_VERTICAL :
+
+                view = inflater.inflate(R.layout.recyclerview_subscribe_vertical, parent, false);
+
+                break;
+
+            default :
+
+                view = inflater.inflate(R.layout.recyclerview_subscribe_horizontal, parent, false);
+
+                break;
         }
 
         SubscribeViewHolder viewHolder = new SubscribeViewHolder(view, onRecyclerViewClickListener);
@@ -63,7 +70,10 @@ public class RecyclerViewSubscribeAdapter extends RecyclerView.Adapter<Subscribe
 
         ChannelDTO channelDTO = item.getChannelDTO();
 
-        holder.layout.getLayoutParams().width = (int)UserDisplay.getWidth();
+        if(item.getViewType() == ViewType.VIEWTYPE_SUBSCRIBE_HORIZONTAL)
+        {
+            holder.layout.getLayoutParams().width = (int)UserDisplay.getWidth();
+        }
 
         //holder.profile.setImageDrawable();
         holder.channel_name.setText(channelDTO.getName());
@@ -105,4 +115,10 @@ public class RecyclerViewSubscribeAdapter extends RecyclerView.Adapter<Subscribe
         }
     }
 
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    {
+        super.onDetachedFromRecyclerView(recyclerView);
+        context = null;
+    }
 }

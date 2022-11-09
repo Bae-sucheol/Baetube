@@ -61,4 +61,11 @@ public class RecyclerViewStorageAdapter extends RecyclerView.Adapter<StorageView
     {
         return list.size();
     }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    {
+        super.onDetachedFromRecyclerView(recyclerView);
+        context = null;
+    }
 }

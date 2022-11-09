@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.baetube.R;
+import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
@@ -173,6 +174,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener
 
             item.setChannelDTO(channelDTO);
             item.setVideoDTO(videoDTO);
+            item.setViewType(ViewType.VIEWTYPE_VIDEO_LARGE);
 
             channelDTO.setName(channel_names[i]);
             videoDTO.setDate("1시간 전");

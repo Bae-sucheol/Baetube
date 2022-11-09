@@ -16,11 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.baetube.R;
+import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.PlaylistDTO;
 import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewStorageAdapter;
-import com.example.baetube.recyclerview.adapter.RecyclerViewVideoHistoryAdapter;
+import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewPlaylistItem;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
@@ -31,7 +32,7 @@ public class StorageFragment extends Fragment
     private View view;
 
     private RecyclerView recyclerViewVideoHistory;
-    private RecyclerViewVideoHistoryAdapter recyclerViewVideoHistoryAdapter;
+    private RecyclerViewVideoAdapter recyclerViewVideoHistoryAdapter;
     private ArrayList<RecyclerViewVideoItem> videoHistoryList = new ArrayList<>();
 
     private RecyclerView recyclerViewVideoStorage;
@@ -64,7 +65,7 @@ public class StorageFragment extends Fragment
         recyclerViewVideoHistory = view.findViewById(R.id.fragment_storage_history_recyclerview);
 
         // 리사이클러뷰 어댑터 객체 생성
-        recyclerViewVideoHistoryAdapter = new RecyclerViewVideoHistoryAdapter(videoHistoryList);
+        recyclerViewVideoHistoryAdapter = new RecyclerViewVideoAdapter(videoHistoryList);
 
         // 리사이클러뷰에 어댑터 설정
         recyclerViewVideoHistory.setAdapter(recyclerViewVideoHistoryAdapter);
@@ -113,6 +114,7 @@ public class StorageFragment extends Fragment
 
             item.setChannelDTO(channelDTO);
             item.setVideoDTO(videoDTO);
+            item.setViewType(ViewType.VIEWTYPE_VIDEO_SMALL);
 
             channelDTO.setName(channel_names[i]);
             videoDTO.setDate("1시간 전");

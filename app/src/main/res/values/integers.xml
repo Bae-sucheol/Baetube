@@ -2,12 +2,6 @@
 <resources>
 
     <!--
-    * 리사이클러뷰 뷰 타입
-    -->
-    <integer name="view_type_subscribe_vertical">4</integer>
-    <integer name="view_type_subscribe_horizontal">5</integer>
-
-    <!--
     * 애니메이션 관련 설정 값
     -->
     <integer name="animation_duration">100</integer>

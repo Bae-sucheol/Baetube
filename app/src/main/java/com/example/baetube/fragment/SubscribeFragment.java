@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.baetube.R;
+import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewSubscribeAdapter;
@@ -111,7 +112,7 @@ public class SubscribeFragment extends Fragment
             ChannelDTO channelDTO = new ChannelDTO();
 
             item.setChannelDTO(channelDTO);
-            item.setViewType(view.getResources().getInteger(R.integer.view_type_subscribe_vertical));
+            item.setViewType(ViewType.VIEWTYPE_SUBSCRIBE_VERTICAL);
 
             channelDTO.setName(channel_names[i]);
 

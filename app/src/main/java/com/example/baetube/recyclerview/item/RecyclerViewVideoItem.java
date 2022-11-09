@@ -9,6 +9,7 @@ public class RecyclerViewVideoItem
 {
     private ChannelDTO channelDTO;
     private VideoDTO videoDTO;
+    private int viewType;
 
     // getter
     public ChannelDTO getChannelDTO()
@@ -20,6 +21,12 @@ public class RecyclerViewVideoItem
     {
         return videoDTO;
     }
+
+    public int getViewType()
+    {
+        return viewType;
+    }
+
     // setter
     public void setChannelDTO(ChannelDTO channelDTO)
     {
@@ -29,5 +36,10 @@ public class RecyclerViewVideoItem
     public void setVideoDTO(VideoDTO videoDTO)
     {
         this.videoDTO = videoDTO;
+    }
+
+    public void setViewType(int viewType)
+    {
+        this.viewType = viewType;
     }
 }

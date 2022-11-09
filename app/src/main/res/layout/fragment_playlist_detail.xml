@@ -89,6 +89,7 @@
                         android:gravity="center"
                         android:layout_margin="@dimen/margin_medium"
                         android:padding="@dimen/padding_xsmall"
+                        android:clickable="true"
                         android:background="@drawable/button_border">
 
                         <ImageView
@@ -100,9 +101,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@string/playlist_detail_text_button_play"
-                            style="@style/textview_style_normal"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_size_small"/>
+                            style="@style/textview_style_small"
+                            android:paddingVertical="@dimen/padding_none"
+                            android:gravity="center" />
 
                     </LinearLayout>
 
@@ -115,6 +116,7 @@
                         android:gravity="center"
                         android:layout_margin="@dimen/margin_medium"
                         android:padding="@dimen/padding_xsmall"
+                        android:clickable="true"
                         android:background="@drawable/button_border">
 
                         <ImageView
@@ -126,9 +128,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@string/playlist_detail_text_button_shuffle"
-                            style="@style/textview_style_normal"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_size_small" />
+                            style="@style/textview_style_small"
+                            android:paddingVertical="@dimen/padding_none"
+                            android:gravity="center" />
 
                     </LinearLayout>
 
@@ -164,6 +166,14 @@
 
 
         </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_playlist_detail_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scroll_behavior"/>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

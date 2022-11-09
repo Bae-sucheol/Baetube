@@ -19,6 +19,7 @@ import android.view.animation.TranslateAnimation;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.UserDisplay;
+import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewSubscribeAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewSubscribeItem;
@@ -88,7 +89,7 @@ public class SubscribeDetailFragment extends Fragment implements OnRecyclerViewC
             ChannelDTO channelDTO = new ChannelDTO();
 
             item.setChannelDTO(channelDTO);
-            item.setViewType(view.getResources().getInteger(R.integer.view_type_subscribe_horizontal));
+            item.setViewType(ViewType.VIEWTYPE_SUBSCRIBE_HORIZONTAL);
 
             channelDTO.setName(channel_names[i]);
 
