@@ -2,16 +2,11 @@ package com.example.baetube.fragment;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,12 +15,13 @@ import com.example.baetube.R;
 import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
+import com.example.baetube.recyclerview.adapter.RecyclerViewSubscribeAdapter;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
 import java.util.ArrayList;
 
-public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewClickListener
+public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClickListener
 {
     private View view;
 
@@ -37,30 +33,17 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.fragment_playlist_detail, container, false);
+        view = inflater.inflate(R.layout.fragment_channel_home, container, false);
 
-        // 툴바(액션바)를 설정
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-
-        // 툴바 메뉴 옵션
-        setHasOptionsMenu(true);
-
-        // 액티비티를 구하고 툴바를 적용시킨다.
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-
-        toolbar.setTitle("");
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         test();
-
         /*
          * 1. 리사이클러뷰 요소 찾기
          * 2. 리사이클러뷰 어댑터 객체 생성
          * 3. 리사이클러뷰 어댑터 설정
          * 4. 리사이클러뷰 레이아웃 매니저 설정
          */
-        recyclerView= view.findViewById(R.id.fragment_playlist_detail_recyclerview);
+        recyclerView = view.findViewById(R.id.fragment_channel_home_recyclerview);
         recyclerViewVideoAdapter = new RecyclerViewVideoAdapter(list);
         recyclerViewVideoAdapter.setOnRecyclerViewClickListener(this);
         recyclerView.setAdapter(recyclerViewVideoAdapter);
@@ -68,13 +51,6 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
 
         // Inflate the layout for this fragment
         return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
-    {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_toolbar_sub, menu);
     }
 
     @Override

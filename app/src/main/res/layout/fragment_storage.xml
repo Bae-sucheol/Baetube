@@ -97,10 +97,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/textview_style_normal"
-                        android:paddingLeft="0dp"
-                        android:paddingRight="0dp"
                         android:textSize="@dimen/text_size_large"
-                        android:text="@string/storage_playlist" />
+                        android:text="@string/storage_playlist"
+                        android:layout_marginRight="@dimen/margin_xsmall"/>
 
                 </LinearLayout>
 
@@ -114,19 +113,19 @@
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
                         android:background="@color/top_menu_border"
-                        style="@style/textview_style_normal"/>
+                        style="@style/top_menu_text_style"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/textview_style_normal"
+                        style="@style/top_menu_text_style"
                         android:text="test"
                         android:background="@drawable/textview_rounded_rectangle_more"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/textview_style_normal"
+                        style="@style/top_menu_text_style"
                         android:text="test"
                         android:background="@drawable/textview_rounded_rectangle_more"/>
 

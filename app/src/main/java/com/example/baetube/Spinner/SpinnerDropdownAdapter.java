@@ -1,20 +1,17 @@
-package com.example.baetube.recyclerview.adapter;
+package com.example.baetube.Spinner;
 
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.baetube.R;
-import com.example.baetube.recyclerview.item.SpinnerItem;
 
 import java.util.ArrayList;
 

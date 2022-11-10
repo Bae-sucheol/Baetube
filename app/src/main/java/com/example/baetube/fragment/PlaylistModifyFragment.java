@@ -13,11 +13,10 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import com.example.baetube.R;
-import com.example.baetube.recyclerview.adapter.SpinnerDropdownAdapter;
-import com.example.baetube.recyclerview.item.SpinnerItem;
+import com.example.baetube.Spinner.SpinnerDropdownAdapter;
+import com.example.baetube.Spinner.SpinnerItem;
 
 import java.util.ArrayList;
 
@@ -62,7 +61,7 @@ public class PlaylistModifyFragment extends Fragment
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_toolbar_playlist, menu);
+        inflater.inflate(R.menu.menu_toolbar_sub, menu);
     }
 
     private void test()

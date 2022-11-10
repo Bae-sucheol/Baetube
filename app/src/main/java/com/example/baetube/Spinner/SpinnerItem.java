@@ -1,4 +1,4 @@
-package com.example.baetube.recyclerview.item;
+package com.example.baetube.Spinner;
 
 public class SpinnerItem
 {

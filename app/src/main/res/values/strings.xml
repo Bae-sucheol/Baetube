@@ -15,6 +15,11 @@
     <string name="bottom_navigation_subscribe">구독</string>
     <string name="bottom_navigation_storage">보관함</string>
 
+    <string name="subscribe_count_prefix">구독자</string>
+    <string name="subscribe_count_suffix">명</string>
+    <string name="video_count_prefix">동영상</string>
+    <string name="video_count_suffix">개</string>
+
     <string name="home_category">카테고리</string>
     <string name="home_drawer_login">로그인</string>
     <string name="home_drawer_account_manage">계정 관리</string>
@@ -79,7 +84,16 @@
     <string name="spinner_visible_text_link_description">링크가 있는 사용자만 볼 수 있음</string>
     <string name="spinner_visible_text_lock">비공개</string>
     <string name="spinner_visible_text_lock_description">나만 볼 수 있음</string>
+    
+    <string-array name="tab_layout_channel_title">
+        <item>홈</item>
+        <item>동영상</item>
+        <item>재생목록</item>
+        <item>커뮤니티</item>
+        <item>정보</item>
+    </string-array>
 
+    <string name="channel_home_upload_video_title">업로드한 동영상</string>
 
     <!--
         * 앱바 스크롤 옵션

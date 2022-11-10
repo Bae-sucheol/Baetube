@@ -82,4 +82,6 @@
     <dimen name="video_small_width">160dp</dimen>
     <dimen name="video_small_height">90dp</dimen>
 
+    <dimen name="channel_art_height">100dp</dimen>
+
 </resources>
