@@ -2,13 +2,13 @@ package com.example.baetube.dto;
 
 public class VideoDTO
 {
-   private int video_id;
-   private int channel_id;
+   private int videoId;
+   private int channelId;
    private int views;
    private int like;
    private int hate;
-   private int reply_count;
-   private int category_id;
+   private int replyCount;
+   private int categoryId;
    private String url;
    private String thumbnail;
    private String title;
@@ -19,14 +19,15 @@ public class VideoDTO
    private boolean age;
 
    // getter
-   public int getVideo_id()
+
+   public int getVideoId()
    {
-      return video_id;
+      return videoId;
    }
 
-   public int getChannel_id()
+   public int getChannelId()
    {
-      return channel_id;
+      return channelId;
    }
 
    public int getViews()
@@ -44,14 +45,14 @@ public class VideoDTO
       return hate;
    }
 
-   public int getReply_count()
+   public int getReplyCount()
    {
-      return reply_count;
+      return replyCount;
    }
 
-   public int getCategory_id()
+   public int getCategoryId()
    {
-      return category_id;
+      return categoryId;
    }
 
    public String getUrl()
@@ -95,14 +96,16 @@ public class VideoDTO
    }
 
    // setter
-   public void setVideo_id(int video_id)
+
+
+   public void setVideoId(int videoId)
    {
-      this.video_id = video_id;
+      this.videoId = videoId;
    }
 
-   public void setChannel_id(int channel_id)
+   public void setChannelId(int channelId)
    {
-      this.channel_id = channel_id;
+      this.channelId = channelId;
    }
 
    public void setViews(int views)
@@ -120,14 +123,14 @@ public class VideoDTO
       this.hate = hate;
    }
 
-   public void setReply_count(int reply_count)
+   public void setReplyCount(int replyCount)
    {
-      this.reply_count = reply_count;
+      this.replyCount = replyCount;
    }
 
-   public void setCategory_id(int category_id)
+   public void setCategoryId(int categoryId)
    {
-      this.category_id = category_id;
+      this.categoryId = categoryId;
    }
 
    public void setUrl(String url)

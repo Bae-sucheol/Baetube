@@ -4,14 +4,14 @@ import android.graphics.PorterDuff;
 
 public class ChannelDTO
 {
-    private int channel_id;
-    private int user_id;
+    private int channelId;
+    private int userId;
     private int subs;
-    private int video_count;
+    private int videoCount;
     private String name;
     private String description;
     private String arts;
-    private String reg_date;
+    private String regDate;
 
     // constructor
     public ChannelDTO()
@@ -19,27 +19,27 @@ public class ChannelDTO
 
     }
 
-    public ChannelDTO(int channel_id, int user_id, int subs, int video_count, String name, String description, String arts, String reg_date)
+    public ChannelDTO(int channelId, int userId, int subs, int videoCount, String name, String description, String arts, String regDate)
     {
-        this.channel_id = channel_id;
-        this.user_id = user_id;
+        this.channelId = channelId;
+        this.userId = userId;
         this.subs = subs;
-        this.video_count = video_count;
+        this.videoCount = videoCount;
         this.name = name;
         this.description = description;
         this.arts = arts;
-        this.reg_date = reg_date;
+        this.regDate = regDate;
     }
 
     // getter
-    public int getChannel_id()
+    public int getChannelId()
     {
-        return channel_id;
+        return channelId;
     }
 
-    public int getUser_id()
+    public int getUserId()
     {
-        return user_id;
+        return userId;
     }
 
     public int getSubs()
@@ -47,9 +47,9 @@ public class ChannelDTO
         return subs;
     }
 
-    public int getVideo_count()
+    public int getVideoCount()
     {
-        return video_count;
+        return videoCount;
     }
 
     public String getName()
@@ -67,20 +67,20 @@ public class ChannelDTO
         return arts;
     }
 
-    public String getReg_date()
+    public String getRegDate()
     {
-        return reg_date;
+        return regDate;
     }
 
     // setter
-    public void setChannel_id(int channel_id)
+    public void setChannelId(int channelId)
     {
-        this.channel_id = channel_id;
+        this.channelId = channelId;
     }
 
-    public void setUser_id(int user_id)
+    public void setUserId(int userId)
     {
-        this.user_id = user_id;
+        this.userId = userId;
     }
 
     public void setSubs(int subs)
@@ -88,9 +88,9 @@ public class ChannelDTO
         this.subs = subs;
     }
 
-    public void setVideo_count(int video_count)
+    public void setVideoCount(int videoCount)
     {
-        this.video_count = video_count;
+        this.videoCount = videoCount;
     }
 
     public void setName(String name)
@@ -108,9 +108,9 @@ public class ChannelDTO
         this.arts = arts;
     }
 
-    public void setReg_date(String reg_date)
+    public void setRegDate(String regDate)
     {
-        this.reg_date = reg_date;
+        this.regDate = regDate;
     }
 
 }

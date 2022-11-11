@@ -84,4 +84,6 @@
 
     <dimen name="channel_art_height">100dp</dimen>
 
+    <dimen name="divider">2dp</dimen>
+
 </resources>

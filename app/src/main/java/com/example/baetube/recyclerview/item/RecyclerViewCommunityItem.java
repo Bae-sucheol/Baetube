@@ -1,17 +1,17 @@
 package com.example.baetube.recyclerview.item;
 
 import com.example.baetube.dto.ChannelDTO;
-import com.example.baetube.dto.PlaylistDTO;
+import com.example.baetube.dto.CommunityDTO;
 
-public class RecyclerViewPlaylistItem
+public class RecyclerViewCommunityItem
 {
-    private PlaylistDTO playlistDTO;
+    private CommunityDTO communityDTO;
     private ChannelDTO channelDTO;
 
     // getter
-    public PlaylistDTO getPlaylistDTO()
+    public CommunityDTO getCommunityDTO()
     {
-        return playlistDTO;
+        return communityDTO;
     }
 
     public ChannelDTO getChannelDTO()
@@ -20,9 +20,9 @@ public class RecyclerViewPlaylistItem
     }
 
     // setter
-    public void setPlaylistDTO(PlaylistDTO playlistDTO)
+    public void setCommunityDTO(CommunityDTO communityDTO)
     {
-        this.playlistDTO = playlistDTO;
+        this.communityDTO = communityDTO;
     }
 
     public void setChannelDTO(ChannelDTO channelDTO)

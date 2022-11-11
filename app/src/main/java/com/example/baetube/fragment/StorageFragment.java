@@ -137,7 +137,7 @@ public class StorageFragment extends Fragment
 
             PlaylistDTO playlistDTO = new PlaylistDTO();
             playlistDTO.setName(names[i]);
-            playlistDTO.setVideo_count(counts[i]);
+            playlistDTO.setVideoCount(counts[i]);
 
             item.setPlaylistDTO(playlistDTO);
 

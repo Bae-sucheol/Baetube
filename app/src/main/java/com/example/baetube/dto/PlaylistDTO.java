@@ -2,20 +2,20 @@ package com.example.baetube.dto;
 
 public class PlaylistDTO
 {
-    private int playlist_id;
-    private int video_count;
+    private int playlistId;
+    private int videoCount;
     private String name;
     private String thumnail;
 
     // getter
-    public int getPlaylist_id()
+    public int getPlaylistId()
     {
-        return playlist_id;
+        return playlistId;
     }
 
-    public int getVideo_count()
+    public int getVideoCount()
     {
-        return video_count;
+        return videoCount;
     }
 
     public String getName()
@@ -29,14 +29,14 @@ public class PlaylistDTO
     }
 
     // setter
-    public void setPlaylist_id(int playlist_id)
+    public void setPlaylistId(int playlistId)
     {
-        this.playlist_id = playlist_id;
+        this.playlistId = playlistId;
     }
 
-    public void setVideo_count(int video_count)
+    public void setVideoCount(int videoCount)
     {
-        this.video_count = video_count;
+        this.videoCount = videoCount;
     }
 
     public void setName(String name)

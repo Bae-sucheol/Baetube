@@ -53,7 +53,7 @@ public class RecyclerViewStorageAdapter extends RecyclerView.Adapter<StorageView
 
         //holder.thumbnail.setImageDrawable();
         holder.name.setText(playlistDTO.getName());
-        holder.count.setText(String.valueOf(playlistDTO.getVideo_count()));
+        holder.count.setText(String.valueOf(playlistDTO.getVideoCount()));
     }
 
     @Override

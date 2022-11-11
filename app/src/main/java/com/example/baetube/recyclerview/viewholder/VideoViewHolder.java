@@ -18,7 +18,7 @@ public class VideoViewHolder extends RecyclerView.ViewHolder
     public TextView title;
     public TextView views;
     public TextView date;
-    public TextView channel_name;
+    public TextView channelName;
 
     public VideoViewHolder(@NonNull View itemView)
     {
@@ -30,7 +30,7 @@ public class VideoViewHolder extends RecyclerView.ViewHolder
         title = itemView.findViewById(R.id.recyclerview_video_text_title);
         views = itemView.findViewById(R.id.recyclerview_video_text_views);
         date = itemView.findViewById(R.id.recyclerview_video_text_date);
-        channel_name = itemView.findViewById(R.id.recyclerview_video_text_channel_name);
+        channelName = itemView.findViewById(R.id.recyclerview_video_text_channel_name);
 
     }
 }

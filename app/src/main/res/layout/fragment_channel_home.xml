@@ -8,7 +8,7 @@
     tools:context=".fragment.ChannelHomeFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/fragment_storage_appbar_under"
+        android:id="@+id/fragment_channel_home_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">

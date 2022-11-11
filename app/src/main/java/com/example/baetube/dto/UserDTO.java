@@ -2,36 +2,36 @@ package com.example.baetube.dto;
 
 public class UserDTO
 {
-    private int user_id;
+    private int userId;
     private String password;
     private String name;
     private String email;
     private String birth;
-    private String fcm_token;
+    private String fcmToken;
     private String phone;
     private String address;
-    private String reg_date;
+    private String regDate;
     private boolean gender;
 
     // constructor
-    public UserDTO(int user_id, String password, String name, String email, String birth, String fcm_token, String phone, String address, String reg_date, boolean gender)
+    public UserDTO(int userId, String password, String name, String email, String birth, String fcmToken, String phone, String address, String regDate, boolean gender)
     {
-        this.user_id = user_id;
+        this.userId = userId;
         this.password = password;
         this.name = name;
         this.email = email;
         this.birth = birth;
-        this.fcm_token = fcm_token;
+        this.fcmToken = fcmToken;
         this.phone = phone;
         this.address = address;
-        this.reg_date = reg_date;
+        this.regDate = regDate;
         this.gender = gender;
     }
 
     // getter
-    public int getUser_id()
+    public int getUserId()
     {
-        return user_id;
+        return userId;
     }
 
     public String getPassword()
@@ -54,9 +54,9 @@ public class UserDTO
         return birth;
     }
 
-    public String getFcm_token()
+    public String getFcmToken()
     {
-        return fcm_token;
+        return fcmToken;
     }
 
     public String getPhone()
@@ -69,9 +69,9 @@ public class UserDTO
         return address;
     }
 
-    public String getReg_date()
+    public String getRegDate()
     {
-        return reg_date;
+        return regDate;
     }
 
     public boolean getGender()
@@ -80,9 +80,9 @@ public class UserDTO
     }
 
     // setter
-    public void setUser_id(int user_id)
+    public void setUserId(int userId)
     {
-        this.user_id = user_id;
+        this.userId = userId;
     }
 
     public void setPassword(String password)
@@ -105,9 +105,9 @@ public class UserDTO
         this.birth = birth;
     }
 
-    public void setFcm_token(String fcm_token)
+    public void setFcmToken(String fcmToken)
     {
-        this.fcm_token = fcm_token;
+        this.fcmToken = fcmToken;
     }
 
     public void setPhone(String phone)
@@ -120,9 +120,9 @@ public class UserDTO
         this.address = address;
     }
 
-    public void setReg_date(String reg_date)
+    public void setRegDate(String regDate)
     {
-        this.reg_date = reg_date;
+        this.regDate = regDate;
     }
 
     public void setGender(boolean gender)

@@ -81,11 +81,11 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
         if (item.getViewType() == ViewType.VIEWTYPE_VIDEO_LARGE)
         {
             holder.thumbnail.getLayoutParams().height = (int) (UserDisplay.getWidth() * UserDisplay.getRatio());
-            holder.channel_name.setText(channelDTO.getName() + " · ");
+            holder.channelName.setText(channelDTO.getName() + " · ");
         }
         else
         {
-            holder.channel_name.setText(channelDTO.getName());
+            holder.channelName.setText(channelDTO.getName());
         }
 
         //holder.thumbnail.setImageDrawable();
