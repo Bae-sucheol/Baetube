@@ -2,11 +2,10 @@ package com.example.baetube;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.baetube.fragment.ChannelCommunityFragment;
-import com.example.baetube.fragment.ChannelDescriptionFragment;
+import com.example.baetube.fragment.ChannelInfomationFragment;
 import com.example.baetube.fragment.ChannelHomeFragment;
 import com.example.baetube.fragment.ChannelPlaylistFragment;
 import com.example.baetube.fragment.ChannelVideoFragment;
@@ -52,7 +51,7 @@ public class ScreenSlidePagerAdapter extends FragmentStateAdapter
                 break;
             default :
 
-                fragment = new ChannelDescriptionFragment();
+                fragment = new ChannelInfomationFragment();
 
                 break;
         }

@@ -44,7 +44,7 @@
                 android:textSize="@dimen/text_size_large"/>
 
             <EditText
-                android:id="@+id/fragment_login_email"
+                android:id="@+id/fragment_login_edit_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/login_email_hint"
@@ -63,7 +63,7 @@
                 android:textSize="@dimen/text_size_large"/>
 
             <EditText
-                android:id="@+id/fragment_login_password"
+                android:id="@+id/fragment_login_edit_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/login_password_hint"
@@ -72,7 +72,7 @@
                 android:padding="@dimen/padding_small"/>
 
             <Button
-                android:id="@+id/fragment_login_login_button"
+                android:id="@+id/fragment_login_button_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/login_button_text"
@@ -84,7 +84,7 @@
                 android:backgroundTint="@color/clickable_text_color" />
 
             <TextView
-                android:id="@+id/fragment_login_sign_in_button"
+                android:id="@+id/fragment_login_button_sign_in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

@@ -84,7 +84,7 @@
     <string name="spinner_visible_text_link_description">링크가 있는 사용자만 볼 수 있음</string>
     <string name="spinner_visible_text_lock">비공개</string>
     <string name="spinner_visible_text_lock_description">나만 볼 수 있음</string>
-    
+
     <string-array name="tab_layout_channel_title">
         <item>홈</item>
         <item>동영상</item>
@@ -94,6 +94,13 @@
     </string-array>
 
     <string name="channel_home_upload_video_title">업로드한 동영상</string>
+
+    <string name="channel_information_text_description">설명</string>
+    <string name="channel_information_text_link">링크</string>
+    <string name="channel_information_text_additional">추가 정보</string>
+    <string name="channel_information_text_sign_in_date">가입일 : </string>
+    <string name="channel_information_text_view_count">조회수 : </string>
+
 
     <!--
         * 앱바 스크롤 옵션

@@ -40,8 +40,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        logInButton = view.findViewById(R.id.fragment_login_login_button);
-        signInButton = view.findViewById(R.id.fragment_login_sign_in_button);
+        logInButton = view.findViewById(R.id.fragment_login_button_login);
+        signInButton = view.findViewById(R.id.fragment_login_button_sign_in);
 
         logInButton.setOnClickListener(this);
         signInButton.setOnClickListener(this);
@@ -55,11 +55,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener
     {
         switch (view.getId())
         {
-            case R.id.fragment_login_login_button :
+            case R.id.fragment_login_button_login :
 
                 break;
 
-            case R.id.fragment_login_sign_in_button :
+            case R.id.fragment_login_button_sign_in :
 
                 break;
         }

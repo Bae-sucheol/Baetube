@@ -57,6 +57,17 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="textview_style_channel_information_title">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="textview_style_channel_information_description">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="top_menu_style">
         <item name="android:paddingHorizontal">@dimen/top_menu_padding_horizontal</item>
         <item name="android:paddingVertical">@dimen/top_menu_padding_vertical</item>

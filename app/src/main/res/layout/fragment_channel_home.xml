@@ -138,11 +138,41 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/fragment_channel_home_layout_manage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/margin_medium"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="동영상 관리"
+                    style="@style/clickable_text_style"
+                    android:layout_marginRight="@dimen/margin_large"/>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_small"
+                    android:layout_height="@dimen/icon_size_small"
+                    android:background="@drawable/ic_baseline_insert_chart_outlined_24"
+                    android:layout_marginHorizontal="@dimen/margin_small"/>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_small"
+                    android:layout_height="@dimen/icon_size_small"
+                    android:background="@drawable/ic_baseline_edit_24" />
+
+            </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:layout_margin="@dimen/margin_medium"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_medium"
                 android:text="@string/channel_home_upload_video_title"
                 style="@style/textview_style_normal"/>
 

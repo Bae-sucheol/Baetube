@@ -19,8 +19,8 @@ public class StorageViewHolder extends RecyclerView.ViewHolder
     {
         super(itemView);
 
-        thumbnail = itemView.findViewById(R.id.recyclerview_storage_thumbnail);
-        name = itemView.findViewById(R.id.recyclerview_storage_name);
-        count = itemView.findViewById(R.id.recyclerview_storage_count);
+        thumbnail = itemView.findViewById(R.id.recyclerview_storage_image_thumbnail);
+        name = itemView.findViewById(R.id.recyclerview_storage_text_name);
+        count = itemView.findViewById(R.id.recyclerview_storage_text_count);
     }
 }

@@ -23,8 +23,8 @@ public class SubscribeViewHolder extends RecyclerView.ViewHolder
         super(itemView);
 
         layout = itemView.findViewById(R.id.recyclerview_subscribe_layout);
-        profile = itemView.findViewById(R.id.recyclerview_subscribe_profile);
-        channel_name = itemView.findViewById(R.id.recyclerview_subscribe_channel_name);
+        profile = itemView.findViewById(R.id.recyclerview_subscribe_image_profile);
+        channel_name = itemView.findViewById(R.id.recyclerview_subscribe_text_channel_name);
 
         layout.setOnClickListener(new View.OnClickListener()
         {

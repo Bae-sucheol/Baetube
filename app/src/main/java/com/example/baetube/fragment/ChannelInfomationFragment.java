@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.baetube.R;
 
-public class ChannelDescriptionFragment extends Fragment
+public class ChannelInfomationFragment extends Fragment
 {
     private View view;
 
@@ -18,7 +18,7 @@ public class ChannelDescriptionFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.fragment_channel_description, container, false);
+        view = inflater.inflate(R.layout.fragment_channel_information, container, false);
 
         // Inflate the layout for this fragment
         return view;
