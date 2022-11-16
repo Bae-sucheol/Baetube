@@ -14,14 +14,14 @@
 
         <ImageView
             android:id="@+id/recyclerview_playlist_image_thumbnail"
-            android:layout_width="@dimen/video_small_width"
-            android:layout_height="@dimen/video_small_height"
+            android:layout_width="@dimen/res_width_small"
+            android:layout_height="@dimen/res_height_small"
             android:background="@drawable/video_border"
             android:layout_marginRight="@dimen/margin_medium"/>
 
         <LinearLayout
-            android:layout_width="@dimen/video_small_width"
-            android:layout_height="@dimen/video_small_height"
+            android:layout_width="@dimen/res_width_small"
+            android:layout_height="@dimen/res_height_small"
             android:weightSum="5"
             android:orientation="horizontal">
 

@@ -101,6 +101,18 @@
     <string name="channel_information_text_sign_in_date">가입일 : </string>
     <string name="channel_information_text_view_count">조회수 : </string>
 
+    <string name="text_title_count_max">100</string>
+    <string name="text_description_count_max">1000</string>
+    <string name="text_count_divider"> / </string>
+
+    <string name="modify_video_text_description">설명</string>
+    <string name="modify_video_text_visible">공개 상태</string>
+    <string name="modify_video_text_age">시청자층</string>
+    <string name="modify_video_text_location">위치</string>
+    <string name="modify_video_text_add_playlist">재생목록 추가</string>
+
+    <string name="modify_community_text_description">설명 추가</string>
+    <string name="modify_community_text_vote">투표 추가</string>
 
     <!--
         * 앱바 스크롤 옵션
@@ -111,4 +123,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--
+    * 화면 비
+    -->
+    <string name="res_ratio_wide">1.77</string>
+
 </resources>
