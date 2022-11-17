@@ -114,6 +114,13 @@
     <string name="modify_community_text_description">설명 추가</string>
     <string name="modify_community_text_vote">투표 추가</string>
 
+    <string name="modify_channel_information_text_description">설명</string>
+    <string name="modify_channel_information_text_link">링크</string>
+
+    <string name="analysis_text_view">조회수</string>
+    <string name="analysis_text_time">시청 시간</string>
+    <string name="analysis_text_subscribe">구독자 수</string>
+
     <!--
         * 앱바 스크롤 옵션
     -->
@@ -127,6 +134,9 @@
     <!--
     * 화면 비
     -->
+    <string name="res_ratio_full">1.33</string>
     <string name="res_ratio_wide">1.77</string>
+    <string name="res_ratio_ultra_wide">2.33</string>
+    <string name="res_ratio_channel_art">3.65</string>
 
 </resources>

@@ -10,12 +10,12 @@ import com.example.baetube.fragment.ChannelHomeFragment;
 import com.example.baetube.fragment.ChannelPlaylistFragment;
 import com.example.baetube.fragment.ChannelVideoFragment;
 
-public class ScreenSlidePagerAdapter extends FragmentStateAdapter
+public class ChannelPagerAdapter extends FragmentStateAdapter
 {
 
     private int count;
 
-    public ScreenSlidePagerAdapter(@NonNull Fragment fragment, int count)
+    public ChannelPagerAdapter(@NonNull Fragment fragment, int count)
     {
         super(fragment);
         this.count = count;
@@ -49,9 +49,15 @@ public class ScreenSlidePagerAdapter extends FragmentStateAdapter
                 fragment = new ChannelCommunityFragment();
 
                 break;
-            default :
+
+            case 4 :
 
                 fragment = new ChannelInfomationFragment();
+
+                break;
+            default :
+
+                fragment = null;
 
                 break;
         }

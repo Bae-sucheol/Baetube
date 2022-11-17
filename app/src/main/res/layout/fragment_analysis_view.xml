@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/analysis_border"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_medium"
+    tools:context=".fragment.AnalysisViewFragment">
+
+    <TextView
+        android:id="@+id/fragment_analysis_view_text_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/analysis_text_view"
+        style="@style/textview_style_analysis_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/fragment_analysis_view_layout_count"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/margin_xsmall"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_analysis_view_text_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/fragment_analysis_view_text_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:layout_marginRight="@dimen/margin_small"
+            style="@style/textview_style_analysis_count"/>
+
+        <ImageView
+            android:id="@+id/fragment_analysis_view_image_count"
+            android:layout_width="@dimen/icon_size_xsmall"
+            android:layout_height="@dimen/icon_size_xsmall"
+            android:background="@drawable/ic_baseline_arrow_upward_24"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/fragment_analysis_view_text_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="지난달보다 66% 많음"
+        style="@style/textview_style_analysis_description"
+        android:layout_marginTop="@dimen/margin_xsmall"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_analysis_view_layout_count"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_small"
+        android:background="@color/top_menu_background"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_analysis_view_text_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintDimensionRatio="@string/res_ratio_wide"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="1.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

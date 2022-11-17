@@ -5,11 +5,11 @@ import androidx.annotation.NonNull;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class TabStrategy implements TabLayoutMediator.TabConfigurationStrategy
+public class ChannelTabStrategy implements TabLayoutMediator.TabConfigurationStrategy
 {
     private String titles[];
 
-    public TabStrategy(String titles[])
+    public ChannelTabStrategy(String titles[])
     {
         this.titles = titles;
     }
@@ -19,4 +19,6 @@ public class TabStrategy implements TabLayoutMediator.TabConfigurationStrategy
     {
         tab.setText(titles[position]);
     }
+
+
 }

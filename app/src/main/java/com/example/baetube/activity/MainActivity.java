@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.baetube.fragment.ChannelAnalysisFragment;
 import com.example.baetube.fragment.ChannelBaseFragment;
 import com.example.baetube.fragment.ChannelManageVideoFragment;
 import com.example.baetube.fragment.PlaylistDetailFragment;
@@ -60,7 +61,8 @@ public class MainActivity extends AppCompatActivity
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new PlaylistDetailFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new PlaylistModifyFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelBaseFragment()).commit();
-        fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelManageVideoFragment()).commit();
+        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelManageVideoFragment()).commit();
+        fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelAnalysisFragment()).commit();
 
         // 바텀 네비게이션 요소를 findViewById를 사용하여 찾는다.
         bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation);

@@ -12,6 +12,7 @@
     * 아이콘 사이즈
     -->
     <dimen name="icon_size_option">15dp</dimen>
+    <dimen name="icon_size_xsmall">20dp</dimen>
     <dimen name="icon_size_small">30dp</dimen>
     <dimen name="icon_size_medium">50dp</dimen>
     <dimen name="icon_size_large">70dp</dimen>
