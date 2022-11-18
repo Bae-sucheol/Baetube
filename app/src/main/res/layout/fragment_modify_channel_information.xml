@@ -66,7 +66,7 @@ tools:context=".fragment.ModifyChannelInformationFragment">
                 android:layout_height="@dimen/icon_size_medium"
                 android:background="@drawable/ic_baseline_account_circle_24"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="fragment_modify_channel_information_image_thumbnail"/>
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <EditText
                 android:id="@+id/fragment_modify_channel_information_edit_title"

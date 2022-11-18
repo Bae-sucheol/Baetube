@@ -139,4 +139,17 @@
     <string name="res_ratio_ultra_wide">2.33</string>
     <string name="res_ratio_channel_art">3.65</string>
 
+    <!--
+    * 알림 날짜 구분
+    -->
+    <string name="notification_date_today">오늘</string>
+    <string name="notification_date_week">이번 주</string>
+    <string name="notification_date_other">이전 페이지</string>
+
+    <!--
+    * 알림 텍스트
+    -->
+    <string name="notification_text_video">에서 업로드한 동영상 : </string>
+    <string name="notification_text_communication">에서 업로드한 게시글 : </string>
+
 </resources>
