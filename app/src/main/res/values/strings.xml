@@ -4,11 +4,14 @@
     <string name="menu_toolbar_notification">알림</string>
     <string name="menu_toolbar_search">검색</string>
     <string name="menu_toolbar_profile">프로필</string>
+    <string name="menu_toolbar_next">다음</string>
 
     <string name="fragment_login_toolbar_title">로그인</string>
     <string name="fragment_sign_in_toolbar_title">회원가입</string>
     <string name="fragment_subscribe_detail_toolbar_title">채널 목록</string>
     <string name="fragment_playlist_modify_toolbar_title">재생목록 수정</string>
+    <string name="fragment_upload_video_list_toolbar_title">업로드</string>
+    <string name="fragment_upload_video_information_toolbar_title">세부정보 추가</string>
 
     <string name="bottom_navigation_home">홈</string>
     <string name="bottom_navigation_upload">업로드</string>
@@ -121,6 +124,11 @@
     <string name="analysis_text_time">시청 시간</string>
     <string name="analysis_text_subscribe">구독자 수</string>
 
+    <string name="upload_video_text_description">설명</string>
+    <string name="upload_video_text_visible">공개 상태</string>
+    <string name="upload_video_text_location">위치</string>
+    <string name="upload_video_text_add_playlist">재생목록 추가</string>
+
     <!--
         * 앱바 스크롤 옵션
     -->
@@ -151,5 +159,11 @@
     -->
     <string name="notification_text_video">에서 업로드한 동영상 : </string>
     <string name="notification_text_communication">에서 업로드한 게시글 : </string>
+    <string name="title_activity_upload">UploadActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 
 </resources>

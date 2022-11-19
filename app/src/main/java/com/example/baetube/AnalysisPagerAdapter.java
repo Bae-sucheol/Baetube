@@ -4,9 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.baetube.fragment.AnalysisSubscribeFragment;
-import com.example.baetube.fragment.AnalysisTimeFragment;
-import com.example.baetube.fragment.AnalysisViewFragment;
+import com.example.baetube.fragment.Analysis.AnalysisSubscribeFragment;
+import com.example.baetube.fragment.Analysis.AnalysisTimeFragment;
+import com.example.baetube.fragment.Analysis.AnalysisViewFragment;
 
 public class AnalysisPagerAdapter extends FragmentStateAdapter
 {

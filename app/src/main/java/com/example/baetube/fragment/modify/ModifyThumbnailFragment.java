@@ -1,4 +1,4 @@
-package com.example.baetube.fragment;
+package com.example.baetube.fragment.modify;
 
 import android.os.Bundle;
 
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.baetube.R;
 
-public class ModifyCommunityFragment extends Fragment
+public class ModifyThumbnailFragment extends Fragment
 {
     private View view;
 
@@ -18,9 +18,7 @@ public class ModifyCommunityFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.fragment_modify_community, container, false);
-
-
+        view = inflater.inflate(R.layout.fragment_modify_thumbnail, container, false);
 
         // Inflate the layout for this fragment
         return view;

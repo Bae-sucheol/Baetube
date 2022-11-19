@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.ChannelManageVideoFragment">
+    tools:context=".fragment.Channel.ChannelManageVideoFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/fragment_channel_manage_video_appbar"

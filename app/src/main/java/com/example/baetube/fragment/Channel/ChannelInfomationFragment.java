@@ -1,4 +1,4 @@
-package com.example.baetube.fragment;
+package com.example.baetube.fragment.Channel;
 
 import android.os.Bundle;
 

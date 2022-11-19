@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragment.modify.ModifyVideoFragment">
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".fragment.upload.UploadVideoInformationFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/fragment_modify_video_appbar"
+        android:id="@+id/fragment_upload_video_information_appbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
@@ -22,26 +23,26 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <ImageView
-        android:id="@+id/fragment_modify_video_image_thumbnail"
+        android:id="@+id/fragment_upload_video_information_image_thumbnail"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="443dp"
         android:background="@color/top_menu_background"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_upload_video_information_appbar"
         app:layout_constraintDimensionRatio="@string/res_ratio_wide"
-        app:layout_constraintStart_toStartOf="@+id/fragment_modify_video_appbar"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="1.0" />
 
     <ImageView
-        android:id="@+id/fragment_modify_video_button_change_thumbnail"
+        android:id="@+id/fragment_upload_video_information_button_change_thumbnail"
         android:layout_width="@dimen/icon_size_medium"
         android:layout_height="@dimen/icon_size_medium"
         android:layout_marginBottom="6dp"
         android:background="@drawable/ic_baseline_autorenew_24"
         android:layout_margin="@dimen/margin_medium"
-        app:layout_constraintStart_toStartOf="@+id/fragment_modify_video_appbar"
-        app:layout_constraintTop_toTopOf="@+id/fragment_modify_video_image_thumbnail" />
+        app:layout_constraintStart_toStartOf="@+id/fragment_upload_video_information_appbar"
+        app:layout_constraintTop_toTopOf="@+id/fragment_upload_video_information_image_thumbnail" />
 
     <LinearLayout
         android:id="@+id/linearLayout6"
@@ -50,43 +51,9 @@
         android:layout_marginHorizontal="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_xsmall"
         android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="@+id/fragment_modify_video_image_thumbnail"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_modify_video_image_thumbnail">
+        app:layout_constraintStart_toStartOf="@+id/fragment_upload_video_information_image_thumbnail"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_upload_video_information_image_thumbnail">
 
-        <TextView
-            style="@style/textview_style_modify_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="제목" />
-
-        <EditText
-            android:id="@+id/fragment_modify_video_edit_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/fragment_modify_video_text_count_cur"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_count_divider" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_title_count_max" />
-
-        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -94,7 +61,35 @@
             android:paddingVertical="@dimen/margin_xsmall">
 
             <ImageView
-                android:id="@+id/fragment_modify_video_image_description"
+                android:id="@+id/fragment_upload_video_information_image_profile"
+                android:layout_width="@dimen/icon_size_medium"
+                android:layout_height="@dimen/icon_size_medium"
+                android:background="@drawable/ic_baseline_account_circle_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/fragment_upload_video_information_text_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_medium"
+                android:text="홍길동"
+                android:gravity="center_vertical"
+                style="@style/textview_style_upload_channel_name"
+                app:layout_constraintStart_toEndOf="@+id/fragment_upload_video_information_image_profile"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/margin_xsmall">
+
+            <ImageView
+                android:id="@+id/fragment_upload_video_information_image_description"
                 android:layout_width="@dimen/icon_size_small"
                 android:layout_height="@dimen/icon_size_small"
                 android:background="@drawable/ic_baseline_sort_24"
@@ -109,20 +104,20 @@
                 android:layout_marginHorizontal="@dimen/margin_small"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fragment_modify_video_button_description"
-                app:layout_constraintStart_toEndOf="@+id/fragment_modify_video_image_description"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_upload_video_information_button_description"
+                app:layout_constraintStart_toEndOf="@+id/fragment_upload_video_information_image_description"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    style="@style/textview_style_modify_title"
+                    style="@style/textview_style_upload_description"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/modify_video_text_description" />
+                    android:text="@string/modify_channel_information_text_description" />
 
                 <TextView
-                    android:id="@+id/fragment_modify_video_text_description"
-                    style="@style/textview_style_modify_title"
+                    android:id="@+id/fragment_upload_video_information_text_description"
+                    style="@style/textview_style_upload_description"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -132,7 +127,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/fragment_modify_video_button_description"
+                android:id="@+id/fragment_upload_video_information_button_description"
                 android:layout_width="@dimen/icon_size_small"
                 android:layout_height="@dimen/icon_size_small"
                 android:gravity="center"
@@ -148,7 +143,6 @@
 
             </LinearLayout>
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -157,7 +151,7 @@
             android:paddingVertical="@dimen/margin_xsmall">
 
             <ImageView
-                android:id="@+id/fragment_modify_video_image_visible"
+                android:id="@+id/fragment_upload_video_information_image_visible"
                 android:layout_width="@dimen/icon_size_small"
                 android:layout_height="@dimen/icon_size_small"
                 android:background="@drawable/ic_baseline_public_24"
@@ -166,26 +160,25 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:id="@+id/linearLayout2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginHorizontal="@dimen/margin_small"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fragment_modify_video_button_visible"
-                app:layout_constraintStart_toEndOf="@+id/fragment_modify_video_image_visible"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_upload_video_information_button_visible"
+                app:layout_constraintStart_toEndOf="@+id/fragment_upload_video_information_image_visible"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    style="@style/textview_style_modify_title"
+                    style="@style/textview_style_upload_description"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/modify_video_text_visible" />
+                    android:text="@string/upload_video_text_visible" />
 
                 <TextView
-                    android:id="@+id/fragment_modify_video_text_visible"
-                    style="@style/textview_style_modify_title"
+                    android:id="@+id/fragment_upload_video_information_text_visible"
+                    style="@style/textview_style_upload_description"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -195,7 +188,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/fragment_modify_video_button_visible"
+                android:id="@+id/fragment_upload_video_information_button_visible"
                 android:layout_width="@dimen/icon_size_small"
                 android:layout_height="@dimen/icon_size_small"
                 android:gravity="center"
@@ -211,7 +204,6 @@
 
             </LinearLayout>
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -220,70 +212,7 @@
             android:paddingVertical="@dimen/margin_xsmall">
 
             <ImageView
-                android:id="@+id/fragment_modify_video_image_age"
-                android:layout_width="@dimen/icon_size_small"
-                android:layout_height="@dimen/icon_size_small"
-                android:background="@drawable/ic_baseline_person_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
-                android:id="@+id/linearLayout3"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="@dimen/margin_small"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fragment_modify_video_button_age"
-                app:layout_constraintStart_toEndOf="@+id/fragment_modify_video_image_age"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    style="@style/textview_style_modify_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="@string/modify_video_text_age" />
-
-                <TextView
-                    android:id="@+id/fragment_modify_video_text_age"
-                    style="@style/textview_style_modify_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:singleLine="true"
-                    android:text="아동용 동영상 아님" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/fragment_modify_video_button_age"
-                android:layout_width="@dimen/icon_size_small"
-                android:layout_height="@dimen/icon_size_small"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size_option"
-                    android:layout_height="@dimen/icon_size_option"
-                    android:background="@drawable/ic_baseline_arrow_forward_ios_24" />
-
-            </LinearLayout>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/margin_xsmall">
-
-            <ImageView
-                android:id="@+id/fragment_modify_video_image_location"
+                android:id="@+id/fragment_upload_video_information_image_location"
                 android:layout_width="@dimen/icon_size_small"
                 android:layout_height="@dimen/icon_size_small"
                 android:background="@drawable/ic_baseline_location_on_24"
@@ -292,38 +221,26 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:id="@+id/linearLayout4"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginHorizontal="@dimen/margin_small"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fragment_modify_video_button_location"
-                app:layout_constraintStart_toEndOf="@+id/fragment_modify_video_image_location"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_upload_video_information_button_location"
+                app:layout_constraintStart_toEndOf="@+id/fragment_upload_video_information_image_location"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    style="@style/textview_style_modify_title"
+                    style="@style/textview_style_upload_description"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="@string/modify_video_text_location" />
-
-                <TextView
-                    android:id="@+id/fragment_modify_video_text_location"
-                    style="@style/textview_style_modify_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:singleLine="true"
-                    android:text=""
-                    android:visibility="gone" />
+                    android:text="@string/upload_video_text_location" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/fragment_modify_video_button_location"
+                android:id="@+id/fragment_upload_video_information_button_location"
                 android:layout_width="@dimen/icon_size_small"
                 android:layout_height="@dimen/icon_size_small"
                 android:gravity="center"
@@ -339,7 +256,6 @@
 
             </LinearLayout>
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -348,7 +264,7 @@
             android:paddingVertical="@dimen/margin_xsmall">
 
             <ImageView
-                android:id="@+id/fragment_modify_video_image_add_playlist"
+                android:id="@+id/fragment_upload_video_information_image_add_playlist"
                 android:layout_width="@dimen/icon_size_small"
                 android:layout_height="@dimen/icon_size_small"
                 android:background="@drawable/ic_baseline_library_add_24"
@@ -357,28 +273,26 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:id="@+id/linearLayout5"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginHorizontal="@dimen/margin_small"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fragment_modify_video_button_add_playlist"
-                app:layout_constraintStart_toEndOf="@+id/fragment_modify_video_image_add_playlist"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_upload_video_information_button_add_playlist"
+                app:layout_constraintStart_toEndOf="@+id/fragment_upload_video_information_image_add_playlist"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    style="@style/textview_style_modify_title"
+                    style="@style/textview_style_upload_description"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="@string/modify_video_text_add_playlist" />
+                    android:text="@string/upload_video_text_add_playlist" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/fragment_modify_video_button_add_playlist"
+                android:id="@+id/fragment_upload_video_information_button_add_playlist"
                 android:layout_width="@dimen/icon_size_small"
                 android:layout_height="@dimen/icon_size_small"
                 android:gravity="center"
@@ -390,14 +304,12 @@
                 <ImageView
                     android:layout_width="@dimen/icon_size_option"
                     android:layout_height="@dimen/icon_size_option"
-                    android:background="@drawable/ic_baseline_add_24" />
+                    android:background="@drawable/ic_baseline_arrow_forward_ios_24" />
 
             </LinearLayout>
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

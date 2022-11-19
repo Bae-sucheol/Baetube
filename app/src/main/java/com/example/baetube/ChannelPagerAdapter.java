@@ -4,11 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.baetube.fragment.ChannelCommunityFragment;
-import com.example.baetube.fragment.ChannelInfomationFragment;
-import com.example.baetube.fragment.ChannelHomeFragment;
-import com.example.baetube.fragment.ChannelPlaylistFragment;
-import com.example.baetube.fragment.ChannelVideoFragment;
+import com.example.baetube.fragment.Channel.ChannelCommunityFragment;
+import com.example.baetube.fragment.Channel.ChannelInfomationFragment;
+import com.example.baetube.fragment.Channel.ChannelHomeFragment;
+import com.example.baetube.fragment.Channel.ChannelPlaylistFragment;
+import com.example.baetube.fragment.Channel.ChannelVideoFragment;
 
 public class ChannelPagerAdapter extends FragmentStateAdapter
 {
