@@ -12,6 +12,11 @@
     <string name="fragment_playlist_modify_toolbar_title">재생목록 수정</string>
     <string name="fragment_upload_video_list_toolbar_title">업로드</string>
     <string name="fragment_upload_video_information_toolbar_title">세부정보 추가</string>
+    <string name="fragment_upload_community_toolbar_title">업로드</string>
+    <string name="fragment_set_description_toolbar_title">설명추가</string>
+    <string name="fragment_set_visible_toolbar_title">공개상태설정</string>
+    <string name="fragment_set_age_toolbar_title">투표추가</string>
+    <string name="fragment_set_vote_toolbar_title">시청자층 선택</string>
 
     <string name="bottom_navigation_home">홈</string>
     <string name="bottom_navigation_upload">업로드</string>
@@ -81,13 +86,6 @@
     <string name="playlist_modify_text_hint_description">설명</string>
     <string name="playlist_modify_text_visible">개인정보 보호</string>
 
-    <string name="spinner_visible_text_public">공개</string>
-    <string name="spinner_visible_text_public_description">모든 사용자가 검색하고 볼 수 있음</string>
-    <string name="spinner_visible_text_link">일부 공개</string>
-    <string name="spinner_visible_text_link_description">링크가 있는 사용자만 볼 수 있음</string>
-    <string name="spinner_visible_text_lock">비공개</string>
-    <string name="spinner_visible_text_lock_description">나만 볼 수 있음</string>
-
     <string-array name="tab_layout_channel_title">
         <item>홈</item>
         <item>동영상</item>
@@ -106,6 +104,7 @@
 
     <string name="text_title_count_max">100</string>
     <string name="text_description_count_max">1000</string>
+    <string name="text_vote_count_max">5</string>
     <string name="text_count_divider"> / </string>
 
     <string name="modify_video_text_description">설명</string>
@@ -128,6 +127,36 @@
     <string name="upload_video_text_visible">공개 상태</string>
     <string name="upload_video_text_location">위치</string>
     <string name="upload_video_text_add_playlist">재생목록 추가</string>
+
+    <string name="upload_video_text_title">제목</string>
+    <string name="upload_video_text_hint_title">제목을 입력하세요.</string>
+
+    <string name="set_visible_text_title">지금 게시</string>
+
+    <string name="visible_text_public">공개</string>
+    <string name="visible_text_public_description">모든 사용자가 검색하고 볼 수 있음</string>
+    <string name="visible_text_link">일부 공개</string>
+    <string name="visible_text_link_description">링크가 있는 사용자만 볼 수 있음</string>
+    <string name="visible_text_lock">비공개</string>
+    <string name="visible_text_lock_description">나만 볼 수 있음</string>
+
+    <string name="set_age_text_child_title">아동용 동영상인가요?</string>
+    <string name="set_age_text_child_description">모든 크리에이터는 위치에 상관없이 아동 온라인 개인정보 보호법(COPPA) 및 기타 법률을 준수해야 할
+        법적인 의무가 있습니다. 아동용 동영상인지 여부는 크리에이터가 지정해야 합니다.</string>
+    <string name="set_age_text_radio_button_child">예, 아동용입니다.</string>
+    <string name="set_age_text_radio_button_not_child">아동용 동영상이 아닙니다.</string>
+    <string name="set_age_text_button_adult">연령 제한(고급)</string>
+    <string name="set_age_text_adult_description">동영상을 성인만 시청할 수 있도록 제한하고 싶으신가요?</string>
+    <string name="set_age_text_adult_description_warn">연령 제한 동영상은 BaeTube의 특정 영역에 표시되지 않습니다.
+    이러한 동영상은 광고 수익 창출이 제한되거나 배제될 수 있습니다.</string>
+    <string name="set_age_text_radio_button_not_adult">아니요, 동영상 시청자를 만 18세 이상으로 제한하지 않습니다.</string>
+    <string name="set_age_text_radio_button_adult">예, 동영상 시정차를 만 18세 이상으로 제한하겠습니다.</string>
+    <string name="set_age_text_button_upload">동영상 업로드</string>
+
+    <string name="upload_community_text_description">설명 추가</string>
+    <string name="upload_community_text_vote">투표 추가</string>
+
+    <string name="set_vote_text_button_add_vote">투표 추가하기</string>
 
     <!--
         * 앱바 스크롤 옵션

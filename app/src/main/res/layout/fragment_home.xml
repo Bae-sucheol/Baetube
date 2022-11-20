@@ -198,7 +198,7 @@
              android:layout_height="match_parent"
              android:gravity="center_vertical"
              android:text="@string/home_drawer_login"
-             style="@style/clickable_text_style"
+             style="@style/textview_style_clickable"
              android:textSize="@dimen/text_size_large"/>
 
       </LinearLayout>

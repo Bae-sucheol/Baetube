@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".fragment.upload.UploadCommunityFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/fragment_upload_community_appbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_no_scroll" />
+    
+    </com.google.android.material.appbar.AppBarLayout>
+    
+    <ImageView
+        android:id="@+id/fragment_upload_community_image_thumbnail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="443dp"
+        android:background="@color/top_menu_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="@string/res_ratio_wide"
+        app:layout_constraintStart_toStartOf="@+id/fragment_upload_community_appbar"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="1.0" />
+    
+    <ImageView
+        android:id="@+id/fragment_upload_community_button_change_thumbnail"
+        android:layout_width="@dimen/icon_size_medium"
+        android:layout_height="@dimen/icon_size_medium"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/ic_baseline_autorenew_24"
+        android:layout_margin="@dimen/margin_medium"
+        app:layout_constraintStart_toStartOf="@+id/fragment_upload_community_appbar"
+        app:layout_constraintTop_toTopOf="@+id/fragment_upload_community_image_thumbnail" />
+    
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_xsmall"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@+id/fragment_upload_community_image_thumbnail"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_upload_community_image_thumbnail">
+    
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/margin_small">
+    
+            <ImageView
+                android:id="@+id/fragment_upload_community_image_profile"
+                android:layout_width="@dimen/icon_size_medium"
+                android:layout_height="@dimen/icon_size_medium"
+                android:background="@drawable/ic_baseline_account_circle_24"
+                android:layout_marginRight="@dimen/margin_medium"/>
+    
+            <TextView
+                android:id="@+id/fragment_upload_community_text_channel_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="홍길동"
+                android:gravity="center_vertical"
+                style="@style/textview_style_upload_channel_name"/>
+    
+    
+        </LinearLayout>
+    
+        <TextView
+            style="@style/textview_style_upload_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="제목" />
+    
+        <EditText
+            android:id="@+id/fragment_upload_video_edit_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+    
+            <TextView
+                android:id="@+id/fragment_upload_video_text_count_cur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0" />
+    
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_count_divider" />
+    
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_title_count_max" />
+    
+        </LinearLayout>
+    
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/margin_xsmall">
+    
+            <ImageView
+                android:id="@+id/fragment_upload_community_image_description"
+                android:layout_width="@dimen/icon_size_small"
+                android:layout_height="@dimen/icon_size_small"
+                android:background="@drawable/ic_baseline_sort_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+    
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/margin_small"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_upload_community_button_description"
+                app:layout_constraintStart_toEndOf="@+id/fragment_upload_community_image_description"
+                app:layout_constraintTop_toTopOf="parent">
+    
+                <TextView
+                    style="@style/textview_style_upload_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/upload_community_text_description" />
+    
+            </LinearLayout>
+    
+            <LinearLayout
+                android:id="@+id/fragment_upload_community_button_description"
+                android:layout_width="@dimen/icon_size_small"
+                android:layout_height="@dimen/icon_size_small"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+    
+                <ImageView
+                    android:layout_width="@dimen/icon_size_option"
+                    android:layout_height="@dimen/icon_size_option"
+                    android:background="@drawable/ic_baseline_arrow_forward_ios_24" />
+    
+            </LinearLayout>
+    
+    
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/margin_xsmall">
+    
+            <ImageView
+                android:id="@+id/fragment_upload_community_image_visible"
+                android:layout_width="@dimen/icon_size_small"
+                android:layout_height="@dimen/icon_size_small"
+                android:background="@drawable/ic_baseline_outlined_flag_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+    
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/margin_small"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_upload_community_button_visible"
+                app:layout_constraintStart_toEndOf="@+id/fragment_upload_community_image_visible"
+                app:layout_constraintTop_toTopOf="parent">
+    
+                <TextView
+                    style="@style/textview_style_upload_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/upload_community_text_vote" />
+    
+            </LinearLayout>
+    
+            <LinearLayout
+                android:id="@+id/fragment_upload_community_button_visible"
+                android:layout_width="@dimen/icon_size_small"
+                android:layout_height="@dimen/icon_size_small"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+    
+                <ImageView
+                    android:layout_width="@dimen/icon_size_option"
+                    android:layout_height="@dimen/icon_size_option"
+                    android:background="@drawable/ic_baseline_arrow_forward_ios_24" />
+    
+            </LinearLayout>
+    
+    
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/fragment_upload_community_text_button_upload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/set_age_text_button_upload"
+        android:gravity="center"
+        android:padding="@dimen/padding_small"
+        style="@style/textview_style_clickable"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

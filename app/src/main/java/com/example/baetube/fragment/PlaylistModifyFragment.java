@@ -69,15 +69,15 @@ public class PlaylistModifyFragment extends Fragment
         int images[] = {R.drawable.ic_baseline_public_24, R.drawable.ic_baseline_link_24, R.drawable.ic_baseline_lock_24};
         String titles[] =
                 {
-                    getString(R.string.spinner_visible_text_public),
-                    getString(R.string.spinner_visible_text_link),
-                    getString(R.string.spinner_visible_text_lock)
+                    getString(R.string.visible_text_public),
+                    getString(R.string.visible_text_link),
+                    getString(R.string.visible_text_lock)
                 };
         String descriptions[] =
                 {
-                        getString(R.string.spinner_visible_text_public_description),
-                        getString(R.string.spinner_visible_text_link_description),
-                        getString(R.string.spinner_visible_text_lock_description)
+                        getString(R.string.visible_text_public_description),
+                        getString(R.string.visible_text_link_description),
+                        getString(R.string.visible_text_lock_description)
                 };
 
         for (int i = 0; i < 3; i++)

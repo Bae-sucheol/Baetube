@@ -76,7 +76,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/login_button_text"
-                style="@style/clickable_text_style"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_large"
                 android:layout_gravity="center"
@@ -89,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/login_sign_in_button_text"
-                style="@style/clickable_text_style"
+                style="@style/textview_style_clickable"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:layout_margin="@dimen/margin_medium"/>

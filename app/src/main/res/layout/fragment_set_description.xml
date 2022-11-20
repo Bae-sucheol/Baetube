@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.set.SetDescriptionFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/fragment_set_description_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <include
+        layout="@layout/toolbar_no_scroll"
+        android:id="@+id/toolbar" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_set_description_guild_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/margin_large"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_set_description_guild_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/margin_medium"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_set_description_guild_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/margin_medium"/>
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:layout_marginVertical="@dimen/margin_medium"
+        app:layout_constraintStart_toEndOf="@+id/fragment_set_description_guild_left"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_set_description_guild_right"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_set_description_appbar" />
+
+
+    <LinearLayout
+        android:id="@+id/fragment_set_description_layout_count"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_set_description_guild_right"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_set_description_guild_bottom">
+
+        <TextView
+            android:id="@+id/fragment_upload_video_information_text_count_cur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_count_divider" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_description_count_max" />
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
