@@ -1,33 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/recyclerview_video_image_thumbnail"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/video_thumbnail_height"
-        android:background="@color/top_menu_background"/>
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/top_menu_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="1.0"
+        app:layout_constraintDimensionRatio="@string/res_ratio_wide"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/video_info_height"
-        android:padding="@dimen/video_info_padding"
-        android:orientation="horizontal">
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_videoinfo"
+        android:padding="@dimen/padding_medium"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview_video_image_thumbnail">
 
         <ImageView
             android:id="@+id/recyclerview_video_image_profile"
-            android:layout_width="@dimen/icon_size_medium"
-            android:layout_height="@dimen/icon_size_medium"
-            android:layout_marginRight="@dimen/video_info_margin"
+            android:layout_width="@dimen/size_icon_medium"
+            android:layout_height="@dimen/size_icon_medium"
+            android:layout_marginRight="@dimen/margin_small"
             android:background="@drawable/ic_baseline_account_circle_24"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingTop="@dimen/text_padding">
+            android:paddingTop="@dimen/padding_xsmall">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,13 +52,13 @@
                     android:maxLines="2"
                     android:ellipsize="end"
                     android:textStyle="bold"
-                    android:textSize="@dimen/text_size_medium" />
+                    android:textSize="@dimen/textsize_medium" />
 
                 <ImageView
                     android:id="@+id/recyclerview_video_image_option"
                     android:layout_weight="1"
-                    android:layout_width="@dimen/icon_size_option"
-                    android:layout_height="@dimen/icon_size_option"
+                    android:layout_width="@dimen/size_icon_option"
+                    android:layout_height="@dimen/size_icon_option"
                     android:background="@drawable/ic_baseline_more_vert_24" />
 
             </LinearLayout>
@@ -62,19 +72,19 @@
                     android:id="@+id/recyclerview_video_text_channel_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="@dimen/text_size_small"/>
+                    android:textSize="@dimen/textsize_small"/>
 
                 <TextView
                     android:id="@+id/recyclerview_video_text_views"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="@dimen/text_size_small"/>
+                    android:textSize="@dimen/textsize_small"/>
 
                 <TextView
                     android:id="@+id/recyclerview_video_text_date"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="@dimen/text_size_small"/>
+                    android:textSize="@dimen/textsize_small"/>
 
             </LinearLayout>
 
@@ -82,4 +92,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

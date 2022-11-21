@@ -53,8 +53,8 @@
         android:layout_marginBottom="@dimen/margin_small">
 
         <ImageView
-            android:layout_width="@dimen/icon_size_small"
-            android:layout_height="@dimen/icon_size_small"
+            android:layout_width="@dimen/size_icon_small"
+            android:layout_height="@dimen/size_icon_small"
             android:background="@drawable/ic_outline_info_24"
             android:layout_marginRight="@dimen/margin_small"/>
 
@@ -82,8 +82,8 @@
         android:layout_marginBottom="@dimen/margin_small">
 
         <ImageView
-            android:layout_width="@dimen/icon_size_small"
-            android:layout_height="@dimen/icon_size_small"
+            android:layout_width="@dimen/size_icon_small"
+            android:layout_height="@dimen/size_icon_small"
             android:background="@drawable/ic_baseline_trending_up_24"
             android:layout_marginRight="@dimen/margin_small"/>
 

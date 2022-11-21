@@ -70,7 +70,7 @@ public class SubscribeDetailFragment extends Fragment implements OnRecyclerViewC
         recyclerViewScribe.setLayoutManager(new LinearLayoutManager(getContext()));
 
         animation_duration = getContext().getResources().getInteger(R.integer.animation_duration);
-        slideDistance = (int) getContext().getResources().getDimension(R.dimen.subscribe_slide_distance);
+        slideDistance = (int) getContext().getResources().getDimension(R.dimen.width_subscribe_slide);
 
         test();
 

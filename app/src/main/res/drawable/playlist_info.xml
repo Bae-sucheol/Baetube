@@ -8,8 +8,8 @@
             <solid android:color="@color/black_transparent"/>
 
             <corners
-                android:topRightRadius="@dimen/video_corner_radius"
-                android:bottomRightRadius="@dimen/video_corner_radius"/>
+                android:topRightRadius="@dimen/radius_medium"
+                android:bottomRightRadius="@dimen/radius_medium"/>
 
         </shape>
 

@@ -35,8 +35,8 @@ tools:context=".fragment.upload.UploadCommunityFragment">
     
     <ImageView
         android:id="@+id/fragment_upload_community_button_change_thumbnail"
-        android:layout_width="@dimen/icon_size_medium"
-        android:layout_height="@dimen/icon_size_medium"
+        android:layout_width="@dimen/size_icon_medium"
+        android:layout_height="@dimen/size_icon_medium"
         android:layout_marginBottom="6dp"
         android:background="@drawable/ic_baseline_autorenew_24"
         android:layout_margin="@dimen/margin_medium"
@@ -61,8 +61,8 @@ tools:context=".fragment.upload.UploadCommunityFragment">
     
             <ImageView
                 android:id="@+id/fragment_upload_community_image_profile"
-                android:layout_width="@dimen/icon_size_medium"
-                android:layout_height="@dimen/icon_size_medium"
+                android:layout_width="@dimen/size_icon_medium"
+                android:layout_height="@dimen/size_icon_medium"
                 android:background="@drawable/ic_baseline_account_circle_24"
                 android:layout_marginRight="@dimen/margin_medium"/>
     
@@ -119,8 +119,8 @@ tools:context=".fragment.upload.UploadCommunityFragment">
     
             <ImageView
                 android:id="@+id/fragment_upload_community_image_description"
-                android:layout_width="@dimen/icon_size_small"
-                android:layout_height="@dimen/icon_size_small"
+                android:layout_width="@dimen/size_icon_small"
+                android:layout_height="@dimen/size_icon_small"
                 android:background="@drawable/ic_baseline_sort_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -148,8 +148,8 @@ tools:context=".fragment.upload.UploadCommunityFragment">
     
             <LinearLayout
                 android:id="@+id/fragment_upload_community_button_description"
-                android:layout_width="@dimen/icon_size_small"
-                android:layout_height="@dimen/icon_size_small"
+                android:layout_width="@dimen/size_icon_small"
+                android:layout_height="@dimen/size_icon_small"
                 android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -157,8 +157,8 @@ tools:context=".fragment.upload.UploadCommunityFragment">
                 app:layout_constraintTop_toTopOf="parent">
     
                 <ImageView
-                    android:layout_width="@dimen/icon_size_option"
-                    android:layout_height="@dimen/icon_size_option"
+                    android:layout_width="@dimen/size_icon_option"
+                    android:layout_height="@dimen/size_icon_option"
                     android:background="@drawable/ic_baseline_arrow_forward_ios_24" />
     
             </LinearLayout>
@@ -173,8 +173,8 @@ tools:context=".fragment.upload.UploadCommunityFragment">
     
             <ImageView
                 android:id="@+id/fragment_upload_community_image_visible"
-                android:layout_width="@dimen/icon_size_small"
-                android:layout_height="@dimen/icon_size_small"
+                android:layout_width="@dimen/size_icon_small"
+                android:layout_height="@dimen/size_icon_small"
                 android:background="@drawable/ic_baseline_outlined_flag_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -202,8 +202,8 @@ tools:context=".fragment.upload.UploadCommunityFragment">
     
             <LinearLayout
                 android:id="@+id/fragment_upload_community_button_visible"
-                android:layout_width="@dimen/icon_size_small"
-                android:layout_height="@dimen/icon_size_small"
+                android:layout_width="@dimen/size_icon_small"
+                android:layout_height="@dimen/size_icon_small"
                 android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -211,8 +211,8 @@ tools:context=".fragment.upload.UploadCommunityFragment">
                 app:layout_constraintTop_toTopOf="parent">
     
                 <ImageView
-                    android:layout_width="@dimen/icon_size_option"
-                    android:layout_height="@dimen/icon_size_option"
+                    android:layout_width="@dimen/size_icon_option"
+                    android:layout_height="@dimen/size_icon_option"
                     android:background="@drawable/ic_baseline_arrow_forward_ios_24" />
     
             </LinearLayout>

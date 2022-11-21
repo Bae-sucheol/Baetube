@@ -2,179 +2,179 @@
 <resources>
     
     <style name="textview_style_normal">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/textsize_medium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:paddingVertical">@dimen/text_padding</item>
-        <item name="android:layout_marginVertical">@dimen/text_margin</item>
+        <item name="android:paddingVertical">@dimen/padding_xsmall</item>
+        <item name="android:layout_marginVertical">@dimen/margin_xsmall</item>
     </style>
 
     <style name="textview_style_small">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:paddingVertical">@dimen/text_padding</item>
-        <item name="android:paddingHorizontal">@dimen/top_menu_padding_horizontal</item>
-        <item name="android:layout_marginVertical">@dimen/text_margin</item>
+        <item name="android:paddingVertical">@dimen/padding_xsmall</item>
+        <item name="android:paddingHorizontal">@dimen/padding_small</item>
+        <item name="android:layout_marginVertical">@dimen/margin_xsmall</item>
     </style>
 
     <style name="textview_style_video_title">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/textsize_medium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:gravity">center_vertical</item>
     </style>
 
     <style name="textview_style_video_description">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:gravity">center_vertical</item>
     </style>
 
     <style name="textview_style_channel_community_description">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:gravity">bottom</item>
     </style>
 
     <style name="textview_style_channel_community_content">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/textsize_medium</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:gravity">center_vertical</item>
     </style>
 
     <style name="textview_style_channel_name">
-        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textSize">@dimen/textsize_large</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
     </style>
 
     <style name="textview_style_channel_description">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
     </style>
 
     <style name="textview_style_channel_information_title">
-        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textSize">@dimen/textsize_large</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="textview_style_channel_information_description">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/textsize_medium</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="top_menu_style">
-        <item name="android:paddingHorizontal">@dimen/top_menu_padding_horizontal</item>
-        <item name="android:paddingVertical">@dimen/top_menu_padding_vertical</item>
+        <item name="android:paddingHorizontal">@dimen/padding_small</item>
+        <item name="android:paddingVertical">@dimen/padding_xsmall</item>
     </style>
 
     <style name="top_menu_text_style">
-        <item name="android:paddingHorizontal">@dimen/top_menu_padding_horizontal</item>
-        <item name="android:paddingVertical">@dimen/top_menu_padding_vertical</item>
+        <item name="android:paddingHorizontal">@dimen/padding_small</item>
+        <item name="android:paddingVertical">@dimen/padding_xsmall</item>
         <item name="android:layout_marginHorizontal">@dimen/margin_xsmall</item>
         <item name="android:layout_marginVertical">@dimen/margin_xsmall</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/textsize_medium</item>
         <item name="android:textStyle">bold</item>
     </style>
 
 
     <style name="textview_style_clickable">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/textsize_medium</item>
         <item name="android:textColor">@color/clickable_text_color</item>
-        <item name="android:padding">@dimen/text_padding</item>
+        <item name="android:padding">@dimen/padding_xsmall</item>
         <item name="android:clickable">true</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
     <style name="tab_layout_text_style">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="textview_style_modify_title">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="textview_style_modify_description">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/textsize_medium</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="textview_style_modify_name">
-        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textSize">@dimen/textsize_large</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="textview_style_analysis_title">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/textsize_medium</item>
         <item name="android:textColor">@color/dark_gray</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="textview_style_analysis_description">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
         <item name="android:textColor">@color/dark_green</item>
     </style>
 
     <style name="textview_style_analysis_count">
-        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textSize">@dimen/textsize_large</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="textview_style_notification_title">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/textsize_medium</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="textview_style_notification_date">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
         <item name="android:textColor">@color/dark_gray</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="textview_style_notification_divider">
-        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textSize">@dimen/textsize_large</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="textview_style_upload_channel_name">
-        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textSize">@dimen/textsize_large</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="textview_style_upload_title">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/textsize_medium</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="textview_style_upload_description">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="textview_style_set_title">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/textsize_medium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="textview_style_set_description">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>

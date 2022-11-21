@@ -2,19 +2,19 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/recyclerview_subscribe_layout"
-    android:layout_width="@dimen/icon_size_large"
+    android:layout_width="@dimen/size_icon_large"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/recyclerview_subscribe_image_profile"
-        android:layout_width="@dimen/icon_size_large"
-        android:layout_height="@dimen/icon_size_large"
+        android:layout_width="@dimen/size_icon_large"
+        android:layout_height="@dimen/size_icon_large"
         android:background="@drawable/ic_baseline_account_circle_24"/>
 
     <TextView
         android:id="@+id/recyclerview_subscribe_text_channel_name"
-        android:layout_width="@dimen/icon_size_large"
+        android:layout_width="@dimen/size_icon_large"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:singleLine="true" />

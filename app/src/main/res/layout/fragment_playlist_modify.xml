@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/fragment_playlist_modify_image_thumbnail"
-            android:layout_width="@dimen/res_width_small"
-            android:layout_height="@dimen/res_height_small"
+            android:layout_width="@dimen/width_res_small"
+            android:layout_height="@dimen/height_res_small"
             android:background="@color/top_menu_background"
             android:layout_marginRight="@dimen/margin_medium"/>
 

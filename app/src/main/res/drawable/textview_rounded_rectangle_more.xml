@@ -11,7 +11,7 @@
 
             <solid android:color="@color/top_menu_background"/>
 
-            <corners android:radius="@dimen/top_menu_corner_radius_more"/>
+            <corners android:radius="@dimen/radius_large"/>
 
         </shape>
 

@@ -39,8 +39,8 @@
 
         <ImageView
             android:id="@+id/fragment_analysis_view_image_count"
-            android:layout_width="@dimen/icon_size_xsmall"
-            android:layout_height="@dimen/icon_size_xsmall"
+            android:layout_width="@dimen/size_icon_xsmall"
+            android:layout_height="@dimen/size_icon_xsmall"
             android:background="@drawable/ic_baseline_arrow_upward_24"
             android:layout_gravity="center_vertical"/>
 

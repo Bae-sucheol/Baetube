@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/recyclerview_video_image_thumbnail"
-        android:layout_width="@dimen/res_width_small"
-        android:layout_height="@dimen/res_height_small"
+        android:layout_width="@dimen/width_res_small"
+        android:layout_height="@dimen/height_res_small"
         android:background="@drawable/video_border"
         android:layout_marginRight="@dimen/margin_medium"/>
 
@@ -68,8 +68,8 @@
 
         <ImageView
             android:id="@+id/recyclerview_video_image_option"
-            android:layout_width="@dimen/icon_size_option"
-            android:layout_height="@dimen/icon_size_option"
+            android:layout_width="@dimen/size_icon_option"
+            android:layout_height="@dimen/size_icon_option"
             android:layout_weight="1"
             android:background="@drawable/ic_baseline_more_vert_24"/>
 

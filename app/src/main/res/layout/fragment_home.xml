@@ -170,10 +170,10 @@
    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
    <LinearLayout
-       android:layout_width="@dimen/drawer_width"
+       android:layout_width="@dimen/width_home_drawer"
        android:layout_height="match_parent"
        android:orientation="vertical"
-       android:padding="@dimen/top_menu_padding_horizontal"
+       android:padding="@dimen/padding_small"
        android:layout_gravity="right"
        android:background="@color/white">
 
@@ -187,8 +187,8 @@
 
          <ImageView
              android:id="@+id/fragment_home_drawer_profile"
-             android:layout_width="@dimen/icon_size_medium"
-             android:layout_height="@dimen/icon_size_medium"
+             android:layout_width="@dimen/size_icon_medium"
+             android:layout_height="@dimen/size_icon_medium"
              android:background="@drawable/ic_baseline_account_circle_24"
              android:layout_marginRight="@dimen/margin_small"/>
 
@@ -199,7 +199,7 @@
              android:gravity="center_vertical"
              android:text="@string/home_drawer_login"
              style="@style/textview_style_clickable"
-             android:textSize="@dimen/text_size_large"/>
+             android:textSize="@dimen/textsize_large"/>
 
       </LinearLayout>
 
@@ -213,8 +213,8 @@
           android:background="?attr/selectableItemBackground">
 
          <ImageView
-             android:layout_width="@dimen/icon_size_small"
-             android:layout_height="@dimen/icon_size_small"
+             android:layout_width="@dimen/size_icon_small"
+             android:layout_height="@dimen/size_icon_small"
              android:background="@drawable/ic_baseline_settings_24"
              android:layout_marginRight="@dimen/margin_small"/>
 
@@ -237,8 +237,8 @@
           android:background="?attr/selectableItemBackground">
 
          <ImageView
-             android:layout_width="@dimen/icon_size_small"
-             android:layout_height="@dimen/icon_size_small"
+             android:layout_width="@dimen/size_icon_small"
+             android:layout_height="@dimen/size_icon_small"
              android:background="@drawable/ic_baseline_account_box_24"
              android:layout_marginRight="@dimen/margin_small"/>
 
@@ -261,8 +261,8 @@
           android:background="?attr/selectableItemBackground">
 
          <ImageView
-             android:layout_width="@dimen/icon_size_small"
-             android:layout_height="@dimen/icon_size_small"
+             android:layout_width="@dimen/size_icon_small"
+             android:layout_height="@dimen/size_icon_small"
              android:background="@drawable/ic_baseline_settings_power_24"
              android:layout_marginRight="@dimen/margin_small"/>
 
@@ -280,7 +280,7 @@
           android:layout_height="1dp"
           android:layout_width="match_parent"
           android:layout_marginTop="@dimen/margin_small"
-          android:layout_marginBottom="@dimen/account_menu_margin"
+          android:layout_marginBottom="@dimen/margin_menu_account"
           />
 
       <LinearLayout
@@ -293,8 +293,8 @@
           android:background="?attr/selectableItemBackground">
 
          <ImageView
-             android:layout_width="@dimen/icon_size_small"
-             android:layout_height="@dimen/icon_size_small"
+             android:layout_width="@dimen/size_icon_small"
+             android:layout_height="@dimen/size_icon_small"
              android:background="@drawable/ic_baseline_keyboard_return_24"
              android:layout_marginRight="@dimen/margin_small"/>
 
