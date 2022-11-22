@@ -16,6 +16,7 @@ import com.example.baetube.fragment.HomeFragment;
 import com.example.baetube.R;
 import com.example.baetube.fragment.StorageFragment;
 import com.example.baetube.fragment.SubscribeFragment;
+import com.example.baetube.fragment.bottomsheetdialog.VideoBottomSheetDialogFragment;
 import com.example.baetube.fragment.upload.UploadVideoListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity
         fragmentManager = getSupportFragmentManager();
 
         // 프래그먼트 매니저에 HomeFragment를 추가하고 커밋한다. ( 첫 화면 지정 )
-        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new HomeFragment()).commit();
+        fragmentManager.beginTransaction().add(R.id.activity_main_frame, new HomeFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new LoginFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new SignInFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new SubscribeDetailFragment()).commit();
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelManageVideoFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelAnalysisFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new NotificationFragment()).commit();
-        fragmentManager.beginTransaction().add(R.id.activity_main_frame, new UploadVideoListFragment()).commit();
+        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new UploadVideoListFragment()).commit();
 
         // 바텀 네비게이션 요소를 findViewById를 사용하여 찾는다.
         bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation);
@@ -95,6 +96,9 @@ public class MainActivity extends AppCompatActivity
                 return true;
             }
         });
+
+        VideoBottomSheetDialogFragment videoBottomSheetDialogFragment = new VideoBottomSheetDialogFragment(this);
+        videoBottomSheetDialogFragment.show(getSupportFragmentManager(), videoBottomSheetDialogFragment.getTag());
 
     }
 

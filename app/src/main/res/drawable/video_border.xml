@@ -7,7 +7,7 @@
 
             <solid android:color="@color/top_menu_background"/>
 
-            <corners android:radius="@dimen/video_corner_radius"/>
+            <corners android:radius="@dimen/radius_medium"/>
 
         </shape>
 
