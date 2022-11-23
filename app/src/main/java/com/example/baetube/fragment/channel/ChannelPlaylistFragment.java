@@ -1,4 +1,4 @@
-package com.example.baetube.fragment.Channel;
+package com.example.baetube.fragment.channel;
 
 import android.os.Bundle;
 
@@ -12,14 +12,10 @@ import android.view.ViewGroup;
 
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
-import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.PlaylistDTO;
-import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewPlaylistAdapter;
-import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewPlaylistItem;
-import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
 import java.util.ArrayList;
 

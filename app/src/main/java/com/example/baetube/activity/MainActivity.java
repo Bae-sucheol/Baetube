@@ -10,15 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.baetube.fragment.NotificationFragment;
 import com.example.baetube.UserDisplay;
 import com.example.baetube.fragment.HomeFragment;
 import com.example.baetube.R;
 import com.example.baetube.fragment.StorageFragment;
 import com.example.baetube.fragment.SubscribeFragment;
-import com.example.baetube.fragment.bottomsheetdialog.VideoBottomSheetDialogFragment;
-import com.example.baetube.fragment.upload.UploadVideoListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity
@@ -27,6 +25,7 @@ public class MainActivity extends AppCompatActivity
     private BottomNavigationView bottomNavigationView;
     // 프래그먼트 매니저
     private FragmentManager fragmentManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -97,8 +96,9 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        VideoBottomSheetDialogFragment videoBottomSheetDialogFragment = new VideoBottomSheetDialogFragment(this);
-        videoBottomSheetDialogFragment.show(getSupportFragmentManager(), videoBottomSheetDialogFragment.getTag());
+        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.activity_main_video_frame));
+        bottomSheetBehavior.setPeekHeight(500);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
     }
 

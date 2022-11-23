@@ -1,4 +1,4 @@
-package com.example.baetube.fragment.Channel;
+package com.example.baetube.fragment.channel;
 
 import android.os.Bundle;
 
@@ -12,27 +12,26 @@ import android.view.ViewGroup;
 
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
-import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
-import com.example.baetube.dto.VideoDTO;
-import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
-import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
+import com.example.baetube.dto.CommunityDTO;
+import com.example.baetube.recyclerview.adapter.RecyclerViewCommunityAdapter;
+import com.example.baetube.recyclerview.item.RecyclerViewCommunityItem;
 
 import java.util.ArrayList;
 
-public class ChannelVideoFragment extends Fragment implements OnRecyclerViewClickListener
+public class ChannelCommunityFragment extends Fragment implements OnRecyclerViewClickListener
 {
     private View view;
 
     private RecyclerView recyclerView;
-    private RecyclerViewVideoAdapter recyclerViewVideoAdapter;
-    private ArrayList<RecyclerViewVideoItem> list = new ArrayList<>();
+    private RecyclerViewCommunityAdapter recyclerViewCommunityAdapter;
+    private ArrayList<RecyclerViewCommunityItem> list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.fragment_channel_video, container, false);
+        view = inflater.inflate(R.layout.fragment_channel_community, container, false);
 
         /*
          * 1. 리사이클러뷰 요소 찾기
@@ -40,13 +39,12 @@ public class ChannelVideoFragment extends Fragment implements OnRecyclerViewClic
          * 3. 리사이클러뷰 어댑터 설정
          * 4. 리사이클러뷰 레이아웃 매니저 설정
          */
-
         test();
 
-        recyclerView = view.findViewById(R.id.fragment_channel_video_recyclerview);
-        recyclerViewVideoAdapter = new RecyclerViewVideoAdapter(list);
-        recyclerViewVideoAdapter.setOnRecyclerViewClickListener(this);
-        recyclerView.setAdapter(recyclerViewVideoAdapter);
+        recyclerView = view.findViewById(R.id.fragment_channel_community_recyclerview);
+        recyclerViewCommunityAdapter = new RecyclerViewCommunityAdapter(list);
+        recyclerViewCommunityAdapter.setOnRecyclerViewClickListener(this);
+        recyclerView.setAdapter(recyclerViewCommunityAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Inflate the layout for this fragment
@@ -68,24 +66,24 @@ public class ChannelVideoFragment extends Fragment implements OnRecyclerViewClic
     public void test()
     {
         String channel_names[] = {"홍길동", "이순신", "장영실", "김유신", "허준"};
-        String titles[] = {"쉽게 배우는 자바", "쉽게 배우는 학익진", "쉽게 배우는 거중기",
-                "쉽게 배우는 전투법", "쉽게 배우는 침술"};
+        String comments[] = {"테스트1", "테스트2", "테스트3", "테스트4", "테스트5"};
 
         for(int i = 0; i < 5; i++)
         {
-            RecyclerViewVideoItem item = new RecyclerViewVideoItem();
+            RecyclerViewCommunityItem item = new RecyclerViewCommunityItem();
 
+            CommunityDTO communityDTO = new CommunityDTO();
             ChannelDTO channelDTO = new ChannelDTO();
-            VideoDTO videoDTO = new VideoDTO();
 
-            item.setChannelDTO(channelDTO);
-            item.setVideoDTO(videoDTO);
-            item.setViewType(ViewType.VIEWTYPE_VIDEO_MEDIUM);
-
+            communityDTO.setComment(comments[i]);
+            communityDTO.setDate("1시간 전");
+            communityDTO.setLikeCount(100);
+            communityDTO.setHateCount(100);
+            communityDTO.setReplyCount(100);
             channelDTO.setName(channel_names[i]);
-            videoDTO.setDate("1시간 전");
-            videoDTO.setTitle(titles[i]);
-            videoDTO.setViews(500);
+
+            item.setCommunityDTO(communityDTO);
+            item.setChannelDTO(channelDTO);
 
             list.add(item);
         }

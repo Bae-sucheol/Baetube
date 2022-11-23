@@ -1,4 +1,4 @@
-package com.example.baetube.fragment.Channel;
+package com.example.baetube.fragment.channel;
 
 import android.os.Bundle;
 
@@ -15,13 +15,12 @@ import com.example.baetube.R;
 import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
-import com.example.baetube.recyclerview.adapter.RecyclerViewSubscribeAdapter;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
 import java.util.ArrayList;
 
-public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClickListener
+public class ChannelVideoFragment extends Fragment implements OnRecyclerViewClickListener
 {
     private View view;
 
@@ -33,17 +32,18 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.fragment_channel_home, container, false);
+        view = inflater.inflate(R.layout.fragment_channel_video, container, false);
 
-
-        test();
         /*
          * 1. 리사이클러뷰 요소 찾기
          * 2. 리사이클러뷰 어댑터 객체 생성
          * 3. 리사이클러뷰 어댑터 설정
          * 4. 리사이클러뷰 레이아웃 매니저 설정
          */
-        recyclerView = view.findViewById(R.id.fragment_channel_home_recyclerview);
+
+        test();
+
+        recyclerView = view.findViewById(R.id.fragment_channel_video_recyclerview);
         recyclerViewVideoAdapter = new RecyclerViewVideoAdapter(list);
         recyclerViewVideoAdapter.setOnRecyclerViewClickListener(this);
         recyclerView.setAdapter(recyclerViewVideoAdapter);

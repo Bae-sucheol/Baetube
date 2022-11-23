@@ -1,4 +1,4 @@
-package com.example.baetube.fragment.Analysis;
+package com.example.baetube.fragment.analysis;
 
 import android.os.Bundle;
 
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.baetube.R;
 
-public class AnalysisTimeFragment extends Fragment
+public class AnalysisViewFragment extends Fragment
 {
     private View view;
 
@@ -18,7 +18,7 @@ public class AnalysisTimeFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.fragment_analysis_time, container, false);
+        view = inflater.inflate(R.layout.fragment_analysis_view, container, false);
 
         // Inflate the layout for this fragment
         return view;

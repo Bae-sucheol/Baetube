@@ -7,7 +7,7 @@
     android:background="@drawable/analysis_border"
     android:orientation="vertical"
     android:padding="@dimen/padding_medium"
-    tools:context=".fragment.Analysis.AnalysisViewFragment">
+    tools:context=".fragment.analysis.AnalysisViewFragment">
 
     <TextView
         android:id="@+id/fragment_analysis_view_text_title"

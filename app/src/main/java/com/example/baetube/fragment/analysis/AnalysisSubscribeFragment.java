@@ -1,4 +1,4 @@
-package com.example.baetube.fragment.Analysis;
+package com.example.baetube.fragment.analysis;
 
 import android.os.Bundle;
 
