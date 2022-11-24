@@ -43,6 +43,9 @@
     <dimen name="radius_medium">10dp</dimen>
     <dimen name="radius_large">15dp</dimen>
 
+    <dimen name="width_reply_slide">50dp</dimen>
+    <dimen name="height_reply_slide">5dp</dimen>
+
     <dimen name="width_home_drawer">200dp</dimen>
     <dimen name="height_videoinfo">100dp</dimen>
 

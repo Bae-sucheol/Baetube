@@ -165,6 +165,8 @@
     <string name="bottomsheetdialogfragment_video_text_reply">댓글</string>
     <string name="bottomsheetdialogfragment_video_hint_reply">댓글을 입력하세요.</string>
 
+    <string name="bottomsheetdialogfragment_reply_text_nested_reply">답글</string>
+
     <!--
         * 앱바 스크롤 옵션
     -->

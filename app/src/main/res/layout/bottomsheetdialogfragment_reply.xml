@@ -1,16 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_bottomsheetdialogfragment_reply"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/fragment_playlist_detail_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:fitsSystemWindows="true"
+        android:background="@color/white"
+        android:overScrollMode="never"
         android:gravity="center"
-        android:text="테스트입니다."/>
+        app:elevation="0dp">
 
-</LinearLayout>
+        <View
+            android:id="@+id/bottomsheetdialogfragment_reply_button_slide"
+            android:layout_width="@dimen/width_reply_slide"
+            android:layout_height="@dimen/height_reply_slide"
+            android:layout_marginTop="@dimen/margin_small"
+            android:background="@drawable/reply_slide_button"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_icon_small"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/bottomsheetdialogfragment_reply_text_reply_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="댓글"
+                style="@style/textview_style_bottomsheetdialogfragment_reply_large"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:id="@+id/bottomsheetdialogfragment_reply_image_close"
+                android:layout_width="@dimen/size_icon_small"
+                android:layout_height="@dimen/size_icon_small"
+                android:background="@drawable/ic_baseline_close_24"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scroll_behavior">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/fragment_playlist_detail_appbar_under"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:fitsSystemWindows="true"
+                android:background="@color/white"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginHorizontal="@dimen/margin_small"
+                    app:layout_scrollFlags="scroll|enterAlways">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/top_menu_text_style"
+                        android:text="test"
+                        android:background="@drawable/textview_rounded_rectangle_more" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/top_menu_text_style"
+                        android:text="test"
+                        android:background="@drawable/textview_rounded_rectangle_more"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/bottomsheetdialogfragment_reply_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_behavior="@string/appbar_scroll_behavior" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
