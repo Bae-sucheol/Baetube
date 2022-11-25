@@ -6,6 +6,8 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.UserDisplay;
 import com.example.baetube.ViewType;
+import com.example.baetube.bottomsheetdialog.BaseOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.ReplyDTO;
 import com.example.baetube.dto.VideoDTO;
@@ -53,6 +56,12 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
     private RecyclerViewReplyAdapter replyAdapter;
 
 
+
+    // 테스트
+    private TextView textView;
+    private Button button;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -80,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
          * 3. 리사이클러뷰 어댑터 설정
          * 4. 리사이클러뷰 레이아웃 매니저 설정
          */
+
         videoRecyclerView = findViewById(R.id.bottomsheetdialogfragment_video_recyclerview);
         videoAdapter = new RecyclerViewVideoAdapter(videoList);
         videoRecyclerView.setAdapter(videoAdapter);
@@ -127,6 +137,8 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
                     // 업로드 아이콘 클릭 시.
                     case R.id.menu_bottom_navigation_upload :
                         // 업로드 액티비티로 전환해야 하므로 추후에 추가.
+                        BaseOptionFragment baseOptionFragment = new BaseOptionFragment();
+                        baseOptionFragment.show(fragmentManager,  baseOptionFragment.getTag());
                         break;
                     // 구독 아이콘 클릭 시 해당 프래그먼트로 리플레이스
                     case R.id.menu_bottom_navigation_subscribe :
@@ -148,8 +160,7 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
 
         BottomSheetBehavior replyBottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.activity_main_reply_frame));
         replyBottomSheetBehavior.setPeekHeight(400);
-        replyBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-
+        replyBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
     }
 

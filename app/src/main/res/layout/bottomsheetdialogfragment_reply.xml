@@ -5,8 +5,7 @@
     android:id="@+id/layout_bottomsheetdialogfragment_reply"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    app:layout_behavior="@string/bottom_sheet_behavior">
+    android:background="@drawable/bottomsheetdialog_border">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/fragment_playlist_detail_appbar"
@@ -14,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:fitsSystemWindows="true"
-        android:background="@color/white"
+        android:background="@drawable/bottomsheetdialog_border"
         android:overScrollMode="never"
         android:gravity="center"
         app:elevation="0dp">
