@@ -6,6 +6,43 @@
     -->
     <integer name="animation_duration">100</integer>
 
+    <integer-array name="video_option_resources">
+        <item>@drawable/ic_outline_watch_later_24</item>
+        <item>@drawable/ic_baseline_library_add_24</item>
+        <item>@drawable/ic_outline_error_outline_24</item>
+    </integer-array>
+
+    <integer-array name="video_option_manage_resources">
+        <item>@drawable/ic_baseline_library_add_24</item>
+        <item>@drawable/ic_baseline_edit_24</item>
+        <item>@drawable/ic_baseline_delete_24</item>
+        <item>@drawable/ic_baseline_close_24</item>
+    </integer-array>
+
+    <integer-array name="playlist_option_resources">
+        <item>@drawable/ic_baseline_library_add_24</item>
+        <item>@drawable/ic_outline_error_outline_24</item>
+    </integer-array>
+
+
+    <integer-array name="playlist_option_manage_resources">
+        <item>@drawable/ic_baseline_delete_24</item>
+        <item>@drawable/ic_baseline_edit_24</item>
+    </integer-array>
+
+
+    <integer-array name="playlist_video_option_manage_resources">
+        <item>@drawable/ic_outline_watch_later_24</item>
+        <item>@drawable/ic_baseline_library_add_24</item>
+        <item>@drawable/ic_baseline_do_not_disturb_alt_24</item>
+        <item>@drawable/ic_outline_error_outline_24</item>
+    </integer-array>
+
+
+    <integer-array name="community_option_resources">
+        <item>@drawable/ic_outline_error_outline_24</item>
+    </integer-array>
+
 
 
 </resources>

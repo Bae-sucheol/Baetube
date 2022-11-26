@@ -19,6 +19,14 @@ import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.UserDisplay;
 import com.example.baetube.ViewType;
 import com.example.baetube.bottomsheetdialog.BaseOptionFragment;
+import com.example.baetube.bottomsheetdialog.CommunityOptionFragment;
+import com.example.baetube.bottomsheetdialog.PlaylistOptionFragment;
+import com.example.baetube.bottomsheetdialog.PlaylistOptionManageFragment;
+import com.example.baetube.bottomsheetdialog.PlaylistVideoOptionManageFragment;
+import com.example.baetube.bottomsheetdialog.ReplyFragment;
+import com.example.baetube.bottomsheetdialog.VideoFragment;
+import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
+import com.example.baetube.bottomsheetdialog.VideoOptionManageFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.ReplyDTO;
 import com.example.baetube.dto.VideoDTO;
@@ -56,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
     private RecyclerViewReplyAdapter replyAdapter;
 
 
-
     // 테스트
     private TextView textView;
     private Button button;
@@ -81,8 +88,8 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
         UserDisplay.setHeight(size.y);
         UserDisplay.setDensity(displayMetrics.density);
 
-        test();
-        test2();
+        //test();
+        //test2();
         /*
          * 1. 리사이클러뷰 요소 찾기
          * 2. 리사이클러뷰 어댑터 객체 생성
@@ -90,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
          * 4. 리사이클러뷰 레이아웃 매니저 설정
          */
 
+        /*
         videoRecyclerView = findViewById(R.id.bottomsheetdialogfragment_video_recyclerview);
         videoAdapter = new RecyclerViewVideoAdapter(videoList);
         videoRecyclerView.setAdapter(videoAdapter);
@@ -100,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
         replyAdapter = new RecyclerViewReplyAdapter(replyList);
         replyRecyclerView.setAdapter(replyAdapter);
         replyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        */
 
         // 프래그먼트 매니저를 지정
         fragmentManager = getSupportFragmentManager();
@@ -117,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelAnalysisFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new NotificationFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new UploadVideoListFragment()).commit();
+
 
         // 바텀 네비게이션 요소를 findViewById를 사용하여 찾는다.
         bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation);
@@ -137,8 +146,31 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
                     // 업로드 아이콘 클릭 시.
                     case R.id.menu_bottom_navigation_upload :
                         // 업로드 액티비티로 전환해야 하므로 추후에 추가.
-                        BaseOptionFragment baseOptionFragment = new BaseOptionFragment();
-                        baseOptionFragment.show(fragmentManager,  baseOptionFragment.getTag());
+
+                        //VideoFragment videoFragment = new VideoFragment();
+                        //videoFragment.show(fragmentManager, videoFragment.getTag());
+
+                        //ReplyFragment replyFragment = new ReplyFragment();
+                        //replyFragment.show(fragmentManager,  replyFragment.getTag());
+
+                        VideoOptionFragment videoOptionFragment = new VideoOptionFragment(getApplicationContext());
+                        videoOptionFragment.show(fragmentManager, videoOptionFragment.getTag());
+
+                        CommunityOptionFragment communityOptionFragment = new CommunityOptionFragment(getApplicationContext());
+                        communityOptionFragment.show(fragmentManager, communityOptionFragment.getTag());
+
+                        PlaylistOptionFragment playlistOptionFragment = new PlaylistOptionFragment(getApplicationContext());
+                        playlistOptionFragment.show(fragmentManager, playlistOptionFragment.getTag());
+
+                        PlaylistOptionManageFragment playlistOptionManageFragment = new PlaylistOptionManageFragment(getApplicationContext());
+                        playlistOptionManageFragment.show(fragmentManager, playlistOptionManageFragment.getTag());
+
+                        PlaylistVideoOptionManageFragment playlistVideoOptionManageFragment = new PlaylistVideoOptionManageFragment(getApplicationContext());
+                        playlistVideoOptionManageFragment.show(fragmentManager, playlistVideoOptionManageFragment.getTag());
+
+                        VideoOptionManageFragment videoOptionManageFragment = new VideoOptionManageFragment(getApplicationContext());
+                        videoOptionManageFragment.show(fragmentManager, videoOptionManageFragment.getTag());
+
                         break;
                     // 구독 아이콘 클릭 시 해당 프래그먼트로 리플레이스
                     case R.id.menu_bottom_navigation_subscribe :
@@ -154,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
             }
         });
 
+        /*
         BottomSheetBehavior videoBottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.activity_main_video_frame));
         videoBottomSheetBehavior.setPeekHeight(500);
         videoBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -161,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
         BottomSheetBehavior replyBottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.activity_main_reply_frame));
         replyBottomSheetBehavior.setPeekHeight(400);
         replyBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        */
 
     }
 
@@ -175,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
     {
 
     }
-
+    /*
     public void test()
     {
         String channel_names[] = {"홍길동", "이순신", "장영실", "김유신", "허준"};
@@ -229,4 +263,6 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
         }
 
     }
+
+     */
 }

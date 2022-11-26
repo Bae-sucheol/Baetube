@@ -8,17 +8,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.recyclerview.item.RecyclerViewOptionItem;
 import com.example.baetube.recyclerview.viewholder.OptionViewHolder;
 
 import java.util.ArrayList;
 
-public class RecyclerViewOptionAdapter extends RecyclerView.Adapter<OptionViewHolder>
+public class RecyclerViewOptionAdapter extends RecyclerView.Adapter<OptionViewHolder> implements OnRecyclerViewClickListener
 {
     private Context context;
-
     private ArrayList<RecyclerViewOptionItem> list = null;
+    private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
     public RecyclerViewOptionAdapter(ArrayList<RecyclerViewOptionItem> list)
     {
@@ -38,7 +39,7 @@ public class RecyclerViewOptionAdapter extends RecyclerView.Adapter<OptionViewHo
 
         View view = layoutInflater.inflate(R.layout.recyclerview_option, parent, false);
 
-        OptionViewHolder viewHolder = new OptionViewHolder(view);
+        OptionViewHolder viewHolder = new OptionViewHolder(view, onRecyclerViewClickListener);
 
         return viewHolder;
     }
@@ -58,4 +59,20 @@ public class RecyclerViewOptionAdapter extends RecyclerView.Adapter<OptionViewHo
         return list.size();
     }
 
+    public void setOnRecyclerViewClickListener(OnRecyclerViewClickListener onRecyclerViewClickListener)
+    {
+        this.onRecyclerViewClickListener = onRecyclerViewClickListener;
+    }
+
+    @Override
+    public void onItemClick(View view, int position)
+    {
+        onRecyclerViewClickListener.onItemClick(view, position);
+    }
+
+    @Override
+    public void onItemLongClick(View view, int position)
+    {
+
+    }
 }

@@ -2,11 +2,13 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_bottomsheetdialogfragment_video"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".bottomsheetdialog.VideoFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/fragment_playlist_detail_appbar"

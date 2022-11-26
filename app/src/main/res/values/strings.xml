@@ -86,14 +86,6 @@
     <string name="playlist_modify_text_hint_description">설명</string>
     <string name="playlist_modify_text_visible">개인정보 보호</string>
 
-    <string-array name="tab_layout_channel_title">
-        <item>홈</item>
-        <item>동영상</item>
-        <item>재생목록</item>
-        <item>커뮤니티</item>
-        <item>정보</item>
-    </string-array>
-
     <string name="channel_home_upload_video_title">업로드한 동영상</string>
 
     <string name="channel_information_text_description">설명</string>
@@ -203,5 +195,50 @@
     values-round/strings.xml for round devices.
     -->
     <string name="hello_world">Hello Square World!</string>
+
+    <!--
+    * 배열
+    -->
+    <string-array name="tab_layout_channel_title">
+        <item>홈</item>
+        <item>동영상</item>
+        <item>재생목록</item>
+        <item>커뮤니티</item>
+        <item>정보</item>
+    </string-array>
+
+    <string-array name="video_option_texts">
+        <item>나중에 볼 동영상에 저장</item>
+        <item>재생목록에 저장</item>
+        <item>신고</item>
+    </string-array>
+
+    <string-array name="video_option_manage_texts">
+        <item>재생목록에 저장</item>
+        <item>수정</item>
+        <item>삭제</item>
+        <item>취소</item>
+    </string-array>
+
+    <string-array name="playlist_option_texts">
+        <item>보관함에 저장</item>
+        <item>신고</item>
+    </string-array>
+
+    <string-array name="playlist_option_manage_texts">
+        <item>삭제</item>
+        <item>수정</item>
+    </string-array>
+
+    <string-array name="playlist_video_option_manage_texts">
+        <item>나중에 볼 동영상에 저장</item>
+        <item>재생목록에 저장</item>
+        <item>해당 재생목록에서 삭제</item>
+        <item>신고</item>
+    </string-array>
+
+    <string-array name="community_option_texts">
+        <item>신고</item>
+    </string-array>
 
 </resources>

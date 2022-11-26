@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.ReplyDTO;
@@ -17,10 +18,11 @@ import com.example.baetube.recyclerview.viewholder.ReplyViewHolder;
 
 import java.util.ArrayList;
 
-public class RecyclerViewReplyAdapter extends RecyclerView.Adapter<ReplyViewHolder>
+public class RecyclerViewReplyAdapter extends RecyclerView.Adapter<ReplyViewHolder> implements OnRecyclerViewClickListener
 {
     private Context context;
     private ArrayList<RecyclerViewReplyItem> list = null;
+    private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
     public RecyclerViewReplyAdapter(ArrayList<RecyclerViewReplyItem> list)
     {
@@ -66,5 +68,22 @@ public class RecyclerViewReplyAdapter extends RecyclerView.Adapter<ReplyViewHold
     public int getItemCount()
     {
         return list.size();
+    }
+
+    public void setOnRecyclerViewClickListener(OnRecyclerViewClickListener onRecyclerViewClickListener)
+    {
+        this.onRecyclerViewClickListener = onRecyclerViewClickListener;
+    }
+
+    @Override
+    public void onItemClick(View view, int position)
+    {
+        onRecyclerViewClickListener.onItemClick(view, position);
+    }
+
+    @Override
+    public void onItemLongClick(View view, int position)
+    {
+
     }
 }

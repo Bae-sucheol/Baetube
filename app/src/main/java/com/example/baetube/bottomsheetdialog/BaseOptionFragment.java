@@ -2,6 +2,7 @@ package com.example.baetube.bottomsheetdialog;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.UserDisplay;
 import com.example.baetube.recyclerview.adapter.RecyclerViewOptionAdapter;
@@ -24,14 +26,20 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class BaseOptionFragment extends BottomSheetDialogFragment
+public class BaseOptionFragment extends BottomSheetDialogFragment implements OnRecyclerViewClickListener
 {
     private View view;
 
     private RecyclerView recyclerView;
-    private ArrayList<RecyclerViewOptionItem> list = new ArrayList<>();
+    private ArrayList<RecyclerViewOptionItem> list;
     private RecyclerViewOptionAdapter adapter;
+
+    public BaseOptionFragment()
+    {
+        list = new ArrayList<>();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,10 +47,9 @@ public class BaseOptionFragment extends BottomSheetDialogFragment
     {
         view = inflater.inflate(R.layout.fragment_baseoption, container, false);
 
-        test();
-
         recyclerView = view.findViewById(R.id.fragment_option_recyclerview);
         adapter = new RecyclerViewOptionAdapter(list);
+        adapter.setOnRecyclerViewClickListener(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -82,21 +89,16 @@ public class BaseOptionFragment extends BottomSheetDialogFragment
         layoutParams.width = (int)(UserDisplay.getWidth() * 0.9);
         bottomSheet.setLayoutParams(layoutParams);
         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-
     }
 
-    private void test()
+    public void addItem(TypedArray resources, String options[])
     {
-        int resources[] = {R.drawable.ic_outline_watch_later_24, R.drawable.ic_baseline_library_add_24,
-                R.drawable.ic_outline_error_outline_24};
 
-        String options[] = {"나중에 볼 동영상에 저장", "재생목록에 저장", "신고"};
-
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < resources.length(); i++)
         {
             RecyclerViewOptionItem item = new RecyclerViewOptionItem();
 
-            item.setResource(resources[i]);
+            item.setResource(resources.getResourceId(i, 0));
             item.setOption(options[i]);
 
             list.add(item);
@@ -104,4 +106,15 @@ public class BaseOptionFragment extends BottomSheetDialogFragment
 
     }
 
+    @Override
+    public void onItemClick(View view, int position)
+    {
+
+    }
+
+    @Override
+    public void onItemLongClick(View view, int position)
+    {
+
+    }
 }

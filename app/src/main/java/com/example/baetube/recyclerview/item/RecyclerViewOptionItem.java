@@ -1,5 +1,7 @@
 package com.example.baetube.recyclerview.item;
 
+import android.graphics.drawable.Drawable;
+
 public class RecyclerViewOptionItem
 {
     private int resource;
