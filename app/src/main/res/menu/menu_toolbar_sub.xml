@@ -8,10 +8,17 @@
         android:title="@string/menu_toolbar_search"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/menu_toolbar_option"
-        android:icon="@drawable/ic_baseline_more_vert_24"
-        android:title="@string/menu_toolbar_profile"
-        app:showAsAction="always"/>
+    <group>
+
+        <item
+            android:id="@+id/menu_toolbar_report"
+            android:title="@string/menu_toolbar_report"/>
+
+        <item
+            android:id="@+id/menu_toolbar_customer_service"
+            android:title="@string/menu_toolbar_customer_service" />
+
+    </group>
+
 
 </menu>

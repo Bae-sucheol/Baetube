@@ -34,6 +34,7 @@ import com.example.baetube.fragment.HomeFragment;
 import com.example.baetube.R;
 import com.example.baetube.fragment.StorageFragment;
 import com.example.baetube.fragment.SubscribeFragment;
+import com.example.baetube.fragment.channel.ChannelBaseFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewReplyAdapter;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewReplyItem;
@@ -114,13 +115,13 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
         fragmentManager = getSupportFragmentManager();
 
         // 프래그먼트 매니저에 HomeFragment를 추가하고 커밋한다. ( 첫 화면 지정 )
-        fragmentManager.beginTransaction().add(R.id.activity_main_frame, new HomeFragment()).commit();
+        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new HomeFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new LoginFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new SignInFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new SubscribeDetailFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new PlaylistDetailFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new PlaylistModifyFragment()).commit();
-        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelBaseFragment()).commit();
+        fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelBaseFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelManageVideoFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelAnalysisFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new NotificationFragment()).commit();
