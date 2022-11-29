@@ -1,33 +1,39 @@
 package com.example.baetube.fragment.upload;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.wear.widget.RoundedDrawable;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
-import com.example.baetube.GridViewAdapter;
+import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.dto.VideoDTO;
+import com.example.baetube.recyclerview.adapter.RecyclerViewVideoListAdapter;
 
 import java.util.ArrayList;
 
-public class UploadVideoListFragment extends Fragment
+public class UploadVideoListFragment extends Fragment implements OnRecyclerViewClickListener
 {
     private View view;
 
-    private GridView gridView;
-    private GridViewAdapter gridViewAdapter;
-    private ArrayList<VideoDTO> list = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private RecyclerViewVideoListAdapter adapter;
+    private ArrayList<Drawable> list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,9 +56,11 @@ public class UploadVideoListFragment extends Fragment
 
         test();
 
-        gridView = view.findViewById(R.id.fragment_upload_video_gridview);
-        gridViewAdapter = new GridViewAdapter(list);
-        gridView.setAdapter(gridViewAdapter);
+        recyclerView = view.findViewById(R.id.fragment_upload_video_list_recyclerview);
+        adapter = new RecyclerViewVideoListAdapter(list);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        adapter.setOnRecyclerViewClickListener(this);
 
         // Inflate the layout for this fragment
         return view;
@@ -60,13 +68,11 @@ public class UploadVideoListFragment extends Fragment
 
     private void test()
     {
+        Drawable drawable = getContext().getResources().getDrawable(R.drawable.ic_baseline_image_24);
+
         for (int i = 0; i < 30; i++)
         {
-            VideoDTO videoDTO = new VideoDTO();
-
-            videoDTO.setVideoId(i);
-
-            list.add(videoDTO);
+            list.add(drawable);
         }
     }
 
@@ -75,5 +81,17 @@ public class UploadVideoListFragment extends Fragment
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_none, menu);
+    }
+
+    @Override
+    public void onItemClick(View view, int position)
+    {
+        getParentFragmentManager().beginTransaction().replace(R.id.activity_upload_layout_main, new UploadVideoSelectFragment()).commit();
+    }
+
+    @Override
+    public void onItemLongClick(View view, int position)
+    {
+
     }
 }

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -29,7 +30,7 @@ public class UploadVideoSelectFragment extends Fragment
         Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         // 툴바 메뉴 옵션
-        setHasOptionsMenu(false);
+        setHasOptionsMenu(true);
 
         // 액티비티를 구하고 툴바를 적용시킨다.
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -47,5 +48,12 @@ public class UploadVideoSelectFragment extends Fragment
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_only_next_button, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        getParentFragmentManager().beginTransaction().replace(R.id.activity_upload_layout_main, new UploadVideoInformationFragment()).commit();
+        return super.onOptionsItemSelected(item);
     }
 }

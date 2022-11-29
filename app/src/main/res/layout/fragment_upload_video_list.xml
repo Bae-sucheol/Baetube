@@ -21,19 +21,12 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <GridView
-        android:id="@+id/fragment_upload_video_gridview"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_upload_video_list_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="3"
-        android:gravity="center"
-        android:stretchMode="columnWidth"
-        android:layout_margin="@dimen/margin_medium"
-        android:verticalSpacing="@dimen/margin_small"
-        android:horizontalSpacing="@dimen/margin_small"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_behavior="@string/appbar_scroll_behavior"/>
-
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

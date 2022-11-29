@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 
 import com.example.baetube.R;
+import com.example.baetube.fragment.upload.UploadVideoListFragment;
 
 public class UploadActivity extends AppCompatActivity
 {
@@ -19,5 +20,7 @@ public class UploadActivity extends AppCompatActivity
         setContentView(R.layout.activity_upload);
 
         fragmentManager = getSupportFragmentManager();
+
+        fragmentManager.beginTransaction().add(R.id.activity_upload_layout_main, new UploadVideoListFragment()).commit();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.baetube.activity;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -51,30 +52,12 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements OnRecyclerViewClickListener
+public class MainActivity extends AppCompatActivity
 {
     // 바텀 네비게이션
     private BottomNavigationView bottomNavigationView;
     // 프래그먼트 매니저
     private FragmentManager fragmentManager;
-    // 연관 비디오 리사이클러 뷰
-    private RecyclerView videoRecyclerView;
-    // 연관 비디오 아이템 리스트
-    private ArrayList<RecyclerViewVideoItem> videoList = new ArrayList<>();
-    // 연관 비디오 리사이클러 뷰 어댑터
-    private RecyclerViewVideoAdapter videoAdapter;
-    // 댓글 리사이클러 뷰
-    private RecyclerView replyRecyclerView;
-    // 댓글 아이템 리스트
-    private ArrayList<RecyclerViewReplyItem> replyList = new ArrayList<>();
-    // 댓글 리사이클러 뷰 어댑터
-    private RecyclerViewReplyAdapter replyAdapter;
-
-
-    // 테스트
-    private TextView textView;
-    private Button button;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -95,45 +78,11 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
         UserDisplay.setHeight(size.y);
         UserDisplay.setDensity(displayMetrics.density);
 
-        //test();
-        //test2();
-        /*
-         * 1. 리사이클러뷰 요소 찾기
-         * 2. 리사이클러뷰 어댑터 객체 생성
-         * 3. 리사이클러뷰 어댑터 설정
-         * 4. 리사이클러뷰 레이아웃 매니저 설정
-         */
-
-        /*
-        videoRecyclerView = findViewById(R.id.bottomsheetdialogfragment_video_recyclerview);
-        videoAdapter = new RecyclerViewVideoAdapter(videoList);
-        videoRecyclerView.setAdapter(videoAdapter);
-        videoAdapter.setOnRecyclerViewClickListener(this);
-        videoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        replyRecyclerView = findViewById(R.id.bottomsheetdialogfragment_reply_recyclerview);
-        replyAdapter = new RecyclerViewReplyAdapter(replyList);
-        replyRecyclerView.setAdapter(replyAdapter);
-        replyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        */
-
         // 프래그먼트 매니저를 지정
         fragmentManager = getSupportFragmentManager();
 
         // 프래그먼트 매니저에 HomeFragment를 추가하고 커밋한다. ( 첫 화면 지정 )
-        fragmentManager.beginTransaction().add(R.id.activity_main_frame, new HomeFragment()).commit();
-        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new LoginFragment()).commit();
-        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new SignInFragment()).commit();
-        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new SubscribeDetailFragment()).commit();
-        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new PlaylistDetailFragment()).commit();
-        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new PlaylistModifyFragment()).commit();
-        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelBaseFragment()).commit();
-        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelManageVideoFragment()).commit();
-        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelAnalysisFragment()).commit();
-        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new NotificationFragment()).commit();
-        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new UploadVideoListFragment()).commit();
-        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new SearchFragment()).commit();
-
+        fragmentManager.beginTransaction().add(R.id.activity_main_layout, new HomeFragment()).commit();
 
         // 바텀 네비게이션 요소를 findViewById를 사용하여 찾는다.
         bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation);
@@ -149,56 +98,23 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
                 {
                     // 홈 아이콘 클릭 시 해당 프래그먼트로 리플레이스
                     case R.id.menu_bottom_navigation_home :
-                        fragmentManager.beginTransaction().replace(R.id.activity_main_frame, new HomeFragment()).commit();
+                        fragmentManager.beginTransaction().replace(R.id.activity_main_layout, new HomeFragment()).commit();
                         break;
                     // 업로드 아이콘 클릭 시.
                     case R.id.menu_bottom_navigation_upload :
-                        // 업로드 액티비티로 전환해야 하므로 추후에 추가.
-
-                        /*
-                        VideoFragment videoFragment = new VideoFragment();
-                        videoFragment.show(fragmentManager, videoFragment.getTag());
-
-                        ReplyFragment replyFragment = new ReplyFragment();
-                        replyFragment.show(fragmentManager,  replyFragment.getTag());
-
-                        VideoOptionFragment videoOptionFragment = new VideoOptionFragment(getApplicationContext());
-                        videoOptionFragment.show(fragmentManager, videoOptionFragment.getTag());
-
-                        CommunityOptionFragment communityOptionFragment = new CommunityOptionFragment(getApplicationContext());
-                        communityOptionFragment.show(fragmentManager, communityOptionFragment.getTag());
-
-                        PlaylistOptionFragment playlistOptionFragment = new PlaylistOptionFragment(getApplicationContext());
-                        playlistOptionFragment.show(fragmentManager, playlistOptionFragment.getTag());
-
-                        PlaylistOptionManageFragment playlistOptionManageFragment = new PlaylistOptionManageFragment(getApplicationContext());
-                        playlistOptionManageFragment.show(fragmentManager, playlistOptionManageFragment.getTag());
-
-                        PlaylistVideoOptionManageFragment playlistVideoOptionManageFragment = new PlaylistVideoOptionManageFragment(getApplicationContext());
-                        playlistVideoOptionManageFragment.show(fragmentManager, playlistVideoOptionManageFragment.getTag());
-
-                        VideoOptionManageFragment videoOptionManageFragment = new VideoOptionManageFragment(getApplicationContext());
-                        videoOptionManageFragment.show(fragmentManager, videoOptionManageFragment.getTag());
-
-                         */
-
-                        VideoReportFragment videoReportFragment = new VideoReportFragment(getApplicationContext());
-                        videoReportFragment.show(fragmentManager, videoReportFragment.getTag());
-
-                        ReplyReportFragment replyReportFragment = new ReplyReportFragment(getApplicationContext());
-                        replyReportFragment.show(fragmentManager, replyReportFragment.getTag());
-
-                        CommunityReportFragment communityReportFragment = new CommunityReportFragment(getApplicationContext());
-                        communityReportFragment.show(fragmentManager, communityReportFragment.getTag());
+                        // 업로드 액티비티로 전환
+                        // 업로드 작업이 완료되거나 취소되어도 이전 화면을 유지해야 하므로 이전 메인 액티비티를 유지한다.(finish() 메소드를 사용하지 않는다.)
+                        Intent intent = new Intent(MainActivity.this, UploadActivity.class);
+                        startActivity(intent);
 
                         break;
                     // 구독 아이콘 클릭 시 해당 프래그먼트로 리플레이스
                     case R.id.menu_bottom_navigation_subscribe :
-                        fragmentManager.beginTransaction().replace(R.id.activity_main_frame, new SubscribeFragment()).commit();
+                        fragmentManager.beginTransaction().replace(R.id.activity_main_layout, new SubscribeFragment()).commit();
                         break;
                     // 보관함 아이콘 클릭 시 해당 프래그머늩로 리플레이스
                     case R.id.menu_bottom_navigation_storage :
-                        fragmentManager.beginTransaction().replace(R.id.activity_main_frame, new StorageFragment()).commit();
+                        fragmentManager.beginTransaction().replace(R.id.activity_main_layout, new StorageFragment()).commit();
                         break;
                 }
 
@@ -206,83 +122,6 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
             }
         });
 
-        /*
-        BottomSheetBehavior videoBottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.activity_main_video_frame));
-        videoBottomSheetBehavior.setPeekHeight(500);
-        videoBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
-        BottomSheetBehavior replyBottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.activity_main_reply_frame));
-        replyBottomSheetBehavior.setPeekHeight(400);
-        replyBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        */
-
     }
 
-    @Override
-    public void onItemClick(View view, int position)
-    {
-
-    }
-
-    @Override
-    public void onItemLongClick(View view, int position)
-    {
-
-    }
-    /*
-    public void test()
-    {
-        String channel_names[] = {"홍길동", "이순신", "장영실", "김유신", "허준"};
-        String titles[] = {"쉽게 배우는 자바", "쉽게 배우는 학익진", "쉽게 배우는 거중기",
-                "쉽게 배우는 전투법", "쉽게 배우는 침술"};
-
-        for(int i = 0; i < 5; i++)
-        {
-            RecyclerViewVideoItem item = new RecyclerViewVideoItem();
-
-            ChannelDTO channelDTO = new ChannelDTO();
-            VideoDTO videoDTO = new VideoDTO();
-
-            item.setChannelDTO(channelDTO);
-            item.setVideoDTO(videoDTO);
-            item.setViewType(ViewType.VIEWTYPE_VIDEO_LARGE);
-
-            channelDTO.setName(channel_names[i]);
-            videoDTO.setDate("1시간 전");
-            videoDTO.setTitle(titles[i]);
-            videoDTO.setViews(500);
-
-            videoList.add(item);
-        }
-
-    }
-
-    public void test2()
-    {
-        String channel_names[] = {"홍길동", "이순신", "장영실", "김유신", "허준"};
-        String comments[] = {"쉽게 배우는 자바", "쉽게 배우는 학익진", "쉽게 배우는 거중기",
-                "쉽게 배우는 전투법", "쉽게 배우는 침술"};
-
-        for(int i = 0; i < 30; i++)
-        {
-            RecyclerViewReplyItem item = new RecyclerViewReplyItem();
-
-            ReplyDTO replyDTO = new ReplyDTO();
-            ChannelDTO channelDTO = new ChannelDTO();
-
-            channelDTO.setName(channel_names[i % 5]);
-            replyDTO.setDate("1시간 전");
-            replyDTO.setComment(comments[i % 5]);
-            replyDTO.setLike(50);
-            replyDTO.setHate(5);
-
-            item.setChannelDTO(channelDTO);
-            item.setReplyDTO(replyDTO);
-
-            replyList.add(item);
-        }
-
-    }
-
-     */
 }

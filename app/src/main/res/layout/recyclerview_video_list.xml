@@ -2,10 +2,12 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/margin_small"
+    android:paddingVertical="@dimen/margin_xsmall">
 
     <ImageView
-        android:id="@+id/gridview_image_thumbnail"
+        android:id="@+id/recyclerview_video_list_image_thumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/top_menu_background" />

@@ -31,11 +31,14 @@ public class SubscribeViewHolder extends RecyclerView.ViewHolder
             @Override
             public void onClick(View view)
             {
-                int position= getAdapterPosition();
+                int position = getAdapterPosition();
 
                 if(position != RecyclerView.NO_POSITION)
                 {
-                    onRecyclerViewClickListener.onItemClick(view, position);
+                    if(onRecyclerViewClickListener != null)
+                    {
+                        onRecyclerViewClickListener.onItemClick(view, position);
+                    }
                 }
             }
         });
@@ -49,7 +52,10 @@ public class SubscribeViewHolder extends RecyclerView.ViewHolder
 
                 if(position != RecyclerView.NO_POSITION)
                 {
-                    onRecyclerViewClickListener.onItemLongClick(view, position);
+                    if(onRecyclerViewClickListener != null)
+                    {
+                        onRecyclerViewClickListener.onItemLongClick(view, position);
+                    }
                 }
 
                 return false;
