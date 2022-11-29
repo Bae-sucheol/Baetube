@@ -19,22 +19,28 @@ import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.UserDisplay;
 import com.example.baetube.ViewType;
 import com.example.baetube.bottomsheetdialog.BaseOptionFragment;
+import com.example.baetube.bottomsheetdialog.BaseReportFragment;
 import com.example.baetube.bottomsheetdialog.CommunityOptionFragment;
+import com.example.baetube.bottomsheetdialog.CommunityReportFragment;
 import com.example.baetube.bottomsheetdialog.PlaylistOptionFragment;
 import com.example.baetube.bottomsheetdialog.PlaylistOptionManageFragment;
 import com.example.baetube.bottomsheetdialog.PlaylistVideoOptionManageFragment;
 import com.example.baetube.bottomsheetdialog.ReplyFragment;
+import com.example.baetube.bottomsheetdialog.ReplyReportFragment;
 import com.example.baetube.bottomsheetdialog.VideoFragment;
 import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
 import com.example.baetube.bottomsheetdialog.VideoOptionManageFragment;
+import com.example.baetube.bottomsheetdialog.VideoReportFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.ReplyDTO;
 import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.fragment.HomeFragment;
 import com.example.baetube.R;
+import com.example.baetube.fragment.SearchFragment;
 import com.example.baetube.fragment.StorageFragment;
 import com.example.baetube.fragment.SubscribeFragment;
 import com.example.baetube.fragment.channel.ChannelBaseFragment;
+import com.example.baetube.fragment.upload.UploadVideoListFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewReplyAdapter;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewReplyItem;
@@ -115,17 +121,18 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
         fragmentManager = getSupportFragmentManager();
 
         // 프래그먼트 매니저에 HomeFragment를 추가하고 커밋한다. ( 첫 화면 지정 )
-        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new HomeFragment()).commit();
+        fragmentManager.beginTransaction().add(R.id.activity_main_frame, new HomeFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new LoginFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new SignInFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new SubscribeDetailFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new PlaylistDetailFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new PlaylistModifyFragment()).commit();
-        fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelBaseFragment()).commit();
+        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelBaseFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelManageVideoFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new ChannelAnalysisFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new NotificationFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new UploadVideoListFragment()).commit();
+        //fragmentManager.beginTransaction().add(R.id.activity_main_frame, new SearchFragment()).commit();
 
 
         // 바텀 네비게이션 요소를 findViewById를 사용하여 찾는다.
@@ -148,11 +155,12 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
                     case R.id.menu_bottom_navigation_upload :
                         // 업로드 액티비티로 전환해야 하므로 추후에 추가.
 
-                        //VideoFragment videoFragment = new VideoFragment();
-                        //videoFragment.show(fragmentManager, videoFragment.getTag());
+                        /*
+                        VideoFragment videoFragment = new VideoFragment();
+                        videoFragment.show(fragmentManager, videoFragment.getTag());
 
-                        //ReplyFragment replyFragment = new ReplyFragment();
-                        //replyFragment.show(fragmentManager,  replyFragment.getTag());
+                        ReplyFragment replyFragment = new ReplyFragment();
+                        replyFragment.show(fragmentManager,  replyFragment.getTag());
 
                         VideoOptionFragment videoOptionFragment = new VideoOptionFragment(getApplicationContext());
                         videoOptionFragment.show(fragmentManager, videoOptionFragment.getTag());
@@ -171,6 +179,17 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerViewCli
 
                         VideoOptionManageFragment videoOptionManageFragment = new VideoOptionManageFragment(getApplicationContext());
                         videoOptionManageFragment.show(fragmentManager, videoOptionManageFragment.getTag());
+
+                         */
+
+                        VideoReportFragment videoReportFragment = new VideoReportFragment(getApplicationContext());
+                        videoReportFragment.show(fragmentManager, videoReportFragment.getTag());
+
+                        ReplyReportFragment replyReportFragment = new ReplyReportFragment(getApplicationContext());
+                        replyReportFragment.show(fragmentManager, replyReportFragment.getTag());
+
+                        CommunityReportFragment communityReportFragment = new CommunityReportFragment(getApplicationContext());
+                        communityReportFragment.show(fragmentManager, communityReportFragment.getTag());
 
                         break;
                     // 구독 아이콘 클릭 시 해당 프래그먼트로 리플레이스

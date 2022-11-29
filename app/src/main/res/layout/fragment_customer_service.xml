@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".CustomerServiceFragment">
+
+    <include
+        layout="@layout/toolbar_no_scroll"
+        android:id="@+id/toolber"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/customer_service_text_title"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginBottom="@dimen/margin_medium"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        style="@style/textview_style_customer_service_title"/>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_customer_service_layout_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/padding_medium"
+        android:paddingVertical="@dimen/padding_small">
+
+        <ImageView
+            android:id="@+id/fragment_customer_service_image_account"
+            android:layout_width="@dimen/size_icon_small"
+            android:layout_height="@dimen/size_icon_small"
+            android:background="@drawable/ic_baseline_article_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_medium"
+            android:text="@string/customer_service_text_account"
+            style="@style/textview_style_customer_service_description"
+            app:layout_constraintStart_toEndOf="@+id/fragment_customer_service_image_account"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fragment_customer_service_image_account"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_customer_service_image_account"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_customer_service_layout_search_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:paddingHorizontal="@dimen/padding_medium"
+        android:paddingVertical="@dimen/padding_small">
+
+        <ImageView
+            android:id="@+id/fragment_customer_service_image_search_history"
+            android:layout_width="@dimen/size_icon_small"
+            android:layout_height="@dimen/size_icon_small"
+            android:background="@drawable/ic_baseline_article_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_medium"
+            android:text="@string/customer_service_text_search_history"
+            style="@style/textview_style_customer_service_description"
+            app:layout_constraintStart_toEndOf="@+id/fragment_customer_service_image_search_history"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fragment_customer_service_image_search_history"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_customer_service_image_search_history"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_customer_service_layout_search_report"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/padding_medium"
+        android:paddingVertical="@dimen/padding_small">
+
+        <ImageView
+            android:id="@+id/fragment_customer_service_image_report"
+            android:layout_width="@dimen/size_icon_small"
+            android:layout_height="@dimen/size_icon_small"
+            android:background="@drawable/ic_outline_error_outline_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_medium"
+            android:text="@string/customer_service_text_report"
+            style="@style/textview_style_customer_service_description"
+            app:layout_constraintStart_toEndOf="@+id/fragment_customer_service_image_report"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fragment_customer_service_image_report"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_customer_service_image_report"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

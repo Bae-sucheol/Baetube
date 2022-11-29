@@ -2,56 +2,54 @@ package com.example.baetube.bottomsheetdialog;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.res.TypedArray;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.UserDisplay;
-import com.example.baetube.recyclerview.adapter.RecyclerViewOptionAdapter;
-import com.example.baetube.recyclerview.item.RecyclerViewOptionItem;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
-public class BaseOptionFragment extends BottomSheetDialogFragment implements OnRecyclerViewClickListener
+public class BaseReportFragment extends BottomSheetDialogFragment implements RadioGroup.OnCheckedChangeListener
 {
     private View view;
 
-    private RecyclerView recyclerView;
-    private ArrayList<RecyclerViewOptionItem> list;
-    private RecyclerViewOptionAdapter adapter;
+    private TextView title;
+    private RadioGroup radioGroup;
+    private RadioButton[] radioButtons;
 
-    public BaseOptionFragment()
+    private String reportTitle;
+    private String reportContents[];
+
+    public BaseReportFragment()
     {
-        list = new ArrayList<>();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.fragment_base_option, container, false);
+        view = inflater.inflate(R.layout.fragment_base_report, container, false);
 
-        recyclerView = view.findViewById(R.id.fragment_option_recyclerview);
-        adapter = new RecyclerViewOptionAdapter(list);
-        adapter.setOnRecyclerViewClickListener(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        title = view.findViewById(R.id.fragment_base_report_text_title);
+        radioGroup = view.findViewById(R.id.fragment_base_report_radio_group);
+
+        radioGroup.setOnCheckedChangeListener(this);
+
+        setTitle(reportTitle);
+        setRadioButtons(reportContents);
 
         // Inflate the layout for this fragment
         return view;
@@ -82,38 +80,46 @@ public class BaseOptionFragment extends BottomSheetDialogFragment implements OnR
                 bottomSheetDialog.findViewById(R.id.design_bottom_sheet);
 
         bottomSheet.setBackgroundResource(R.drawable.bottomsheetdialog_border);
-        bottomSheet.setY(bottomSheet.getY() - 50);
+        bottomSheet.setY((int)UserDisplay.getHeight() / 2 - bottomSheet.getHeight() / 2);
 
         BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
         ViewGroup.LayoutParams layoutParams = bottomSheet.getLayoutParams();
-        layoutParams.width = (int)(UserDisplay.getWidth() * 0.9);
+        layoutParams.width = (int)(UserDisplay.getWidth() * 0.8);
         bottomSheet.setLayoutParams(layoutParams);
+
         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
-    public void addItem(TypedArray resources, String options[])
+    public void setTitle(String reportTitle)
     {
+        title.setText(reportTitle);
+    }
 
-        for (int i = 0; i < resources.length(); i++)
+    public void setRadioButtons(String reportContents[])
+    {
+        int length = reportContents.length;
+
+        radioButtons = new RadioButton[length];
+
+        for (int i = 0; i < length; i++)
         {
-            RecyclerViewOptionItem item = new RecyclerViewOptionItem();
+            RadioButton radioButton = new RadioButton(getContext());
 
-            item.setResource(resources.getResourceId(i, 0));
-            item.setOption(options[i]);
-
-            list.add(item);
+            radioButton.setText(reportContents[i]);
+            radioButtons[i] = radioButton;
+            radioGroup.addView(radioButtons[i]);
         }
 
     }
 
-    @Override
-    public void onItemClick(View view, int position)
+    public void initDialog(String reportTitle, String reportContents[])
     {
-
+        this.reportTitle = reportTitle;
+        this.reportContents = reportContents;
     }
 
     @Override
-    public void onItemLongClick(View view, int position)
+    public void onCheckedChanged(RadioGroup radioGroup, int i)
     {
 
     }

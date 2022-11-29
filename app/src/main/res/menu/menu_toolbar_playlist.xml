@@ -2,7 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item
+        android:id="@+id/menu_toolbar_search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/menu_toolbar_search"
+        app:showAsAction="always"/>
+
     <group>
+
+        <item
+            android:id="@+id/menu_toolbar_remove_playlist"
+            android:title="@string/menu_toolbar_remove_playlist"/>
 
         <item
             android:id="@+id/menu_toolbar_report"
@@ -13,5 +23,6 @@
             android:title="@string/menu_toolbar_customer_service" />
 
     </group>
+
 
 </menu>

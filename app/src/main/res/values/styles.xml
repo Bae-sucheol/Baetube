@@ -228,5 +228,32 @@
         <item name="android:gravity">center_vertical</item>
     </style>
 
+    <style name="textview_style_report_title">
+        <item name="android:textSize">@dimen/textsize_large</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="textview_style_report_button">
+        <item name="android:textSize">@dimen/textsize_medium</item>
+        <item name="android:textColor">@color/dark_blue</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="textview_style_customer_service_title">
+        <item name="android:textSize">@dimen/textsize_large</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="textview_style_customer_service_description">
+        <item name="android:textSize">@dimen/textsize_medium</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 
 </resources>

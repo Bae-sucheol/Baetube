@@ -7,6 +7,7 @@
     <string name="menu_toolbar_next">다음</string>
     <string name="menu_toolbar_report">사용자 신고</string>
     <string name="menu_toolbar_customer_service">고객센터</string>
+    <string name="menu_toolbar_remove_playlist">재생목록 삭제</string>
 
     <string name="fragment_login_toolbar_title">로그인</string>
     <string name="fragment_sign_in_toolbar_title">회원가입</string>
@@ -199,6 +200,21 @@
     <string name="hello_world">Hello Square World!</string>
 
     <!--
+    * 신고 다이얼로그 제목
+    -->
+    <string name="report_video_text_title">동영상 또는 제목 신고</string>
+    <string name="report_reply_text_title">댓글 신고</string>
+    <string name="report_community_text_title">게시글 신고</string>
+
+    <!--
+    * 고객 센터
+    -->
+    <string name="customer_service_text_title">많이 찾아본 도움말</string>
+    <string name="customer_service_text_account">로그인 및 로그아웃 방법</string>
+    <string name="customer_service_text_search_history">검색 기록을 조회, 삭제하는 방법</string>
+    <string name="customer_service_text_report">의견 보내기</string>
+
+    <!--
     * 배열
     -->
     <string-array name="tab_layout_channel_title">
@@ -241,6 +257,39 @@
 
     <string-array name="community_option_texts">
         <item>신고</item>
+    </string-array>
+
+    <!--
+    * 신고 다이얼로그
+    -->
+    <string-array name="report_video_texts">
+        <item>성적인 콘텐츠</item>
+        <item>폭력적 또는 혐오스러운 콘텐츠</item>
+        <item>증오 또는 학대하는 콘텐츠</item>
+        <item>유해하거나 위험한 행위</item>
+        <item>스팸 또는 사용자를 현혹하는 콘텐츠</item>
+    </string-array>
+
+    <string-array name="report_reply_texts">
+        <item>원치 않는 상업성 콘텐츠 또는 스팸</item>
+        <item>포르노 또는 음란물</item>
+        <item>아동 학대</item>
+        <item>증오심 표현 또는 노골적인 폭력</item>
+        <item>테러 조장</item>
+        <item>희롱 또는 괴롭힘</item>
+        <item>자살 또는 자해</item>
+        <item>잘못된 정보</item>
+    </string-array>
+
+    <string-array name="report_community_texts">
+        <item>원치 않는 상업성 콘텐츠 또는 스팸</item>
+        <item>포르노 또는 음란물</item>
+        <item>아동 학대</item>
+        <item>증오심 표현 또는 노골적인 폭력</item>
+        <item>테러 조장</item>
+        <item>희롱 또는 괴롭힘</item>
+        <item>자살 또는 자해</item>
+        <item>잘못된 정보</item>
     </string-array>
 
 </resources>
