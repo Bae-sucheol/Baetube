@@ -80,9 +80,12 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/fragment_set_age_layout_adult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            android:visibility="invisible">
 
             <TextView
                 android:layout_width="match_parent"
@@ -122,16 +125,16 @@
 
             </RadioGroup>
 
-            <TextView
-                android:id="@+id/fragment_set_age_text_button_upload"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/set_age_text_button_upload"
-                android:gravity="center"
-                android:padding="@dimen/padding_small"
-                style="@style/textview_style_clickable"/>
-
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/fragment_set_age_text_button_upload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/set_age_text_button_upload"
+            android:gravity="center"
+            android:padding="@dimen/padding_small"
+            style="@style/textview_style_clickable"/>
 
     </LinearLayout>
 

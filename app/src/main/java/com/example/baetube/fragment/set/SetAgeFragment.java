@@ -10,14 +10,23 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.baetube.R;
 
-public class SetAgeFragment extends Fragment
+import java.nio.channels.ClosedSelectorException;
+
+public class SetAgeFragment extends Fragment implements View.OnClickListener
 {
     private View view;
+
+    private TextView textButtonAdult;
+
+    private LinearLayout layoutAdult;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +46,11 @@ public class SetAgeFragment extends Fragment
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        textButtonAdult = view.findViewById(R.id.fragment_set_age_text_button_adult);
+        layoutAdult = view.findViewById(R.id.fragment_set_age_layout_adult);
+
+        textButtonAdult.setOnClickListener(this);
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -46,5 +60,46 @@ public class SetAgeFragment extends Fragment
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_none, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            /*
+             * 뒤로가기 버튼을 눌렀을 때
+             * 액티비티의 onBackPressed() 메소드를 실행.
+             * onBackPressed() 메소드에서는 fragmentManager를 통해
+             * popBackStack() 메소드를 사용하여 뒤로가기 기능을 구현.
+             */
+            case android.R.id.home :
+
+                getActivity().onBackPressed();
+
+            default :
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    @Override
+    public void onClick(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.fragment_set_age_text_button_adult :
+
+                if(layoutAdult.getVisibility() == View.VISIBLE)
+                {
+                    layoutAdult.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    layoutAdult.setVisibility(View.VISIBLE);
+                }
+
+                break;
+        }
     }
 }

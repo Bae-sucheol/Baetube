@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.set.SetVisibleFragment">
+    tools:context=".fragment.set.SetPublicFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/fragment_set_visible_appbar"
+        android:id="@+id/fragment_set_public_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
@@ -34,14 +34,14 @@
             style="@style/textview_style_set_title"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fragment_set_visible_layout_visible"
+            android:id="@+id/fragment_set_public_layout_public"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/margin_medium"
             android:paddingVertical="@dimen/margin_small">
 
             <ImageView
-                android:id="@+id/fragment_set_visible_image_visible"
+                android:id="@+id/fragment_set_public_image_public"
                 android:layout_width="@dimen/size_icon_medium"
                 android:layout_height="@dimen/size_icon_medium"
                 android:background="@drawable/ic_baseline_public_24"
@@ -53,7 +53,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_marginLeft="@dimen/margin_small"
-                app:layout_constraintStart_toEndOf="@+id/fragment_set_visible_image_visible"
+                app:layout_constraintStart_toEndOf="@+id/fragment_set_public_image_public"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
@@ -75,14 +75,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fragment_set_visible_layout_link"
+            android:id="@+id/fragment_set_public_layout_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/margin_medium"
             android:paddingVertical="@dimen/margin_small">
 
             <ImageView
-                android:id="@+id/fragment_set_visible_image_link"
+                android:id="@+id/fragment_set_public_image_link"
                 android:layout_width="@dimen/size_icon_medium"
                 android:layout_height="@dimen/size_icon_medium"
                 android:background="@drawable/ic_baseline_link_24"
@@ -94,7 +94,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_marginLeft="@dimen/margin_small"
-                app:layout_constraintStart_toEndOf="@+id/fragment_set_visible_image_link"
+                app:layout_constraintStart_toEndOf="@+id/fragment_set_public_image_link"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
@@ -116,14 +116,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fragment_set_visible_layout_lock"
+            android:id="@+id/fragment_set_public_layout_lock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/margin_medium"
             android:paddingVertical="@dimen/margin_small">
 
             <ImageView
-                android:id="@+id/fragment_set_visible_image_lock"
+                android:id="@+id/fragment_set_public_image_lock"
                 android:layout_width="@dimen/size_icon_medium"
                 android:layout_height="@dimen/size_icon_medium"
                 android:background="@drawable/ic_baseline_lock_24"
@@ -135,7 +135,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_marginLeft="@dimen/margin_small"
-                app:layout_constraintStart_toEndOf="@+id/fragment_set_visible_image_lock"
+                app:layout_constraintStart_toEndOf="@+id/fragment_set_public_image_lock"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">

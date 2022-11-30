@@ -17,9 +17,9 @@
     <string name="fragment_upload_video_information_toolbar_title">세부정보 추가</string>
     <string name="fragment_upload_community_toolbar_title">업로드</string>
     <string name="fragment_set_description_toolbar_title">설명추가</string>
-    <string name="fragment_set_visible_toolbar_title">공개상태설정</string>
-    <string name="fragment_set_age_toolbar_title">투표추가</string>
-    <string name="fragment_set_vote_toolbar_title">시청자층 선택</string>
+    <string name="fragment_set_public_toolbar_title">공개상태설정</string>
+    <string name="fragment_set_age_toolbar_title">시청자층 선택</string>
+    <string name="fragment_set_vote_toolbar_title">투표추가</string>
 
     <string name="bottom_navigation_home">홈</string>
     <string name="bottom_navigation_upload">업로드</string>
@@ -200,11 +200,13 @@
     <string name="hello_world">Hello Square World!</string>
 
     <!--
-    * 신고 다이얼로그 제목
+    * 신고 다이얼로그
     -->
     <string name="report_video_text_title">동영상 또는 제목 신고</string>
     <string name="report_reply_text_title">댓글 신고</string>
     <string name="report_community_text_title">게시글 신고</string>
+    <string name="report_text_button_report">신고</string>
+    <string name="report_text_button_close">취소</string>
 
     <!--
     * 고객 센터
@@ -213,6 +215,18 @@
     <string name="customer_service_text_account">로그인 및 로그아웃 방법</string>
     <string name="customer_service_text_search_history">검색 기록을 조회, 삭제하는 방법</string>
     <string name="customer_service_text_report">의견 보내기</string>
+
+    <!--
+    * 설명 작성 힌트
+    -->
+    <string name="set_description_text_hint">설명을 입력해주세요.</string>
+
+    <!--
+    * 재생목록 추가 바텀시트 다이얼로그
+    -->
+    <string name="add_playlist_text_title">재생목록에 저장</string>
+    <string name="add_playlist_text_button_confirm">확인</string>
+    <string name="add_playlist_text_button_close">취소</string>
 
     <!--
     * 배열

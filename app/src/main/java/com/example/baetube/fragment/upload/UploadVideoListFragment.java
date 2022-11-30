@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.wear.widget.RoundedDrawable;
@@ -16,6 +17,7 @@ import androidx.wear.widget.RoundedDrawable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -45,7 +47,7 @@ public class UploadVideoListFragment extends Fragment implements OnRecyclerViewC
         Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         // 툴바 메뉴 옵션
-        setHasOptionsMenu(false);
+        setHasOptionsMenu(true);
 
         // 액티비티를 구하고 툴바를 적용시킨다.
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -68,7 +70,7 @@ public class UploadVideoListFragment extends Fragment implements OnRecyclerViewC
 
     private void test()
     {
-        Drawable drawable = getContext().getResources().getDrawable(R.drawable.ic_baseline_image_24);
+        Drawable drawable = getContext().getDrawable(R.drawable.ic_baseline_image_24);
 
         for (int i = 0; i < 30; i++)
         {
@@ -84,9 +86,19 @@ public class UploadVideoListFragment extends Fragment implements OnRecyclerViewC
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        getActivity().onBackPressed();
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onItemClick(View view, int position)
     {
-        getParentFragmentManager().beginTransaction().replace(R.id.activity_upload_layout_main, new UploadVideoSelectFragment()).commit();
+        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.activity_upload_layout_main, new UploadVideoSelectFragment());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override

@@ -35,7 +35,7 @@ tools:context=".fragment.upload.UploadVideoInformationFragment">
         app:layout_constraintWidth_percent="1.0" />
 
     <ImageView
-        android:id="@+id/fragment_upload_video_information_button_change_thumbnail"
+        android:id="@+id/fragment_upload_video_information_image_button_change_thumbnail"
         android:layout_width="@dimen/size_icon_medium"
         android:layout_height="@dimen/size_icon_medium"
         android:layout_marginBottom="6dp"
@@ -136,6 +136,7 @@ tools:context=".fragment.upload.UploadVideoInformationFragment">
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_upload_video_information_layout_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="@dimen/margin_xsmall">
@@ -198,6 +199,7 @@ tools:context=".fragment.upload.UploadVideoInformationFragment">
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_upload_video_information_layout_visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="@dimen/margin_xsmall">
@@ -259,6 +261,7 @@ tools:context=".fragment.upload.UploadVideoInformationFragment">
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_upload_video_information_layout_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="@dimen/margin_xsmall">
@@ -311,6 +314,7 @@ tools:context=".fragment.upload.UploadVideoInformationFragment">
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_upload_video_information_layout_playlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="@dimen/margin_xsmall">

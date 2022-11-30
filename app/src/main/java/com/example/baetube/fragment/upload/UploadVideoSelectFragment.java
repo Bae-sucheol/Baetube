@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -53,7 +55,29 @@ public class UploadVideoSelectFragment extends Fragment
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        getParentFragmentManager().beginTransaction().replace(R.id.activity_upload_layout_main, new UploadVideoInformationFragment()).commit();
+        switch (item.getItemId())
+        {
+            case android.R.id.home :
+
+                getActivity().onBackPressed();
+
+                break;
+
+            case R.id.menu_toolbar_next :
+
+                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.activity_upload_layout_main, new UploadVideoInformationFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+                break;
+
+            default :
+                break;
+        }
+
+
         return super.onOptionsItemSelected(item);
     }
+
 }
