@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,12 +27,16 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 
-public class ReplyFragment extends BottomSheetDialogFragment implements OnRecyclerViewClickListener
+public class ReplyFragment extends BottomSheetDialogFragment implements OnRecyclerViewClickListener, View.OnClickListener
 {
     private View view;
     private RecyclerView recyclerView;
     private RecyclerViewReplyAdapter adapter;
     private ArrayList<RecyclerViewReplyItem> list = new ArrayList<>();
+
+    // 닫기 버튼 뷰
+    private ImageView buttonClose;
+
 
     @Nullable
     @Override
@@ -52,6 +57,10 @@ public class ReplyFragment extends BottomSheetDialogFragment implements OnRecycl
         recyclerView.setAdapter(adapter);
         adapter.setOnRecyclerViewClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        buttonClose = view.findViewById(R.id.bottomsheetdialogfragment_reply_image_close);
+
+        buttonClose.setOnClickListener(this);
 
         return view;
     }
@@ -128,4 +137,9 @@ public class ReplyFragment extends BottomSheetDialogFragment implements OnRecycl
 
     }
 
+    @Override
+    public void onClick(View view)
+    {
+        this.dismiss();
+    }
 }

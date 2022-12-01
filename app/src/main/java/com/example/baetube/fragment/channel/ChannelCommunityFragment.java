@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
+import com.example.baetube.bottomsheetdialog.CommunityOptionFragment;
+import com.example.baetube.bottomsheetdialog.ReplyFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.CommunityDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewCommunityAdapter;
@@ -54,7 +56,36 @@ public class ChannelCommunityFragment extends Fragment implements OnRecyclerView
     @Override
     public void onItemClick(View view, int position)
     {
+        switch (view.getId())
+        {
+            case R.id.recyclerview_community_image_option :
 
+                CommunityOptionFragment communityOptionFragment = new CommunityOptionFragment(getContext());
+                communityOptionFragment.show(getParentFragmentManager(), communityOptionFragment.getTag());
+
+                break;
+            case R.id.recyclerview_community_image_like :
+
+                // 좋아요 기능
+
+                break;
+            case R.id.recyclerview_community_image_hate :
+
+                // 싫어요 기능
+
+                break;
+            case R.id.recyclerview_community_image_reply :
+
+                // 댓글 출력.
+                ReplyFragment replyFragment = new ReplyFragment();
+                replyFragment.show(getParentFragmentManager(), replyFragment.getTag());
+
+                break;
+            default :
+
+
+                break;
+        }
     }
 
     @Override

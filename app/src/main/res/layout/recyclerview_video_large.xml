@@ -18,6 +18,7 @@
         app:layout_constraintDimensionRatio="@string/res_ratio_wide"/>
 
     <LinearLayout
+        android:id="@+id/recyclerview_video_layout_information"
         android:layout_width="0dp"
         android:layout_height="@dimen/height_videoinfo"
         android:padding="@dimen/padding_medium"

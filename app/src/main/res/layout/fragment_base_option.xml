@@ -8,6 +8,16 @@
     android:orientation="vertical"
     tools:context="bottomsheetdialog.BaseOptionFragment">
 
+    <TextView
+        android:id="@+id/fragment_base_option_text_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginVertical="@dimen/margin_medium"
+        style="@style/textview_style_option_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragment_option_button_slide"/>
+
     <View
         android:id="@+id/fragment_option_button_slide"
         android:layout_width="@dimen/width_reply_slide"
@@ -23,8 +33,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="@dimen/margin_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_option_button_slide"/>
+        app:layout_constraintTop_toBottomOf="@+id/fragment_base_option_text_title"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

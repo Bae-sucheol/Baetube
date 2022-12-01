@@ -43,6 +43,10 @@
         <item>@drawable/ic_outline_error_outline_24</item>
     </integer-array>
 
+    <integer-array name="upload_option_resources">
+        <item>@drawable/ic_baseline_upload_24</item>
+        <item>@drawable/ic_baseline_note_add_24</item>
+    </integer-array>
 
 
 </resources>

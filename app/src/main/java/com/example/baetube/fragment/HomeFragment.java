@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,16 +21,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
+import com.example.baetube.bottomsheetdialog.VideoFragment;
+import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
+import com.example.baetube.fragment.channel.ChannelBaseFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment implements View.OnClickListener
+public class HomeFragment extends Fragment implements View.OnClickListener, OnRecyclerViewClickListener
 {
 
     private View view;
@@ -91,6 +97,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener
 
         // 리사이클러뷰에 어댑터 설정
         recyclerView.setAdapter(recyclerViewVideoAdapter);
+
+        // 리사이클러뷰 어댑터에 클릭리스너 등록
+        recyclerViewVideoAdapter.setOnRecyclerViewClickListener(this);
 
         // 리사이클러뷰에 레이아웃 매니저 설정
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -156,6 +165,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener
                 }
 
                 break;
+
+            default :
+                break;
         }
     }
 
@@ -186,4 +198,47 @@ public class HomeFragment extends Fragment implements View.OnClickListener
 
     }
 
+    @Override
+    public void onItemClick(View view, int position)
+    {
+        switch (view.getId())
+        {
+            case R.id.recyclerview_video_image_thumbnail :
+
+                VideoFragment videoFragment = new VideoFragment();
+                videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+
+                break;
+            case R.id.recyclerview_video_image_profile :
+
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.activity_main_layout, new ChannelBaseFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+                break;
+            case R.id.recyclerview_video_image_option :
+
+                VideoOptionFragment videoOptionFragment = new VideoOptionFragment(getContext());
+                videoOptionFragment.show(getParentFragmentManager(), videoOptionFragment.getTag());
+
+                break;
+            case R.id.recyclerview_video_layout_information :
+
+                videoFragment = new VideoFragment();
+                videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+
+                break;
+
+            default :
+                break;
+        }
+    }
+
+    @Override
+    public void onItemLongClick(View view, int position)
+    {
+
+    }
 }

@@ -28,6 +28,7 @@ import com.example.baetube.bottomsheetdialog.PlaylistOptionManageFragment;
 import com.example.baetube.bottomsheetdialog.PlaylistVideoOptionManageFragment;
 import com.example.baetube.bottomsheetdialog.ReplyFragment;
 import com.example.baetube.bottomsheetdialog.ReplyReportFragment;
+import com.example.baetube.bottomsheetdialog.UploadOptionFragment;
 import com.example.baetube.bottomsheetdialog.VideoFragment;
 import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
 import com.example.baetube.bottomsheetdialog.VideoOptionManageFragment;
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity
 
         // 프래그먼트 매니저에 HomeFragment를 추가하고 커밋한다. ( 첫 화면 지정 )
         fragmentManager.beginTransaction().add(R.id.activity_main_layout, new HomeFragment()).commit();
+        //fragmentManager.beginTransaction().add(R.id.activity_main_layout, new ChannelBaseFragment()).commit();
 
         // 바텀 네비게이션 요소를 findViewById를 사용하여 찾는다.
         bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation);
@@ -102,10 +104,10 @@ public class MainActivity extends AppCompatActivity
                         break;
                     // 업로드 아이콘 클릭 시.
                     case R.id.menu_bottom_navigation_upload :
-                        // 업로드 액티비티로 전환
-                        // 업로드 작업이 완료되거나 취소되어도 이전 화면을 유지해야 하므로 이전 메인 액티비티를 유지한다.(finish() 메소드를 사용하지 않는다.)
-                        Intent intent = new Intent(MainActivity.this, UploadActivity.class);
-                        startActivity(intent);
+                        // 업로드 옵션 프래그먼트를 출력한다.
+                        // 출력 시 비디오 업로드, 게시글 작성 2가지 옵션이 출력.
+                        UploadOptionFragment uploadOptionFragment = new UploadOptionFragment(getApplicationContext());
+                        uploadOptionFragment.show(fragmentManager, uploadOptionFragment.getTag());
 
                         break;
                     // 구독 아이콘 클릭 시 해당 프래그먼트로 리플레이스

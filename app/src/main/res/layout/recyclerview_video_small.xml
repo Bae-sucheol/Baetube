@@ -12,6 +12,7 @@
         android:background="@drawable/video_border"/>
 
     <LinearLayout
+        android:id="@+id/recyclerview_video_layout_information"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_xsmall"

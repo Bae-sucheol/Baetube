@@ -21,13 +21,12 @@ public class RecyclerViewCommunityAdapter extends RecyclerView.Adapter<Community
 {
     private Context context;
     private ArrayList<RecyclerViewCommunityItem> list = null;
+    private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
     public RecyclerViewCommunityAdapter(ArrayList<RecyclerViewCommunityItem> list)
     {
         this.list = list;
     }
-
-    private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
     @NonNull
     @Override
@@ -42,7 +41,7 @@ public class RecyclerViewCommunityAdapter extends RecyclerView.Adapter<Community
 
         View view = inflater.inflate(R.layout.recyclerview_community, parent, false);
 
-        CommunityViewHolder viewHolder = new CommunityViewHolder(view);
+        CommunityViewHolder viewHolder = new CommunityViewHolder(view, onRecyclerViewClickListener);
 
         return viewHolder;
     }

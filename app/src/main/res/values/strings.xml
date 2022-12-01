@@ -150,6 +150,7 @@
 
     <string name="upload_community_text_description">설명 추가</string>
     <string name="upload_community_text_vote">투표 추가</string>
+    <string name="upload_community_text_button_upload">게시글 업로드</string>
 
     <string name="set_vote_text_button_add_vote">투표 추가하기</string>
 
@@ -229,6 +230,19 @@
     <string name="add_playlist_text_button_close">취소</string>
 
     <!--
+    * 업로드 바텀시트 다이얼로그
+    -->
+    <string name="upload_text_title">업로드</string>
+
+    <!--
+    * 투표 추가 바텀시트 다이얼로그
+    -->
+    <string name="add_vote_text_title">투표 추가</string>
+    <string name="add_vote_text_hint">투표 내용을 입력해주세요.</string>
+    <string name="add_vote_text_button_add">추가</string>
+    <string name="add_vote_text_button_close">취소</string>
+
+    <!--
     * 배열
     -->
     <string-array name="tab_layout_channel_title">
@@ -271,6 +285,11 @@
 
     <string-array name="community_option_texts">
         <item>신고</item>
+    </string-array>
+
+    <string-array name="upload_option_texts">
+        <item>동영상 업로드</item>
+        <item>게시물 작성</item>
     </string-array>
 
     <!--

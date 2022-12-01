@@ -34,7 +34,7 @@ tools:context=".fragment.upload.UploadCommunityFragment">
         app:layout_constraintWidth_percent="1.0" />
     
     <ImageView
-        android:id="@+id/fragment_upload_community_button_change_thumbnail"
+        android:id="@+id/fragment_upload_community_image_button_change_thumbnail"
         android:layout_width="@dimen/size_icon_medium"
         android:layout_height="@dimen/size_icon_medium"
         android:layout_marginBottom="6dp"
@@ -113,6 +113,7 @@ tools:context=".fragment.upload.UploadCommunityFragment">
         </LinearLayout>
     
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_upload_community_layout_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="@dimen/margin_xsmall">
@@ -167,12 +168,13 @@ tools:context=".fragment.upload.UploadCommunityFragment">
         </androidx.constraintlayout.widget.ConstraintLayout>
     
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_upload_community_layout_public"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="@dimen/margin_xsmall">
     
             <ImageView
-                android:id="@+id/fragment_upload_community_image_visible"
+                android:id="@+id/fragment_upload_community_image_public"
                 android:layout_width="@dimen/size_icon_small"
                 android:layout_height="@dimen/size_icon_small"
                 android:background="@drawable/ic_baseline_outlined_flag_24"
@@ -187,8 +189,8 @@ tools:context=".fragment.upload.UploadCommunityFragment">
                 android:layout_marginHorizontal="@dimen/margin_small"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fragment_upload_community_button_visible"
-                app:layout_constraintStart_toEndOf="@+id/fragment_upload_community_image_visible"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_upload_community_button_public"
+                app:layout_constraintStart_toEndOf="@+id/fragment_upload_community_image_public"
                 app:layout_constraintTop_toTopOf="parent">
     
                 <TextView
@@ -201,7 +203,7 @@ tools:context=".fragment.upload.UploadCommunityFragment">
             </LinearLayout>
     
             <LinearLayout
-                android:id="@+id/fragment_upload_community_button_visible"
+                android:id="@+id/fragment_upload_community_button_public"
                 android:layout_width="@dimen/size_icon_small"
                 android:layout_height="@dimen/size_icon_small"
                 android:gravity="center"
@@ -222,12 +224,11 @@ tools:context=".fragment.upload.UploadCommunityFragment">
     
     </LinearLayout>
 
-
     <TextView
         android:id="@+id/fragment_upload_community_text_button_upload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/set_age_text_button_upload"
+        android:text="@string/upload_community_text_button_upload"
         android:gravity="center"
         android:padding="@dimen/padding_small"
         style="@style/textview_style_clickable"

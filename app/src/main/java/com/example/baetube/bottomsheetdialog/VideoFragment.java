@@ -10,6 +10,8 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +21,7 @@ import com.example.baetube.UserDisplay;
 import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
+import com.example.baetube.fragment.channel.ChannelBaseFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -93,7 +96,13 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
     @Override
     public void onItemClick(View view, int position)
     {
+        switch (view.getId())
+        {
 
+
+            default :
+                break;
+        }
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,9 +33,14 @@ public class BaseOptionFragment extends BottomSheetDialogFragment implements OnR
 {
     private View view;
 
+    // 제목을 출력하는 뷰
+    private TextView textTitle;
+    // 옵션을 표현해주는 리사이클러뷰, 어뎁터, 리스트
     private RecyclerView recyclerView;
     private ArrayList<RecyclerViewOptionItem> list;
     private RecyclerViewOptionAdapter adapter;
+    // 제목을 저장할 문자열 변수
+    private String title;
 
     public BaseOptionFragment()
     {
@@ -47,11 +53,19 @@ public class BaseOptionFragment extends BottomSheetDialogFragment implements OnR
     {
         view = inflater.inflate(R.layout.fragment_base_option, container, false);
 
+        textTitle = view.findViewById(R.id.fragment_base_option_text_title);
+
         recyclerView = view.findViewById(R.id.fragment_option_recyclerview);
         adapter = new RecyclerViewOptionAdapter(list);
         adapter.setOnRecyclerViewClickListener(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        if(title == null)
+        {
+            textTitle.setVisibility(View.GONE);
+        }
+        textTitle.setText(title);
 
         // Inflate the layout for this fragment
         return view;
@@ -104,6 +118,11 @@ public class BaseOptionFragment extends BottomSheetDialogFragment implements OnR
             list.add(item);
         }
 
+    }
+
+    public void setTitle(String title)
+    {
+        this.title = title;
     }
 
     @Override

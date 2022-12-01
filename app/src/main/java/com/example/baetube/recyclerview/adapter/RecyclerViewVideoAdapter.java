@@ -65,7 +65,7 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
         }
 
 
-        VideoViewHolder viewHolder = new VideoViewHolder(view);
+        VideoViewHolder viewHolder = new VideoViewHolder(view, onRecyclerViewClickListener);
 
         return viewHolder;
     }
@@ -111,7 +111,7 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
     @Override
     public void onItemClick(View view, int position)
     {
-
+        onRecyclerViewClickListener.onItemClick(view, position);
     }
 
     @Override

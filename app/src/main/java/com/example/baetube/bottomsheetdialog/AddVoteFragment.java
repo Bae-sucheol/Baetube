@@ -11,57 +11,38 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.example.baetube.PublicState;
 import com.example.baetube.R;
 import com.example.baetube.UserDisplay;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-public class BaseReportFragment extends BottomSheetDialogFragment implements RadioGroup.OnCheckedChangeListener, View.OnClickListener
+public class AddVoteFragment extends BottomSheetDialogFragment implements View.OnClickListener
 {
     private View view;
 
-    // 제목을 출력할 뷰
-    private TextView title;
-    // 신고, 취소 버튼 뷰(clickable textView)
-    private TextView buttonReport;
+    // 추가, 취소 버튼 뷰(clickable textView)
+    private TextView buttonAdd;
     private TextView buttonClose;
-
-    private RadioGroup radioGroup;
-    private RadioButton[] radioButtons;
-    // 신고 내용들을 저장할 변수.
-    private String reportTitle;
-    private String reportContents[];
-
-    public BaseReportFragment()
-    {
-    }
+    // 투표 내용을 작성할 뷰
+    private EditText comment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.fragment_base_report, container, false);
+        view = inflater.inflate(R.layout.fragment_add_vote, container, false);
 
-        title = view.findViewById(R.id.fragment_base_report_text_title);
-        radioGroup = view.findViewById(R.id.fragment_base_report_radio_group);
+        buttonAdd = view.findViewById(R.id.fragment_add_vote_text_button_add);
+        buttonClose = view.findViewById(R.id.fragment_add_vote_text_button_close);
+        comment = view.findViewById(R.id.fragment_add_vote_edit_comment);
 
-        buttonReport = view.findViewById(R.id.fragment_base_report_text_button_report);
-        buttonClose = view.findViewById(R.id.fragment_base_report_text_button_close);
-
-        buttonReport.setOnClickListener(this);
+        buttonAdd.setOnClickListener(this);
         buttonClose.setOnClickListener(this);
-
-        radioGroup.setOnCheckedChangeListener(this);
-
-        setTitle(reportTitle);
-        setRadioButtons(reportContents);
 
         // Inflate the layout for this fragment
         return view;
@@ -92,7 +73,7 @@ public class BaseReportFragment extends BottomSheetDialogFragment implements Rad
                 bottomSheetDialog.findViewById(R.id.design_bottom_sheet);
 
         bottomSheet.setBackgroundResource(R.drawable.bottomsheetdialog_border);
-        bottomSheet.setY((int)UserDisplay.getHeight() / 2 - bottomSheet.getHeight() / 2);
+        bottomSheet.setY((int) UserDisplay.getHeight() / 2 - bottomSheet.getHeight() / 2);
 
         BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
         ViewGroup.LayoutParams layoutParams = bottomSheet.getLayoutParams();
@@ -102,49 +83,15 @@ public class BaseReportFragment extends BottomSheetDialogFragment implements Rad
         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
-    public void setTitle(String reportTitle)
-    {
-        title.setText(reportTitle);
-    }
-
-    public void setRadioButtons(String reportContents[])
-    {
-        int length = reportContents.length;
-
-        radioButtons = new RadioButton[length];
-
-        for (int i = 0; i < length; i++)
-        {
-            RadioButton radioButton = new RadioButton(getContext());
-
-            radioButton.setText(reportContents[i]);
-            radioButtons[i] = radioButton;
-            radioGroup.addView(radioButtons[i]);
-        }
-
-    }
-
-    public void initDialog(String reportTitle, String reportContents[])
-    {
-        this.reportTitle = reportTitle;
-        this.reportContents = reportContents;
-    }
-
-    @Override
-    public void onCheckedChanged(RadioGroup radioGroup, int i)
-    {
-
-    }
-
     @Override
     public void onClick(View view)
     {
         // 신고를 하던 취소를 하던 결국 마지막에는 dismiss를 해야하므로
-        // switch - case로 나누지 않고 신고 버튼을 눌렀을 경우 신고 접수를 하는 기능만
+        // switch - case로 나누지 않고 추가 버튼을 눌렀을 경우 추가 기능만
         // 작성해주면 된다. 따라서 if 문으로 처리
-        if(view.getId() == R.id.fragment_base_report_text_button_report)
+        if(view.getId() == R.id.fragment_add_vote_text_button_add)
         {
-            // 신고 접수 기능
+            // 추가 기능 작성
         }
 
         this.dismiss();
