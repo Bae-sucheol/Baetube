@@ -4,106 +4,115 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".fragment.channel.ChannelInfomationFragment"
-    android:layout_margin="@dimen/margin_medium">
+    tools:context=".fragment.channel.ChannelInfomationFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/channel_information_text_description"
-        android:layout_marginBottom="@dimen/margin_small"
-        style="@style/textview_style_channel_information_title"
-        android:gravity="left"/>
+    <include
+        layout="@layout/toolbar_no_scroll"
+        android:id="@id/toolbar"/>
 
-    <TextView
-        android:id="@+id/fragment_channel_information_text_description"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="안녕하세요. 코딩을 좋아하는 홍길동입니다.
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/margin_medium">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/channel_information_text_description"
+            android:layout_marginBottom="@dimen/margin_small"
+            style="@style/textview_style_channel_information_title"
+            android:gravity="left"/>
+
+        <TextView
+            android:id="@+id/fragment_channel_information_text_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="안녕하세요. 코딩을 좋아하는 홍길동입니다.
 차근차근 쉽게 배우는 코딩 시리즈를 업로드 할 예정입니다."
-        style="@style/textview_style_channel_information_description"
-        android:layout_marginBottom="@dimen/margin_large"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/channel_information_text_link"
-        android:layout_marginBottom="@dimen/margin_small"
-        style="@style/textview_style_channel_information_title" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="보류"
-        style="@style/textview_style_channel_information_description"
-        android:gravity="left"
-        android:layout_marginBottom="@dimen/margin_large"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/channel_information_text_additional"
-        android:layout_marginBottom="@dimen/margin_small"
-        style="@style/textview_style_channel_information_title" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="@dimen/margin_small">
-
-        <ImageView
-            android:layout_width="@dimen/size_icon_small"
-            android:layout_height="@dimen/size_icon_small"
-            android:background="@drawable/ic_outline_info_24"
-            android:layout_marginRight="@dimen/margin_small"/>
+            style="@style/textview_style_channel_information_description"
+            android:layout_marginBottom="@dimen/margin_large"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/channel_information_text_sign_in_date"
-            style="@style/textview_style_channel_information_description"
-            android:layout_gravity="center_vertical" />
+            android:text="@string/channel_information_text_link"
+            android:layout_marginBottom="@dimen/margin_small"
+            style="@style/textview_style_channel_information_title" />
 
         <TextView
-            android:id="@+id/fragment_channel_information_text_sign_in_date"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2022. 09. 20"
+            android:text="보류"
             style="@style/textview_style_channel_information_description"
-            android:layout_gravity="center_vertical" />
+            android:gravity="left"
+            android:layout_marginBottom="@dimen/margin_large"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/channel_information_text_additional"
+            android:layout_marginBottom="@dimen/margin_small"
+            style="@style/textview_style_channel_information_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/margin_small">
+
+            <ImageView
+                android:layout_width="@dimen/size_icon_small"
+                android:layout_height="@dimen/size_icon_small"
+                android:background="@drawable/ic_outline_info_24"
+                android:layout_marginRight="@dimen/margin_small"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/channel_information_text_sign_in_date"
+                style="@style/textview_style_channel_information_description"
+                android:layout_gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/fragment_channel_information_text_sign_in_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2022. 09. 20"
+                style="@style/textview_style_channel_information_description"
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/margin_small">
+
+            <ImageView
+                android:layout_width="@dimen/size_icon_small"
+                android:layout_height="@dimen/size_icon_small"
+                android:background="@drawable/ic_baseline_trending_up_24"
+                android:layout_marginRight="@dimen/margin_small"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/channel_information_text_view_count"
+                style="@style/textview_style_channel_information_description"
+                android:layout_gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/fragment_channel_information_text_view_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2,000 회"
+                style="@style/textview_style_channel_information_description"
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="@dimen/margin_small">
-
-        <ImageView
-            android:layout_width="@dimen/size_icon_small"
-            android:layout_height="@dimen/size_icon_small"
-            android:background="@drawable/ic_baseline_trending_up_24"
-            android:layout_marginRight="@dimen/margin_small"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/channel_information_text_view_count"
-            style="@style/textview_style_channel_information_description"
-            android:layout_gravity="center_vertical" />
-
-        <TextView
-            android:id="@+id/fragment_channel_information_text_view_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2,000 회"
-            style="@style/textview_style_channel_information_description"
-            android:layout_gravity="center_vertical" />
-
-    </LinearLayout>
-
-
 
 </LinearLayout>

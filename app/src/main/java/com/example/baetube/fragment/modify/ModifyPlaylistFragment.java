@@ -1,4 +1,4 @@
-package com.example.baetube.fragment;
+package com.example.baetube.fragment.modify;
 
 import android.os.Bundle;
 
@@ -20,7 +20,7 @@ import com.example.baetube.Spinner.SpinnerItem;
 
 import java.util.ArrayList;
 
-public class PlaylistModifyFragment extends Fragment
+public class ModifyPlaylistFragment extends Fragment
 {
     private View view;
 
@@ -32,7 +32,7 @@ public class PlaylistModifyFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.fragment_playlist_modify, container, false);
+        view = inflater.inflate(R.layout.fragment_modify_playlist, container, false);
 
         // 툴바(액션바)를 설정
         Toolbar toolbar = view.findViewById(R.id.toolbar);

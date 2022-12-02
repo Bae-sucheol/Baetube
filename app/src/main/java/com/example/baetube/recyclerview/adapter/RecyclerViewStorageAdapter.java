@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.dto.PlaylistDTO;
 import com.example.baetube.recyclerview.item.RecyclerViewPlaylistItem;
@@ -15,11 +16,12 @@ import com.example.baetube.recyclerview.viewholder.StorageViewHolder;
 
 import java.util.ArrayList;
 
-public class RecyclerViewStorageAdapter extends RecyclerView.Adapter<StorageViewHolder>
+public class RecyclerViewStorageAdapter extends RecyclerView.Adapter<StorageViewHolder> implements OnRecyclerViewClickListener
 {
 
     private Context context;
     private ArrayList<RecyclerViewPlaylistItem> list = null;
+    private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
     public RecyclerViewStorageAdapter(ArrayList<RecyclerViewPlaylistItem> list)
     {
@@ -39,7 +41,7 @@ public class RecyclerViewStorageAdapter extends RecyclerView.Adapter<StorageView
 
         View view = inflater.inflate(R.layout.recyclerview_storage, parent, false);
 
-        StorageViewHolder viewHolder = new StorageViewHolder(view);
+        StorageViewHolder viewHolder = new StorageViewHolder(view, onRecyclerViewClickListener);
 
         return viewHolder;
     }
@@ -67,5 +69,22 @@ public class RecyclerViewStorageAdapter extends RecyclerView.Adapter<StorageView
     {
         super.onDetachedFromRecyclerView(recyclerView);
         context = null;
+    }
+
+    public void setOnRecyclerViewClickListener(OnRecyclerViewClickListener onRecyclerViewClickListener)
+    {
+        this.onRecyclerViewClickListener = onRecyclerViewClickListener;
+    }
+
+    @Override
+    public void onItemClick(View view, int position)
+    {
+        onRecyclerViewClickListener.onItemClick(view, position);
+    }
+
+    @Override
+    public void onItemLongClick(View view, int position)
+    {
+
     }
 }

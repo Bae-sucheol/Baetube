@@ -53,6 +53,7 @@
                     android:textSize="@dimen/textsize_large"/>
 
                 <TextView
+                    android:id="@+id/fragment_storage_text_button_detail"
                     android:layout_width="@dimen/width_history_button"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,9 +16,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
+import com.example.baetube.bottomsheetdialog.VideoFragment;
+import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.PlaylistDTO;
 import com.example.baetube.dto.VideoDTO;
@@ -27,9 +33,10 @@ import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
 import java.util.ArrayList;
 
-public class StorageFragment extends Fragment
+public class StorageFragment extends Fragment implements OnRecyclerViewClickListener, View.OnClickListener
 {
     private View view;
+    private TextView buttonDetail;
 
     private RecyclerView recyclerViewVideoHistory;
     private RecyclerViewVideoAdapter recyclerViewVideoHistoryAdapter;
@@ -58,6 +65,9 @@ public class StorageFragment extends Fragment
         test();
         test2();
 
+        buttonDetail = view.findViewById(R.id.fragment_storage_text_button_detail);
+        buttonDetail.setOnClickListener(this);
+
         /*
          * 동영상 시청 기록 리스트 출력
          */
@@ -69,6 +79,9 @@ public class StorageFragment extends Fragment
 
         // 리사이클러뷰에 어댑터 설정
         recyclerViewVideoHistory.setAdapter(recyclerViewVideoHistoryAdapter);
+
+        // 어댑터에 클릭 리스너 등록
+        recyclerViewVideoHistoryAdapter.setOnRecyclerViewClickListener(this);
 
         // 리사이클러뷰에 레이아웃 매니저 설정 (가로로 출력)
         recyclerViewVideoHistory.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
@@ -84,6 +97,9 @@ public class StorageFragment extends Fragment
 
         // 리사이클러뷰에 어댑터 설정
         recyclerViewVideoStorage.setAdapter(recyclerViewStorageAdapter);
+
+        // 어댑터에 클릭 리스너 등록
+        recyclerViewStorageAdapter.setOnRecyclerViewClickListener(this);
 
         // 리사이클러뷰에 레이아웃 매니저 설정 (가로로 출력)
         recyclerViewVideoStorage.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -143,6 +159,62 @@ public class StorageFragment extends Fragment
 
             storageList.add(item);
         }
+
+    }
+
+    @Override
+    public void onClick(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.fragment_storage_text_button_detail :
+
+                // 관련 프래그먼트를 만들어야 할 것 같다.
+
+                break;
+        }
+    }
+
+    @Override
+    public void onItemClick(View view, int position)
+    {
+        switch (view.getId())
+        {
+            case R.id.recyclerview_video_image_thumbnail :
+
+                VideoFragment videoFragment = new VideoFragment();
+                videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+
+                break;
+            case R.id.recyclerview_video_image_option :
+
+                VideoOptionFragment videoOptionFragment = new VideoOptionFragment(getContext());
+                videoOptionFragment.show(getParentFragmentManager(), videoOptionFragment.getTag());
+
+                break;
+            case R.id.recyclerview_video_layout_information :
+
+                videoFragment = new VideoFragment();
+                videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+
+                break;
+            case R.id.recyclerview_storage_layout_main :
+
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.activity_main_layout, new PlaylistDetailFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+                break;
+            default :
+                break;
+        }
+    }
+
+    @Override
+    public void onItemLongClick(View view, int position)
+    {
 
     }
 }

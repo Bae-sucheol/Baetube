@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
+import com.example.baetube.bottomsheetdialog.VideoFragment;
+import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
@@ -47,6 +49,7 @@ public class ChannelVideoFragment extends Fragment implements OnRecyclerViewClic
         recyclerViewVideoAdapter = new RecyclerViewVideoAdapter(list);
         recyclerViewVideoAdapter.setOnRecyclerViewClickListener(this);
         recyclerView.setAdapter(recyclerViewVideoAdapter);
+        recyclerViewVideoAdapter.setOnRecyclerViewClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Inflate the layout for this fragment
@@ -56,7 +59,30 @@ public class ChannelVideoFragment extends Fragment implements OnRecyclerViewClic
     @Override
     public void onItemClick(View view, int position)
     {
+        switch (view.getId())
+        {
+            case R.id.recyclerview_video_image_thumbnail :
 
+                VideoFragment videoFragment = new VideoFragment();
+                videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+
+                break;
+            case R.id.recyclerview_video_image_option :
+
+                VideoOptionFragment videoOptionFragment = new VideoOptionFragment(getContext());
+                videoOptionFragment.show(getParentFragmentManager(), videoOptionFragment.getTag());
+
+                break;
+            case R.id.recyclerview_video_layout_information :
+
+                videoFragment = new VideoFragment();
+                videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+
+                break;
+
+            default :
+                break;
+        }
     }
 
     @Override

@@ -6,17 +6,23 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.baetube.CustomerServiceFragment;
 import com.example.baetube.R;
 import com.example.baetube.ChannelPagerAdapter;
 import com.example.baetube.ChannelTabStrategy;
+import com.example.baetube.bottomsheetdialog.ChannelReportFragment;
+import com.example.baetube.fragment.SearchFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -77,5 +83,48 @@ public class ChannelBaseFragment extends Fragment
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_sub, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home :
+
+                getActivity().onBackPressed();
+
+                break;
+            case R.id.menu_toolbar_search :
+
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.activity_main_layout, new SearchFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+                break;
+            case R.id.menu_toolbar_report :
+
+                ChannelReportFragment channelReportFragment = new ChannelReportFragment(getContext());
+                channelReportFragment.show(getParentFragmentManager(), channelReportFragment.getTag());
+
+                break;
+            case R.id.menu_toolbar_customer_service :
+
+                fragmentManager = getParentFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.activity_main_layout, new CustomerServiceFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+                break;
+            default :
+
+
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

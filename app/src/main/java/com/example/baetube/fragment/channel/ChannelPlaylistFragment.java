@@ -3,6 +3,8 @@ package com.example.baetube.fragment.channel;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,8 +14,11 @@ import android.view.ViewGroup;
 
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
+import com.example.baetube.bottomsheetdialog.PlaylistOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.PlaylistDTO;
+import com.example.baetube.fragment.PlaylistDetailFragment;
+import com.example.baetube.fragment.SearchFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewPlaylistAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewPlaylistItem;
 
@@ -46,6 +51,7 @@ public class ChannelPlaylistFragment extends Fragment implements OnRecyclerViewC
         recyclerViewPlaylistAdapter = new RecyclerViewPlaylistAdapter(list);
         recyclerViewPlaylistAdapter.setOnRecyclerViewClickListener(this);
         recyclerView.setAdapter(recyclerViewPlaylistAdapter);
+        recyclerViewPlaylistAdapter.setOnRecyclerViewClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Inflate the layout for this fragment
@@ -55,7 +61,30 @@ public class ChannelPlaylistFragment extends Fragment implements OnRecyclerViewC
     @Override
     public void onItemClick(View view, int position)
     {
+        switch (view.getId())
+        {
+            case R.id.recyclerview_playlist_layout_main :
 
+                FragmentManager fragmentManager = getParentFragment().getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.activity_main_layout, new PlaylistDetailFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+                break;
+            case R.id.recyclerview_playlist_image_option :
+
+                /*
+                 * 내 채널인지 아닌지 구분하여
+                 * PlaylistOptionFragment, PlaylistOptionManageFragment 둘 중 하나를 사용한다.
+                 */
+                PlaylistOptionFragment playlistOptionFragment = new PlaylistOptionFragment(getContext());
+                playlistOptionFragment.show(getParentFragmentManager(), playlistOptionFragment.getTag());
+
+                break;
+            default :
+                break;
+        }
     }
 
     @Override

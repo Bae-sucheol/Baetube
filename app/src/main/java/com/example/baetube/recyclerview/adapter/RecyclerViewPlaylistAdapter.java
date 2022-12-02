@@ -43,7 +43,7 @@ public class RecyclerViewPlaylistAdapter extends RecyclerView.Adapter<PlaylistVi
 
         View view = inflater.inflate(R.layout.recyclerview_playlist, parent, false);
 
-        PlaylistViewHolder viewHolder = new PlaylistViewHolder(view);
+        PlaylistViewHolder viewHolder = new PlaylistViewHolder(view, onRecyclerViewClickListener);
 
         return viewHolder;
     }
@@ -59,7 +59,13 @@ public class RecyclerViewPlaylistAdapter extends RecyclerView.Adapter<PlaylistVi
         //holder.thumbnail.setImageDrawable();
         holder.title.setText(playlistDTO.getName());
         holder.channelName.setText(channelDTO.getName());
-        holder.videoCount.setText(String.valueOf(playlistDTO.getVideoCount()));
+
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("동영상 ");
+        stringBuffer.append(playlistDTO.getVideoCount());
+        stringBuffer.append("개");
+
+        holder.videoCount.setText(stringBuffer.toString());
     }
 
     @Override
@@ -71,7 +77,7 @@ public class RecyclerViewPlaylistAdapter extends RecyclerView.Adapter<PlaylistVi
     @Override
     public void onItemClick(View view, int position)
     {
-
+        onRecyclerViewClickListener.onItemClick(view, position);
     }
 
     @Override

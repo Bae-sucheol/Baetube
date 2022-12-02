@@ -9,7 +9,7 @@
 
     <include
         layout="@layout/toolbar_no_scroll"
-        android:id="@+id/toolber"/>
+        android:id="@+id/toolbar"/>
 
     <TextView
         android:layout_width="match_parent"

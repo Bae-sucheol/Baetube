@@ -5,7 +5,7 @@
     <string name="menu_toolbar_search">검색</string>
     <string name="menu_toolbar_profile">프로필</string>
     <string name="menu_toolbar_next">다음</string>
-    <string name="menu_toolbar_report">사용자 신고</string>
+    <string name="menu_toolbar_report">채널 신고</string>
     <string name="menu_toolbar_customer_service">고객센터</string>
     <string name="menu_toolbar_remove_playlist">재생목록 삭제</string>
 
@@ -20,6 +20,7 @@
     <string name="fragment_set_public_toolbar_title">공개상태설정</string>
     <string name="fragment_set_age_toolbar_title">시청자층 선택</string>
     <string name="fragment_set_vote_toolbar_title">투표추가</string>
+    <string name="fragment_customer_service_toolbar_title">고객센터</string>
 
     <string name="bottom_navigation_home">홈</string>
     <string name="bottom_navigation_upload">업로드</string>
@@ -208,6 +209,7 @@
     <string name="report_community_text_title">게시글 신고</string>
     <string name="report_text_button_report">신고</string>
     <string name="report_text_button_close">취소</string>
+    <string name="report_channel_text_title">채널 신고</string>
 
     <!--
     * 고객 센터
@@ -315,6 +317,17 @@
     </string-array>
 
     <string-array name="report_community_texts">
+        <item>원치 않는 상업성 콘텐츠 또는 스팸</item>
+        <item>포르노 또는 음란물</item>
+        <item>아동 학대</item>
+        <item>증오심 표현 또는 노골적인 폭력</item>
+        <item>테러 조장</item>
+        <item>희롱 또는 괴롭힘</item>
+        <item>자살 또는 자해</item>
+        <item>잘못된 정보</item>
+    </string-array>
+
+    <string-array name="report_channel_texts">
         <item>원치 않는 상업성 콘텐츠 또는 스팸</item>
         <item>포르노 또는 음란물</item>
         <item>아동 학대</item>

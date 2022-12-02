@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -63,6 +64,7 @@ public class ChannelManageVideoFragment extends Fragment implements OnRecyclerVi
         recyclerView = view.findViewById(R.id.fragment_channel_manage_video_recyclerview);
         recyclerViewVideoAdapter = new RecyclerViewVideoAdapter(list);
         recyclerView.setAdapter(recyclerViewVideoAdapter);
+        recyclerViewVideoAdapter.setOnRecyclerViewClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Inflate the layout for this fragment
@@ -74,6 +76,18 @@ public class ChannelManageVideoFragment extends Fragment implements OnRecyclerVi
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_sub, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home :
+                getActivity().onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
