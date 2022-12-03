@@ -1,4 +1,4 @@
-package com.example.baetube;
+package com.example.baetube.fragment;
 
 import android.os.Bundle;
 
@@ -13,6 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.baetube.R;
 
 public class CustomerServiceFragment extends Fragment
 {

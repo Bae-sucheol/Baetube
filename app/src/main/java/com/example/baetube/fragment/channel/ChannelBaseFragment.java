@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.baetube.CustomerServiceFragment;
+import com.example.baetube.fragment.CustomerServiceFragment;
 import com.example.baetube.R;
 import com.example.baetube.ChannelPagerAdapter;
 import com.example.baetube.ChannelTabStrategy;
