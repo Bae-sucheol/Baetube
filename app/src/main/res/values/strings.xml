@@ -161,8 +161,10 @@
     <string name="bottomsheetdialogfragment_video_text_subscribe_count">구독자</string>
     <string name="bottomsheetdialogfragment_video_text_reply">댓글</string>
     <string name="bottomsheetdialogfragment_video_hint_reply">댓글을 입력하세요.</string>
-
+    <string name="bottomsheetdialogfragment_reply_text_reply">댓글</string>
     <string name="bottomsheetdialogfragment_reply_text_nested_reply">답글</string>
+    <string name="bottomsheetdialogfragment_reply_hint">댓글 추가...</string>
+    <string name="bottomsheetdialogfragment_nested_reply_hint">답글 추가...</string>
 
     <!--
         * 앱바 스크롤 옵션
@@ -243,6 +245,13 @@
     <string name="add_vote_text_hint">투표 내용을 입력해주세요.</string>
     <string name="add_vote_text_button_add">추가</string>
     <string name="add_vote_text_button_close">취소</string>
+
+    <!--
+    * 시청기록 (history_detail)
+    -->
+    <string name="history_detail_text_search_hint">시청 기록 검색</string>
+    <string name="history_detail_text_button_cancel">취소</string>
+
 
     <!--
     * 배열

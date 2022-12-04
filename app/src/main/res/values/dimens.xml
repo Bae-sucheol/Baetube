@@ -62,6 +62,8 @@
     <dimen name="height_res_small">90dp</dimen>
 
     <dimen name="height_divider">2dp</dimen>
+
+    <dimen name="height_historydetail_button">40dp</dimen>
     <!--
     Because the window insets on round devices are larger than 15dp, this padding only applies
     to square screens.

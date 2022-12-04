@@ -84,7 +84,7 @@ public class NotificationFragment extends Fragment
         RecyclerViewNotificationItem dividerItem = new RecyclerViewNotificationItem();
 
         dividerItem.setDivideString(getContext().getString(R.string.notification_date_today));
-        dividerItem.setViewType(ViewType.VIEWTYPE_NOTIFICATION_DIVIDER);
+        dividerItem.setViewType(ViewType.NOTIFICATION_DIVIDER);
         list.add(dividerItem);
 
         for(int i = 0; i < 5; i++)
@@ -96,7 +96,7 @@ public class NotificationFragment extends Fragment
 
             item.setChannelDTO(channelDTO);
             item.setVideoDTO(videoDTO);
-            item.setViewType(ViewType.VIEWTYPE_NOTIFICATION_VIDEO);
+            item.setViewType(ViewType.NOTIFICATION_VIDEO);
 
             channelDTO.setName(channel_names[i]);
             videoDTO.setDate("1시간 전");
@@ -108,7 +108,7 @@ public class NotificationFragment extends Fragment
         dividerItem = new RecyclerViewNotificationItem();
 
         dividerItem.setDivideString(getContext().getString(R.string.notification_date_week));
-        dividerItem.setViewType(ViewType.VIEWTYPE_NOTIFICATION_DIVIDER);
+        dividerItem.setViewType(ViewType.NOTIFICATION_DIVIDER);
         list.add(dividerItem);
 
         for(int i = 0; i < 5; i++)
@@ -120,7 +120,7 @@ public class NotificationFragment extends Fragment
 
             item.setChannelDTO(channelDTO);
             item.setVideoDTO(videoDTO);
-            item.setViewType(ViewType.VIEWTYPE_NOTIFICATION_VIDEO);
+            item.setViewType(ViewType.NOTIFICATION_VIDEO);
 
             channelDTO.setName(channel_names[i]);
             videoDTO.setDate("1주 전");
@@ -132,7 +132,7 @@ public class NotificationFragment extends Fragment
         dividerItem = new RecyclerViewNotificationItem();
 
         dividerItem.setDivideString(getContext().getString(R.string.notification_date_other));
-        dividerItem.setViewType(ViewType.VIEWTYPE_NOTIFICATION_DIVIDER);
+        dividerItem.setViewType(ViewType.NOTIFICATION_DIVIDER);
         list.add(dividerItem);
 
         for(int i = 0; i < 5; i++)
@@ -144,7 +144,7 @@ public class NotificationFragment extends Fragment
 
             item.setChannelDTO(channelDTO);
             item.setVideoDTO(videoDTO);
-            item.setViewType(ViewType.VIEWTYPE_NOTIFICATION_VIDEO);
+            item.setViewType(ViewType.NOTIFICATION_VIDEO);
 
             channelDTO.setName(channel_names[i]);
             videoDTO.setDate("2주 전");

@@ -45,7 +45,7 @@ public class RecyclerViewSubscribeAdapter extends RecyclerView.Adapter<Subscribe
 
         switch(viewType)
         {
-            case ViewType.VIEWTYPE_SUBSCRIBE_VERTICAL :
+            case ViewType.SUBSCRIBE_VERTICAL :
 
                 view = inflater.inflate(R.layout.recyclerview_subscribe_vertical, parent, false);
 
@@ -70,7 +70,7 @@ public class RecyclerViewSubscribeAdapter extends RecyclerView.Adapter<Subscribe
 
         ChannelDTO channelDTO = item.getChannelDTO();
 
-        if(item.getViewType() == ViewType.VIEWTYPE_SUBSCRIBE_HORIZONTAL)
+        if(item.getViewType() == ViewType.SUBSCRIBE_HORIZONTAL)
         {
             holder.layout.getLayoutParams().width = (int)UserDisplay.getWidth();
         }

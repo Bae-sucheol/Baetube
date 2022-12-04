@@ -186,7 +186,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
 
             item.setChannelDTO(channelDTO);
             item.setVideoDTO(videoDTO);
-            item.setViewType(ViewType.VIEWTYPE_VIDEO_LARGE);
+            item.setViewType(ViewType.VIDEO_LARGE);
 
             channelDTO.setName(channel_names[i]);
             videoDTO.setDate("1시간 전");

@@ -130,7 +130,7 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
 
             item.setChannelDTO(channelDTO);
             item.setVideoDTO(videoDTO);
-            item.setViewType(ViewType.VIEWTYPE_VIDEO_SMALL);
+            item.setViewType(ViewType.VIDEO_SMALL);
 
             channelDTO.setName(channel_names[i]);
             videoDTO.setDate("1시간 전");
@@ -169,7 +169,11 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
         {
             case R.id.fragment_storage_text_button_detail :
 
-                // 관련 프래그먼트를 만들어야 할 것 같다.
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.activity_main_layout, new HistoryDetailFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
 
                 break;
         }

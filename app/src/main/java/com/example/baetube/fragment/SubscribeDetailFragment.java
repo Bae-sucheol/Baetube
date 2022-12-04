@@ -40,7 +40,7 @@ public class SubscribeDetailFragment extends Fragment implements OnRecyclerViewC
     private ArrayList<RecyclerViewSubscribeItem> selectedList = new ArrayList<>();
 
     private int slideDistance = 0;
-    private int animation_duration = 0;
+    private int animationDuration = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,7 +73,7 @@ public class SubscribeDetailFragment extends Fragment implements OnRecyclerViewC
         recyclerViewScribe.setAdapter(recyclerViewSubscribeAdapter);
         recyclerViewScribe.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        animation_duration = getContext().getResources().getInteger(R.integer.animation_duration);
+        animationDuration = getContext().getResources().getInteger(R.integer.animation_duration);
         slideDistance = (int) getContext().getResources().getDimension(R.dimen.width_subscribe_slide);
 
         test();
@@ -112,7 +112,7 @@ public class SubscribeDetailFragment extends Fragment implements OnRecyclerViewC
             ChannelDTO channelDTO = new ChannelDTO();
 
             item.setChannelDTO(channelDTO);
-            item.setViewType(ViewType.VIEWTYPE_SUBSCRIBE_HORIZONTAL);
+            item.setViewType(ViewType.SUBSCRIBE_HORIZONTAL);
 
             channelDTO.setName(channel_names[i]);
 
@@ -139,7 +139,7 @@ public class SubscribeDetailFragment extends Fragment implements OnRecyclerViewC
         {
             TranslateAnimation translateAnimation = new TranslateAnimation(0, -slideDistance, 0, 0);
 
-            translateAnimation.setDuration(animation_duration);
+            translateAnimation.setDuration(animationDuration);
             translateAnimation.setFillAfter(true);
 
             view.startAnimation(translateAnimation);
@@ -150,7 +150,7 @@ public class SubscribeDetailFragment extends Fragment implements OnRecyclerViewC
         {
             TranslateAnimation translateAnimation = new TranslateAnimation(-slideDistance, 0, 0, 0);
 
-            translateAnimation.setDuration(animation_duration);
+            translateAnimation.setDuration(animationDuration);
             translateAnimation.setFillAfter(true);
 
             view.startAnimation(translateAnimation);

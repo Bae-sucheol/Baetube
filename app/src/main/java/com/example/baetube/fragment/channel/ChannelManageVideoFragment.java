@@ -117,7 +117,7 @@ public class ChannelManageVideoFragment extends Fragment implements OnRecyclerVi
 
             item.setChannelDTO(channelDTO);
             item.setVideoDTO(videoDTO);
-            item.setViewType(ViewType.VIEWTYPE_VIDEO_MEDIUM);
+            item.setViewType(ViewType.VIDEO_MEDIUM);
 
             channelDTO.setName(channel_names[i]);
             videoDTO.setDate("1시간 전");

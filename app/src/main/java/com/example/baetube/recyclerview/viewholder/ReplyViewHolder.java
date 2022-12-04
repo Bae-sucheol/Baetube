@@ -9,9 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 
-public class ReplyViewHolder extends RecyclerView.ViewHolder
+public class ReplyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 {
     public ImageView profile;
     public ImageView option;
@@ -26,7 +27,9 @@ public class ReplyViewHolder extends RecyclerView.ViewHolder
     public TextView nestedReplyCount;
     public LinearLayout nestedReplyLayout;
 
-    public ReplyViewHolder(@NonNull View itemView)
+    private OnRecyclerViewClickListener onRecyclerViewClickListener;
+
+    public ReplyViewHolder(@NonNull View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
     {
         super(itemView);
 
@@ -42,5 +45,24 @@ public class ReplyViewHolder extends RecyclerView.ViewHolder
         hate = itemView.findViewById(R.id.recyclerview_reply_text_hate);
         nestedReplyCount = itemView.findViewById(R.id.recyclerview_reply_text_nested_reply_count);
         nestedReplyLayout = itemView.findViewById(R.id.recyclerview_reply_layout_nested_reply);
+
+        this.onRecyclerViewClickListener = onRecyclerViewClickListener;
+
+        nestedReplyLayout.setOnClickListener(this);
     }
+
+    @Override
+    public void onClick(View view)
+    {
+        int position = getAdapterPosition();
+
+        if(position != RecyclerView.NO_POSITION)
+        {
+            if(onRecyclerViewClickListener != null)
+            {
+                onRecyclerViewClickListener.onItemClick(view, position);
+            }
+        }
+    }
+
 }

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,6 +38,8 @@ public class ReplyFragment extends BottomSheetDialogFragment implements OnRecycl
     // 닫기 버튼 뷰
     private ImageView buttonClose;
 
+    private CoordinatorLayout layoutNestedReply;
+
 
     @Nullable
     @Override
@@ -61,6 +64,9 @@ public class ReplyFragment extends BottomSheetDialogFragment implements OnRecycl
         buttonClose = view.findViewById(R.id.bottomsheetdialogfragment_reply_image_close);
 
         buttonClose.setOnClickListener(this);
+
+        layoutNestedReply = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_layout);
+
 
         return view;
     }
@@ -95,13 +101,21 @@ public class ReplyFragment extends BottomSheetDialogFragment implements OnRecycl
         ViewGroup.LayoutParams layoutParams = bottomSheet.getLayoutParams();
         layoutParams.height = (int) UserDisplay.getHeight();
         bottomSheet.setLayoutParams(layoutParams);
-        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     @Override
     public void onItemClick(View view, int position)
     {
+        switch (view.getId())
+        {
+            case R.id.recyclerview_reply_layout_nested_reply :
 
+                layoutNestedReply.setVisibility(View.VISIBLE);
+                layoutNestedReply.setAlpha(1.0f);
+
+                break;
+        }
     }
 
     @Override

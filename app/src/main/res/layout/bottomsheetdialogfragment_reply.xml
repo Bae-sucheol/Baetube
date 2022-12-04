@@ -1,67 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_bottomsheetdialogfragment_reply"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/bottomsheetdialog_border"
     tools:context=".bottomsheetdialog.ReplyFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/fragment_playlist_detail_appbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomsheetdialogfragment_reply_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:fitsSystemWindows="true"
-        android:background="@drawable/bottomsheetdialog_border"
-        android:overScrollMode="never"
-        android:gravity="center"
-        app:elevation="0dp">
+        android:layout_height="match_parent">
 
-        <View
-            android:id="@+id/bottomsheetdialogfragment_reply_button_slide"
-            android:layout_width="@dimen/width_reply_slide"
-            android:layout_height="@dimen/height_reply_slide"
-            android:layout_marginTop="@dimen/margin_small"
-            android:background="@drawable/reply_slide_button"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_icon_small"
-            android:layout_marginTop="@dimen/margin_small"
-            android:layout_marginHorizontal="@dimen/margin_medium"
-            android:layout_gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/bottomsheetdialogfragment_reply_text_reply_title"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="댓글"
-                style="@style/textview_style_bottomsheetdialogfragment_reply_large"
+            <View
+                android:id="@+id/bottomsheetdialogfragment_reply_button_slide"
+                android:layout_width="@dimen/width_reply_slide"
+                android:layout_height="@dimen/height_reply_slide"
+                android:layout_marginTop="@dimen/margin_small"
+                android:background="@drawable/reply_slide_button"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
-            <ImageView
-                android:id="@+id/bottomsheetdialogfragment_reply_image_close"
-                android:layout_width="@dimen/size_icon_small"
-                android:layout_height="@dimen/size_icon_small"
-                android:background="@drawable/ic_baseline_close_24"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                <TextView
+                    android:id="@+id/bottomsheetdialogfragment_reply_text_reply_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_medium"
+                    android:text="@string/bottomsheetdialogfragment_reply_text_reply"
+                    style="@style/textview_style_bottomsheetdialogfragment_reply_large"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_reply_button_slide"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
+                <ImageView
+                    android:id="@+id/bottomsheetdialogfragment_reply_image_close"
+                    android:layout_width="@dimen/size_icon_small"
+                    android:layout_height="@dimen/size_icon_small"
+                    android:background="@drawable/ic_baseline_close_24"
+                    android:layout_marginHorizontal="@dimen/margin_medium"
+                    app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_reply_text_reply_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/bottomsheetdialogfragment_reply_text_reply_title"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scroll_behavior">
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_reply_text_reply_title">
 
             <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/fragment_playlist_detail_appbar_under"
+                android:id="@+id/fragment_reply_appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
@@ -93,6 +85,29 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginVertical="@dimen/margin_small"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                    <ImageView
+                        android:id="@+id/bottomsheetdialogfragment_reply_image_profile"
+                        android:layout_width="@dimen/size_icon_medium"
+                        android:layout_height="@dimen/size_icon_medium"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:background="@drawable/ic_baseline_account_circle_24" />
+
+                    <EditText
+                        android:id="@+id/bottomsheetdialogfragment_reply_edit_reply"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="@string/bottomsheetdialogfragment_nested_reply_hint"/>
+
+                </LinearLayout>
+
             </com.google.android.material.appbar.AppBarLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -105,5 +120,229 @@
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/bottomsheetdialogfragment_nested_reply_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:alpha="0"
+        android:background="@color/white"
+        android:layout_gravity="right">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/fragment_nested_reply_under"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:fitsSystemWindows="true"
+            android:background="@drawable/bottomsheetdialog_border"
+            android:overScrollMode="never"
+            android:gravity="center"
+            app:elevation="0dp">
+
+            <View
+                android:id="@+id/bottomsheetdialogfragment_nested_reply_button_slide"
+                android:layout_width="@dimen/width_reply_slide"
+                android:layout_height="@dimen/height_reply_slide"
+                android:layout_marginTop="@dimen/margin_small"
+                android:background="@drawable/reply_slide_button"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_icon_small"
+                android:layout_marginVertical="@dimen/margin_small"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:layout_gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/bottomsheetdialogfragment_nested_reply_image_button_back"
+                    android:layout_width="@dimen/size_icon_small"
+                    android:layout_height="@dimen/size_icon_small"
+                    android:background="@drawable/ic_baseline_arrow_back_24"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/bottomsheetdialogfragment_nested_reply_text_reply_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/bottomsheetdialogfragment_reply_text_nested_reply"
+                    android:layout_marginLeft="@dimen/margin_large"
+                    style="@style/textview_style_bottomsheetdialogfragment_reply_large"
+                    app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_nested_reply_image_button_back"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/bottomsheetdialogfragment_nested_reply_image_close"
+                    android:layout_width="@dimen/size_icon_small"
+                    android:layout_height="@dimen/size_icon_small"
+                    android:background="@drawable/ic_baseline_close_24"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scroll_behavior">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/fragment_nested_reply_appbar_under"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:fitsSystemWindows="true"
+                android:background="@color/white"
+                android:gravity="center">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    android:background="@color/light_gray">
+
+                    <ImageView
+                        android:id="@+id/bottomsheetdialogfragment_nested_reply_image_replier_profile"
+                        android:layout_width="@dimen/size_icon_small"
+                        android:layout_height="@dimen/size_icon_small"
+                        android:background="@drawable/ic_baseline_account_circle_24"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <ImageView
+                        android:id="@+id/bottomsheetdialogfragment_nested_reply_image_option"
+                        android:layout_width="@dimen/size_icon_option"
+                        android:layout_height="@dimen/size_icon_option"
+                        android:background="@drawable/ic_baseline_more_vert_24"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/bottomsheetdialogfragment_nested_reply_text_channel_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_small"
+                        android:text="코린이 김철수"
+                        style="@style/textview_style_bottomsheetdialogfragment_reply_small"
+                        app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_nested_reply_image_replier_profile"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/bottomsheetdialogfragment_nested_reply_text_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_xsmall"
+                        android:text="1시간 전"
+                        style="@style/textview_style_bottomsheetdialogfragment_reply_small"
+                        app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_nested_reply_text_channel_name"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/bottomsheetdialogfragment_nested_reply_text_comment"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_xsmall"
+                        android:layout_marginHorizontal="@dimen/margin_small"
+                        android:text="강의가 정말 좋습니다. 덕분에 자바에 자신감이 생겼습니다."
+                        style="@style/textview_style_bottomsheetdialogfragment_reply_medium"
+                        app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_nested_reply_image_replier_profile"
+                        app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_nested_reply_text_date"
+                        app:layout_constraintEnd_toStartOf="@+id/bottomsheetdialogfragment_nested_reply_image_option"/>
+
+                    <ImageView
+                        android:id="@+id/bottomsheetdialogfragment_nested_reply_image_thumb_up"
+                        android:layout_width="@dimen/size_icon_xsmall"
+                        android:layout_height="@dimen/size_icon_xsmall"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:background="@drawable/ic_baseline_thumb_up_24"
+                        app:layout_constraintStart_toStartOf="@+id/bottomsheetdialogfragment_nested_reply_text_comment"
+                        app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_nested_reply_text_comment"/>
+
+                    <TextView
+                        android:id="@+id/bottomsheetdialogfragment_nested_reply_text_like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/margin_xsmall"
+                        android:text="50"
+                        app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_nested_reply_image_thumb_up"
+                        app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_nested_reply_image_thumb_up"
+                        app:layout_constraintBottom_toBottomOf="@+id/bottomsheetdialogfragment_nested_reply_image_thumb_up"/>
+
+                    <ImageView
+                        android:id="@+id/bottomsheetdialogfragment_nested_reply_image_thumb_down"
+                        android:layout_width="@dimen/size_icon_xsmall"
+                        android:layout_height="@dimen/size_icon_xsmall"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:background="@drawable/ic_baseline_thumb_down_24"
+                        app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_nested_reply_text_like"
+                        app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_nested_reply_text_like"
+                        app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_nested_reply_text_comment"/>
+
+                    <TextView
+                        android:id="@+id/bottomsheetdialogfragment_nested_reply_text_hate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/margin_xsmall"
+                        android:text="5"
+                        app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_nested_reply_image_thumb_down"
+                        app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_nested_reply_image_thumb_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/bottomsheetdialogfragment_nested_reply_image_thumb_down"/>
+
+                    <ImageView
+                        android:id="@+id/bottomsheetdialogfragment_nested_reply_image_write_nested_reply"
+                        android:layout_width="@dimen/size_icon_xsmall"
+                        android:layout_height="@dimen/size_icon_xsmall"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:background="@drawable/ic_outline_comment_24"
+                        app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_nested_reply_text_hate"
+                        app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_nested_reply_text_hate"
+                        app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_nested_reply_text_hate"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="@dimen/margin_medium"
+                    android:layout_marginVertical="@dimen/margin_small">
+
+                    <ImageView
+                        android:id="@+id/bottomsheetdialogfragment_nested_reply_image_profile"
+                        android:layout_width="@dimen/size_icon_small"
+                        android:layout_height="@dimen/size_icon_small"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:background="@drawable/ic_baseline_account_circle_24" />
+
+                    <EditText
+                        android:id="@+id/bottomsheetdialogfragment_nested_reply_edit_reply"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_medium"
+                        android:background="@null"
+                        android:hint="@string/bottomsheetdialogfragment_nested_reply_hint"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/bottomsheetdialogfragment_nested_reply_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_behavior="@string/appbar_scroll_behavior" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</FrameLayout>

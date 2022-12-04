@@ -42,7 +42,7 @@ public class RecyclerViewReplyAdapter extends RecyclerView.Adapter<ReplyViewHold
 
         View view = inflater.inflate(R.layout.recyclerview_reply, parent, false);
 
-        ReplyViewHolder viewHolder = new ReplyViewHolder(view);
+        ReplyViewHolder viewHolder = new ReplyViewHolder(view, onRecyclerViewClickListener);
 
         return viewHolder;
     }

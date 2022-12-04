@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
-    <color name="light_gray">#DCDCDC</color>
+    <color name="light_gray">#E6E6E6</color>
     <color name="gray">#B4B4B4</color>
     <color name="dark_gray">#787878</color>
     <color name="dark_green">#2B2B2B</color>
@@ -22,6 +22,7 @@
 
     <color name="button_border">#E6E6E6</color>
     <color name="black_transparent">#80000000</color>
+    <color name="black_transparent_clear">#1A000000</color>
 
     <color name="divider">#B4B4B4</color>
 

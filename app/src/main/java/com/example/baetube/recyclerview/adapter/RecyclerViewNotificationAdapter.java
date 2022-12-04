@@ -48,14 +48,14 @@ public class RecyclerViewNotificationAdapter extends RecyclerView.Adapter<Notifi
         switch(viewType)
         {
 
-            case ViewType.VIEWTYPE_NOTIFICATION_VIDEO :
-            case ViewType.VIEWTYPE_NOTIFICATION_COMMUNITY :
+            case ViewType.NOTIFICATION_VIDEO :
+            case ViewType.NOTIFICATION_COMMUNITY :
 
                 view = inflater.inflate(R.layout.recyclerview_notification, parent, false);
 
                 break;
 
-            case ViewType.VIEWTYPE_NOTIFICATION_DIVIDER :
+            case ViewType.NOTIFICATION_DIVIDER :
 
                 view = inflater.inflate(R.layout.recyclerview_notification_divider, parent, false);
 
@@ -81,7 +81,7 @@ public class RecyclerViewNotificationAdapter extends RecyclerView.Adapter<Notifi
         switch(item.getViewType())
         {
 
-            case ViewType.VIEWTYPE_NOTIFICATION_VIDEO:
+            case ViewType.NOTIFICATION_VIDEO:
 
                 ChannelDTO channelDTO = item.getChannelDTO();
                 VideoDTO videoDTO = item.getVideoDTO();
@@ -100,7 +100,7 @@ public class RecyclerViewNotificationAdapter extends RecyclerView.Adapter<Notifi
 
                 break;
 
-            case ViewType.VIEWTYPE_NOTIFICATION_COMMUNITY:
+            case ViewType.NOTIFICATION_COMMUNITY:
 
                 channelDTO = item.getChannelDTO();
                 CommunityDTO communityDTO = item.getCommunityDTO();
@@ -119,7 +119,7 @@ public class RecyclerViewNotificationAdapter extends RecyclerView.Adapter<Notifi
 
                 break;
 
-            case ViewType.VIEWTYPE_NOTIFICATION_DIVIDER:
+            case ViewType.NOTIFICATION_DIVIDER:
 
                 holder.date.setText(item.getDivideString());
 

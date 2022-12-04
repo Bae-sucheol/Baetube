@@ -47,19 +47,30 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
 
         switch(viewType)
         {
-            case ViewType.VIEWTYPE_VIDEO_MEDIUM :
+            case ViewType.VIDEO_LARGE :
+
+                view = inflater.inflate(R.layout.recyclerview_video_large, parent, false);
+
+                break;
+            case ViewType.VIDEO_MEDIUM :
 
                 view = inflater.inflate(R.layout.recyclerview_video_medium, parent, false);
 
                 break;
-            case ViewType.VIEWTYPE_VIDEO_SMALL :
+            case ViewType.VIDEO_SMALL :
 
                 view = inflater.inflate(R.layout.recyclerview_video_small, parent, false);
 
                 break;
+            case ViewType.VIDEO_DIVIDER :
+
+                view = inflater.inflate(R.layout.recyclerview_video_divider, parent, false);
+
+                break;
             default :
 
-                view = inflater.inflate(R.layout.recyclerview_video_large, parent, false);
+                // 지원하는 뷰타입이 없는 경우.
+                view = null; // 임시.
 
                 break;
         }
@@ -78,21 +89,41 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
         ChannelDTO channelDTO = item.getChannelDTO();
         VideoDTO videoDTO = item.getVideoDTO();
 
-        if (item.getViewType() == ViewType.VIEWTYPE_VIDEO_LARGE)
+        switch(item.getViewType())
         {
-            holder.thumbnail.getLayoutParams().height = (int) (UserDisplay.getWidth() * UserDisplay.getRatio());
-            holder.channelName.setText(channelDTO.getName() + " · ");
-        }
-        else
-        {
-            holder.channelName.setText(channelDTO.getName());
-        }
+            case ViewType.VIDEO_LARGE :
 
-        //holder.thumbnail.setImageDrawable();
-        //holder.profile.setImageDrawable();
-        holder.title.setText(videoDTO.getTitle());
-        holder.views.setText(String.valueOf(videoDTO.getViews()) + " · ");
-        holder.date.setText(videoDTO.getDate());
+                holder.channelName.setText(channelDTO.getName() + " · ");
+                //holder.thumbnail.setImageDrawable();
+                //holder.profile.setImageDrawable();
+                holder.title.setText(videoDTO.getTitle());
+                holder.views.setText(String.valueOf(videoDTO.getViews()) + " · ");
+                holder.date.setText(videoDTO.getDate());
+
+                break;
+            case ViewType.VIDEO_MEDIUM :
+
+            case ViewType.VIDEO_SMALL :
+
+                holder.channelName.setText(channelDTO.getName());
+                //holder.thumbnail.setImageDrawable();
+                //holder.profile.setImageDrawable();
+                holder.title.setText(videoDTO.getTitle());
+                holder.views.setText(String.valueOf(videoDTO.getViews()) + " · ");
+                holder.date.setText(videoDTO.getDate());
+
+                break;
+            case ViewType.VIDEO_DIVIDER :
+
+                holder.date.setText(videoDTO.getDate());
+
+                break;
+            default :
+
+                // 지원하지 않는 뷰타입
+
+                break;
+        }
 
     }
 

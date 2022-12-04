@@ -1,12 +1,20 @@
 package com.example.baetube.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.Property;
 import android.view.Display;
+import android.view.KeyEvent;
+import android.view.KeyboardShortcutGroup;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -52,6 +60,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -124,6 +133,12 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
     }
 
 }

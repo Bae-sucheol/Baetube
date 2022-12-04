@@ -130,7 +130,7 @@ public class SubscribeFragment extends Fragment implements OnRecyclerViewClickLi
             ChannelDTO channelDTO = new ChannelDTO();
 
             item.setChannelDTO(channelDTO);
-            item.setViewType(ViewType.VIEWTYPE_SUBSCRIBE_VERTICAL);
+            item.setViewType(ViewType.SUBSCRIBE_VERTICAL);
 
             channelDTO.setName(channel_names[i]);
 
@@ -159,6 +159,7 @@ public class SubscribeFragment extends Fragment implements OnRecyclerViewClickLi
             videoDTO.setDate("1시간 전");
             videoDTO.setTitle(titles[i]);
             videoDTO.setViews(500);
+            item.setViewType(ViewType.VIDEO_LARGE);
 
             videoList.add(item);
         }

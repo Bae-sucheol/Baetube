@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,15 +7,97 @@
     android:layout_height="match_parent"
     tools:context=".fragment.HistoryDetailFragment">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/fragment_history_detail_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:fitsSystemWindows="true">
+
     <include
         layout="@layout/toolbar_no_scroll"
-        android:id="@+id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:id="@+id/toolbar" />
 
-    <
+    </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scroll_behavior">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/fragment_history_detail_appbar_under"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                    <TextView
+                        android:id="@+id/fragment_history_detail_text_button_cancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/height_historydetail_button"
+                        android:background="@color/gray"
+                        android:text="@string/history_detail_text_button_cancel"
+                        android:layout_gravity="right"
+                        android:clickable="true"
+                        style="@style/textview_style_history_detail"
+                        app:layout_constraintStart_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/fragment_history_detail_layout_search"
+                        app:layout_constraintBottom_toBottomOf="@+id/fragment_history_detail_layout_search"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/fragment_history_detail_layout_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/light_gray"
+                        android:paddingVertical="@dimen/padding_xsmall"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/fragment_history_detail_image_search"
+                            android:layout_width="@dimen/size_icon_small"
+                            android:layout_height="@dimen/size_icon_small"
+                            android:background="@drawable/ic_baseline_search_24"
+                            android:layout_marginLeft="@dimen/margin_medium"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <EditText
+                            android:id="@+id/fragment_history_detail_edit_search"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:background="@null"
+                            android:gravity="center_vertical"
+                            android:hint="@string/history_detail_text_search_hint"
+                            app:layout_constraintStart_toEndOf="@+id/fragment_history_detail_image_search"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </FrameLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fragment_history_detail_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_behavior="@string/appbar_scroll_behavior"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_history_detail_layout_search"/>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
