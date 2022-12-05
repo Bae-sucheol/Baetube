@@ -294,4 +294,10 @@
         <item name="android:paddingHorizontal">@dimen/padding_small</item>
     </style>
 
+    <style name="textview_style_home_drawer_normal">
+        <item name="android:textSize">@dimen/textsize_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

@@ -1,16 +1,22 @@
 package com.example.baetube.bottomsheetdialog;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.UserDisplay;
+import com.example.baetube.WidthProperty;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.ReplyDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewReplyAdapter;
@@ -37,8 +44,13 @@ public class ReplyFragment extends BottomSheetDialogFragment implements OnRecycl
 
     // 닫기 버튼 뷰
     private ImageView buttonClose;
+    private ImageView buttonCloseNested;
+    private ImageView buttonBackNested;
 
+    private ConstraintLayout layoutReply;
     private CoordinatorLayout layoutNestedReply;
+
+    private int animationDuration;
 
 
     @Nullable
@@ -62,11 +74,17 @@ public class ReplyFragment extends BottomSheetDialogFragment implements OnRecycl
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         buttonClose = view.findViewById(R.id.bottomsheetdialogfragment_reply_image_close);
+        buttonCloseNested = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_image_close);
+        buttonBackNested = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_image_back);
 
         buttonClose.setOnClickListener(this);
+        buttonCloseNested.setOnClickListener(this);
+        buttonBackNested.setOnClickListener(this);
 
+        layoutReply = view.findViewById(R.id.bottomsheetdialogfragment_reply_layout);
         layoutNestedReply = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_layout);
 
+        animationDuration = getContext().getResources().getInteger(R.integer.animation_duration_reply);
 
         return view;
     }
@@ -111,8 +129,7 @@ public class ReplyFragment extends BottomSheetDialogFragment implements OnRecycl
         {
             case R.id.recyclerview_reply_layout_nested_reply :
 
-                layoutNestedReply.setVisibility(View.VISIBLE);
-                layoutNestedReply.setAlpha(1.0f);
+                openNestedReply();
 
                 break;
         }
@@ -154,6 +171,96 @@ public class ReplyFragment extends BottomSheetDialogFragment implements OnRecycl
     @Override
     public void onClick(View view)
     {
-        this.dismiss();
+        switch (view.getId())
+        {
+            case R.id.bottomsheetdialogfragment_reply_image_close :
+
+
+            case R.id.bottomsheetdialogfragment_nested_reply_image_close :
+
+                this.dismiss();
+
+                break;
+            case R.id.bottomsheetdialogfragment_nested_reply_image_back :
+
+                closeNestedReply();
+
+                break;
+            default :
+
+                // 의도하지 않은 문제
+
+                break;
+        }
+    }
+
+    /**
+     * 답글 화면 출력하는 메소드
+     */
+    private void openNestedReply()
+    {
+        // 먼저 Visible이 Gone인 답글 화면을 Visible로 전환.
+        layoutNestedReply.setVisibility(View.VISIBLE);
+        /*
+         * width, alpha 값을 순차적으로 변화시킨다.
+         * width는 0부터 댓글 화면 사이즈(즉 match_parent) 까지
+         * alpha는 0.0f부터 1.0f까지
+         */
+        PropertyValuesHolder widthProperty = PropertyValuesHolder.ofInt(new WidthProperty(), 0, layoutReply.getWidth());
+        PropertyValuesHolder alphaProperty = PropertyValuesHolder.ofFloat("alpha", 1.0f);
+
+        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(layoutNestedReply, widthProperty, alphaProperty);
+        objectAnimator.setDuration(animationDuration);
+        objectAnimator.start();
+    }
+
+    /**
+     * 답글 화면을 종료하고 댓글 화면을 출력하는 메소드
+     */
+    private void closeNestedReply()
+    {
+        /*
+         * width, alpha 값을 순차적으로 변화시킨다.
+         * width는 댓글 화면 사이즈(즉 match_parent) 부터 0 까지
+         * alpha는 1.0f부터 0.0f까지
+         */
+        PropertyValuesHolder widthProperty = PropertyValuesHolder.ofInt(new WidthProperty(), layoutReply.getWidth(), 0);
+        PropertyValuesHolder alphaProperty = PropertyValuesHolder.ofFloat("alpha", 0.0f);
+
+        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(layoutNestedReply, widthProperty, alphaProperty);
+        objectAnimator.setDuration(animationDuration);
+        objectAnimator.start();
+
+        // 애니메이션이 끝나는 순간 답글 화면의 Visible을 Gone으로 변화시켜야 한다.
+        objectAnimator.addListener(new Animator.AnimatorListener()
+        {
+            @Override
+            public void onAnimationStart(Animator animator)
+            {
+
+            }
+
+            /*
+             * 따라서 onAnimationEnd 메소드를 사용하여 애니메이션이 끝나는 순간
+             * 답글 화면의 Visible를 Gone으로 만든다.
+             */
+            @Override
+            public void onAnimationEnd(Animator animator)
+            {
+                layoutNestedReply.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator)
+            {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator)
+            {
+
+            }
+        });
     }
 }

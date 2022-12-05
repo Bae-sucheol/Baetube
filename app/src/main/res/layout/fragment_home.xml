@@ -155,7 +155,6 @@
       </com.google.android.material.appbar.AppBarLayout>
 
 
-
       <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/fragment_home_recyclerview"
           android:layout_width="match_parent"
@@ -178,7 +177,7 @@
        android:background="@color/white">
 
       <LinearLayout
-          android:id="@+id/fragment_home_drawer_profile_layout"
+          android:id="@+id/fragment_home_drawer_image_profile_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
@@ -186,14 +185,14 @@
           android:background="?attr/selectableItemBackground">
 
          <ImageView
-             android:id="@+id/fragment_home_drawer_profile"
+             android:id="@+id/fragment_home_drawer_image_profile"
              android:layout_width="@dimen/size_icon_medium"
              android:layout_height="@dimen/size_icon_medium"
              android:background="@drawable/ic_baseline_account_circle_24"
              android:layout_marginRight="@dimen/margin_small"/>
 
          <TextView
-             android:id="@+id/fragment_home_drawer_name"
+             android:id="@+id/fragment_home_drawer_text_name"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:gravity="center_vertical"
@@ -223,7 +222,7 @@
              android:layout_height="match_parent"
              android:gravity="center_vertical"
              android:text="@string/home_drawer_account_manage"
-             style="@style/textview_style_normal"/>
+             style="@style/textview_style_home_drawer_normal"/>
 
       </LinearLayout>
 
@@ -247,7 +246,7 @@
              android:layout_height="match_parent"
              android:gravity="center_vertical"
              android:text="@string/home_drawer_my_channel"
-             style="@style/textview_style_normal"/>
+             style="@style/textview_style_home_drawer_normal"/>
 
       </LinearLayout>
 
@@ -271,7 +270,7 @@
              android:layout_height="match_parent"
              android:gravity="center_vertical"
              android:text="@string/home_drawer_logout"
-             style="@style/textview_style_normal"/>
+             style="@style/textview_style_home_drawer_normal"/>
 
       </LinearLayout>
 
@@ -303,11 +302,11 @@
              android:layout_height="match_parent"
              android:gravity="center_vertical"
              android:text="@string/home_drawer_back"
-             style="@style/textview_style_normal"/>
+             style="@style/textview_style_home_drawer_normal"/>
 
       </LinearLayout>
 
    </LinearLayout>
-
+-->
 </androidx.drawerlayout.widget.DrawerLayout>
 

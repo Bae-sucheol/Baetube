@@ -13,7 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottomsheetdialogfragment_reply_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/bottomsheetdialog_border">
 
             <View
                 android:id="@+id/bottomsheetdialogfragment_reply_button_slide"
@@ -33,7 +34,7 @@
                     android:text="@string/bottomsheetdialogfragment_reply_text_reply"
                     style="@style/textview_style_bottomsheetdialogfragment_reply_large"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_reply_button_slide"/>
+                    app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_reply_button_slide"/>
 
                 <ImageView
                     android:id="@+id/bottomsheetdialogfragment_reply_image_close"
@@ -124,11 +125,11 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/bottomsheetdialogfragment_nested_reply_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:visibility="gone"
-        android:alpha="0"
-        android:background="@color/white"
+        android:alpha="0.0"
+        android:background="@drawable/bottomsheetdialog_border"
         android:layout_gravity="right">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -142,44 +143,50 @@
             android:gravity="center"
             app:elevation="0dp">
 
-            <View
-                android:id="@+id/bottomsheetdialogfragment_nested_reply_button_slide"
-                android:layout_width="@dimen/width_reply_slide"
-                android:layout_height="@dimen/height_reply_slide"
-                android:layout_marginTop="@dimen/margin_small"
-                android:background="@drawable/reply_slide_button"/>
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_icon_small"
-                android:layout_marginVertical="@dimen/margin_small"
-                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical">
 
+                <View
+                    android:id="@+id/bottomsheetdialogfragment_nested_reply_button_slide"
+                    android:layout_width="@dimen/width_reply_slide"
+                    android:layout_height="@dimen/height_reply_slide"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:background="@drawable/reply_slide_button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
                 <ImageView
-                    android:id="@+id/bottomsheetdialogfragment_nested_reply_image_button_back"
+                    android:id="@+id/bottomsheetdialogfragment_nested_reply_image_back"
                     android:layout_width="@dimen/size_icon_small"
                     android:layout_height="@dimen/size_icon_small"
                     android:background="@drawable/ic_baseline_arrow_back_24"
+                    android:layout_marginHorizontal="@dimen/margin_medium"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_nested_reply_text_reply_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/bottomsheetdialogfragment_nested_reply_text_reply_title"/>
 
                 <TextView
                     android:id="@+id/bottomsheetdialogfragment_nested_reply_text_reply_title"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_medium"
+                    android:layout_marginHorizontal="@dimen/margin_large"
                     android:text="@string/bottomsheetdialogfragment_reply_text_nested_reply"
-                    android:layout_marginLeft="@dimen/margin_large"
                     style="@style/textview_style_bottomsheetdialogfragment_reply_large"
-                    app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_nested_reply_image_button_back"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_nested_reply_image_back"
+                    app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_nested_reply_button_slide"/>
 
                 <ImageView
                     android:id="@+id/bottomsheetdialogfragment_nested_reply_image_close"
                     android:layout_width="@dimen/size_icon_small"
                     android:layout_height="@dimen/size_icon_small"
                     android:background="@drawable/ic_baseline_close_24"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginHorizontal="@dimen/margin_medium"
+                    app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_nested_reply_text_reply_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/bottomsheetdialogfragment_nested_reply_text_reply_title"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

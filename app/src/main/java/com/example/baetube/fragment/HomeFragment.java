@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
         drawerLayout = view.findViewById(R.id.fragment_home_drawer);
 
         // 드로워 메뉴 레이아웃 요소 찾기
-        layoutProfile = view.findViewById(R.id.fragment_home_drawer_profile_layout);
+        layoutProfile = view.findViewById(R.id.fragment_home_drawer_image_profile_layout);
         layoutAccountManage = view.findViewById(R.id.fragment_home_drawer_account_manage_layout);
         layoutMyChannel = view.findViewById(R.id.fragment_home_drawer_my_channel_layout);
         layoutLogout = view.findViewById(R.id.fragment_home_drawer_logout_layout);
@@ -145,7 +145,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
     {
         switch(view.getId())
         {
-            case R.id.fragment_home_drawer_profile_layout :
+            case R.id.fragment_home_drawer_image_profile_layout :
 
                 break;
             case R.id.fragment_home_drawer_account_manage_layout :

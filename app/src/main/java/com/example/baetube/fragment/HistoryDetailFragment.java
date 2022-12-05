@@ -96,7 +96,7 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
         search.setOnFocusChangeListener(this);
         buttonCancel.setOnClickListener(this);
 
-        animationDuration = getContext().getResources().getInteger(R.integer.animation_duration);
+        animationDuration = getContext().getResources().getInteger(R.integer.animation_duration_histort_detail);
 
         // Inflate the layout for this fragment
         return view;
