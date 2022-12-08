@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
+import com.example.baetube.TestMotionLayoutFragment;
 import com.example.baetube.ViewType;
 import com.example.baetube.bottomsheetdialog.VideoFragment;
 import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
@@ -205,8 +206,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
         {
             case R.id.recyclerview_video_image_thumbnail :
 
-                VideoFragment videoFragment = new VideoFragment();
-                videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+                //VideoFragment videoFragment = new VideoFragment();
+                //videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+
+                getParentFragmentManager().beginTransaction().replace(R.id.activity_main_layout, new TestMotionLayoutFragment()).commit();
 
                 break;
             case R.id.recyclerview_video_image_profile :
@@ -226,8 +229,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
                 break;
             case R.id.recyclerview_video_layout_information :
 
-                videoFragment = new VideoFragment();
-                videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+                //videoFragment = new VideoFragment();
+                //videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
 
                 break;
 

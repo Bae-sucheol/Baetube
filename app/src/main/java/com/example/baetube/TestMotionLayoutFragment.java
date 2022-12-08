@@ -1,8 +1,18 @@
-package com.example.baetube.bottomsheetdialog;
+package com.example.baetube;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.baetube.OnRecyclerViewClickListener;
-import com.example.baetube.R;
-import com.example.baetube.UserDisplay;
-import com.example.baetube.VideoBottomSheetCallback;
-import com.example.baetube.ViewType;
+import com.example.baetube.bottomsheetdialog.AddPlaylistFragment;
+import com.example.baetube.bottomsheetdialog.ReplyFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.fragment.channel.ChannelBaseFragment;
@@ -34,11 +33,10 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
-public class VideoFragment extends BottomSheetDialogFragment implements OnRecyclerViewClickListener, View.OnClickListener
+
+public class TestMotionLayoutFragment extends Fragment implements OnRecyclerViewClickListener, View.OnClickListener
 {
     private View view;
     private RecyclerView recyclerView;
@@ -70,7 +68,7 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.bottomsheetdialogfragment_video, container, false);
+        view = inflater.inflate(R.layout.fragment_test_motion_layout, container, false);
 
         test();
         /*
@@ -79,7 +77,7 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
          * 3. 리사이클러뷰 어댑터 설정
          * 4. 리사이클러뷰 레이아웃 매니저 설정
          */
-
+/*
         recyclerView = view.findViewById(R.id.bottomsheetdialogfragment_video_recyclerview);
         adapter = new RecyclerViewVideoAdapter(list);
         recyclerView.setAdapter(adapter);
@@ -114,45 +112,10 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
         addLibrary.setOnClickListener(this);
         channelProfile.setOnClickListener(this);
         layoutReply.setOnClickListener(this);
+        */
+
 
         return view;
-    }
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
-    {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-
-        dialog.setOnShowListener(new DialogInterface.OnShowListener()
-        {
-            @Override
-            public void onShow(DialogInterface dialogInterface)
-            {
-                BottomSheetDialog bottomSheetDialog = (BottomSheetDialog)dialogInterface;
-                setRatio(bottomSheetDialog);
-            }
-        });
-
-        return dialog;
-    }
-
-    public void setRatio(BottomSheetDialog bottomSheetDialog)
-    {
-        FrameLayout bottomSheet = (FrameLayout)
-                bottomSheetDialog.findViewById(R.id.design_bottom_sheet);
-
-        BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
-        ViewGroup.LayoutParams layoutParams = bottomSheet.getLayoutParams();
-        layoutParams.height = (int)UserDisplay.getHeight();
-        bottomSheet.setLayoutParams(layoutParams);
-        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        behavior.addBottomSheetCallback(new VideoBottomSheetCallback(player.getHeight(), player));
-
-        int peekHeight = (int)(UserDisplay.getWidth() * 0.125);
-
-        behavior.setPeekHeight(peekHeight);
-
     }
 
     @Override
