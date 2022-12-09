@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+
+    <ConstraintSet android:id="@+id/start" >
+        <Constraint
+            android:id="@+id/videoView"
+            motion:layout_constraintWidth_percent="1.0"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintDimensionRatio="@string/res_ratio_wide" />
+        <Constraint
+            android:id="@+id/layout_description"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@+id/videoView"
+            motion:layout_constraintStart_toStartOf="parent" />
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/end" >
+
+        <Constraint
+            android:id="@+id/videoView"
+            motion:layout_constraintWidth_percent="0.4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintDimensionRatio="@string/res_ratio_ultra_wide" />
+
+        <Constraint
+            android:id="@+id/layout_description"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@+id/videoView"
+            motion:layout_constraintStart_toStartOf="parent" />
+    </ConstraintSet>
+    <Transition
+        motion:constraintSetStart="@+id/start"
+        motion:constraintSetEnd="@+id/end" >
+        <OnSwipe
+            motion:touchAnchorId="@+id/videoView"
+            motion:dragDirection="dragDown"
+            motion:touchAnchorSide="middle" />
+        <KeyFrameSet >
+            <KeyAttribute
+                motion:motionTarget="@+id/videoView"
+                motion:framePosition="90"
+                android:scaleX="3.3" />
+        </KeyFrameSet>
+    </Transition>
+</MotionScene>

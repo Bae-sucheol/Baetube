@@ -183,6 +183,8 @@
     <string name="res_ratio_wide">1.77</string>
     <string name="res_ratio_ultra_wide">2.33</string>
     <string name="res_ratio_channel_art">3.65</string>
+    <string name="res_ratio_collapsed">4.00</string>
+    <string name="res_ratio_min">5.00</string>
 
     <!--
     * 알림 날짜 구분

@@ -25,6 +25,7 @@
     <dimen name="margin_small">10dp</dimen>
     <dimen name="margin_medium">15dp</dimen>
     <dimen name="margin_large">30dp</dimen>
+    <dimen name="margin_minimum">2dp</dimen>
 
     <!--
     * padding 사이즈
@@ -42,6 +43,16 @@
     <dimen name="radius_small">8dp</dimen>
     <dimen name="radius_medium">10dp</dimen>
     <dimen name="radius_large">15dp</dimen>
+
+    <!--
+    * 화면 비
+    -->
+    <dimen name="res_ratio_full">1.33</dimen>
+    <dimen name="res_ratio_wide">1.77</dimen>
+    <dimen name="res_ratio_ultra_wide">2.33</dimen>
+    <dimen name="res_ratio_channel_art">3.65</dimen>
+    <dimen name="res_ratio_collapsed">4.00</dimen>
+    <dimen name="res_ratio_min">5.00</dimen>
 
     <dimen name="width_reply_slide">50dp</dimen>
     <dimen name="height_reply_slide">5dp</dimen>
