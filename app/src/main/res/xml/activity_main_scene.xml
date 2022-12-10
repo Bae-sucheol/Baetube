@@ -1,54 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MotionScene 
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:motion="http://schemas.android.com/apk/res-auto">
-
-    <Transition
-        motion:constraintSetEnd="@+id/end"
-        motion:constraintSetStart="@id/start"
-        motion:duration="1000">
-       <KeyFrameSet>
-       </KeyFrameSet>
-        <OnSwipe
-            motion:touchAnchorId="@+id/activity_main_layout_front"
-            motion:dragDirection="dragDown"
-            motion:touchAnchorSide="bottom" />
-    </Transition>
+    xmlns:motion="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ConstraintSet android:id="@+id/start">
         <Constraint
-            android:id="@+id/activity_main_layout_front"
+            android:id="@+id/videoView"
+            motion:layout_constraintWidth_percent="1.0"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            motion:layout_constraintBottom_toTopOf="@+id/activity_main_bottom_navigation"
             motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintStart_toStartOf="parent" />
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintDimensionRatio="@string/res_ratio_wide" />
         <Constraint
-            android:id="@+id/activity_main_bottom_navigation"
+            android:id="@+id/activity_main_layout_video_"
+            motion:layout_constraintStart_toEndOf="@+id/videoView"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/videoView"
+            motion:layout_constraintTop_toTopOf="@+id/videoView" />
+        <Constraint
+            android:id="@+id/activity_main_layout"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             motion:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"
+            motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
         <Constraint
-            android:id="@+id/activity_main_layout_front"
+            android:id="@+id/videoView"
+            motion:layout_constraintWidth_percent="0.4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintDimensionRatio="@string/res_ratio_ultra_wide" />
+        <Constraint
+            android:id="@+id/activity_main_layout_video_"
+            motion:layout_constraintStart_toEndOf="@+id/videoView"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            motion:layout_constraintBottom_toTopOf="@+id/activity_main_bottom_navigation"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintWidth_percent="1.0"
-            motion:layout_constraintDimensionRatio="@string/res_ratio_min"/>
+            motion:layout_constraintBottom_toBottomOf="@+id/videoView"
+            motion:layout_constraintTop_toTopOf="@+id/videoView" />
         <Constraint
-            android:id="@+id/activity_main_bottom_navigation"
+            android:id="@+id/activity_main_layout"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             motion:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="visible"
+            motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>
+
+    <Transition
+        motion:constraintSetStart="@+id/start"
+        motion:constraintSetEnd="@+id/end" >
+        <OnSwipe
+            motion:touchAnchorId="@+id/videoView"
+            motion:dragDirection="dragDown"
+            motion:touchAnchorSide="bottom" />
+        <KeyFrameSet >
+            <KeyAttribute
+                motion:motionTarget="@+id/videoView"
+                motion:framePosition="90"
+                android:scaleX="3.4" />
+        </KeyFrameSet>
+    </Transition>
+
+
 </MotionScene>

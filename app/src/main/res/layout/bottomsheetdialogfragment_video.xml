@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_bottomsheetdialogfragment_video"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".bottomsheetdialog.VideoFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -15,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:fitsSystemWindows="true"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:fitsSystemWindows="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -26,17 +25,82 @@
                 android:id="@+id/bottomsheetdialogfragment_video_player"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="@string/res_ratio_wide"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="1.0"
-                app:layout_constraintDimensionRatio="@string/res_ratio_wide"/>
+                app:layout_constraintWidth_percent="1.0" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bottomsheetdialogfragment_video_min_menu"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/bottomsheetdialogfragment_video_player"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_video_player"
+                app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_video_player">
+
+                <LinearLayout
+                    android:id="@+id/bottomsheetdialogfragment_video_layout_player_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <ImageView
+                        android:id="@+id/bottomsheetdialogfragment_video_image_player_play"
+                        android:layout_width="@dimen/size_icon_small"
+                        android:layout_height="@dimen/size_icon_small"
+                        android:background="@drawable/ic_baseline_play_arrow_24"/>
+
+                    <ImageView
+                        android:id="@+id/bottomsheetdialogfragment_video_image_player_close"
+                        android:layout_width="@dimen/size_icon_small"
+                        android:layout_height="@dimen/size_icon_small"
+                        android:background="@drawable/ic_baseline_close_24"
+                        android:layout_marginHorizontal="@dimen/margin_medium"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/bottomsheetdialogfragment_video_text_player_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="쉽게 배우는 자바"
+                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    style="@style/textview_style_home_drawer_normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/bottomsheetdialogfragment_video_layout_player_menu"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/bottomsheetdialogfragment_video_text_player_channel_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="홍길동"
+                    android:layout_marginLeft="@dimen/margin_xsmall"
+                    android:layout_marginTop="@dimen/margin_xsmall"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    style="@style/textview_style_home_drawer_normal"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="@+id/bottomsheetdialogfragment_video_text_player_title"
+                    app:layout_constraintEnd_toEndOf="@+id/bottomsheetdialogfragment_video_text_player_title"
+                    app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_text_player_title"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/bottomsheetdialogfragment_video_layout_description"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scroll_behavior">
@@ -59,66 +123,66 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_begin="@dimen/margin_medium"/>
+                    app:layout_constraintGuide_begin="@dimen/margin_medium" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/bottomsheetdialogfragment_video_gulid_right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_end="@dimen/margin_medium"/>
+                    app:layout_constraintGuide_end="@dimen/margin_medium" />
 
                 <ImageView
                     android:id="@+id/bottomsheetdialogfragment_video_image_detail"
                     android:layout_width="@dimen/size_icon_small"
                     android:layout_height="@dimen/size_icon_small"
-                    android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
                     android:layout_marginTop="@dimen/margin_small"
+                    android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
                     app:layout_constraintEnd_toEndOf="@+id/bottomsheetdialogfragment_video_gulid_right"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/bottomsheetdialogfragment_video_text_title"
+                    style="@style/textview_style_bottomsheetdialogfragment_video_large"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
                     android:text="쉽게 배우는 자바"
-                    style="@style/textview_style_bottomsheetdialogfragment_video_large"
-                    app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_video_gulid_left"
                     app:layout_constraintEnd_toStartOf="@+id/bottomsheetdialogfragment_video_image_detail"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_video_gulid_left"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:id="@+id/bottomsheetdialogfragment_video_data_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginTop="@dimen/margin_xsmall"
-                    app:layout_constraintStart_toEndOf="@id/bottomsheetdialogfragment_video_gulid_left"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toStartOf="@id/bottomsheetdialogfragment_video_image_detail"
+                    app:layout_constraintStart_toEndOf="@id/bottomsheetdialogfragment_video_gulid_left"
                     app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_text_title">
 
                     <TextView
+                        style="textview_style_bottomsheetdialogfragment_video_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/bottomsheetdialogfragment_video_text_view"
-                        style="textview_style_bottomsheetdialogfragment_video_small" />
+                        android:text="@string/bottomsheetdialogfragment_video_text_view" />
 
                     <TextView
                         android:id="@+id/bottomsheetdialogfragment_video_text_view_count"
+                        style="textview_style_bottomsheetdialogfragment_video_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="500"
                         android:layout_marginLeft="@dimen/margin_xsmall"
-                        style="textview_style_bottomsheetdialogfragment_video_small" />
+                        android:text="500" />
 
                     <TextView
                         android:id="@+id/bottomsheetdialogfragment_video_text_date"
+                        style="textview_style_bottomsheetdialogfragment_video_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1시간 전"
                         android:layout_marginLeft="@dimen/margin_xsmall"
-                        style="textview_style_bottomsheetdialogfragment_video_small" />
+                        android:text="1시간 전" />
 
                 </LinearLayout>
 
@@ -127,8 +191,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
-                    app:layout_constraintStart_toEndOf="@id/bottomsheetdialogfragment_video_gulid_left"
                     app:layout_constraintEnd_toStartOf="@+id/bottomsheetdialogfragment_video_gulid_right"
+                    app:layout_constraintStart_toEndOf="@id/bottomsheetdialogfragment_video_gulid_left"
                     app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_data_layout">
 
                     <ImageView
@@ -137,58 +201,58 @@
                         android:layout_height="@dimen/size_icon_small"
                         android:background="@drawable/ic_baseline_thumb_up_24"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/bottomsheetdialogfragment_video_image_thumb_down"
                         android:layout_width="@dimen/size_icon_small"
                         android:layout_height="@dimen/size_icon_small"
-                        android:background="@drawable/ic_baseline_thumb_down_24"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:background="@drawable/ic_baseline_thumb_down_24"
                         app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_video_image_thumb_up"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/bottomsheetdialogfragment_video_image_add_library"
                         android:layout_width="@dimen/size_icon_small"
                         android:layout_height="@dimen/size_icon_small"
-                        android:background="@drawable/ic_baseline_library_add_24"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:background="@drawable/ic_baseline_library_add_24"
                         app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_video_image_thumb_down"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/bottomsheetdialogfragment_video_text_like"
+                        style="@style/textview_style_bottomsheetdialogfragment_video_small"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="50"
                         android:gravity="center"
-                        style="@style/textview_style_bottomsheetdialogfragment_video_small"
-                        app:layout_constraintStart_toStartOf="@+id/bottomsheetdialogfragment_video_image_thumb_up"
+                        android:text="50"
                         app:layout_constraintEnd_toEndOf="@+id/bottomsheetdialogfragment_video_image_thumb_up"
-                        app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_image_thumb_up"/>
+                        app:layout_constraintStart_toStartOf="@+id/bottomsheetdialogfragment_video_image_thumb_up"
+                        app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_image_thumb_up" />
 
                     <TextView
                         android:id="@+id/bottomsheetdialogfragment_video_text_hate"
+                        style="@style/textview_style_bottomsheetdialogfragment_video_small"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="50"
                         android:gravity="center"
-                        style="@style/textview_style_bottomsheetdialogfragment_video_small"
-                        app:layout_constraintStart_toStartOf="@+id/bottomsheetdialogfragment_video_image_thumb_down"
+                        android:text="50"
                         app:layout_constraintEnd_toEndOf="@+id/bottomsheetdialogfragment_video_image_thumb_down"
-                        app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_image_thumb_down"/>
+                        app:layout_constraintStart_toStartOf="@+id/bottomsheetdialogfragment_video_image_thumb_down"
+                        app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_image_thumb_down" />
 
                     <TextView
                         android:id="@+id/bottomsheetdialogfragment_video_text_add_playlist"
+                        style="@style/textview_style_bottomsheetdialogfragment_video_small"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/bottomsheetdialogfragment_video_text_add_playlist"
                         android:gravity="center"
-                        style="@style/textview_style_bottomsheetdialogfragment_video_small"
-                        app:layout_constraintStart_toStartOf="@+id/bottomsheetdialogfragment_video_image_add_library"
+                        android:text="@string/bottomsheetdialogfragment_video_text_add_playlist"
                         app:layout_constraintEnd_toEndOf="@+id/bottomsheetdialogfragment_video_image_add_library"
-                        app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_image_add_library"/>
+                        app:layout_constraintStart_toStartOf="@+id/bottomsheetdialogfragment_video_image_add_library"
+                        app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_image_add_library" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -196,118 +260,118 @@
                     android:id="@+id/bottomsheetdialogfragment_video_image_channel_profile"
                     android:layout_width="@dimen/size_icon_medium"
                     android:layout_height="@dimen/size_icon_medium"
-                    android:background="@drawable/ic_baseline_account_circle_24"
                     android:layout_marginTop="@dimen/margin_small"
+                    android:background="@drawable/ic_baseline_account_circle_24"
                     app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_video_gulid_left"
-                    app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_function_layout"/>
+                    app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_function_layout" />
 
                 <TextView
                     android:id="@+id/bottomsheetdialogfragment_video_text_button_subscribe"
+                    style="@style/textview_style_clickable"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:text="@string/bottomsheetdialogfragment_video_text_subscribe"
                     android:gravity="center"
-                    style="@style/textview_style_clickable"
+                    android:text="@string/bottomsheetdialogfragment_video_text_subscribe"
                     android:textColor="@color/red"
-                    app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_video_image_channel_profile"
                     app:layout_constraintBottom_toBottomOf="@+id/bottomsheetdialogfragment_video_image_channel_profile"
-                    app:layout_constraintEnd_toStartOf="@id/bottomsheetdialogfragment_video_gulid_right"/>
+                    app:layout_constraintEnd_toStartOf="@id/bottomsheetdialogfragment_video_gulid_right"
+                    app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_video_image_channel_profile" />
 
                 <TextView
                     android:id="@+id/bottomsheetdialogfragment_video_text_channel_name"
+                    style="@style/textview_style_bottomsheetdialogfragment_video_large"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_small"
                     android:text="홍길동"
-                    style="@style/textview_style_bottomsheetdialogfragment_video_large"
-                    app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_video_image_channel_profile"
+                    app:layout_constraintEnd_toStartOf="@id/bottomsheetdialogfragment_video_text_button_subscribe"
                     app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_video_image_channel_profile"
-                    app:layout_constraintEnd_toStartOf="@id/bottomsheetdialogfragment_video_text_button_subscribe"/>
+                    app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_video_image_channel_profile" />
 
                 <LinearLayout
                     android:id="@+id/bottomsheetdialogfragment_video_subscribe_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginLeft="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_xsmall"
-                    app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_video_image_channel_profile"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toStartOf="@+id/bottomsheetdialogfragment_video_text_button_subscribe"
+                    app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_video_image_channel_profile"
                     app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_text_channel_name">
 
                     <TextView
+                        style="@style/textview_style_bottomsheetdialogfragment_video_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/bottomsheetdialogfragment_video_text_subscribe_count"
-                        style="@style/textview_style_bottomsheetdialogfragment_video_small"/>
+                        android:text="@string/bottomsheetdialogfragment_video_text_subscribe_count" />
 
                     <TextView
                         android:id="@+id/bottomsheetdialogfragment_video_text_subscribe_count"
+                        style="@style/textview_style_bottomsheetdialogfragment_video_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_xsmall"
-                        android:text="100 명"
-                        style="@style/textview_style_bottomsheetdialogfragment_video_small"/>
+                        android:text="100 명" />
 
                 </LinearLayout>
 
-              <androidx.constraintlayout.widget.ConstraintLayout
-                  android:id="@+id/bottomsheetdialogfragment_video_layout_reply"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="@dimen/margin_small"
-                  android:layout_marginHorizontal="@dimen/margin_medium"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_image_channel_profile">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/bottomsheetdialogfragment_video_layout_reply"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_medium"
+                    android:layout_marginTop="@dimen/margin_small"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_image_channel_profile">
 
-                  <TextView
-                      android:id="@+id/bottomsheetdialogfragment_video_text_reply"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/bottomsheetdialogfragment_video_text_reply"
-                      style="@style/textview_style_bottomsheetdialogfragment_video_small"
-                      app:layout_constraintStart_toStartOf="parent"
-                      app:layout_constraintTop_toTopOf="parent"/>
+                    <TextView
+                        android:id="@+id/bottomsheetdialogfragment_video_text_reply"
+                        style="@style/textview_style_bottomsheetdialogfragment_video_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bottomsheetdialogfragment_video_text_reply"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                  <TextView
-                      android:id="@+id/bottomsheetdialogfragment_video_text_reply_count"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_marginLeft="@dimen/margin_xsmall"
-                      android:text="10"
-                      style="@style/textview_style_bottomsheetdialogfragment_video_small"
-                      app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_video_text_reply"
-                      app:layout_constraintTop_toTopOf="parent"/>
+                    <TextView
+                        android:id="@+id/bottomsheetdialogfragment_video_text_reply_count"
+                        style="@style/textview_style_bottomsheetdialogfragment_video_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_xsmall"
+                        android:text="10"
+                        app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_video_text_reply"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                  <ImageView
-                      android:layout_width="@dimen/size_icon_xsmall"
-                      android:layout_height="@dimen/size_icon_xsmall"
-                      android:background="@drawable/ic_baseline_unfold_more_24"
-                      app:layout_constraintEnd_toEndOf="parent"
-                      app:layout_constraintTop_toTopOf="parent"/>
+                    <ImageView
+                        android:layout_width="@dimen/size_icon_xsmall"
+                        android:layout_height="@dimen/size_icon_xsmall"
+                        android:background="@drawable/ic_baseline_unfold_more_24"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                  <ImageView
-                      android:id="@+id/bottomsheetdialogfragment_video_image_profile"
-                      android:layout_width="@dimen/size_icon_small"
-                      android:layout_height="@dimen/size_icon_small"
-                      android:background="@drawable/ic_baseline_account_circle_24"
-                      app:layout_constraintStart_toStartOf="@+id/bottomsheetdialogfragment_video_text_reply"
-                      app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_video_edit_reply"
-                      app:layout_constraintBottom_toBottomOf="@+id/bottomsheetdialogfragment_video_edit_reply"/>
+                    <ImageView
+                        android:id="@+id/bottomsheetdialogfragment_video_image_profile"
+                        android:layout_width="@dimen/size_icon_small"
+                        android:layout_height="@dimen/size_icon_small"
+                        android:background="@drawable/ic_baseline_account_circle_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/bottomsheetdialogfragment_video_edit_reply"
+                        app:layout_constraintStart_toStartOf="@+id/bottomsheetdialogfragment_video_text_reply"
+                        app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_video_edit_reply" />
 
-                  <EditText
-                      android:id="@+id/bottomsheetdialogfragment_video_edit_reply"
-                      android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="@dimen/margin_small"
-                      android:layout_marginLeft="@dimen/margin_medium"
-                      style="@style/textview_style_bottomsheetdialogfragment_video_small"
-                      android:hint="@string/bottomsheetdialogfragment_video_hint_reply"
-                      app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_video_text_reply"
-                      app:layout_constraintEnd_toEndOf="parent"
-                      app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_text_reply"/>
+                    <EditText
+                        android:id="@+id/bottomsheetdialogfragment_video_edit_reply"
+                        style="@style/textview_style_bottomsheetdialogfragment_video_small"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_medium"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:hint="@string/bottomsheetdialogfragment_video_hint_reply"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_video_text_reply"
+                        app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_text_reply" />
 
-              </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -320,7 +384,7 @@
             android:layout_marginTop="@dimen/margin_small"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_behavior="@string/appbar_scroll_behavior"/>
+            app:layout_behavior="@string/appbar_scroll_behavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

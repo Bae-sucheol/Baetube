@@ -15,6 +15,7 @@ import android.widget.VideoView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -65,6 +66,8 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
     private EditText reply;
 
     private ConstraintLayout layoutReply;
+    private CoordinatorLayout layoutDescription;
+    private ConstraintLayout layoutMinMenu;
 
     @Nullable
     @Override
@@ -108,12 +111,16 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
         reply = view.findViewById(R.id.bottomsheetdialogfragment_video_edit_reply);
 
         layoutReply = view.findViewById(R.id.bottomsheetdialogfragment_video_layout_reply);
+        layoutDescription = view.findViewById(R.id.bottomsheetdialogfragment_video_layout_description);
+        layoutMinMenu = view.findViewById(R.id.bottomsheetdialogfragment_video_min_menu);
 
         thumbUp.setOnClickListener(this);
         thumbDown.setOnClickListener(this);
         addLibrary.setOnClickListener(this);
         channelProfile.setOnClickListener(this);
         layoutReply.setOnClickListener(this);
+
+        this.setCancelable(false);
 
         return view;
     }
@@ -142,16 +149,15 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
         FrameLayout bottomSheet = (FrameLayout)
                 bottomSheetDialog.findViewById(R.id.design_bottom_sheet);
 
+        int peekHeight = (int)(UserDisplay.getWidth() * 0.16);
+
         BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
         ViewGroup.LayoutParams layoutParams = bottomSheet.getLayoutParams();
         layoutParams.height = (int)UserDisplay.getHeight();
         bottomSheet.setLayoutParams(layoutParams);
         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        behavior.addBottomSheetCallback(new VideoBottomSheetCallback(player.getHeight(), player));
-
-        int peekHeight = (int)(UserDisplay.getWidth() * 0.125);
-
         behavior.setPeekHeight(peekHeight);
+        behavior.addBottomSheetCallback(new VideoBottomSheetCallback(player.getHeight(), player, layoutDescription, behavior));
 
     }
 

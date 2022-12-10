@@ -12,14 +12,19 @@ import android.view.KeyEvent;
 import android.view.KeyboardShortcutGroup;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.motion.widget.MotionLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -69,6 +74,14 @@ public class MainActivity extends AppCompatActivity
     // 프래그먼트 매니저
     private FragmentManager fragmentManager;
 
+    private ConstraintLayout layoutFront;
+    private LinearLayout layout;
+    private MotionLayout layoutParent;
+    private VideoView videoView;
+    private int video_height;
+    private int swipe_height;
+    private float start;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -88,12 +101,22 @@ public class MainActivity extends AppCompatActivity
         UserDisplay.setHeight(size.y);
         UserDisplay.setDensity(displayMetrics.density);
 
+        //layoutFront = findViewById(R.id.activity_main_layout_front);
+
+        //videoView = layoutFront.findViewById(R.id.videoView);
+        //video_height = videoView.getHeight();
+        //swipe_height = (int)UserDisplay.getHeight() - video_height;
+        //layout = findViewById(R.id.activity_main_layout);
+        //layout.setEnabled(false);
+
+
         // 프래그먼트 매니저를 지정
         fragmentManager = getSupportFragmentManager();
 
         // 프래그먼트 매니저에 HomeFragment를 추가하고 커밋한다. ( 첫 화면 지정 )
         fragmentManager.beginTransaction().add(R.id.activity_main_layout, new HomeFragment()).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_layout, new ChannelBaseFragment()).commit();
+
 
         // 바텀 네비게이션 요소를 findViewById를 사용하여 찾는다.
         bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation);
