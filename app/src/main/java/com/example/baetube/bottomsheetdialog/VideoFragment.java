@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -39,7 +40,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class VideoFragment extends BottomSheetDialogFragment implements OnRecyclerViewClickListener, View.OnClickListener
+public class VideoFragment extends BottomSheetDialogFragment implements OnRecyclerViewClickListener, View.OnClickListener, View.OnTouchListener
 {
     private View view;
     private RecyclerView recyclerView;
@@ -62,6 +63,8 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
     private ImageView addLibrary;
     private ImageView channelProfile;
     private ImageView profile;
+    private ImageView buttonPlayerPlay;
+    private ImageView buttonPlayerClose;
 
     private EditText reply;
 
@@ -107,6 +110,11 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
         addLibrary = view.findViewById(R.id.bottomsheetdialogfragment_video_image_add_library);
         channelProfile = view.findViewById(R.id.bottomsheetdialogfragment_video_image_channel_profile);
         profile = view.findViewById(R.id.bottomsheetdialogfragment_video_image_profile);
+
+        buttonPlayerPlay = view.findViewById(R.id.bottomsheetdialogfragment_video_image_player_play);
+        buttonPlayerClose = view.findViewById(R.id.bottomsheetdialogfragment_video_image_player_close);
+
+        buttonPlayerClose.setOnClickListener(this);
 
         reply = view.findViewById(R.id.bottomsheetdialogfragment_video_edit_reply);
 
@@ -157,7 +165,7 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
         bottomSheet.setLayoutParams(layoutParams);
         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         behavior.setPeekHeight(peekHeight);
-        behavior.addBottomSheetCallback(new VideoBottomSheetCallback(player.getHeight(), player, layoutDescription, behavior));
+       // behavior.addBottomSheetCallback(new VideoBottomSheetCallback(player.getHeight(), player, layoutDescription, behavior));
 
     }
 
@@ -242,10 +250,21 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
                 replyFragment.show(getParentFragmentManager(), replyFragment.getTag());
 
                 break;
+            case R.id.bottomsheetdialogfragment_video_image_player_close :
+
+                dismiss();
+
+                break;
             default :
                 break;
         }
 
     }
 
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent)
+    {
+
+        return false;
+    }
 }

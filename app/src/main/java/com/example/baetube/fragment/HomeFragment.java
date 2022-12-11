@@ -206,8 +206,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
         {
             case R.id.recyclerview_video_image_thumbnail :
 
-                VideoFragment videoFragment = new VideoFragment();
-                videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+                //VideoFragment videoFragment = new VideoFragment();
+                //videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
 
                 //getParentFragmentManager().beginTransaction().replace(R.id.activity_main_layout_front, new TestMotionLayoutFragment()).addToBackStack(null).commit();
 

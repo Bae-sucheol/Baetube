@@ -25,12 +25,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.OnRecyclerViewClickListener;
+import com.example.baetube.TestMotionLayoutFragment;
 import com.example.baetube.UserDisplay;
+import com.example.baetube.VideoBottomSheetCallback;
 import com.example.baetube.ViewType;
 import com.example.baetube.bottomsheetdialog.BaseOptionFragment;
 import com.example.baetube.bottomsheetdialog.BaseReportFragment;
@@ -73,14 +76,13 @@ public class MainActivity extends AppCompatActivity
     private BottomNavigationView bottomNavigationView;
     // 프래그먼트 매니저
     private FragmentManager fragmentManager;
-
-    private ConstraintLayout layoutFront;
-    private LinearLayout layout;
-    private MotionLayout layoutParent;
-    private VideoView videoView;
-    private int video_height;
-    private int swipe_height;
-    private float start;
+    // 바텀시트 다이얼로그(동영상)
+    private ConstraintLayout bottomSheetVideo;
+    // 바텀시트 비헤이버
+    private BottomSheetBehavior bottomSheetBehavior;
+    // 바텀시트 내부 요소들.
+    private VideoView player;
+    private CoordinatorLayout layoutDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -101,22 +103,12 @@ public class MainActivity extends AppCompatActivity
         UserDisplay.setHeight(size.y);
         UserDisplay.setDensity(displayMetrics.density);
 
-        //layoutFront = findViewById(R.id.activity_main_layout_front);
-
-        //videoView = layoutFront.findViewById(R.id.videoView);
-        //video_height = videoView.getHeight();
-        //swipe_height = (int)UserDisplay.getHeight() - video_height;
-        //layout = findViewById(R.id.activity_main_layout);
-        //layout.setEnabled(false);
-
-
         // 프래그먼트 매니저를 지정
         fragmentManager = getSupportFragmentManager();
 
         // 프래그먼트 매니저에 HomeFragment를 추가하고 커밋한다. ( 첫 화면 지정 )
-        fragmentManager.beginTransaction().add(R.id.activity_main_layout, new HomeFragment()).commit();
+        fragmentManager.beginTransaction().replace(R.id.activity_main_layout, new HomeFragment()).addToBackStack(null).commit();
         //fragmentManager.beginTransaction().add(R.id.activity_main_layout, new ChannelBaseFragment()).commit();
-
 
         // 바텀 네비게이션 요소를 findViewById를 사용하여 찾는다.
         bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation);
@@ -156,7 +148,21 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        bottomNavigationView.setVisibility(View.GONE);
+
+        // 바텀 시트 요소를 findViewById를 사용하여 찾는다.
+        bottomSheetVideo = findViewById(R.id.activity_main_bottomsheet_video);
+        // 바텀시트 비헤이버를 from 메소드를 통해 설정.
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetVideo);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        // 바텀시트 내부 요소 찾기
+        player = bottomSheetVideo.findViewById(R.id.videoView);
+        layoutDescription = bottomSheetVideo.findViewById(R.id.layout_description);
+
+        bottomSheetBehavior.addBottomSheetCallback(new VideoBottomSheetCallback(player, layoutDescription, bottomSheetBehavior, bottomNavigationView));
     }
+
+
 
     @Override
     public void onBackPressed()

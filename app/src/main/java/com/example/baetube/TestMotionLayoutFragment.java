@@ -113,7 +113,8 @@ public class TestMotionLayoutFragment extends Fragment implements OnRecyclerView
         channelProfile.setOnClickListener(this);
         layoutReply.setOnClickListener(this);
         */
-
+        player = view.findViewById(R.id.videoView);
+        player.setOnClickListener(this);
 
         return view;
     }
@@ -197,6 +198,11 @@ public class TestMotionLayoutFragment extends Fragment implements OnRecyclerView
 
                 ReplyFragment replyFragment = new ReplyFragment();
                 replyFragment.show(getParentFragmentManager(), replyFragment.getTag());
+
+                break;
+            case R.id.videoView :
+
+                getParentFragmentManager().popBackStack();
 
                 break;
             default :

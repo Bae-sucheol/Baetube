@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.shape.InterpolateOnScrollPositionChangeHelper;
@@ -20,17 +21,21 @@ public class VideoBottomSheetCallback extends BottomSheetBehavior.BottomSheetCal
     private BottomSheetBehavior behavior;
     private int peekHeight;
     private int peekWidth;
+    private BottomNavigationView bottomNavigationView;
 
-    public VideoBottomSheetCallback(int height, View player, View description, BottomSheetBehavior behavior)
+    public VideoBottomSheetCallback(View player, View description, BottomSheetBehavior behavior, BottomNavigationView bottomNavigationView)
     {
-        this.height = height;
         this.player = player;
         this.description = description;
         this.behavior = behavior;
+        this.bottomNavigationView = bottomNavigationView;
 
+        height = (int)(UserDisplay.getWidth() * UserDisplay.getRatio());
         width = (int)UserDisplay.getWidth();
-        peekHeight = behavior.getPeekHeight();
+        peekHeight = (int)(UserDisplay.getWidth() * 0.16);
         peekWidth = (int)(peekHeight * 2.33);
+
+        behavior.setPeekHeight(peekHeight);
     }
 
     @Override
@@ -87,7 +92,9 @@ public class VideoBottomSheetCallback extends BottomSheetBehavior.BottomSheetCal
                 player.getLayoutParams().width = width;
             }
 
-            player.getLayoutParams().height = (int) Lerp(height, behavior.getPeekHeight(), interval);
+            //Log.d("test", "height : " + (int) Lerp(height, behavior.getPeekHeight(), interval));
+
+            player.getLayoutParams().height = (int) Lerp(height, peekHeight, interval);
             player.setLayoutParams(player.getLayoutParams());
 
             description.setAlpha(Lerp(1.0f, 0.0f, interval));

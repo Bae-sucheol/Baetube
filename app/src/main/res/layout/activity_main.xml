@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,100 +7,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/activity_main_layout_parent"
-    app:layoutDescription="@xml/activity_main_scene"
     tools:context=".activity.MainActivity">
 
-        <LinearLayout
-            android:id="@+id/activity_main_layout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/activity_main_bottom_navigation">
-
-
-        </LinearLayout>
-
-        <!--
-        <VideoView
-            android:id="@+id/videoView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="1.0"
-            app:layout_constraintDimensionRatio="@string/res_ratio_wide"/>
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/activity_main_layout_video_"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toEndOf="@+id/videoView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/videoView"
-            app:layout_constraintBottom_toBottomOf="@+id/videoView">
+            android:id="@+id/activity_main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/activity_main_image_close"
-                    android:layout_width="@dimen/size_icon_small"
-                    android:layout_height="@dimen/size_icon_small"
-                    android:layout_marginEnd="@dimen/margin_medium"
-                    android:background="@drawable/ic_baseline_close_24"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <ImageView
-                    android:id="@+id/activity_main_image_play"
-                    android:layout_width="@dimen/size_icon_small"
-                    android:layout_height="@dimen/size_icon_small"
-                    android:layout_marginEnd="@dimen/margin_medium"
-                    android:background="@drawable/ic_baseline_play_arrow_24"
-                    app:layout_constraintEnd_toStartOf="@+id/activity_main_image_close"
-                    app:layout_constraintTop_toTopOf="@+id/activity_main_image_close"
-                    app:layout_constraintBottom_toBottomOf="@+id/activity_main_image_close"/>
-
-                <TextView
-                    android:id="@+id/activity_main_text_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:layout_marginHorizontal="@dimen/margin_small"
-                    android:text="쉽게 배우는 자바"
-                    style="@style/textview_style_home_drawer_normal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/activity_main_image_play"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-                <TextView
-                    android:id="@+id/activity_main_text_channel_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_xsmall"
-                    android:layout_marginStart="@dimen/margin_xsmall"
-                    android:text="홍길동"
-                    style="@style/textview_style_home_drawer_normal"
-                    android:textStyle="normal"
-                    app:layout_constraintStart_toStartOf="@+id/activity_main_text_title"
-                    app:layout_constraintEnd_toEndOf="@+id/activity_main_text_title"
-                    app:layout_constraintTop_toBottomOf="@+id/activity_main_text_title"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        -->
+        <include
+            layout="@layout/fragment_test_motion_layout"
+            android:id="@+id/activity_main_bottomsheet_video"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/activity_main_bottom_navigation"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             app:labelVisibilityMode="labeled"
-            app:menu="@menu/menu_bottom_navigation"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:menu="@menu/menu_bottom_navigation" />
+
 
         <!--
         <RelativeLayout
@@ -137,4 +65,4 @@
         </RelativeLayout>
         -->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
