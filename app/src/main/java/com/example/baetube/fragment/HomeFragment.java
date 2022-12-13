@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.baetube.OnFragmentInteractionListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.TestMotionLayoutFragment;
@@ -35,7 +37,7 @@ import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment implements View.OnClickListener, OnRecyclerViewClickListener
+public class HomeFragment extends Fragment implements View.OnClickListener, OnRecyclerViewClickListener, OnFragmentInteractionListener
 {
 
     private View view;
@@ -51,6 +53,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
     private RecyclerView recyclerView;
     private RecyclerViewVideoAdapter recyclerViewVideoAdapter;
     private ArrayList<RecyclerViewVideoItem> list = new ArrayList<>();
+    private OnFragmentInteractionListener onFragmentInteractionListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -87,6 +90,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
         layoutMyChannel.setOnClickListener(this);
         layoutLogout.setOnClickListener(this);
         layoutBack.setOnClickListener(this);
+
+        onFragmentInteractionListener = (OnFragmentInteractionListener) getContext();
 
         test();
 
@@ -211,6 +216,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
 
                 //getParentFragmentManager().beginTransaction().replace(R.id.activity_main_layout_front, new TestMotionLayoutFragment()).addToBackStack(null).commit();
 
+                this.onVideoItemClick();
+
                 break;
             case R.id.recyclerview_video_image_profile :
 
@@ -243,5 +250,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
     public void onItemLongClick(View view, int position)
     {
 
+    }
+
+    @Override
+    public void onVideoItemClick()
+    {
+        onFragmentInteractionListener.onVideoItemClick();
     }
 }

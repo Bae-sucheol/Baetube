@@ -15,10 +15,74 @@
         android:layout_height="0dp"
         android:tag="비디오 뷰"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="1.0"
         app:layout_constraintDimensionRatio="@string/res_ratio_wide"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomsheetdialogfragment_video_min_menu"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/videoView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/videoView"
+        app:layout_constraintTop_toTopOf="@+id/videoView">
+
+        <LinearLayout
+            android:id="@+id/bottomsheetdialogfragment_video_layout_player_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/bottomsheetdialogfragment_video_image_player_play"
+                android:layout_width="@dimen/size_icon_small"
+                android:layout_height="@dimen/size_icon_small"
+                android:background="@drawable/ic_baseline_play_arrow_24"/>
+
+            <ImageView
+                android:id="@+id/bottomsheetdialogfragment_video_image_player_close"
+                android:layout_width="@dimen/size_icon_small"
+                android:layout_height="@dimen/size_icon_small"
+                android:background="@drawable/ic_baseline_close_24"
+                android:layout_marginHorizontal="@dimen/margin_medium"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/bottomsheetdialogfragment_video_text_player_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="쉽게 배우는 자바"
+            android:layout_marginHorizontal="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_small"
+            android:lines="1"
+            android:ellipsize="end"
+            style="@style/textview_style_home_drawer_normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/bottomsheetdialogfragment_video_layout_player_menu"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/bottomsheetdialogfragment_video_text_player_channel_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="홍길동"
+            android:layout_marginLeft="@dimen/margin_xsmall"
+            android:layout_marginTop="@dimen/margin_xsmall"
+            android:lines="1"
+            android:ellipsize="end"
+            style="@style/textview_style_home_drawer_normal"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="@+id/bottomsheetdialogfragment_video_text_player_title"
+            app:layout_constraintEnd_toEndOf="@+id/bottomsheetdialogfragment_video_text_player_title"
+            app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_text_player_title"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/layout_description"
@@ -299,6 +363,14 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/bottomsheetdialogfragment_video_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scroll_behavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

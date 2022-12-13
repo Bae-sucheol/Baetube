@@ -42,38 +42,6 @@ public class VideoBottomSheetCallback extends BottomSheetBehavior.BottomSheetCal
     public void onStateChanged(@NonNull View bottomSheet, int newState)
     {
         state = newState;
-
-        switch (state)
-        {
-            case BottomSheetBehavior.STATE_DRAGGING :
-                Log.d("test", "state : Dragging");
-                break;
-            case BottomSheetBehavior.STATE_SETTLING :
-                Log.d("test", "state : Setting");
-                break;
-            case BottomSheetBehavior.STATE_EXPANDED :
-                Log.d("test", "state : Expanded");
-                break;
-            case BottomSheetBehavior.STATE_COLLAPSED :
-                Log.d("test", "state : Collapsed");
-                break;
-            case BottomSheetBehavior.STATE_HIDDEN :
-                Log.d("test", "state : Hidden");
-                break;
-            case BottomSheetBehavior.STATE_HALF_EXPANDED :
-                Log.d("test", "state : Half_Expanded");
-                break;
-        }
-
-
-        if(state == BottomSheetBehavior.STATE_COLLAPSED)
-        {
-            description.setVisibility(View.GONE);
-        }
-        else if(state == BottomSheetBehavior.STATE_DRAGGING)
-        {
-            description.setVisibility(View.VISIBLE);
-        }
     }
     // 선형 보간법을 통해 offset이 0.1 까지 갈 때까지 선형적으로 높이가 줄어드는 형태로 만들어야 한다.
     @Override
@@ -81,23 +49,26 @@ public class VideoBottomSheetCallback extends BottomSheetBehavior.BottomSheetCal
     {
         float interval = 1 - slideOffset;
 
-        if(state != BottomSheetBehavior.STATE_COLLAPSED)
+        if(slideOffset <= 0.1)
         {
-            if(slideOffset <= 0.1)
-            {
-                player.getLayoutParams().width = (int)Lerp(width, peekWidth, 1 - slideOffset * 10);
-            }
-            else
-            {
-                player.getLayoutParams().width = width;
-            }
+            player.getLayoutParams().width = (int) Lerp(width, peekWidth, 1 - slideOffset * 10);
+        }
+        else
+        {
+            player.getLayoutParams().width = width;
+        }
 
-            //Log.d("test", "height : " + (int) Lerp(height, behavior.getPeekHeight(), interval));
-
+        if(slideOffset >= 0)
+        {
             player.getLayoutParams().height = (int) Lerp(height, peekHeight, interval);
             player.setLayoutParams(player.getLayoutParams());
 
-            description.setAlpha(Lerp(1.0f, 0.0f, interval));
+            description.setAlpha(slideOffset);
+            bottomSheet.setAlpha(1);
+        }
+        else
+        {
+            bottomSheet.setAlpha(1 + slideOffset);
         }
 
     }

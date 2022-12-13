@@ -8,6 +8,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bottomsheetdialog_border"
+    app:behavior_hideable="true"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     tools:context=".bottomsheetdialog.ReplyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout

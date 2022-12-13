@@ -18,7 +18,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
-            layout="@layout/fragment_test_motion_layout"
+            layout="@layout/bottomsheetdialogfragment_video"
             android:id="@+id/activity_main_bottomsheet_video"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -28,41 +28,5 @@
             android:layout_gravity="bottom"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/menu_bottom_navigation" />
-
-
-        <!--
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:id="@+id/activity_main_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_above="@+id/activity_main_bottom_navigation"
-                    android:orientation="vertical">
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/activity_main_layout_front"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_above="@+id/activity_main_bottom_navigation"
-                    android:orientation="vertical">
-
-
-                </LinearLayout>
-
-                <com.google.android.material.bottomnavigation.BottomNavigationView
-                    android:id="@+id/activity_main_bottom_navigation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    app:labelVisibilityMode="labeled"
-                    app:menu="@menu/menu_bottom_navigation" />
-
-        </RelativeLayout>
-        -->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
