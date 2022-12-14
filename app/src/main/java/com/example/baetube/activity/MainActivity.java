@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -37,6 +38,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.baetube.LinearInterpolation;
+import com.example.baetube.OnBottomSheetInteractionListener;
 import com.example.baetube.OnFragmentInteractionListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.TestMotionLayoutFragment;
@@ -80,16 +83,23 @@ import com.google.android.material.navigation.NavigationBarView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener, OnRecyclerViewClickListener, View.OnClickListener
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener, OnRecyclerViewClickListener,
+        View.OnClickListener, OnBottomSheetInteractionListener
 {
     // 바텀 네비게이션
     private BottomNavigationView bottomNavigationView;
+    private int navigationHeight;
+    private int bottomBarHeight;
     // 프래그먼트 매니저
     private FragmentManager fragmentManager;
     // 바텀시트 다이얼로그(동영상)
     private CoordinatorLayout bottomSheetVideo;
     // 바텀시트 비헤이버
     private BottomSheetBehavior bottomSheetVideoBehavior;
+    // 바텀 시트 콜백
+    private VideoBottomSheetCallback videoBottomSheetCallback;
+    // 바텀 시트 피크 높이
+    private int bottomSheetPeekHeight;
     // 바텀시트 내부 요소들.
     private VideoView player;
 
@@ -173,6 +183,22 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         // 바텀 네비게이션 요소를 findViewById를 사용하여 찾는다.
         bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation);
 
+        // 바텀바(뒤로가기 홈) 높이
+        bottomBarHeight = getResources().getDimensionPixelSize(getResources().getIdentifier(
+                "navigation_bar_height", "dimen", "android"));
+
+        // 뷰의 상태가 변하면(그려지면) Height를 구하고 리스너를 제거하여 다시 실행되지 않도록 한다.
+        bottomNavigationView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+        {
+            @Override
+            public void onGlobalLayout()
+            {
+                navigationHeight = bottomNavigationView.getHeight();
+                bottomNavigationView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
+
         // 바텀 네비게이션 아이템 선택 이벤트.
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener()
         {
@@ -207,8 +233,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 return true;
             }
         });
-
-        bottomNavigationView.setVisibility(View.GONE);
 
         // 바텀 시트 요소를 findViewById를 사용하여 찾는다.
         bottomSheetVideo = findViewById(R.id.activity_main_bottomsheet_video);
@@ -273,8 +297,12 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         buttonNestedReplyClose.setOnClickListener(this);
         buttonNestedReplyBack.setOnClickListener(this);
 
-        bottomSheetVideoBehavior.addBottomSheetCallback(new VideoBottomSheetCallback(
-                player, layoutDescription, bottomSheetVideoBehavior, bottomNavigationView));
+        bottomSheetPeekHeight = (int)(UserDisplay.getWidth() * 0.16);
+
+        videoBottomSheetCallback = new VideoBottomSheetCallback(this,
+                player, layoutDescription, bottomSheetVideoBehavior, bottomSheetPeekHeight);
+
+        bottomSheetVideoBehavior.addBottomSheetCallback(videoBottomSheetCallback);
 
         animationDuration = this.getResources().getInteger(R.integer.animation_duration_reply);
 
@@ -309,7 +337,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     @Override
     public void onVideoItemClick()
     {
-        Log.d("test", "클릭");
         bottomSheetVideoBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
@@ -519,4 +546,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         });
     }
 
+    @Override
+    public void onSlide(View bottomSheet, float slideOffset)
+    {
+        if(slideOffset >= 0)
+        {
+            bottomNavigationView.setY((int) UserDisplay.getHeight() - bottomBarHeight / 2 - navigationHeight * (1 - slideOffset));
+            bottomSheet.setY(LinearInterpolation.Lerp(0, bottomNavigationView.getY() - bottomSheetPeekHeight, 1 - slideOffset));
+        }
+    }
 }
