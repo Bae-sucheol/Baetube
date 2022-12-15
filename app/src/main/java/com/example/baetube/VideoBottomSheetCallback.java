@@ -33,6 +33,7 @@ public class VideoBottomSheetCallback extends BottomSheetBehavior.BottomSheetCal
         this.peekHeight = peekHeight;
 
         description.setOnTouchListener(this);
+        player.setOnTouchListener(this);
 
         height = (int)(UserDisplay.getWidth() * UserDisplay.getRatio());
         width = (int)UserDisplay.getWidth();
@@ -83,14 +84,21 @@ public class VideoBottomSheetCallback extends BottomSheetBehavior.BottomSheetCal
     public boolean onTouch(View view, MotionEvent motionEvent)
     {
         /*
-         * description 레이아웃만 터치 리스너를 등록했기 때문에
-         * 따로 id를 필터링할 필요가 없다.
+         * 플레이어를 제외한 나머지를 터치했을 경우 드래그가 불가능한 상태로 설정한다.
          */
+
         switch (motionEvent.getAction())
         {
             case MotionEvent.ACTION_DOWN :
 
-                behavior.setDraggable(false);
+                if(view.getId() == R.id.bottomsheetdialogfragment_video_player)
+                {
+                    behavior.setDraggable(true);
+                }
+                else
+                {
+                    behavior.setDraggable(false);
+                }
 
                 break;
             case MotionEvent.ACTION_UP :

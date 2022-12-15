@@ -555,4 +555,5 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             bottomSheet.setY(LinearInterpolation.Lerp(0, bottomNavigationView.getY() - bottomSheetPeekHeight, 1 - slideOffset));
         }
     }
+
 }
