@@ -13,6 +13,7 @@ import android.util.Property;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.KeyboardShortcutGroup;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -153,6 +154,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private CoordinatorLayout layoutNestedReply;
 
     private int animationDuration;
+
+    private ConstraintLayout layoutTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -323,6 +326,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         replyRecyclerView.setAdapter(replyAdapter);
         replyAdapter.setOnRecyclerViewClickListener(this);
         replyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        layoutTest = findViewById(R.id.activity_main_test);
+
 
     }
 

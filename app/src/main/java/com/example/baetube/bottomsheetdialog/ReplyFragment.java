@@ -52,7 +52,6 @@ public class ReplyFragment extends BottomSheetDialogFragment implements OnRecycl
 
     private int animationDuration;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
