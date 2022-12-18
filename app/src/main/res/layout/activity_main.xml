@@ -21,15 +21,6 @@
             layout="@layout/bottomsheetdialogfragment_video"
             android:id="@+id/activity_main_bottomsheet_video" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/activity_main_test"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:behavior_hideable="true"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/activity_main_bottom_navigation"

@@ -1,5 +1,8 @@
 package com.example.baetube;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,11 +40,14 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
     private ConstraintLayout layoutReply;
     private CoordinatorLayout layoutNestedReply;
 
+    private OnAttachViewListener onAttachViewListener;
+
     private int animationDuration;
 
     public ReplyView(Context context)
     {
         this.context = context;
+        onAttachViewListener = (OnAttachViewListener)context;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container)
@@ -108,13 +114,41 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
     @Override
     public void onClick(View view)
     {
+        switch (view.getId())
+        {
+            case R.id.bottomsheetdialogfragment_reply_image_close :
+
+
+            case R.id.bottomsheetdialogfragment_nested_reply_image_close :
+
+                onAttachViewListener.onAttachViewClick(view);
+
+                break;
+            case R.id.bottomsheetdialogfragment_nested_reply_image_back :
+
+                closeNestedReply();
+
+                break;
+            default :
+
+                // 의도하지 않은 문제
+
+                break;
+        }
 
     }
 
     @Override
     public void onItemClick(View view, int position)
     {
+        switch (view.getId())
+        {
+            case R.id.recyclerview_reply_layout_nested_reply :
 
+                openNestedReply();
+
+                break;
+        }
     }
 
     @Override
@@ -122,4 +156,75 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
     {
 
     }
+
+    /**
+     * 답글 화면 출력하는 메소드
+     */
+    public void openNestedReply()
+    {
+        // 먼저 Visible이 Gone인 답글 화면을 Visible로 전환.
+        layoutNestedReply.setVisibility(View.VISIBLE);
+        /*
+         * width, alpha 값을 순차적으로 변화시킨다.
+         * width는 0부터 댓글 화면 사이즈(즉 match_parent) 까지
+         * alpha는 0.0f부터 1.0f까지
+         */
+        PropertyValuesHolder widthProperty = PropertyValuesHolder.ofInt(new WidthProperty(), 0, layoutReply.getWidth());
+        PropertyValuesHolder alphaProperty = PropertyValuesHolder.ofFloat("alpha", 1.0f);
+
+        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(layoutNestedReply, widthProperty, alphaProperty);
+        objectAnimator.setDuration(animationDuration);
+        objectAnimator.start();
+    }
+
+    /**
+     * 답글 화면을 종료하고 댓글 화면을 출력하는 메소드
+     */
+    public void closeNestedReply()
+    {
+        /*
+         * width, alpha 값을 순차적으로 변화시킨다.
+         * width는 댓글 화면 사이즈(즉 match_parent) 부터 0 까지
+         * alpha는 1.0f부터 0.0f까지
+         */
+        PropertyValuesHolder widthProperty = PropertyValuesHolder.ofInt(new WidthProperty(), layoutReply.getWidth(), 0);
+        PropertyValuesHolder alphaProperty = PropertyValuesHolder.ofFloat("alpha", 0.0f);
+
+        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(layoutNestedReply, widthProperty, alphaProperty);
+        objectAnimator.setDuration(animationDuration);
+        objectAnimator.start();
+
+        // 애니메이션이 끝나는 순간 답글 화면의 Visible을 Gone으로 변화시켜야 한다.
+        objectAnimator.addListener(new Animator.AnimatorListener()
+        {
+            @Override
+            public void onAnimationStart(Animator animator)
+            {
+
+            }
+
+            /*
+             * 따라서 onAnimationEnd 메소드를 사용하여 애니메이션이 끝나는 순간
+             * 답글 화면의 Visible를 Gone으로 만든다.
+             */
+            @Override
+            public void onAnimationEnd(Animator animator)
+            {
+                layoutNestedReply.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator)
+            {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator)
+            {
+
+            }
+        });
+    }
+
 }

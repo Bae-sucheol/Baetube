@@ -39,10 +39,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.baetube.DescriptionView;
 import com.example.baetube.LinearInterpolation;
+import com.example.baetube.OnAttachViewListener;
 import com.example.baetube.OnBottomSheetInteractionListener;
 import com.example.baetube.OnFragmentInteractionListener;
 import com.example.baetube.OnRecyclerViewClickListener;
+import com.example.baetube.ReplyView;
 import com.example.baetube.TestMotionLayoutFragment;
 import com.example.baetube.UserDisplay;
 import com.example.baetube.VideoBottomSheetCallback;
@@ -85,7 +88,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener, OnRecyclerViewClickListener,
-        View.OnClickListener, OnBottomSheetInteractionListener
+        View.OnClickListener, OnBottomSheetInteractionListener, OnAttachViewListener
 {
     // 바텀 네비게이션
     private BottomNavigationView bottomNavigationView;
@@ -114,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private TextView likeCount;
     private TextView hateCount;
 
+    private ImageView buttonDetail;
     private ImageView thumbUp;
     private ImageView thumbDown;
     private ImageView addLibrary;
@@ -135,27 +139,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private RecyclerViewVideoAdapter relatedVideoAdapter;
     private ArrayList<RecyclerViewVideoItem> relatedVideoList = new ArrayList<>();
 
-    // 바텀시트 내부 바텀시트(댓글 답글)
-    private FrameLayout bottomSheetReply;
+    // 바텀시트 내부 바텀시트(댓글 답글, 동영상 상세 정보)
+    private FrameLayout bottomSheetSub;
     // 바텀시트 비헤이버
-    private BottomSheetBehavior bottomSheetReplyBehavior;
-
-    // 댓글 답글 바텀시트 내부 요소
-    private RecyclerView replyRecyclerView;
-    private RecyclerViewReplyAdapter replyAdapter;
-    private ArrayList<RecyclerViewReplyItem> replyList = new ArrayList<>();
-
-    // 닫기 버튼 뷰
-    private ImageView buttonReplyClose;
-    private ImageView buttonNestedReplyClose;
-    private ImageView buttonNestedReplyBack;
-
-    private ConstraintLayout layoutReply;
-    private CoordinatorLayout layoutNestedReply;
-
-    private int animationDuration;
-
-    private ConstraintLayout layoutTest;
+    private BottomSheetBehavior bottomSheetSubBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -255,6 +242,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         likeCount = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_text_like);
         hateCount = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_text_hate);
 
+        buttonDetail = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_image_detail);
         thumbUp = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_image_thumb_up);
         thumbDown = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_image_thumb_down);
         addLibrary = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_image_add_library);
@@ -273,20 +261,12 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         layoutDescription = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_layout_description);
         layoutMinMenu = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_min_menu);
 
-        bottomSheetReply = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_bottomsheet_reply);
+        bottomSheetSub = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_bottomsheet_sub);
         // 바텀시트 비헤이버를 from 메소드를 통해 설정.
-        bottomSheetReplyBehavior = BottomSheetBehavior.from(bottomSheetReply);
-        bottomSheetReplyBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        bottomSheetSubBehavior = BottomSheetBehavior.from(bottomSheetSub);
+        bottomSheetSubBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
-        buttonReplyClose = bottomSheetReply.findViewById(R.id.bottomsheetdialogfragment_reply_image_close);
-        buttonNestedReplyClose = bottomSheetReply.findViewById(R.id.bottomsheetdialogfragment_nested_reply_image_close);
-        buttonNestedReplyBack = bottomSheetReply.findViewById(R.id.bottomsheetdialogfragment_nested_reply_image_back);
-
-        replyRecyclerView = bottomSheetReply.findViewById(R.id.bottomsheetdialogfragment_reply_recyclerview);
-
-        layoutReply = bottomSheetReply.findViewById(R.id.bottomsheetdialogfragment_reply_layout);
-        layoutNestedReply = bottomSheetReply.findViewById(R.id.bottomsheetdialogfragment_nested_reply_layout);
-
+        buttonDetail.setOnClickListener(this);
         thumbUp.setOnClickListener(this);
         thumbDown.setOnClickListener(this);
         addLibrary.setOnClickListener(this);
@@ -296,10 +276,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         buttonPlayerPlay.setOnClickListener(this);
         buttonPlayerClose.setOnClickListener(this);
 
-        buttonReplyClose.setOnClickListener(this);
-        buttonNestedReplyClose.setOnClickListener(this);
-        buttonNestedReplyBack.setOnClickListener(this);
-
         bottomSheetPeekHeight = (int)(UserDisplay.getWidth() * 0.16);
 
         videoBottomSheetCallback = new VideoBottomSheetCallback(this,
@@ -307,10 +283,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         bottomSheetVideoBehavior.addBottomSheetCallback(videoBottomSheetCallback);
 
-        animationDuration = this.getResources().getInteger(R.integer.animation_duration_reply);
-
         test();
-        test2();
         /*
          * 1. 리사이클러뷰 어댑터 객체 생성
          * 2. 리사이클러뷰 어댑터 설정
@@ -321,15 +294,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         relatedVideoRecyclerView.setAdapter(relatedVideoAdapter);
         relatedVideoAdapter.setOnRecyclerViewClickListener(this);
         relatedVideoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        replyAdapter = new RecyclerViewReplyAdapter(replyList);
-        replyRecyclerView.setAdapter(replyAdapter);
-        replyAdapter.setOnRecyclerViewClickListener(this);
-        replyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        layoutTest = findViewById(R.id.activity_main_test);
-
-
     }
 
 
@@ -349,14 +313,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     @Override
     public void onItemClick(View view, int position)
     {
-        switch (view.getId())
-        {
-            case R.id.recyclerview_reply_layout_nested_reply :
 
-                openNestedReply();
-
-                break;
-        }
     }
 
     @Override
@@ -388,33 +345,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             videoDTO.setViews(500);
 
             relatedVideoList.add(item);
-        }
-
-    }
-
-    public void test2()
-    {
-        String channel_names[] = {"홍길동", "이순신", "장영실", "김유신", "허준"};
-        String comments[] = {"쉽게 배우는 자바", "쉽게 배우는 학익진", "쉽게 배우는 거중기",
-                "쉽게 배우는 전투법", "쉽게 배우는 침술"};
-
-        for(int i = 0; i < 30; i++)
-        {
-            RecyclerViewReplyItem item = new RecyclerViewReplyItem();
-
-            ReplyDTO replyDTO = new ReplyDTO();
-            ChannelDTO channelDTO = new ChannelDTO();
-
-            channelDTO.setName(channel_names[i % 5]);
-            replyDTO.setDate("1시간 전");
-            replyDTO.setComment(comments[i % 5]);
-            replyDTO.setLike(50);
-            replyDTO.setHate(5);
-
-            item.setChannelDTO(channelDTO);
-            item.setReplyDTO(replyDTO);
-
-            replyList.add(item);
         }
 
     }
@@ -461,20 +391,14 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 break;
             case R.id.bottomsheetdialogfragment_video_layout_reply :
 
-                bottomSheetReplyBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                attachReplyView();
+                bottomSheetSubBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
                 break;
-            case R.id.bottomsheetdialogfragment_reply_image_close :
+            case R.id.bottomsheetdialogfragment_video_image_detail :
 
-                bottomSheetReplyBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-
-            case R.id.bottomsheetdialogfragment_nested_reply_image_close :
-
-                bottomSheetReplyBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                break;
-            case R.id.bottomsheetdialogfragment_nested_reply_image_back :
-
-                closeNestedReply();
+                attachDescriptionView();
+                bottomSheetSubBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
                 break;
             default :
@@ -482,74 +406,26 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         }
     }
 
-    /**
-     * 답글 화면 출력하는 메소드
-     */
-    private void openNestedReply()
+    private void resetView()
     {
-        // 먼저 Visible이 Gone인 답글 화면을 Visible로 전환.
-        layoutNestedReply.setVisibility(View.VISIBLE);
-        /*
-         * width, alpha 값을 순차적으로 변화시킨다.
-         * width는 0부터 댓글 화면 사이즈(즉 match_parent) 까지
-         * alpha는 0.0f부터 1.0f까지
-         */
-        PropertyValuesHolder widthProperty = PropertyValuesHolder.ofInt(new WidthProperty(), 0, layoutReply.getWidth());
-        PropertyValuesHolder alphaProperty = PropertyValuesHolder.ofFloat("alpha", 1.0f);
-
-        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(layoutNestedReply, widthProperty, alphaProperty);
-        objectAnimator.setDuration(animationDuration);
-        objectAnimator.start();
+        if(bottomSheetSub.getChildCount() > 0)
+        {
+            bottomSheetSub.removeAllViews();
+        }
     }
 
-    /**
-     * 답글 화면을 종료하고 댓글 화면을 출력하는 메소드
-     */
-    private void closeNestedReply()
+    private void attachReplyView()
     {
-        /*
-         * width, alpha 값을 순차적으로 변화시킨다.
-         * width는 댓글 화면 사이즈(즉 match_parent) 부터 0 까지
-         * alpha는 1.0f부터 0.0f까지
-         */
-        PropertyValuesHolder widthProperty = PropertyValuesHolder.ofInt(new WidthProperty(), layoutReply.getWidth(), 0);
-        PropertyValuesHolder alphaProperty = PropertyValuesHolder.ofFloat("alpha", 0.0f);
+        resetView();
+        ReplyView replyView = new ReplyView(this);
+        bottomSheetSub.addView(replyView.onCreateView(getLayoutInflater(), bottomSheetSub));
+    }
 
-        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(layoutNestedReply, widthProperty, alphaProperty);
-        objectAnimator.setDuration(animationDuration);
-        objectAnimator.start();
-
-        // 애니메이션이 끝나는 순간 답글 화면의 Visible을 Gone으로 변화시켜야 한다.
-        objectAnimator.addListener(new Animator.AnimatorListener()
-        {
-            @Override
-            public void onAnimationStart(Animator animator)
-            {
-
-            }
-
-            /*
-             * 따라서 onAnimationEnd 메소드를 사용하여 애니메이션이 끝나는 순간
-             * 답글 화면의 Visible를 Gone으로 만든다.
-             */
-            @Override
-            public void onAnimationEnd(Animator animator)
-            {
-                layoutNestedReply.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator)
-            {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator)
-            {
-
-            }
-        });
+    private void attachDescriptionView()
+    {
+        resetView();
+        DescriptionView descriptionView = new DescriptionView(this);
+        bottomSheetSub.addView(descriptionView.onCreateView(getLayoutInflater(), bottomSheetSub));
     }
 
     @Override
@@ -562,4 +438,25 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         }
     }
 
+    @Override
+    public void onAttachViewClick(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.bottomsheetdialogfragment_reply_image_close :
+
+            case R.id.bottomsheetdialogfragment_description_image_close :
+
+            case R.id.bottomsheetdialogfragment_nested_reply_image_close :
+
+                bottomSheetSubBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+                break;
+            default :
+
+                // 의도하지 않은 문제
+
+                break;
+        }
+    }
 }
