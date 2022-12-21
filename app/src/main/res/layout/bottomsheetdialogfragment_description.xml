@@ -71,6 +71,27 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <ImageView
+            android:id="@+id/bottomsheetdialogfragment_description_image_profile"
+            android:layout_width="@dimen/size_icon_small"
+            android:layout_height="@dimen/size_icon_small"
+            android:layout_marginTop="@dimen/margin_small"
+            android:background="@drawable/ic_baseline_account_circle_24"
+            app:layout_constraintStart_toStartOf="@+id/bottomsheetdialogfragment_description_text_video_title"
+            app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_description_text_video_title"/>
+
+        <TextView
+            android:id="@+id/bottomsheetdialogfragment_description_text_channel_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:text="홍길동"
+            style="@style/textview_style_bottomsheetdialogfragment_description_large"
+            app:layout_constraintStart_toEndOf="@+id/bottomsheetdialogfragment_description_image_profile"
+            app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_description_image_profile"
+            app:layout_constraintBottom_toBottomOf="@+id/bottomsheetdialogfragment_description_image_profile"/>
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottomsheetdialogfragment_description_layout_info"
             android:layout_width="0dp"
@@ -78,7 +99,7 @@
             android:layout_marginVertical="@dimen/margin_medium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_description_text_video_title">
+            app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_description_image_profile">
 
             <TextView
                 android:id="@+id/bottomsheetdialogfragment_description_text_like_count"
