@@ -1,6 +1,15 @@
 package com.example.baetube.fragment;
 
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,34 +21,27 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-
+import com.example.baetube.Callback.ReturnableCallback;
+import com.example.baetube.FragmentTagUtil;
+import com.example.baetube.OkHttpUtil;
+import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.OnFragmentInteractionListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
-import com.example.baetube.TestMotionLayoutFragment;
 import com.example.baetube.ViewType;
-import com.example.baetube.bottomsheetdialog.VideoFragment;
 import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.fragment.channel.ChannelBaseFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment implements View.OnClickListener, OnRecyclerViewClickListener, OnFragmentInteractionListener
 {
-
     private View view;
 
     private DrawerLayout drawerLayout;
@@ -52,8 +54,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
 
     private RecyclerView recyclerView;
     private RecyclerViewVideoAdapter recyclerViewVideoAdapter;
-    private ArrayList<RecyclerViewVideoItem> list = new ArrayList<>();
+    private ArrayList<RecyclerViewVideoItem> list;
+
+    private OnCallbackResponseListener onCallbackResponseListener;
     private OnFragmentInteractionListener onFragmentInteractionListener;
+    private OkHttpUtil okHttpUtil;
+
+    private LinearLayoutManager linearLayoutManager;
+
+    private boolean isCalled;
+    private int state;
+
+    public HomeFragment(OnCallbackResponseListener onCallbackResponseListener)
+    {
+        this.onCallbackResponseListener = onCallbackResponseListener;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -93,7 +108,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
 
         onFragmentInteractionListener = (OnFragmentInteractionListener) getContext();
 
-        test();
+
+        // 리스트 초기화.
+        list = new ArrayList<>();
 
         // 리사이클러뷰 요소 찾기
         recyclerView = view.findViewById(R.id.fragment_home_recyclerview);
@@ -107,8 +124,84 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
         // 리사이클러뷰 어댑터에 클릭리스너 등록
         recyclerViewVideoAdapter.setOnRecyclerViewClickListener(this);
 
+        isCalled = false;
+
         // 리사이클러뷰에 레이아웃 매니저 설정
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        linearLayoutManager = new LinearLayoutManager(getContext())
+        {
+            @Override
+            public void onLayoutCompleted(RecyclerView.State state)
+            {
+                super.onLayoutCompleted(state);
+
+                if(okHttpUtil == null)
+                {
+                    okHttpUtil = new OkHttpUtil();
+                }
+
+                if(!isCalled)
+                {
+                    // 지금은 테스트용으로 임의의 값을 넣는다.
+                    String url = "http://192.168.0.4:9090/Baetube_backEnd/api/video/main_video/20";
+
+                    ReturnableCallback mainVideoCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_MAIN_VIDEO);
+
+                    okHttpUtil.sendGetRequest(url, mainVideoCallback);
+
+                    isCalled = true;
+                }
+
+                if(!list.isEmpty() && recyclerView.getChildCount() > 0)
+                {
+                    // 현재 화면에 전부 보이는 첫 번째 뷰의 어댑터 위치를 반환한다.
+                    int position = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+
+                    if(position != 0)
+                    {
+                        return;
+                    }
+
+                    RecyclerViewVideoItem item = list.get(position);
+                    View view = linearLayoutManager.findViewByPosition(position);
+                    FrameLayout layout = view.findViewById(R.id.recyclerview_video_layout_player);
+
+                    onFragmentInteractionListener.onCompletelyVisible(layout, item.getVideoDTO().getUrl());
+                }
+
+            }
+        };
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
+            {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                // 스크롤을 하지 않는 상태일 때.
+                if(newState == RecyclerView.SCROLL_STATE_IDLE)
+                {
+                    // 현재 화면에 전부 보이는 첫 번째 뷰의 어댑터 위치를 반환한다.
+                    int position = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+
+                    if(position == -1)
+                    {
+                        return;
+                    }
+
+                    RecyclerViewVideoItem item = list.get(position);
+                    View view = linearLayoutManager.findViewByPosition(position);
+                    FrameLayout layout = view.findViewById(R.id.recyclerview_video_layout_player);
+
+                    onFragmentInteractionListener.onCompletelyVisible(layout, item.getVideoDTO().getUrl());
+                }
+
+            }
+        });
+
+
 
         return view;
     }
@@ -153,6 +246,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
         {
             case R.id.fragment_home_drawer_image_profile_layout :
 
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.activity_main_layout, new LoginFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_LOGIN);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
                 break;
             case R.id.fragment_home_drawer_account_manage_layout :
 
@@ -177,53 +276,58 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
         }
     }
 
-    public void test()
+    public void setRecyclerViewVideo(List<VideoDTO> videoList, ArrayList<ChannelDTO> channelList)
     {
-        String channel_names[] = {"홍길동", "이순신", "장영실", "김유신", "허준"};
-        String titles[] = {"쉽게 배우는 자바", "쉽게 배우는 학익진", "쉽게 배우는 거중기",
-                "쉽게 배우는 전투법", "쉽게 배우는 침술"};
+        if(list == null)
+        {
+            return;
+        }
 
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < videoList.size(); i++)
         {
             RecyclerViewVideoItem item = new RecyclerViewVideoItem();
-
-            ChannelDTO channelDTO = new ChannelDTO();
-            VideoDTO videoDTO = new VideoDTO();
-
-            item.setChannelDTO(channelDTO);
-            item.setVideoDTO(videoDTO);
             item.setViewType(ViewType.VIDEO_LARGE);
-
-            channelDTO.setName(channel_names[i]);
-            videoDTO.setDate("1시간 전");
-            videoDTO.setTitle(titles[i]);
-            videoDTO.setViews(500);
+            item.setVideoDTO(videoList.get(i));
+            item.setChannelDTO(channelList.get(i));
 
             list.add(item);
         }
+
+        getActivity().runOnUiThread(new Runnable(){
+            @Override
+            public void run()
+            {
+                recyclerViewVideoAdapter.notifyDataSetChanged();
+            }
+        });
 
     }
 
     @Override
     public void onItemClick(View view, int position)
     {
+
         switch (view.getId())
         {
+            case R.id.recyclerview_video_layout_player :
+
+                RecyclerViewVideoItem item = list.get(position);
+                //this.onVideoItemClick(item.getVideoDTO().getUrl());
+                onFragmentInteractionListener.onVideoItemClick(item);
+
             case R.id.recyclerview_video_image_thumbnail :
 
-                //VideoFragment videoFragment = new VideoFragment();
-                //videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
-
-                //getParentFragmentManager().beginTransaction().replace(R.id.activity_main_layout_front, new TestMotionLayoutFragment()).addToBackStack(null).commit();
-
-                this.onVideoItemClick();
+                item = list.get(position);
+                //this.onVideoItemClick(item.getVideoDTO().getUrl());
+                onFragmentInteractionListener.onVideoItemClick(item);
+                System.out.println("여기서 클릭");
 
                 break;
             case R.id.recyclerview_video_image_profile :
 
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.activity_main_layout, new ChannelBaseFragment());
+                fragmentTransaction.replace(R.id.activity_main_layout, new ChannelBaseFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_CHANNEL_BASE);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
@@ -242,6 +346,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
                 break;
 
             default :
+
+                // 비디오 서페이스
+                item = list.get(position);
+                onFragmentInteractionListener.onVideoItemClick(item);
+
                 break;
         }
     }
@@ -253,8 +362,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
     }
 
     @Override
-    public void onVideoItemClick()
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
     {
-        onFragmentInteractionListener.onVideoItemClick();
+
+    }
+
+    @Override
+    public void onVideoItemClick(RecyclerViewVideoItem videoItem)
+    {
+
+    }
+
+    @Override
+    public void onCompletelyVisible(FrameLayout layout, String uuid)
+    {
+        //onFragmentInteractionListener.onCompletelyVisible(layout, uuid);
     }
 }

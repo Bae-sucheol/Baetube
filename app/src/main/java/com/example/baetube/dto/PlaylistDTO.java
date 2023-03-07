@@ -2,20 +2,60 @@ package com.example.baetube.dto;
 
 public class PlaylistDTO
 {
-    private int playlistId;
-    private int videoCount;
+    private Integer playlistId;
+    private Integer channelId;
     private String name;
-    private String thumnail;
+    private Integer visible;
+    private Integer videoCount;
+    private String thumbnail;
+
+    // constructor
+    public PlaylistDTO()
+    {
+        super();
+    }
+
+    public PlaylistDTO(Integer playlistId, Integer channelId, String name, Integer visible, Integer videoCount,
+                    String thumbnail)
+    {
+        super();
+        this.playlistId = playlistId;
+        this.channelId = channelId;
+        this.name = name;
+        this.visible = visible;
+        this.videoCount = videoCount;
+        this.thumbnail = thumbnail;
+    }
+
+    public PlaylistDTO(Integer channelId, String name, Integer visible, Integer videoCount, String thumbnail)
+    {
+        super();
+        this.channelId = channelId;
+        this.name = name;
+        this.visible = visible;
+        this.videoCount = videoCount;
+        this.thumbnail = thumbnail;
+    }
+
+
+    public PlaylistDTO(Integer channelId, String name, Integer visible, String thumbnail)
+    {
+        super();
+        this.channelId = channelId;
+        this.name = name;
+        this.visible = visible;
+        this.thumbnail = thumbnail;
+    }
 
     // getter
-    public int getPlaylistId()
+    public Integer getPlaylistId()
     {
         return playlistId;
     }
 
-    public int getVideoCount()
+    public Integer getChannelId()
     {
-        return videoCount;
+        return channelId;
     }
 
     public String getName()
@@ -23,20 +63,30 @@ public class PlaylistDTO
         return name;
     }
 
-    public String getThumnail()
+    public Integer getVisible()
     {
-        return thumnail;
+        return visible;
+    }
+
+    public Integer getVideoCount()
+    {
+        return videoCount;
+    }
+
+    public String getThumbnail()
+    {
+        return thumbnail;
     }
 
     // setter
-    public void setPlaylistId(int playlistId)
+    public void setPlaylistId(Integer playlistId)
     {
         this.playlistId = playlistId;
     }
 
-    public void setVideoCount(int videoCount)
+    public void setChannelId(Integer channelId)
     {
-        this.videoCount = videoCount;
+        this.channelId = channelId;
     }
 
     public void setName(String name)
@@ -44,8 +94,18 @@ public class PlaylistDTO
         this.name = name;
     }
 
-    public void setThumnail(String thumnail)
+    public void setVisible(Integer visible)
     {
-        this.thumnail = thumnail;
+        this.visible = visible;
+    }
+
+    public void setVideoCount(Integer videoCount)
+    {
+        this.videoCount = videoCount;
+    }
+
+    public void setThumbnail(String thumbnail)
+    {
+        this.thumbnail = thumbnail;
     }
 }

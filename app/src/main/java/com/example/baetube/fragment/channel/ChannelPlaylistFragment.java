@@ -1,6 +1,9 @@
 package com.example.baetube.fragment.channel;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -8,21 +11,20 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import com.example.baetube.FragmentTagUtil;
+import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.bottomsheetdialog.PlaylistOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.PlaylistDTO;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.fragment.PlaylistDetailFragment;
-import com.example.baetube.fragment.SearchFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewPlaylistAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewPlaylistItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChannelPlaylistFragment extends Fragment implements OnRecyclerViewClickListener
 {
@@ -32,6 +34,13 @@ public class ChannelPlaylistFragment extends Fragment implements OnRecyclerViewC
     private RecyclerView recyclerView;
     private RecyclerViewPlaylistAdapter recyclerViewPlaylistAdapter;
     private ArrayList<RecyclerViewPlaylistItem> list = new ArrayList<>();
+
+    private OnCallbackResponseListener onCallbackResponseListener;
+
+    public ChannelPlaylistFragment(OnCallbackResponseListener onCallbackResponseListener)
+    {
+        this.onCallbackResponseListener = onCallbackResponseListener;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +54,7 @@ public class ChannelPlaylistFragment extends Fragment implements OnRecyclerViewC
          * 3. 리사이클러뷰 어댑터 설정
          * 4. 리사이클러뷰 레이아웃 매니저 설정
          */
-        test();
+        //test();
 
         recyclerView = view.findViewById(R.id.fragment_channel_playlist_recyclerview);
         recyclerViewPlaylistAdapter = new RecyclerViewPlaylistAdapter(list);
@@ -67,7 +76,8 @@ public class ChannelPlaylistFragment extends Fragment implements OnRecyclerViewC
 
                 FragmentManager fragmentManager = getParentFragment().getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.activity_main_layout, new PlaylistDetailFragment());
+                fragmentTransaction.add(R.id.activity_main_layout, new PlaylistDetailFragment(list.get(position), onCallbackResponseListener),
+                        FragmentTagUtil.FRAGMENT_TAG_PLAYLIST_DETAIL);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
@@ -93,26 +103,33 @@ public class ChannelPlaylistFragment extends Fragment implements OnRecyclerViewC
 
     }
 
-    public void test()
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
     {
-        String titles[] = {"자바 강의", "c언어 강의", "c++ 강의", "파이썬 강의", "오버워치2 강의"};
 
-        for(int i = 0; i < 5; i++)
+    }
+
+    public void setRecyclerViewPlaylist(List<PlaylistDTO> playlistList)
+    {
+        ChannelBaseFragment channelBaseFragment = (ChannelBaseFragment)getParentFragment();
+        ChannelDTO channel = channelBaseFragment.getChannel();
+
+        for(int i = 0; i < playlistList.size(); i++)
         {
             RecyclerViewPlaylistItem item = new RecyclerViewPlaylistItem();
-
-            PlaylistDTO playlistDTO = new PlaylistDTO();
-            ChannelDTO channelDTO = new ChannelDTO();
-
-            item.setChannelDTO(channelDTO);
-            item.setPlaylistDTO(playlistDTO);
-
-            channelDTO.setName("홍길동");
-            playlistDTO.setName(titles[i]);
-            playlistDTO.setVideoCount(5);
+            item.setPlaylistDTO(playlistList.get(i));
+            item.setChannelDTO(channel);
 
             list.add(item);
         }
 
+        getActivity().runOnUiThread(new Runnable(){
+            @Override
+            public void run()
+            {
+                recyclerViewPlaylistAdapter.notifyDataSetChanged();
+            }
+        });
     }
+
 }

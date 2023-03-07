@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".fragment.set.SetDescriptionFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -43,6 +44,7 @@
         app:layout_constraintGuide_end="@dimen/margin_medium"/>
 
     <EditText
+        android:id="@+id/fragment_set_description_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="top"
@@ -64,7 +66,7 @@
         app:layout_constraintBottom_toTopOf="@+id/fragment_set_description_guild_bottom">
 
         <TextView
-            android:id="@+id/fragment_upload_video_information_text_count_cur"
+            android:id="@+id/fragment_set_description_text_count_cur"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0" />

@@ -6,14 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
-import com.example.baetube.UserDisplay;
 import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 import com.example.baetube.recyclerview.viewholder.VideoViewHolder;
 
@@ -75,7 +78,6 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
                 break;
         }
 
-
         VideoViewHolder viewHolder = new VideoViewHolder(view, onRecyclerViewClickListener);
 
         return viewHolder;
@@ -94,28 +96,58 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
             case ViewType.VIDEO_LARGE :
 
                 holder.channelName.setText(channelDTO.getName() + " · ");
-                //holder.thumbnail.setImageDrawable();
-                //holder.profile.setImageDrawable();
+
+                Glide.with(context)
+                        .asBitmap()
+                        .load("http://192.168.0.4:9090/Baetube_backEnd/api/image/thumbnail/" + item.getVideoDTO().getThumbnail() + ".jpg") // or URI/path
+                        .error(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_circle_24))
+                        .override(holder.thumbnail.getWidth(), holder.thumbnail.getHeight())
+                        .centerCrop()
+                        .into(holder.thumbnail);
+                Glide.with(context)
+                        .asBitmap()
+                        .load("http://192.168.0.4:9090/Baetube_backEnd/api/image/profile/" + item.getChannelDTO().getProfile() + ".jpg")
+                        .error(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_circle_24))
+                        .override(holder.profile.getWidth(), holder.profile.getHeight())
+                        .centerCrop()
+                        .apply(new RequestOptions().circleCrop())
+                        .into(holder.profile);
+                //holder.profile.setBackground(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_box_24));
                 holder.title.setText(videoDTO.getTitle());
                 holder.views.setText(String.valueOf(videoDTO.getViews()) + " · ");
-                holder.date.setText(videoDTO.getDate());
+                holder.date.setText(videoDTO.getDate().toString());
+                holder.player.setVisibility(View.INVISIBLE);
+                holder.thumbnail.bringToFront();
 
                 break;
             case ViewType.VIDEO_MEDIUM :
 
+
+
             case ViewType.VIDEO_SMALL :
 
                 holder.channelName.setText(channelDTO.getName());
+
+                Glide.with(context)
+                        .asBitmap()
+                        .load("http://192.168.0.4:9090/Baetube_backEnd/api/image/thumbnail/" + item.getVideoDTO().getThumbnail() + ".jpg") // or URI/path
+                        .error(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_circle_24))
+                        .override(holder.thumbnail.getWidth(), holder.thumbnail.getHeight())
+                        .centerCrop()
+                        .into(holder.thumbnail);
+
                 //holder.thumbnail.setImageDrawable();
                 //holder.profile.setImageDrawable();
                 holder.title.setText(videoDTO.getTitle());
                 holder.views.setText(String.valueOf(videoDTO.getViews()) + " · ");
-                holder.date.setText(videoDTO.getDate());
+                holder.date.setText(videoDTO.getDate().toString());
+                holder.player.setVisibility(View.INVISIBLE);
+                holder.thumbnail.bringToFront();
 
                 break;
             case ViewType.VIDEO_DIVIDER :
 
-                holder.date.setText(videoDTO.getDate());
+                holder.date.setText(videoDTO.getDate().toString());
 
                 break;
             default :
@@ -140,6 +172,12 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
     }
 
     @Override
+    public long getItemId(int position)
+    {
+        return super.getItemId(position);
+    }
+
+    @Override
     public void onItemClick(View view, int position)
     {
         onRecyclerViewClickListener.onItemClick(view, position);
@@ -147,6 +185,12 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
 
     @Override
     public void onItemLongClick(View view, int position)
+    {
+
+    }
+
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
     {
 
     }

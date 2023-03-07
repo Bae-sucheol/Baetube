@@ -1,17 +1,12 @@
 package com.example.baetube;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.android.material.shape.InterpolateOnScrollPositionChangeHelper;
 
 public class VideoBottomSheetCallback extends BottomSheetBehavior.BottomSheetCallback implements OnBottomSheetInteractionListener, View.OnTouchListener
 {

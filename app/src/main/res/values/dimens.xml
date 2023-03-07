@@ -54,6 +54,8 @@
     <dimen name="res_ratio_collapsed">4.00</dimen>
     <dimen name="res_ratio_min">5.00</dimen>
 
+    <dimen name="height_progressbar">40dp</dimen>
+
     <dimen name="width_reply_slide">50dp</dimen>
     <dimen name="height_reply_slide">5dp</dimen>
 

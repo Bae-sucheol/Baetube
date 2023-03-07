@@ -24,6 +24,7 @@ public class CommunityViewHolder extends RecyclerView.ViewHolder implements View
     public TextView likeCount;
     public TextView hateCount;
     public TextView replyCount;
+    public RecyclerView recyclerViewVote;
 
     private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
@@ -43,6 +44,7 @@ public class CommunityViewHolder extends RecyclerView.ViewHolder implements View
         likeCount = itemView.findViewById(R.id.recyclerview_community_text_like_count);
         hateCount = itemView.findViewById(R.id.recyclerview_community_text_hate_count);
         replyCount = itemView.findViewById(R.id.recyclerview_community_text_reply_count);
+        recyclerViewVote = itemView.findViewById(R.id.recyclerview_community_recyclerview_vote);
 
         this.onRecyclerViewClickListener = onRecyclerViewClickListener;
 

@@ -256,6 +256,16 @@
     <string name="history_detail_text_search_hint">시청 기록 검색</string>
     <string name="history_detail_text_button_cancel">취소</string>
 
+    <!--
+    * rest api url
+    -->
+    <string name="rest_api_base_url">http://localhost:9090/Baetube_backEnd/api/</string>
+
+    <!--
+    * 프래그먼트 태그
+    -->
+    <string name="fragment_tag_home">home</string>
+    <string name="fragment_tag_subscribe">subscribe</string>
 
     <!--
     * 배열

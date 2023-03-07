@@ -182,7 +182,7 @@
           android:layout_height="wrap_content"
           android:orientation="horizontal"
           android:layout_marginBottom="@dimen/margin_small"
-          android:background="?attr/selectableItemBackground">
+          android:background="@color/white">
 
          <ImageView
              android:id="@+id/fragment_home_drawer_image_profile"
@@ -209,7 +209,7 @@
           android:orientation="horizontal"
           android:paddingTop="@dimen/margin_xsmall"
           android:paddingBottom="@dimen/margin_xsmall"
-          android:background="?attr/selectableItemBackground">
+          android:background="@color/white">
 
          <ImageView
              android:layout_width="@dimen/size_icon_small"
@@ -233,7 +233,7 @@
           android:orientation="horizontal"
           android:paddingTop="@dimen/margin_xsmall"
           android:paddingBottom="@dimen/margin_xsmall"
-          android:background="?attr/selectableItemBackground">
+          android:background="@color/white">
 
          <ImageView
              android:layout_width="@dimen/size_icon_small"
@@ -257,7 +257,7 @@
           android:orientation="horizontal"
           android:paddingTop="@dimen/margin_xsmall"
           android:paddingBottom="@dimen/margin_xsmall"
-          android:background="?attr/selectableItemBackground">
+          android:background="@color/white">
 
          <ImageView
              android:layout_width="@dimen/size_icon_small"
@@ -289,7 +289,7 @@
           android:orientation="horizontal"
           android:paddingTop="@dimen/margin_xsmall"
           android:paddingBottom="@dimen/margin_xsmall"
-          android:background="?attr/selectableItemBackground">
+          android:background="@color/white">
 
          <ImageView
              android:layout_width="@dimen/size_icon_small"
@@ -307,6 +307,6 @@
       </LinearLayout>
 
    </LinearLayout>
--->
+
 </androidx.drawerlayout.widget.DrawerLayout>
 

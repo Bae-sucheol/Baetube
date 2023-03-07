@@ -1,6 +1,13 @@
 package com.example.baetube.fragment.channel;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,16 +16,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.baetube.fragment.CustomerServiceFragment;
+import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.R;
 import com.example.baetube.bottomsheetdialog.ChannelReportFragment;
+import com.example.baetube.dto.ChannelDTO;
+import com.example.baetube.fragment.CustomerServiceFragment;
 import com.example.baetube.fragment.SearchFragment;
 
 /**
@@ -29,7 +31,9 @@ import com.example.baetube.fragment.SearchFragment;
 public class ChannelInfomationFragment extends Fragment
 {
     private View view;
-
+    private TextView channelDescription;
+    private TextView regDate;
+    private OnCallbackResponseListener onCallbackResponseListener;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,6 +47,11 @@ public class ChannelInfomationFragment extends Fragment
         // Required empty public constructor
     }
 
+    public ChannelInfomationFragment(OnCallbackResponseListener onCallbackResponseListener)
+    {
+        this.onCallbackResponseListener = onCallbackResponseListener;
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -51,9 +60,9 @@ public class ChannelInfomationFragment extends Fragment
      * @return A new instance of fragment BlankFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChannelInfomationFragment newInstance(boolean hasToolbar)
+    public static ChannelInfomationFragment newInstance(boolean hasToolbar, OnCallbackResponseListener onCallbackResponseListener)
     {
-        ChannelInfomationFragment fragment = new ChannelInfomationFragment();
+        ChannelInfomationFragment fragment = new ChannelInfomationFragment(onCallbackResponseListener);
         Bundle args = new Bundle();
         args.putBoolean(ARG_PARAM, hasToolbar);
         fragment.setArguments(args);
@@ -97,6 +106,9 @@ public class ChannelInfomationFragment extends Fragment
             toolbar.setVisibility(View.GONE);
         }
 
+        channelDescription = view.findViewById(R.id.fragment_channel_information_text_description);
+        regDate = view.findViewById(R.id.fragment_channel_information_text_reg_date);
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -106,6 +118,13 @@ public class ChannelInfomationFragment extends Fragment
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_sub, menu);
+    }
+
+    // 채널 정보를 설정하는 메소드, visitChannel을 요청하고 데이터가 돌아오면 실행된다.
+    public void setChannelInfomation(ChannelDTO channel)
+    {
+        channelDescription.setText(channel.getDescription());
+        regDate.setText(channel.getRegDate().toString());
     }
 
     @Override

@@ -16,7 +16,6 @@
             android:id="@+id/recyclerview_storage_image_thumbnail"
             android:layout_width="@dimen/size_icon_medium"
             android:layout_height="@dimen/size_icon_medium"
-            android:background="@drawable/ic_baseline_image_24"
             android:layout_marginRight="@dimen/margin_xsmall"/>
 
         <LinearLayout

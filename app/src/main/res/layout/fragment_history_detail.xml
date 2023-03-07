@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".fragment.HistoryDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -22,7 +23,7 @@
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scroll_behavior">
 
             <com.google.android.material.appbar.AppBarLayout
@@ -89,13 +90,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/fragment_history_detail_recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scroll_behavior"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_history_detail_layout_search"/>
+                app:layout_behavior="@string/appbar_scroll_behavior" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

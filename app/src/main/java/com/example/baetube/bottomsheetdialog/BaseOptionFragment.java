@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +12,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.UserDisplay;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewOptionAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewOptionItem;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -27,7 +26,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class BaseOptionFragment extends BottomSheetDialogFragment implements OnRecyclerViewClickListener
 {
@@ -133,6 +131,12 @@ public class BaseOptionFragment extends BottomSheetDialogFragment implements OnR
 
     @Override
     public void onItemLongClick(View view, int position)
+    {
+
+    }
+
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
     {
 
     }

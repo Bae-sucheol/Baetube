@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.recyclerview.viewholder.VoteViewHolder;
 
 import java.util.ArrayList;
@@ -72,5 +73,18 @@ public class ReclyclerViewVoteAdapter extends RecyclerView.Adapter<VoteViewHolde
     public void onItemLongClick(View view, int position)
     {
 
+    }
+
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
+    {
+
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    {
+        super.onDetachedFromRecyclerView(recyclerView);
+        context = null;
     }
 }

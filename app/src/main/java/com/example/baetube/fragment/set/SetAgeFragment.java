@@ -1,12 +1,6 @@
 package com.example.baetube.fragment.set;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,19 +8,42 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+
+import com.example.baetube.OnSetFragmentListener;
 import com.example.baetube.R;
 
-import java.nio.channels.ClosedSelectorException;
-
-public class SetAgeFragment extends Fragment implements View.OnClickListener
+public class SetAgeFragment extends Fragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener
 {
     private View view;
 
     private TextView textButtonAdult;
 
     private LinearLayout layoutAdult;
+
+    private OnSetFragmentListener onSetFragmentListener;
+
+    private boolean child;
+    private boolean adult;
+
+    private Integer age;
+
+    private RadioGroup radioGroupChild;
+
+    private RadioGroup radioGroupAdult;
+
+    private TextView buttonUpload;
+
+    public SetAgeFragment(OnSetFragmentListener onSetFragmentListener)
+    {
+        this.onSetFragmentListener = onSetFragmentListener;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +67,15 @@ public class SetAgeFragment extends Fragment implements View.OnClickListener
         layoutAdult = view.findViewById(R.id.fragment_set_age_layout_adult);
 
         textButtonAdult.setOnClickListener(this);
+
+        radioGroupChild = view.findViewById(R.id.fragment_set_age_radio_group_child);
+        radioGroupAdult = view.findViewById(R.id.fragment_set_age_radio_group_adult);
+
+        radioGroupChild.setOnCheckedChangeListener(this);
+        radioGroupAdult.setOnCheckedChangeListener(this);
+
+        buttonUpload = view.findViewById(R.id.fragment_set_age_text_button_upload);
+        buttonUpload.setOnClickListener(this);
 
         // Inflate the layout for this fragment
         return view;
@@ -82,13 +108,17 @@ public class SetAgeFragment extends Fragment implements View.OnClickListener
         }
     }
 
-
     @Override
     public void onClick(View view)
     {
         switch (view.getId())
         {
             case R.id.fragment_set_age_text_button_adult :
+
+                if(!child)
+                {
+                    return;
+                }
 
                 if(layoutAdult.getVisibility() == View.VISIBLE)
                 {
@@ -100,6 +130,65 @@ public class SetAgeFragment extends Fragment implements View.OnClickListener
                 }
 
                 break;
+            case R.id.fragment_set_age_text_button_upload :
+
+                // 업로드 작업을 요청하는 코드를 삽입해야 한다.
+
+                // 체크한 항목을 검사하여 적용한다.
+                applyToPolicy();
+                onSetFragmentListener.onResponseAge(age);
+
+                break;
+
         }
     }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int checkedId)
+    {
+        switch (checkedId)
+        {
+            case R.id.fragment_set_age_radio_button_child :
+
+                child = true;
+
+                break;
+                
+            case R.id.fragment_set_age_radio_button_not_child :
+
+                child = false;
+
+                break;
+                
+            case R.id.fragment_set_age_radio_button_not_adult :
+
+                adult = false;
+
+                break;
+                
+            case R.id.fragment_set_age_radio_button_adult :
+
+                adult = true;
+
+                break;
+        }
+    }
+
+    private void applyToPolicy()
+    {
+        if(child && !adult)
+        {
+            age = 0;
+        }
+        else if(!child && !adult)
+        {
+            age = null;
+        }
+        else if(!child && adult)
+        {
+            age = 1;
+        }
+    }
+
+
 }

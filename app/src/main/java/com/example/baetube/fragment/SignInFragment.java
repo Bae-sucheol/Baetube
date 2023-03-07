@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.R;
 
 public class SignInFragment extends Fragment
@@ -35,6 +36,13 @@ public class SignInFragment extends Fragment
     private RadioGroup radioGroupGender;
 
     private Button buttonSignIn;
+
+    private OnCallbackResponseListener onCallbackResponseListener;
+
+    public SignInFragment(OnCallbackResponseListener onCallbackResponseListener)
+    {
+        this.onCallbackResponseListener = onCallbackResponseListener;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

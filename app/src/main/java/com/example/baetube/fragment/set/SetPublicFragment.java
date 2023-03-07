@@ -1,13 +1,6 @@
 package com.example.baetube.fragment.set;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +8,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+
+import com.example.baetube.OnSetFragmentListener;
 import com.example.baetube.PublicState;
 import com.example.baetube.R;
 
@@ -32,6 +32,15 @@ public class SetPublicFragment extends Fragment implements View.OnClickListener
     // 선택된 항목의 번호를 저장하는 정수형 변수.
     private int selectNumber;
     private View selectedView;
+
+    private OnSetFragmentListener onSetFragmentListener;
+
+    private Integer visible = 1;
+
+    public SetPublicFragment(OnSetFragmentListener onSetFragmentListener)
+    {
+        this.onSetFragmentListener = onSetFragmentListener;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,6 +96,7 @@ public class SetPublicFragment extends Fragment implements View.OnClickListener
             case android.R.id.home :
 
                 getActivity().onBackPressed();
+                onSetFragmentListener.onResponsePublic(visible);
 
             default :
                 return super.onOptionsItemSelected(item);
@@ -105,6 +115,8 @@ public class SetPublicFragment extends Fragment implements View.OnClickListener
                 selectedView = layoutPublic;
                 selectedView.setBackgroundColor(getContext().getColor(R.color.light_gray));
 
+                visible = 1;
+
                 break;
             case R.id.fragment_set_public_layout_link :
 
@@ -112,6 +124,8 @@ public class SetPublicFragment extends Fragment implements View.OnClickListener
                 selectedView.setBackgroundColor(getContext().getColor(R.color.white));
                 selectedView = layoutLink;
                 selectedView.setBackgroundColor(getContext().getColor(R.color.light_gray));
+
+                visible = 0;
 
                 break;
             case R.id.fragment_set_public_layout_lock :
@@ -121,10 +135,10 @@ public class SetPublicFragment extends Fragment implements View.OnClickListener
                 selectedView = layoutLock;
                 selectedView.setBackgroundColor(getContext().getColor(R.color.light_gray));
 
+                visible = null;
+
                 break;
             default :
-
-
 
                 break;
         }

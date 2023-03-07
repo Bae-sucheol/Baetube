@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".fragment.set.SetVoteFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -23,6 +24,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <TextView
+            style="@style/textview_style_upload_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="제목" />
+
+        <EditText
+            android:id="@+id/fragment_set_vote_edit_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_marginVertical="@dimen/margin_small"/>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_set_vote_recyclerview"

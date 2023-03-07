@@ -22,6 +22,7 @@ import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewNotificationAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewNotificationItem;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class NotificationFragment extends Fragment
@@ -99,7 +100,7 @@ public class NotificationFragment extends Fragment
             item.setViewType(ViewType.NOTIFICATION_VIDEO);
 
             channelDTO.setName(channel_names[i]);
-            videoDTO.setDate("1시간 전");
+            videoDTO.setDate(new Timestamp(System.currentTimeMillis()));
             videoDTO.setTitle(titles[i]);
 
             list.add(item);
@@ -123,7 +124,7 @@ public class NotificationFragment extends Fragment
             item.setViewType(ViewType.NOTIFICATION_VIDEO);
 
             channelDTO.setName(channel_names[i]);
-            videoDTO.setDate("1주 전");
+            videoDTO.setDate(new Timestamp(System.currentTimeMillis()));
             videoDTO.setTitle(titles[i]);
 
             list.add(item);
@@ -147,7 +148,7 @@ public class NotificationFragment extends Fragment
             item.setViewType(ViewType.NOTIFICATION_VIDEO);
 
             channelDTO.setName(channel_names[i]);
-            videoDTO.setDate("2주 전");
+            videoDTO.setDate(new Timestamp(System.currentTimeMillis()));
             videoDTO.setTitle(titles[i]);
 
             list.add(item);

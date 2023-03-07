@@ -1,6 +1,13 @@
 package com.example.baetube.fragment;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,22 +16,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
-
+import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
-import com.example.baetube.UserDisplay;
 import com.example.baetube.ViewType;
-import com.example.baetube.dto.ChannelDTO;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewSubscribeAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewSubscribeItem;
 
@@ -36,11 +32,22 @@ public class SubscribeDetailFragment extends Fragment implements OnRecyclerViewC
 
     private RecyclerView recyclerViewScribe;
     private RecyclerViewSubscribeAdapter recyclerViewSubscribeAdapter;
-    private ArrayList<RecyclerViewSubscribeItem> subscribeList = new ArrayList<>();
+    private ArrayList<RecyclerViewSubscribeItem> subscribeList;
     private ArrayList<RecyclerViewSubscribeItem> selectedList = new ArrayList<>();
 
     private int slideDistance = 0;
     private int animationDuration = 0;
+
+    private OnCallbackResponseListener onCallbackResponseListener;
+    private ArrayList<RecyclerViewSubscribeItem> recyclerViewSubscribeList;
+
+    private boolean isManageMode;
+
+    public SubscribeDetailFragment(ArrayList<RecyclerViewSubscribeItem> subscribeList , OnCallbackResponseListener onCallbackResponseListener)
+    {
+        this.subscribeList = subscribeList;
+        this.onCallbackResponseListener = onCallbackResponseListener;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +74,9 @@ public class SubscribeDetailFragment extends Fragment implements OnRecyclerViewC
         * 3. 리사이클러뷰 어댑터 설정
         * 4. 리사이클러뷰 레이아웃 매니저 설정
          */
+
+        setSubscribeList();
+
         recyclerViewScribe = view.findViewById(R.id.fragment_subscribe_detail_recyclerview);
         recyclerViewSubscribeAdapter = new RecyclerViewSubscribeAdapter(subscribeList);
         recyclerViewSubscribeAdapter.setOnRecyclerViewClickListener(this);
@@ -76,10 +86,16 @@ public class SubscribeDetailFragment extends Fragment implements OnRecyclerViewC
         animationDuration = getContext().getResources().getInteger(R.integer.animation_duration_subscribe);
         slideDistance = (int) getContext().getResources().getDimension(R.dimen.width_subscribe_slide);
 
-        test();
-
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void setSubscribeList()
+    {
+        for(RecyclerViewSubscribeItem item : subscribeList)
+        {
+            item.setViewType(ViewType.SUBSCRIBE_HORIZONTAL);
+        }
     }
 
     @Override
@@ -99,26 +115,6 @@ public class SubscribeDetailFragment extends Fragment implements OnRecyclerViewC
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void test()
-    {
-        String channel_names[] = {"홍길동", "이순신", "장영실", "김유신", "허준", "김시민", "이성계","홍길동", "이순신", "장영실", "김유신", "허준", "김시민", "이성계"};
-
-        for(int i = 0; i < 14; i++)
-        {
-            RecyclerViewSubscribeItem item = new RecyclerViewSubscribeItem();
-
-            ChannelDTO channelDTO = new ChannelDTO();
-
-            item.setChannelDTO(channelDTO);
-            item.setViewType(ViewType.SUBSCRIBE_HORIZONTAL);
-
-            channelDTO.setName(channel_names[i]);
-
-            subscribeList.add(item);
-        }
-
     }
 
     @Override
@@ -157,6 +153,12 @@ public class SubscribeDetailFragment extends Fragment implements OnRecyclerViewC
 
             selectedList.remove(subscribeList.get(position));
         }
+    }
+
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
+    {
+
     }
 
 }

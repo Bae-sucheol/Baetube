@@ -1,7 +1,6 @@
 package com.example.baetube.recyclerview.viewholder;
 
 import android.view.View;
-import android.widget.GridView;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -18,7 +17,7 @@ public class VideoListViewHolder extends RecyclerView.ViewHolder
     {
         super(itemView);
 
-        thumbnail = itemView.findViewById(R.id.recyclerview_video_list_image_thumbnail);
+        thumbnail = itemView.findViewById(R.id.recyclerview_video_list_thumbnail);
 
         thumbnail.setOnClickListener(new View.OnClickListener()
         {

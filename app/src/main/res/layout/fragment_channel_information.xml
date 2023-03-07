@@ -75,7 +75,7 @@
                 android:layout_gravity="center_vertical" />
 
             <TextView
-                android:id="@+id/fragment_channel_information_text_sign_in_date"
+                android:id="@+id/fragment_channel_information_text_reg_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2022. 09. 20"

@@ -13,6 +13,7 @@ import com.example.baetube.R;
 
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.PlaylistDTO;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.recyclerview.item.RecyclerViewPlaylistItem;
 import com.example.baetube.recyclerview.viewholder.PlaylistViewHolder;
 
@@ -82,6 +83,12 @@ public class RecyclerViewPlaylistAdapter extends RecyclerView.Adapter<PlaylistVi
 
     @Override
     public void onItemLongClick(View view, int position)
+    {
+
+    }
+
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
     {
 
     }

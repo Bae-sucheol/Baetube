@@ -14,6 +14,7 @@ import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.CommunityDTO;
 import com.example.baetube.dto.VideoDTO;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.recyclerview.item.RecyclerViewNotificationItem;
 import com.example.baetube.recyclerview.viewholder.NotificationViewHolder;
 
@@ -96,7 +97,7 @@ public class RecyclerViewNotificationAdapter extends RecyclerView.Adapter<Notifi
                 stringBuffer.append(videoDTO.getTitle());
 
                 holder.title.setText(stringBuffer.toString());
-                holder.date.setText(videoDTO.getDate());
+                holder.date.setText(videoDTO.getDate().toString());
 
                 break;
 
@@ -115,7 +116,7 @@ public class RecyclerViewNotificationAdapter extends RecyclerView.Adapter<Notifi
                 stringBuffer.append(communityDTO.getComment());
 
                 holder.title.setText(stringBuffer.toString());
-                holder.date.setText(communityDTO.getDate());
+                holder.date.setText(communityDTO.getDate().toString());
 
                 break;
 
@@ -154,6 +155,12 @@ public class RecyclerViewNotificationAdapter extends RecyclerView.Adapter<Notifi
 
     @Override
     public void onItemLongClick(View view, int position)
+    {
+
+    }
+
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
     {
 
     }

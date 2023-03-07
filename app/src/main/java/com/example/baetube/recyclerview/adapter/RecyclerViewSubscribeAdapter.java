@@ -13,6 +13,7 @@ import com.example.baetube.R;
 import com.example.baetube.UserDisplay;
 import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.recyclerview.item.RecyclerViewSubscribeItem;
 import com.example.baetube.recyclerview.viewholder.SubscribeViewHolder;
 
@@ -113,6 +114,12 @@ public class RecyclerViewSubscribeAdapter extends RecyclerView.Adapter<Subscribe
         {
             onRecyclerViewClickListener.onItemLongClick(view, position);
         }
+    }
+
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
+    {
+
     }
 
     @Override

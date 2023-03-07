@@ -1,96 +1,151 @@
 package com.example.baetube.dto;
 
+import java.sql.Timestamp;
+
 public class ReplyDTO
 {
-    private int replyId;
-    private int userID;
-    private int videoId;
-    private int communityId;
+    private Integer replyId;
+    private Long contentsId;
+    private Long attachedId;
+    private Integer channelId;
     private String comment;
-    private int like;
-    private int hate;
-    private String date;
+    private Integer like;
+    private Integer hate;
+    private Timestamp date;
+    private Integer nestedCount;
+    private String name;
+    private String profile;
+
+    // constructor
+    public ReplyDTO()
+    {
+        super();
+    }
+
+    public ReplyDTO(Integer replyId, Long contentsId, Long attachedId, Integer channelId, String comment, Integer like,
+                 Integer hate, Timestamp date, Integer nestedCount, String name, String profile)
+    {
+        super();
+        this.replyId = replyId;
+        this.contentsId = contentsId;
+        this.attachedId = attachedId;
+        this.channelId = channelId;
+        this.comment = comment;
+        this.like = like;
+        this.hate = hate;
+        this.date = date;
+        this.nestedCount = nestedCount;
+        this.name = name;
+        this.profile = profile;
+    }
+
+    public ReplyDTO(Long attachedId, Integer channelId, String comment, Timestamp date)
+    {
+        super();
+        this.attachedId = attachedId;
+        this.channelId = channelId;
+        this.comment = comment;
+        this.date = date;
+    }
+
+    public ReplyDTO(Long attachedId, Integer channelId, String comment)
+    {
+        super();
+        this.attachedId = attachedId;
+        this.channelId = channelId;
+        this.comment = comment;
+    }
 
     // getter
-    public int getReplyId()
+    public Integer getReplyId()
     {
         return replyId;
     }
-
-    public int getUserID()
+    public Long getContentsId()
     {
-        return userID;
+        return contentsId;
     }
-
-    public int getVideoId()
+    public Long getAttachedId()
     {
-        return videoId;
+        return attachedId;
     }
-
-    public int getCommunityId()
+    public Integer getChannelId()
     {
-        return communityId;
+        return channelId;
     }
-
     public String getComment()
     {
         return comment;
     }
-
-    public int getLike()
+    public Integer getLike()
     {
         return like;
     }
-
-    public int getHate()
+    public Integer getHate()
     {
         return hate;
     }
-
-    public String getDate()
+    public Timestamp getDate()
     {
         return date;
     }
+    public Integer getNestedCount()
+    {
+        return nestedCount;
+    }
+    public String getName()
+    {
+        return name;
+    }
+    public String getProfile()
+    {
+        return profile;
+    }
 
     // setter
-    public void setReplyId(int replyId)
+    public void setReplyId(Integer replyId)
     {
         this.replyId = replyId;
     }
-
-    public void setUserID(int userID)
+    public void setContentsId(Long contentsId)
     {
-        this.userID = userID;
+        this.contentsId = contentsId;
     }
-
-    public void setVideoId(int videoId)
+    public void setAttachedId(Long attachedId)
     {
-        this.videoId = videoId;
+        this.attachedId = attachedId;
     }
-
-    public void setCommunityId(int communityId)
+    public void setChannelId(Integer channelId)
     {
-        this.communityId = communityId;
+        this.channelId = channelId;
     }
-
     public void setComment(String comment)
     {
         this.comment = comment;
     }
-
-    public void setLike(int like)
+    public void setLike(Integer like)
     {
         this.like = like;
     }
-
-    public void setHate(int hate)
+    public void setHate(Integer hate)
     {
         this.hate = hate;
     }
-
-    public void setDate(String date)
+    public void setDate(Timestamp date)
     {
         this.date = date;
+    }
+    public void setNestedCount(Integer nestedCount)
+    {
+        this.nestedCount = nestedCount;
+    }
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+    public void setProfile(String profile)
+    {
+        this.profile = profile;
     }
 
 }

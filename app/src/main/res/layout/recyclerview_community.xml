@@ -85,6 +85,13 @@
                 android:layout_height="300dp"
                 android:background="@color/top_menu_background"/>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_community_recyclerview_vote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/margin_small"/>
+
         </LinearLayout>
 
         <LinearLayout

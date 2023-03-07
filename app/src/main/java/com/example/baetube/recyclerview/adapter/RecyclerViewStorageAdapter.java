@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.dto.PlaylistDTO;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.recyclerview.item.RecyclerViewPlaylistItem;
 import com.example.baetube.recyclerview.viewholder.StorageViewHolder;
 
@@ -49,6 +50,16 @@ public class RecyclerViewStorageAdapter extends RecyclerView.Adapter<StorageView
     @Override
     public void onBindViewHolder(@NonNull StorageViewHolder holder, int position)
     {
+        if(position == 0)
+        {
+            // 일단 하드코딩 추후 변경
+            holder.name.setText("새 재생목록");
+            holder.count.setVisibility(View.GONE);
+            holder.thumbnail.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_add_24));
+
+            return;
+        }
+
         RecyclerViewPlaylistItem item = list.get(position);
 
         PlaylistDTO playlistDTO = item.getPlaylistDTO();
@@ -84,6 +95,12 @@ public class RecyclerViewStorageAdapter extends RecyclerView.Adapter<StorageView
 
     @Override
     public void onItemLongClick(View view, int position)
+    {
+
+    }
+
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
     {
 
     }

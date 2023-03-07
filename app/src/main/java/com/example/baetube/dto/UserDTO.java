@@ -1,31 +1,68 @@
 package com.example.baetube.dto;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 public class UserDTO
 {
-    private int userId;
+    private Integer userId;
+    private String email;
     private String password;
     private String name;
-    private String email;
-    private String birth;
+    private Integer gender;
+    private Timestamp birth;
     private String fcmToken;
     private String phone;
     private String address;
-    private String regDate;
-    private boolean gender;
+    private Timestamp regDate;
 
     // constructor
-    public UserDTO(int userId, String password, String name, String email, String birth, String fcmToken, String phone, String address, String regDate, boolean gender)
+    public UserDTO()
+    {
+        super();
+    }
+
+    public UserDTO(Integer userId, String email, String password, String name, Integer gender, Timestamp birth, String fcmToken, String phone, String address, Timestamp regDate)
     {
         this.userId = userId;
+        this.email = email;
         this.password = password;
         this.name = name;
-        this.email = email;
+        this.gender = gender;
         this.birth = birth;
         this.fcmToken = fcmToken;
         this.phone = phone;
         this.address = address;
         this.regDate = regDate;
+    }
+
+    public UserDTO(String email, String password, String name, Integer gender, Timestamp birth, String fcmToken, String phone, String address, Timestamp regDate)
+    {
+        this.email = email;
+        this.password = password;
+        this.name = name;
         this.gender = gender;
+        this.birth = birth;
+        this.fcmToken = fcmToken;
+        this.phone = phone;
+        this.address = address;
+        this.regDate = regDate;
+    }
+
+    public UserDTO(String email, String password, String name, Integer gender, String fcmToken, String phone, String address)
+    {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.gender = gender;
+        this.fcmToken = fcmToken;
+        this.phone = phone;
+        this.address = address;
+    }
+
+    public UserDTO(String email)
+    {
+        this.email = email;
     }
 
     // getter
@@ -49,7 +86,7 @@ public class UserDTO
         return email;
     }
 
-    public String getBirth()
+    public Timestamp getBirth()
     {
         return birth;
     }
@@ -69,12 +106,12 @@ public class UserDTO
         return address;
     }
 
-    public String getRegDate()
+    public Timestamp getRegDate()
     {
         return regDate;
     }
 
-    public boolean getGender()
+    public Integer getGender()
     {
         return gender;
     }
@@ -100,7 +137,7 @@ public class UserDTO
         this.email = email;
     }
 
-    public void setBirth(String birth)
+    public void setBirth(Timestamp birth)
     {
         this.birth = birth;
     }
@@ -120,12 +157,12 @@ public class UserDTO
         this.address = address;
     }
 
-    public void setRegDate(String regDate)
+    public void setRegDate(Timestamp regDate)
     {
         this.regDate = regDate;
     }
 
-    public void setGender(boolean gender)
+    public void setGender(Integer gender)
     {
         this.gender = gender;
     }

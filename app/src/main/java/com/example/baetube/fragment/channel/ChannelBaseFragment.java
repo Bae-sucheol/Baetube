@@ -1,6 +1,12 @@
 package com.example.baetube.fragment.channel;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,18 +16,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.baetube.fragment.CustomerServiceFragment;
-import com.example.baetube.R;
 import com.example.baetube.ChannelPagerAdapter;
 import com.example.baetube.ChannelTabStrategy;
+import com.example.baetube.OnCallbackResponseListener;
+import com.example.baetube.R;
+import com.example.baetube.ViewPagerCallback;
 import com.example.baetube.bottomsheetdialog.ChannelReportFragment;
+import com.example.baetube.dto.ChannelDTO;
+import com.example.baetube.dto.ViewPagerFragmentData;
+import com.example.baetube.fragment.CustomerServiceFragment;
 import com.example.baetube.fragment.SearchFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -35,6 +38,18 @@ public class ChannelBaseFragment extends Fragment
     private TabLayout tabLayout;
     private TabLayoutMediator tabLayoutMediator;
     private ChannelTabStrategy tabStrategy;
+
+    private OnCallbackResponseListener onCallbackResponseListener;
+
+    private ViewPagerCallback onPageChangeCallback;
+
+    private ChannelDTO channel;
+
+    public ChannelBaseFragment(OnCallbackResponseListener onCallbackResponseListener)
+    {
+        this.onCallbackResponseListener = onCallbackResponseListener;
+        onPageChangeCallback = new ViewPagerCallback(onCallbackResponseListener);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +75,7 @@ public class ChannelBaseFragment extends Fragment
         tabLayout = view.findViewById(R.id.fragment_channel_base_tab_layout);
 
         // 커스텀 뷰페이저 어댑터 객체를 만든다.
-        channelPagerAdapter = new ChannelPagerAdapter(this, 5);
+        channelPagerAdapter = new ChannelPagerAdapter(this, 5, onCallbackResponseListener);
         // 어댑터를 뷰페이저에 할당한다.
         viewPager.setAdapter(channelPagerAdapter);
         // 뷰페이저의 방향을 지정.(수평)
@@ -74,8 +89,16 @@ public class ChannelBaseFragment extends Fragment
 
         tabLayoutMediator.attach();
 
+        viewPager.registerOnPageChangeCallback(onPageChangeCallback);
+        viewPager.setOffscreenPageLimit(5);
+
         // Inflate the layout for this fragment
         return view;
+    }
+
+    public ViewPagerFragmentData getCurrentFragmentData()
+    {
+        return channelPagerAdapter.getCurrentFragmentData(viewPager.getCurrentItem());
     }
 
     @Override
@@ -122,9 +145,19 @@ public class ChannelBaseFragment extends Fragment
             default :
 
 
-
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setChannel(ChannelDTO channel)
+    {
+        this.channel = channel;
+        channelPagerAdapter.setChannelInfomation(channel);
+    }
+
+    public ChannelDTO getChannel()
+    {
+        return channel;
     }
 }

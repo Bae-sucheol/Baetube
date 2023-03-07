@@ -3,6 +3,15 @@ package com.example.baetube.fragment;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,19 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.TranslateAnimation;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.TextView;
-
+import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
@@ -33,9 +30,11 @@ import com.example.baetube.bottomsheetdialog.VideoFragment;
 import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class HistoryDetailFragment extends Fragment implements OnRecyclerViewClickListener, View.OnClickListener, View.OnFocusChangeListener
@@ -44,7 +43,7 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
 
     private RecyclerView recyclerView;
     private RecyclerViewVideoAdapter adapter;
-    private ArrayList<RecyclerViewVideoItem> list = new ArrayList<>();
+    private ArrayList<RecyclerViewVideoItem> list;
 
     private EditText search;
     private TextView buttonCancel;
@@ -53,9 +52,13 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
     private int animationDuration;
     private ConstraintLayout layoutSearch;
 
-    private int x;
-    private int y;
+    private OnCallbackResponseListener onCallbackResponseListener;
 
+    public HistoryDetailFragment(ArrayList<RecyclerViewVideoItem> list, OnCallbackResponseListener onCallbackResponseListener)
+    {
+        this.list = list;
+        this.onCallbackResponseListener = onCallbackResponseListener;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,13 +78,16 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        test();
+        //test();
         /*
          * 1. 리사이클러뷰 요소 찾기
          * 2. 리사이클러뷰 어댑터 객체 생성
          * 3. 리사이클러뷰 어댑터 설정
          * 4. 리사이클러뷰 레이아웃 매니저 설정
          */
+
+        setHistoryList();
+
         recyclerView = view.findViewById(R.id.fragment_history_detail_recyclerview);
         adapter = new RecyclerViewVideoAdapter(list);
         recyclerView.setAdapter(adapter);
@@ -101,6 +107,15 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
         // Inflate the layout for this fragment
         return view;
     }
+
+    private void setHistoryList()
+    {
+        for(RecyclerViewVideoItem item : list)
+        {
+            item.setViewType(ViewType.VIDEO_MEDIUM);
+        }
+    }
+
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
@@ -136,7 +151,7 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
         item.setVideoDTO(videoDTO);
 
         item.setViewType(ViewType.VIDEO_DIVIDER);
-        videoDTO.setDate("오늘");
+        videoDTO.setDate(new Timestamp(System.currentTimeMillis()));
 
         list.add(item);
 
@@ -152,7 +167,7 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
             item.setViewType(ViewType.VIDEO_MEDIUM);
 
             channelDTO.setName(channel_names[i]);
-            videoDTO.setDate("1시간 전");
+            videoDTO.setDate(new Timestamp(System.currentTimeMillis()));
             videoDTO.setTitle(titles[i]);
             videoDTO.setViews(500);
 
@@ -168,7 +183,7 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
         item.setVideoDTO(videoDTO);
 
         item.setViewType(ViewType.VIDEO_DIVIDER);
-        videoDTO.setDate("어제");
+        videoDTO.setDate(new Timestamp(System.currentTimeMillis()));
 
         list.add(item);
 
@@ -184,7 +199,7 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
             item.setViewType(ViewType.VIDEO_MEDIUM);
 
             channelDTO.setName(channel_names[i]);
-            videoDTO.setDate("1시간 전");
+            videoDTO.setDate(new Timestamp(System.currentTimeMillis()));
             videoDTO.setTitle(titles[i]);
             videoDTO.setViews(500);
 
@@ -199,7 +214,7 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
         {
             case R.id.recyclerview_video_image_thumbnail :
 
-                VideoFragment videoFragment = new VideoFragment();
+                VideoFragment videoFragment = new VideoFragment(onCallbackResponseListener);
                 videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
 
                 break;
@@ -211,7 +226,7 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
                 break;
             case R.id.recyclerview_video_layout_information :
 
-                videoFragment = new VideoFragment();
+                videoFragment = new VideoFragment(onCallbackResponseListener);
                 videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
 
                 break;
@@ -223,6 +238,12 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
 
     @Override
     public void onItemLongClick(View view, int position)
+    {
+
+    }
+
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
     {
 
     }

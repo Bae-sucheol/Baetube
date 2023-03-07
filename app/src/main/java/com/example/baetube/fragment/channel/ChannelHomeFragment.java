@@ -1,36 +1,36 @@
 package com.example.baetube.fragment.channel;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.baetube.FragmentTagUtil;
+import com.example.baetube.OkHttpUtil;
+import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.OnRecyclerViewClickListener;
-import com.example.baetube.PublicState;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
-import com.example.baetube.bottomsheetdialog.ChannelReportFragment;
 import com.example.baetube.bottomsheetdialog.VideoFragment;
 import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.fragment.modify.ModifyChannelInformationFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClickListener, View.OnClickListener
 {
@@ -38,7 +38,7 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
 
     private RecyclerView recyclerView;
     private RecyclerViewVideoAdapter recyclerViewVideoAdapter;
-    private ArrayList<RecyclerViewVideoItem> list = new ArrayList<>();
+    private ArrayList<RecyclerViewVideoItem> list;
 
     private ImageView profile;
     private ImageView expand;
@@ -52,20 +52,28 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
     private TextView buttonManageVideo;
     private LinearLayout layoutManage;
 
+    private OnCallbackResponseListener onCallbackResponseListener;
+
+    private OkHttpUtil okHttpUtil;
+
+    public ChannelHomeFragment(OnCallbackResponseListener onCallbackResponseListener)
+    {
+        this.onCallbackResponseListener = onCallbackResponseListener;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         view = inflater.inflate(R.layout.fragment_channel_home, container, false);
 
-
-        test();
         /*
          * 1. 리사이클러뷰 요소 찾기
          * 2. 리사이클러뷰 어댑터 객체 생성
          * 3. 리사이클러뷰 어댑터 설정
          * 4. 리사이클러뷰 레이아웃 매니저 설정
          */
+        list = new ArrayList<>();
         recyclerView = view.findViewById(R.id.fragment_channel_home_recyclerview);
         recyclerViewVideoAdapter = new RecyclerViewVideoAdapter(list);
         recyclerViewVideoAdapter.setOnRecyclerViewClickListener(this);
@@ -102,7 +110,7 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
         {
             case R.id.recyclerview_video_image_thumbnail :
 
-                VideoFragment videoFragment = new VideoFragment();
+                VideoFragment videoFragment = new VideoFragment(onCallbackResponseListener);
                 videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
 
                 break;
@@ -114,7 +122,7 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
                 break;
             case R.id.recyclerview_video_layout_information :
 
-                videoFragment = new VideoFragment();
+                videoFragment = new VideoFragment(onCallbackResponseListener);
                 videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
 
                 break;
@@ -130,31 +138,79 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
 
     }
 
-    public void test()
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
     {
-        String channel_names[] = {"홍길동", "이순신", "장영실", "김유신", "허준"};
-        String titles[] = {"쉽게 배우는 자바", "쉽게 배우는 학익진", "쉽게 배우는 거중기",
-                "쉽게 배우는 전투법", "쉽게 배우는 침술"};
 
-        for(int i = 0; i < 5; i++)
+    }
+
+    /*
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+
+        okHttpUtil = new OkHttpUtil();
+
+        // 채널 Id를 기입해야 한다. 지금은 테스트용으로 임의의 값을 넣는다.
+        String channelUrl = "http://192.168.0.4:9090/Baetube_backEnd/api/channel/visit/4";
+
+        ReturnableCallback channelCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_VISIT_CHANNEL);
+
+        okHttpUtil.sendGetRequest(channelUrl, channelCallback);
+
+        // 채널 동영상 정보를 가져온다.
+
+        String videoUrl = "http://192.168.0.4:9090/Baetube_backEnd/api/video/channel_video/4";
+
+        ReturnableCallback videoCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_CHANNEL_VIDEO);
+
+        okHttpUtil.sendGetRequest(videoUrl, videoCallback);
+
+    }
+
+     */
+
+    public void setChannelData(ChannelDTO channel)
+    {
+        getActivity().runOnUiThread(new Runnable(){
+            @Override
+            public void run()
+            {
+                ChannelBaseFragment channelBaseFragment = (ChannelBaseFragment)getParentFragment();
+
+                channelBaseFragment.setChannel(channel);
+
+                channelName.setText(channel.getName());
+                subscribeCount.setText(channel.getSubs().toString());
+                videoCount.setText(channel.getVideoCount().toString());
+                channelDescription.setText(channel.getDescription());
+                // 기타 이미지 설정은 추후에.
+            }
+        });
+
+    }
+
+    public void setRecyclerViewVideo(List<VideoDTO> videoList, List<ChannelDTO> channelList)
+    {
+
+        for(int i = 0; i < videoList.size(); i++)
         {
             RecyclerViewVideoItem item = new RecyclerViewVideoItem();
-
-            ChannelDTO channelDTO = new ChannelDTO();
-            VideoDTO videoDTO = new VideoDTO();
-
-            item.setChannelDTO(channelDTO);
-            item.setVideoDTO(videoDTO);
             item.setViewType(ViewType.VIDEO_MEDIUM);
-
-            channelDTO.setName(channel_names[i]);
-            videoDTO.setDate("1시간 전");
-            videoDTO.setTitle(titles[i]);
-            videoDTO.setViews(500);
+            item.setVideoDTO(videoList.get(i));
+            item.setChannelDTO(channelList.get(i));
 
             list.add(item);
         }
 
+        getActivity().runOnUiThread(new Runnable(){
+            @Override
+            public void run()
+            {
+                recyclerViewVideoAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -166,7 +222,7 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
 
                 FragmentManager fragmentManager = getParentFragment().getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.activity_main_layout, ChannelInfomationFragment.newInstance(true));
+                fragmentTransaction.replace(R.id.activity_main_layout, ChannelInfomationFragment.newInstance(true, onCallbackResponseListener));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
@@ -198,7 +254,7 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
 
                 fragmentManager = getParentFragment().getParentFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.activity_main_layout, new ChannelManageVideoFragment());
+                fragmentTransaction.add(R.id.activity_main_layout, new ChannelManageVideoFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_CHANNEL_MANAGE_VIDEO);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 

@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.OnRecyclerViewClickListener;
-import com.example.baetube.PublicState;
 import com.example.baetube.R;
 
 public class VoteViewHolder extends RecyclerView.ViewHolder
@@ -34,6 +33,25 @@ public class VoteViewHolder extends RecyclerView.ViewHolder
                         onRecyclerViewClickListener.onItemClick(view, position);
                     }
                 }
+            }
+        });
+
+        comment.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view)
+            {
+
+                int position = getAdapterPosition();
+
+                if(position != RecyclerView.NO_POSITION)
+                {
+                    if (onRecyclerViewClickListener != null)
+                    {
+                        onRecyclerViewClickListener.onItemLongClick(view, position);
+                    }
+                }
+                return false;
             }
         });
     }

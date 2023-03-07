@@ -7,12 +7,25 @@
     android:orientation="horizontal"
     android:layout_margin="@dimen/margin_medium">
 
-    <ImageView
-        android:id="@+id/recyclerview_video_image_thumbnail"
+    <FrameLayout
+        android:id="@+id/recyclerview_video_layout_player"
         android:layout_width="@dimen/width_res_small"
         android:layout_height="@dimen/height_res_small"
-        android:background="@drawable/video_border"
-        android:layout_marginRight="@dimen/margin_medium"/>
+        android:layout_marginRight="@dimen/margin_medium">
+
+        <ImageView
+            android:id="@+id/recyclerview_video_image_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.google.android.exoplayer2.ui.StyledPlayerView
+            android:id="@+id/recyclerview_video_player"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="비디오 뷰"
+            android:background="@drawable/video_border" />
+
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/recyclerview_video_layout_information"

@@ -1,14 +1,6 @@
 package com.example.baetube.fragment.channel;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,15 +8,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.baetube.Callback.ReturnableCallback;
+import com.example.baetube.OkHttpUtil;
+import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChannelManageVideoFragment extends Fragment implements OnRecyclerViewClickListener
 {
@@ -33,6 +38,14 @@ public class ChannelManageVideoFragment extends Fragment implements OnRecyclerVi
     private RecyclerView recyclerView;
     private RecyclerViewVideoAdapter recyclerViewVideoAdapter;
     private ArrayList<RecyclerViewVideoItem> list = new ArrayList<>();
+
+    private OnCallbackResponseListener onCallbackResponseListener;
+    private OkHttpUtil okHttpUtil;
+
+    public ChannelManageVideoFragment(OnCallbackResponseListener onCallbackResponseListener)
+    {
+        this.onCallbackResponseListener = onCallbackResponseListener;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,7 +66,7 @@ public class ChannelManageVideoFragment extends Fragment implements OnRecyclerVi
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        test();
+        //test();
 
         /*
          * 1. 리사이클러뷰 요소 찾기
@@ -79,12 +92,30 @@ public class ChannelManageVideoFragment extends Fragment implements OnRecyclerVi
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+
+        System.out.println("정보를 요청했습니다.");
+
+        okHttpUtil = new OkHttpUtil();
+
+        // 채널 동영상 정보를 가져온다.
+
+        String videoUrl = "http://192.168.0.4:9090/Baetube_backEnd/api/video/channel_video/4";
+
+        ReturnableCallback videoCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_CHANNEL_VIDEO);
+
+        okHttpUtil.sendGetRequest(videoUrl, videoCallback);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
         switch (item.getItemId())
         {
             case android.R.id.home :
-                getActivity().onBackPressed();
+               // getActivity().onBackPressed();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -102,6 +133,35 @@ public class ChannelManageVideoFragment extends Fragment implements OnRecyclerVi
 
     }
 
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
+    {
+
+    }
+
+    public void setRecyclerViewVideo(List<VideoDTO> videoList, List<ChannelDTO> channelList)
+    {
+
+        for(int i = 0; i < videoList.size(); i++)
+        {
+            RecyclerViewVideoItem item = new RecyclerViewVideoItem();
+            item.setViewType(ViewType.VIDEO_MEDIUM);
+            item.setVideoDTO(videoList.get(i));
+            item.setChannelDTO(channelList.get(i));
+
+            list.add(item);
+        }
+
+        getActivity().runOnUiThread(new Runnable(){
+            @Override
+            public void run()
+            {
+                recyclerViewVideoAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    /*
     public void test()
     {
         String channel_names[] = {"홍길동", "이순신", "장영실", "김유신", "허준"};
@@ -120,7 +180,7 @@ public class ChannelManageVideoFragment extends Fragment implements OnRecyclerVi
             item.setViewType(ViewType.VIDEO_MEDIUM);
 
             channelDTO.setName(channel_names[i]);
-            videoDTO.setDate("1시간 전");
+            videoDTO.setDate(new Timestamp(System.currentTimeMillis()));
             videoDTO.setTitle(titles[i]);
             videoDTO.setViews(500);
 
@@ -128,4 +188,6 @@ public class ChannelManageVideoFragment extends Fragment implements OnRecyclerVi
         }
 
     }
+     */
+
 }

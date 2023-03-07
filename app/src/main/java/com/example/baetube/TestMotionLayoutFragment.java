@@ -1,8 +1,13 @@
 package com.example.baetube;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,29 +15,18 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.example.baetube.bottomsheetdialog.AddPlaylistFragment;
 import com.example.baetube.bottomsheetdialog.ReplyFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.fragment.channel.ChannelBaseFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 
@@ -63,6 +57,13 @@ public class TestMotionLayoutFragment extends Fragment implements OnRecyclerView
     private EditText reply;
 
     private ConstraintLayout layoutReply;
+
+    private OnCallbackResponseListener onCallbackResponseListener;
+
+    public TestMotionLayoutFragment(OnCallbackResponseListener onCallbackResponseListener)
+    {
+        this.onCallbackResponseListener = onCallbackResponseListener;
+    }
 
     @Nullable
     @Override
@@ -137,6 +138,12 @@ public class TestMotionLayoutFragment extends Fragment implements OnRecyclerView
 
     }
 
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
+    {
+
+    }
+
     public void test()
     {
         String channel_names[] = {"홍길동", "이순신", "장영실", "김유신", "허준"};
@@ -155,7 +162,7 @@ public class TestMotionLayoutFragment extends Fragment implements OnRecyclerView
             item.setViewType(ViewType.VIDEO_LARGE);
 
             channelDTO.setName(channel_names[i]);
-            videoDTO.setDate("1시간 전");
+            videoDTO.setDate(new Timestamp(System.currentTimeMillis()));
             videoDTO.setTitle(titles[i]);
             videoDTO.setViews(500);
 
@@ -189,7 +196,7 @@ public class TestMotionLayoutFragment extends Fragment implements OnRecyclerView
 
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.activity_main_layout, new ChannelBaseFragment());
+                fragmentTransaction.replace(R.id.activity_main_layout, new ChannelBaseFragment(onCallbackResponseListener));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 

@@ -127,7 +127,7 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/bottomsheetdialogfragment_nested_reply_layout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
         android:alpha="0.0"

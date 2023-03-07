@@ -22,13 +22,14 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.UserDisplay;
-import com.example.baetube.VideoBottomSheetCallback;
 import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.fragment.channel.ChannelBaseFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
@@ -36,8 +37,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import org.w3c.dom.Text;
-
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class VideoFragment extends BottomSheetDialogFragment implements OnRecyclerViewClickListener, View.OnClickListener, View.OnTouchListener
@@ -72,6 +72,13 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
     private CoordinatorLayout layoutDescription;
     private ConstraintLayout layoutMinMenu;
 
+    private OnCallbackResponseListener onCallbackResponseListener;
+
+    public VideoFragment(OnCallbackResponseListener onCallbackResponseListener)
+    {
+        this.onCallbackResponseListener = onCallbackResponseListener;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -91,8 +98,6 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
         recyclerView.setAdapter(adapter);
         adapter.setOnRecyclerViewClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        test();
 
         player = view.findViewById(R.id.bottomsheetdialogfragment_video_player);
         title = view.findViewById(R.id.bottomsheetdialogfragment_video_text_title);
@@ -187,6 +192,12 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
 
     }
 
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
+    {
+
+    }
+
     public void test()
     {
         String channel_names[] = {"홍길동", "이순신", "장영실", "김유신", "허준"};
@@ -205,7 +216,7 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
             item.setViewType(ViewType.VIDEO_LARGE);
 
             channelDTO.setName(channel_names[i]);
-            videoDTO.setDate("1시간 전");
+            videoDTO.setDate(new Timestamp(System.currentTimeMillis()));
             videoDTO.setTitle(titles[i]);
             videoDTO.setViews(500);
 
@@ -239,7 +250,7 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
 
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.activity_main_layout, new ChannelBaseFragment());
+                fragmentTransaction.replace(R.id.activity_main_layout, new ChannelBaseFragment(onCallbackResponseListener));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 

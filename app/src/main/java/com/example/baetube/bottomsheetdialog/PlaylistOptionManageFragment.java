@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.view.View;
 
+import com.example.baetube.OnDialogInteractionListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 
@@ -11,9 +12,14 @@ public class PlaylistOptionManageFragment extends BaseOptionFragment implements 
 {
     private static TypedArray resources;
     private static String options[];
+    private int position;
 
-    public PlaylistOptionManageFragment(Context context)
+    private OnDialogInteractionListener onDialogInteractionListener;
+
+    public PlaylistOptionManageFragment(Context context, int position, OnDialogInteractionListener onDialogInteractionListener)
     {
+        this.position = position;
+        this.onDialogInteractionListener = onDialogInteractionListener;
         resources = context.getResources().obtainTypedArray(R.array.playlist_option_manage_resources);
         options = context.getResources().getStringArray(R.array.playlist_option_manage_texts);
 
@@ -27,6 +33,10 @@ public class PlaylistOptionManageFragment extends BaseOptionFragment implements 
         {
             case 0 :
                 //
+
+                onDialogInteractionListener.onDeletePlaylistItem(position);
+                dismiss();
+
                 break;
 
             case 1 :

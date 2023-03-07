@@ -63,6 +63,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/set_age_text_radio_button_not_child"
+                    android:checked="true"
                     style="@style/textview_style_set_title"/>
 
             </RadioGroup>
@@ -113,6 +114,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/set_age_text_radio_button_not_adult"
+                    android:checked="true"
                     style="@style/textview_style_set_title"/>
 
                 <RadioButton

@@ -3,11 +3,6 @@ package com.example.baetube.bottomsheetdialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +10,10 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.example.baetube.OnDialogInteractionListener;
 import com.example.baetube.R;
 import com.example.baetube.UserDisplay;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -30,6 +29,14 @@ public class AddVoteFragment extends BottomSheetDialogFragment implements View.O
     private TextView buttonClose;
     // 투표 내용을 작성할 뷰
     private EditText comment;
+
+    // 추가할 투표 내용을 전달하기 위한 인터페이스
+    private OnDialogInteractionListener onDialogInteractionListener;
+
+    public AddVoteFragment(OnDialogInteractionListener onDialogInteractionListener)
+    {
+        this.onDialogInteractionListener = onDialogInteractionListener;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,6 +99,7 @@ public class AddVoteFragment extends BottomSheetDialogFragment implements View.O
         if(view.getId() == R.id.fragment_add_vote_text_button_add)
         {
             // 추가 기능 작성
+            onDialogInteractionListener.onAddVoteResponse(comment.getText().toString());
         }
 
         this.dismiss();

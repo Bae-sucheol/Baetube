@@ -1,7 +1,6 @@
 package com.example.baetube.bottomsheetdialog;
 
 import android.animation.Animator;
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.app.Dialog;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -27,12 +25,14 @@ import com.example.baetube.UserDisplay;
 import com.example.baetube.WidthProperty;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.ReplyDTO;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewReplyAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewReplyItem;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class ReplyFragment extends BottomSheetDialogFragment implements OnRecyclerViewClickListener, View.OnClickListener
@@ -140,6 +140,12 @@ public class ReplyFragment extends BottomSheetDialogFragment implements OnRecycl
 
     }
 
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
+    {
+
+    }
+
     public void test()
     {
         String channel_names[] = {"홍길동", "이순신", "장영실", "김유신", "허준"};
@@ -154,7 +160,7 @@ public class ReplyFragment extends BottomSheetDialogFragment implements OnRecycl
             ChannelDTO channelDTO = new ChannelDTO();
 
             channelDTO.setName(channel_names[i % 5]);
-            replyDTO.setDate("1시간 전");
+            replyDTO.setDate(new Timestamp(System.currentTimeMillis()));
             replyDTO.setComment(comments[i % 5]);
             replyDTO.setLike(50);
             replyDTO.setHate(5);

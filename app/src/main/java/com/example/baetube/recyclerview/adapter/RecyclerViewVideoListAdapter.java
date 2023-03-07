@@ -1,8 +1,6 @@
 package com.example.baetube.recyclerview.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +8,23 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.UserDisplay;
+import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.recyclerview.viewholder.VideoListViewHolder;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class RecyclerViewVideoListAdapter extends RecyclerView.Adapter<VideoListViewHolder> implements OnRecyclerViewClickListener
 {
     private Context context;
-    private ArrayList<Drawable> list;
+    private ArrayList<File> list;
     private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
-    public RecyclerViewVideoListAdapter(ArrayList<Drawable> list)
+    public RecyclerViewVideoListAdapter(ArrayList<File> list)
     {
         this.list = list;
     }
@@ -58,12 +59,14 @@ public class RecyclerViewVideoListAdapter extends RecyclerView.Adapter<VideoList
     @Override
     public void onBindViewHolder(@NonNull VideoListViewHolder holder, int position)
     {
-        Drawable item = list.get(position);
+        File item = list.get(position);
 
-        holder.thumbnail.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-        holder.thumbnail.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
-
-        holder.thumbnail.setImageDrawable(item);
+        Glide.with(context)
+                .asBitmap()
+                .load(item.getAbsoluteFile()) // or URI/path
+                .override(holder.thumbnail.getWidth(), holder.thumbnail.getHeight())
+                .centerCrop()
+                .into(holder.thumbnail);
     }
 
     @Override
@@ -87,5 +90,18 @@ public class RecyclerViewVideoListAdapter extends RecyclerView.Adapter<VideoList
     public void onItemLongClick(View view, int position)
     {
 
+    }
+
+    @Override
+    public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
+    {
+
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    {
+        super.onDetachedFromRecyclerView(recyclerView);
+        context = null;
     }
 }
