@@ -290,12 +290,84 @@ tools:context=".fragment.upload.UploadVideoInformationFragment">
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
+                    android:layout_weight="1"
                     android:text="@string/upload_video_text_location" />
+
+                <TextView
+                    android:id="@+id/fragment_upload_video_information_text_location"
+                    style="@style/textview_style_upload_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/fragment_upload_video_information_button_location"
+                android:layout_width="@dimen/size_icon_small"
+                android:layout_height="@dimen/size_icon_small"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="@dimen/size_icon_option"
+                    android:layout_height="@dimen/size_icon_option"
+                    android:background="@drawable/ic_baseline_arrow_forward_ios_24" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_upload_video_information_layout_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/margin_xsmall">
+
+            <ImageView
+                android:id="@+id/fragment_upload_video_information_image_add_category"
+                android:layout_width="@dimen/size_icon_small"
+                android:layout_height="@dimen/size_icon_small"
+                android:background="@drawable/ic_baseline_category_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/margin_small"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_upload_video_information_button_add_category"
+                app:layout_constraintStart_toEndOf="@+id/fragment_upload_video_information_image_add_category"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    style="@style/textview_style_upload_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="@string/upload_video_text_add_category" />
+
+                <TextView
+                    android:id="@+id/fragment_upload_video_information_text_category"
+                    style="@style/textview_style_upload_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:singleLine="true" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fragment_upload_video_information_button_add_category"
                 android:layout_width="@dimen/size_icon_small"
                 android:layout_height="@dimen/size_icon_small"
                 android:gravity="center"

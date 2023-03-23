@@ -17,7 +17,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.baetube.bottomsheetdialog.AddPlaylistFragment;
 import com.example.baetube.bottomsheetdialog.ReplyFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
@@ -188,8 +187,8 @@ public class TestMotionLayoutFragment extends Fragment implements OnRecyclerView
                 break;
             case R.id.bottomsheetdialogfragment_video_image_add_library :
 
-                AddPlaylistFragment addPlaylistFragment = new AddPlaylistFragment(getContext());
-                addPlaylistFragment.show(getParentFragmentManager(), addPlaylistFragment.getTag());
+                //AddPlaylistFragment addPlaylistFragment = new AddPlaylistFragment(getContext());
+                //addPlaylistFragment.show(getParentFragmentManager(), addPlaylistFragment.getTag());
 
                 break;
             case R.id.bottomsheetdialogfragment_video_image_channel_profile :

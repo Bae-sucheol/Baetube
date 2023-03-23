@@ -22,6 +22,8 @@ import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
+import com.example.baetube.activity.MainActivity;
+import com.example.baetube.bottomsheetdialog.VideoOptionManageFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.dto.VoteDTO;
@@ -124,7 +126,31 @@ public class ChannelManageVideoFragment extends Fragment implements OnRecyclerVi
     @Override
     public void onItemClick(View view, int position)
     {
+        switch (view.getId())
+        {
+            case R.id.recyclerview_video_image_thumbnail :
 
+                //VideoFragment videoFragment = new VideoFragment(onCallbackResponseListener);
+                //videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+
+                break;
+            case R.id.recyclerview_video_image_option :
+
+                VideoOptionManageFragment videoOptionManageFragment = new VideoOptionManageFragment(getContext(), recyclerViewVideoAdapter, list, position);
+                videoOptionManageFragment.show(getParentFragmentManager(), videoOptionManageFragment.getTag());
+                ((MainActivity)getContext()).setManagedVideoItem(list.get(position));
+
+                break;
+            case R.id.recyclerview_video_layout_information :
+
+                //videoFragment = new VideoFragment(onCallbackResponseListener);
+                //videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+
+                break;
+
+            default :
+                break;
+        }
     }
 
     @Override

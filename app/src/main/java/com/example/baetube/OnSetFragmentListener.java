@@ -11,4 +11,6 @@ public interface OnSetFragmentListener
     public void onResponseLocation(String str);
     public void onResponseAge(Integer value);
     public void onResponseVote(VoteDTO vote, List<VoteDTO> voteOptions);
+    public void onResponseCategory(String str, int position);
+    public void onResponseCalendar(int year, int month, int dayOfMonth);
 }

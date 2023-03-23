@@ -26,6 +26,7 @@ import com.example.baetube.OnFragmentInteractionListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
+import com.example.baetube.activity.MainActivity;
 import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.PlaylistDTO;
@@ -257,8 +258,9 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
 
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.activity_main_layout,
-                        new HistoryDetailFragment((ArrayList<RecyclerViewVideoItem>)videoHistoryList.clone(), onCallbackResponseListener));
+                fragmentTransaction.replace(R.id.activity_main_layout,
+                        new HistoryDetailFragment((ArrayList<RecyclerViewVideoItem>)videoHistoryList.clone(), onCallbackResponseListener)
+                        , FragmentTagUtil.FRAGMENT_TAG_HISTORY_DETAIL);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
@@ -269,18 +271,6 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
     @Override
     public void onItemClick(View view, int position)
     {
-        // 0 번째 포지션이라면 새 재생목록 이라는 의미이므로 관련 기능을 제공해야 한다.
-        if(position == 0)
-        {
-            FragmentManager fragmentManager = getParentFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.activity_main_layout,
-                    new AddStorageFragment((ArrayList<RecyclerViewVideoItem>)videoHistoryList.clone(), onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_ADD_STORAGE);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-
-            return;
-        }
 
         switch (view.getId())
         {
@@ -297,6 +287,7 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
 
                 VideoOptionFragment videoOptionFragment = new VideoOptionFragment(getContext());
                 videoOptionFragment.show(getParentFragmentManager(), videoOptionFragment.getTag());
+                ((MainActivity)getContext()).setManagedVideoItem(videoHistoryList.get(position));
 
                 break;
             case R.id.recyclerview_video_layout_information :
@@ -306,6 +297,19 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
 
                 break;
             case R.id.recyclerview_storage_layout_main :
+
+                // 0 번째 포지션이라면 새 재생목록 이라는 의미이므로 관련 기능을 제공해야 한다.
+                if(position == 0)
+                {
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.activity_main_layout,
+                            new AddStorageFragment((ArrayList<RecyclerViewVideoItem>)videoHistoryList.clone(), onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_ADD_STORAGE);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+
+                    return;
+                }
 
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -342,5 +346,10 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
     public void onCompletelyVisible(FrameLayout layout, String uuid)
     {
 
+    }
+
+    public boolean isCalled()
+    {
+        return isCalled;
     }
 }

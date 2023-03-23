@@ -1,6 +1,5 @@
 package com.example.baetube.recyclerview.viewholder;
 
-import android.media.Image;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,6 +48,8 @@ public class ReplyViewHolder extends RecyclerView.ViewHolder implements View.OnC
         this.onRecyclerViewClickListener = onRecyclerViewClickListener;
 
         nestedReplyLayout.setOnClickListener(this);
+        writeNestedReply.setOnClickListener(this);
+        option.setOnClickListener(this);
     }
 
     @Override

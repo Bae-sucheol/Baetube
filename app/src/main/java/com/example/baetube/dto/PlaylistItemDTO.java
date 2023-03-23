@@ -10,6 +10,10 @@ public class PlaylistItemDTO
         super();
     }
 
+    /**
+     * @param playlistId
+     * @param videoId
+     */
     public PlaylistItemDTO(Integer playlistId, Integer videoId)
     {
         super();

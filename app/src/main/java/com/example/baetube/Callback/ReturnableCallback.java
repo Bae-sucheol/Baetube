@@ -28,7 +28,13 @@ public class ReturnableCallback implements Callback
     public static final int CALLBACK_SELECT_VOTE_OPTION = 15;
     public static final int CALLBACK_SELECT_SUBSCRIBE = 16;
     public static final int CALLBACK_INSERT = 17;
-
+    public static final int CALLBACK_RATE = 18;
+    public static final int CALLBACK_SUBSCRIBE = 19;
+    public static final int CALLBACK_UNSUBSCRIBE = 20;
+    public static final int CALLBACK_REPLY = 21;
+    public static final int CALLBACK_NESTED_REPLY = 22;
+    public static final int CALLBACK_SIGN_IN = 23;
+    public static final int CALLBACK_SELECT_RELATED_VIDEO = 24;
 
     private OnCallbackResponseListener onCallbackResponseListener;
     private int type;
@@ -126,6 +132,34 @@ public class ReturnableCallback implements Callback
 
             case CALLBACK_INSERT :
                 onCallbackResponseListener.onInsertResponse(object);
+                break;
+
+            case CALLBACK_RATE :
+                onCallbackResponseListener.onRateResponse(object);
+                break;
+
+            case CALLBACK_SUBSCRIBE :
+                onCallbackResponseListener.onSubscribeResponse(object);
+                break;
+
+            case CALLBACK_UNSUBSCRIBE :
+                onCallbackResponseListener.onUnSubscribeResponse(object);
+                break;
+
+            case CALLBACK_REPLY :
+                onCallbackResponseListener.onReplyResponse(object);
+                break;
+
+            case CALLBACK_NESTED_REPLY :
+                onCallbackResponseListener.onNestedReplyResponse(object);
+                break;
+
+            case CALLBACK_SIGN_IN :
+                onCallbackResponseListener.onSignInResponse(object);
+                break;
+
+            case CALLBACK_SELECT_RELATED_VIDEO :
+                onCallbackResponseListener.onSelectRelatedVideoResponse(object);
                 break;
 
             default :

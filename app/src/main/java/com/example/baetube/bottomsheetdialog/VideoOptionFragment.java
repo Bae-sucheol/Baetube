@@ -1,19 +1,25 @@
 package com.example.baetube.bottomsheetdialog;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
+import com.example.baetube.activity.MainActivity;
 
 public class VideoOptionFragment extends BaseOptionFragment implements OnRecyclerViewClickListener
 {
     private static TypedArray resources;
     private static String options[];
+    private Context context;
 
     public VideoOptionFragment(Context context)
     {
+        this.context = context;
         resources = context.getResources().obtainTypedArray(R.array.video_option_resources);
         options = context.getResources().getStringArray(R.array.video_option_texts);
 
@@ -30,14 +36,24 @@ public class VideoOptionFragment extends BaseOptionFragment implements OnRecycle
                 break;
 
             case 1 :
-                System.out.println("재생목록에 저장!");
+                ((MainActivity)context).requestSelectPlaylist();
                 break;
 
             case 2 :
-                System.out.println("신고!");
+                VideoReportFragment videoReportFragment = new VideoReportFragment(context);
+                videoReportFragment.show(getParentFragmentManager(), videoReportFragment.getTag());
                 break;
 
         }
+
+        dismiss();
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog)
+    {
+        ((MainActivity)context).setManagedVideoItem(null);
+        super.onDismiss(dialog);
     }
 
     @Override

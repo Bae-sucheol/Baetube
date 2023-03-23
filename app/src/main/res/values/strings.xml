@@ -122,6 +122,7 @@
     <string name="upload_video_text_description">설명</string>
     <string name="upload_video_text_visible">공개 상태</string>
     <string name="upload_video_text_location">위치</string>
+    <string name="upload_video_text_add_category">카테고리</string>
     <string name="upload_video_text_add_playlist">재생목록 추가</string>
 
     <string name="upload_video_text_title">제목</string>
@@ -238,6 +239,20 @@
     <string name="add_playlist_text_button_close">취소</string>
 
     <!--
+    * 카테고리 설정 바텀시트 다이얼로그
+    -->
+    <string name="set_category_text_title">카테고리 설정</string>
+    <string name="set_category_text_button_confirm">확인</string>
+    <string name="set_category_text_button_close">취소</string>
+
+    <!--
+    * 캘린더 설정 바텀시트 다이얼로그
+    -->
+    <string name="set_calendar_text_title">생년월일 설정</string>
+    <string name="set_calendar_text_button_confirm">확인</string>
+    <string name="set_calendar_text_button_close">취소</string>
+
+    <!--
     * 업로드 바텀시트 다이얼로그
     -->
     <string name="upload_text_title">업로드</string>
@@ -268,6 +283,19 @@
     <string name="fragment_tag_subscribe">subscribe</string>
 
     <!--
+    * 회원가입 에러 텍스트
+    -->
+    <string name="fragment_sign_in_error_email">이메일 형식이 맞지 않습니다.</string>
+    <string name="fragment_sign_in_error_password">비밀번호 형식이 맞지 않습니다.</string>
+    <string name="fragment_sign_in_error_password_check">비밀번호가 일치하지 않습니다.</string>
+    <string name="fragment_sign_in_error_name">이름 형식이 맞지 않습니다.</string>
+    <string name="fragment_sign_in_error_birth">생년월일을 작성해주세요.</string>
+    <string name="fragment_sign_in_error_gender">성별을 선택해주세요.</string>
+    <string name="fragment_sign_in_error_address">주소를 작성해주세요.</string>
+    <string name="fragment_sign_in_error_phone">전화번호 형식이 맞지 않습니다.</string>
+
+
+    <!--
     * 배열
     -->
     <string-array name="tab_layout_channel_title">
@@ -284,6 +312,24 @@
         <item>신고</item>
     </string-array>
 
+    <string-array name="category_option_texts">
+        <item>게임</item>
+        <item>과학기술</item>
+        <item>교육</item>
+        <item>노하우/스타일</item>
+        <item>뉴스/정치</item>
+        <item>비영리/사회운동</item>
+        <item>스포츠</item>
+        <item>애완동물/동물</item>
+        <item>엔터테인먼트</item>
+        <item>여행/이벤트</item>
+        <item>영화/애니메이션</item>
+        <item>음악</item>
+        <item>인물/블로그</item>
+        <item>자동차/교통</item>
+        <item>코미디</item>
+    </string-array>
+
     <string-array name="video_option_manage_texts">
         <item>재생목록에 저장</item>
         <item>수정</item>
@@ -292,7 +338,6 @@
     </string-array>
 
     <string-array name="playlist_option_texts">
-        <item>보관함에 저장</item>
         <item>신고</item>
     </string-array>
 
@@ -308,6 +353,13 @@
         <item>신고</item>
     </string-array>
 
+    <string-array name="history_video_option_manage_texts">
+        <item>시청 기록에서 삭제</item>
+        <item>나중에 볼 동영상에 저장</item>
+        <item>재생목록에 저장</item>
+        <item>신고</item>
+    </string-array>
+
     <string-array name="community_option_texts">
         <item>신고</item>
     </string-array>
@@ -315,6 +367,12 @@
     <string-array name="upload_option_texts">
         <item>동영상 업로드</item>
         <item>게시물 작성</item>
+    </string-array>
+
+    <string-array name="player_option_texts">
+        <item>1080p</item>
+        <item>720p</item>
+        <item>480p</item>
     </string-array>
 
     <!--

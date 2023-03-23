@@ -20,6 +20,7 @@ import com.example.baetube.FragmentTagUtil;
 import com.example.baetube.OkHttpUtil;
 import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.R;
+import com.example.baetube.activity.MainActivity;
 import com.example.baetube.dto.UserDTO;
 
 public class LoginFragment extends Fragment implements View.OnClickListener
@@ -61,6 +62,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener
 
         logInButton.setOnClickListener(this);
         signInButton.setOnClickListener(this);
+
+        ((MainActivity)getContext()).setBottomNavigationViewVisible(View.GONE);
 
         // Inflate the layout for this fragment
         return view;
@@ -114,6 +117,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener
         }
     }
 
-
-
+    @Override
+    public void onDestroy()
+    {
+        ((MainActivity)getContext()).setBottomNavigationViewVisible(View.VISIBLE);
+        super.onDestroy();
+    }
 }

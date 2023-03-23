@@ -19,6 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:tag="비디오 뷰"
+            app:controller_layout_id="@layout/layout_custom_exoplayer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="1.0"
@@ -265,6 +266,8 @@
                         android:gravity="center"
                         android:text="@string/bottomsheetdialogfragment_video_text_subscribe"
                         android:textColor="@color/red"
+                        android:background="@drawable/button_subscribe_border"
+                        android:layout_marginVertical="@dimen/margin_small"
                         app:layout_constraintBottom_toBottomOf="@+id/bottomsheetdialogfragment_video_image_channel_profile"
                         app:layout_constraintEnd_toStartOf="@id/bottomsheetdialogfragment_video_gulid_right"
                         app:layout_constraintTop_toTopOf="@+id/bottomsheetdialogfragment_video_image_channel_profile" />

@@ -70,7 +70,7 @@ public class ModifyPlaylistFragment extends Fragment
         thumbnail = view.findViewById(R.id.fragment_playlist_modify_image_thumbnail);
         playlistName = view.findViewById(R.id.fragment_playlist_modify_edit_title);
         spinner = view.findViewById(R.id.fragment_playlist_modify_spinner);
-        adapter = new SpinnerDropdownAdapter(activity, R.layout.spinner_dropdown, list);
+        adapter = new SpinnerDropdownAdapter(activity, R.layout.spinner_dropdown, list, false);
         spinner.setAdapter(adapter);
 
         playlistName.setText(recyclerViewPlaylistItem.getPlaylistDTO().getName());

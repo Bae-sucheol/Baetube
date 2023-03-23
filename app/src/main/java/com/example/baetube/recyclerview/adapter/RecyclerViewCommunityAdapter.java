@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.baetube.DateToStringUtil;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.dto.ChannelDTO;
@@ -108,7 +109,7 @@ public class RecyclerViewCommunityAdapter extends RecyclerView.Adapter<Community
                 .into(holder.profile);
 
         holder.channelName.setText(channelDTO.getName());
-        holder.date.setText(communityDTO.getDate().toString());
+        holder.date.setText(DateToStringUtil.dateToString(communityDTO.getDate()));
         holder.comment.setText(communityDTO.getComment());
         holder.likeCount.setText(String.valueOf(communityDTO.getLikeCount()));
         holder.hateCount.setText(String.valueOf(communityDTO.getHateCount()));

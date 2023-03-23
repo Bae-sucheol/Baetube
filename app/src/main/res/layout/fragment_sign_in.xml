@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".fragment.SignInFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -58,6 +59,15 @@
                     android:padding="@dimen/padding_small"/>
 
                 <TextView
+                    android:id="@+id/fragment_sign_in_text_error_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_email"
+                    android:visibility="gone"/>
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/sign_in_password"
@@ -75,6 +85,15 @@
                     android:background="@drawable/input_border"
                     style="@style/textview_style_normal"
                     android:padding="@dimen/padding_small"/>
+
+                <TextView
+                    android:id="@+id/fragment_sign_in_text_error_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_password"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -95,6 +114,15 @@
                     style="@style/textview_style_normal"
                     android:padding="@dimen/padding_small"
                     android:layout_marginBottom="@dimen/margin_medium"/>
+
+                <TextView
+                    android:id="@+id/fragment_sign_in_text_error_password_check"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_password_check"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -126,6 +154,15 @@
                     android:padding="@dimen/padding_small"/>
 
                 <TextView
+                    android:id="@+id/fragment_sign_in_text_error_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_name"
+                    android:visibility="gone"/>
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/sign_in_birth"
@@ -154,6 +191,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/sign_in_birth_year"
                         android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/margin_xsmall"
                         style="@style/textview_style_normal"
                         android:paddingLeft="0dp"/>
 
@@ -171,6 +209,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/sign_in_birth_month"
                         android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/margin_xsmall"
                         style="@style/textview_style_normal"
                         android:paddingLeft="0dp"/>
 
@@ -188,10 +227,20 @@
                         android:layout_height="wrap_content"
                         android:text="@string/sign_in_birth_day"
                         android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/margin_xsmall"
                         style="@style/textview_style_normal"
                         android:paddingLeft="0dp"/>
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/fragment_sign_in_text_error_birth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_birth"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -235,6 +284,15 @@
 
                 </RadioGroup>
 
+                <TextView
+                    android:id="@+id/fragment_sign_in_text_error_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_gender"
+                    android:visibility="gone"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -265,6 +323,15 @@
                     android:padding="@dimen/padding_small"/>
 
                 <TextView
+                    android:id="@+id/fragment_sign_in_text_error_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_address"
+                    android:visibility="gone"/>
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/sign_in_phone"
@@ -283,6 +350,15 @@
                     style="@style/textview_style_normal"
                     android:padding="@dimen/padding_small"
                     android:layout_marginBottom="@dimen/margin_medium"/>
+
+                <TextView
+                    android:id="@+id/fragment_sign_in_text_error_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_phone"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 

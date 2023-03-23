@@ -25,6 +25,7 @@ import com.example.baetube.OnFragmentInteractionListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
+import com.example.baetube.activity.MainActivity;
 import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
@@ -61,6 +62,7 @@ public class SubscribeFragment extends Fragment implements OnRecyclerViewClickLi
     private LinearLayoutManager linearLayoutManager;
 
     private boolean isCalled;
+    private boolean isFirst;
 
     public SubscribeFragment(OnCallbackResponseListener onCallbackResponseListener)
     {
@@ -176,7 +178,7 @@ public class SubscribeFragment extends Fragment implements OnRecyclerViewClickLi
                     isCalled = true;
                 }
 
-                if(!recyclerViewVideoList.isEmpty() && recyclerViewVideo.getChildCount() > 0)
+                if(!recyclerViewVideoList.isEmpty() && recyclerViewVideo.getChildCount() > 0 && !isFirst)
                 {
                     // 현재 화면에 전부 보이는 첫 번째 뷰의 어댑터 위치를 반환한다.
                     int position = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
@@ -192,6 +194,8 @@ public class SubscribeFragment extends Fragment implements OnRecyclerViewClickLi
                     FrameLayout layout = view.findViewById(R.id.recyclerview_video_layout_player);
 
                     onFragmentInteractionListener.onCompletelyVisible(layout, item.getVideoDTO().getUrl());
+
+                    isFirst = true;
                 }
 
 
@@ -330,6 +334,7 @@ public class SubscribeFragment extends Fragment implements OnRecyclerViewClickLi
 
                 VideoOptionFragment videoOptionFragment = new VideoOptionFragment(getContext());
                 videoOptionFragment.show(getParentFragmentManager(), videoOptionFragment.getTag());
+                ((MainActivity)getContext()).setManagedVideoItem(recyclerViewVideoList.get(position));
 
                 break;
             case R.id.recyclerview_video_layout_information :

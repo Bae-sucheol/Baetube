@@ -149,6 +149,36 @@ public class OkHttpPlaylistTest
             {
 
             }
+
+            @Override
+            public void onRateResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSubscribeResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onUnSubscribeResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onReplyResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onNestedReplyResponse(String object)
+            {
+
+            }
         };
     }
 
@@ -198,8 +228,9 @@ public class OkHttpPlaylistTest
     @Test
     public void testC() throws Exception
     {
-        PlaylistDTO playlist = new PlaylistDTO(11, 4, "testPlaylistTitle2222", 1, 0,
-                "test");
+        PlaylistDTO playlist = new PlaylistDTO(11, 4, "testPlaylistTitle222", 0, 0,
+                "3f205674-89e9-442b-8f2a-8599511d2a2c");
+
         String url = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/update";
 
         countDownLatch = new CountDownLatch(1);

@@ -26,11 +26,11 @@ public class PlaylistOptionFragment extends BaseOptionFragment implements OnRecy
         switch (position)
         {
             case 0 :
-                //
-                break;
 
-            case 1 :
-                //
+                dismiss();
+                VideoReportFragment videoReportFragment = new VideoReportFragment(getContext());
+                videoReportFragment.show(getParentFragmentManager(), videoReportFragment.getTag());
+
                 break;
         }
     }

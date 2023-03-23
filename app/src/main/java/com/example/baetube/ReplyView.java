@@ -8,6 +8,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.Callback.ReturnableCallback;
+import com.example.baetube.activity.MainActivity;
 import com.example.baetube.dto.NestedReplyDTO;
 import com.example.baetube.dto.ReplyDTO;
 import com.example.baetube.dto.VoteDTO;
@@ -29,7 +32,7 @@ import com.example.baetube.recyclerview.item.RecyclerViewReplyItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListener
+public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListener, View.OnFocusChangeListener
 {
     private Context context;
     private View view;
@@ -49,6 +52,9 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
     private RecyclerView recyclerViewNestedReply;
     private RecyclerViewNestedReplyAdapter nestedReplyAdapter;
     private ArrayList<RecyclerViewNestedReplyItem> nestedReplyList = new ArrayList<>();
+
+    private EditText editReply;
+    private EditText editNestedReply;
 
     private OnAttachViewListener onAttachViewListener;
 
@@ -88,10 +94,14 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
         buttonClose = view.findViewById(R.id.bottomsheetdialogfragment_reply_image_close);
         buttonCloseNested = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_image_close);
         buttonBackNested = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_image_back);
+        editNestedReply = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_edit_reply);
+        editReply = view.findViewById(R.id.bottomsheetdialogfragment_reply_edit_reply);
 
         buttonClose.setOnClickListener(this);
         buttonCloseNested.setOnClickListener(this);
         buttonBackNested.setOnClickListener(this);
+        editNestedReply.setOnFocusChangeListener(this);
+        editReply.setOnFocusChangeListener(this);
 
         layoutReply = view.findViewById(R.id.bottomsheetdialogfragment_reply_layout);
         layoutNestedReply = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_layout);
@@ -116,25 +126,37 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
             okHttpUtil = new OkHttpUtil();
         }
 
-        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/reply/select/82";
+        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/reply/select/" + contentsId;
+
+        System.out.println("url : " + url);
 
         ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_REPLY);
 
         okHttpUtil.sendGetRequest(url, returnableCallback);
     }
 
-    private void requestNestedReply()
+    public void requestNestedReply(Integer replyId)
     {
         if(okHttpUtil == null)
         {
             okHttpUtil = new OkHttpUtil();
         }
 
-        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/nestedreply/select/26";
+        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/nestedreply/select/" + replyId;
 
         ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_NESTED_REPLY);
 
         okHttpUtil.sendGetRequest(url, returnableCallback);
+    }
+
+    public void clearReplyList()
+    {
+        replyList.clear();
+    }
+
+    public void clearNestedReplyList()
+    {
+        nestedReplyList.clear();
     }
 
     public void setRecyclerViewReply(List<ReplyDTO> replyItems)
@@ -168,6 +190,8 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
             return;
         }
 
+        System.out.println("다시 불러왔습니다.");
+
         for(int i = 0; i < nestedReplyItems.size(); i++)
         {
             RecyclerViewNestedReplyItem item = new RecyclerViewNestedReplyItem();
@@ -176,7 +200,8 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
             nestedReplyList.add(item);
         }
 
-        ((Activity)context).runOnUiThread(new Runnable(){
+        ((Activity)context).runOnUiThread(new Runnable()
+        {
             @Override
             public void run()
             {
@@ -221,7 +246,42 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
             case R.id.recyclerview_reply_layout_nested_reply :
 
                 openNestedReply();
-                requestNestedReply();
+                requestNestedReply(replyList.get(position).getReplyDTO().getReplyId());
+                ((MainActivity)context).setCurrentReplyData(replyList.get(position));
+
+                break;
+
+            case R.id.recyclerview_reply_image_write_nested_reply :
+
+                // 댓글에 답글(대댓글)을 달기 위한 버튼.
+                ((MainActivity)context).setCurrentReplyData(replyList.get(position));
+                openNestedReply();
+                editNestedReply.requestFocus();
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+
+                // 해당 댓글에 대댓글이 존재한다면(1개 이상) 해당 댓글에 달린 대댓글을 불러와야 한다.
+                if(replyList.get(position).getReplyDTO().getNestedCount() > 0)
+                {
+                    requestNestedReply(replyList.get(position).getReplyDTO().getReplyId());
+                }
+
+                break;
+
+            case R.id.recyclerview_reply_image_option :
+
+                // 옵션 클릭
+                // 대댓글(답글)레이아웃의 visibility가 Gone이면 댓글창 이므로 댓글에 대한 정보를 메인 엑티비티에 넘겨준다.
+                if(layoutNestedReply.getVisibility() == View.GONE)
+                {
+
+                }
+                else
+                {
+
+                }
+
+                
 
                 break;
         }
@@ -309,4 +369,10 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
         });
     }
 
+    @Override
+    public void onFocusChange(View view, boolean b)
+    {
+        // 메인 엑티비티로 넘겨서 관리한다.
+        ((MainActivity)context).onFocusChange(view, b);
+    }
 }

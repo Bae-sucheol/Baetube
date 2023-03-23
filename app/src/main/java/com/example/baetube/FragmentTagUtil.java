@@ -19,6 +19,7 @@ public class FragmentTagUtil
     public static final String FRAGMENT_TAG_UPLOAD_COMMUNITY = "uploadCommunity";
     public static final String FRAGMENT_TAG_UPLOAD_VIDEO = "uploadVideo";
     public static final String FRAGMENT_TAG_ADD_STORAGE = "addStorage";
+    public static final String FRAGMENT_TAG_HISTORY_DETAIL = "historyDetail";
 
 
 

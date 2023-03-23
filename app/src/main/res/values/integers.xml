@@ -21,8 +21,14 @@
         <item>@drawable/ic_baseline_close_24</item>
     </integer-array>
 
-    <integer-array name="playlist_option_resources">
+    <string-array name="history_video_option_manage_resources">
+        <item>@drawable/ic_baseline_delete_24</item>
+        <item>@drawable/ic_outline_watch_later_24</item>
         <item>@drawable/ic_baseline_library_add_24</item>
+        <item>@drawable/ic_outline_error_outline_24</item>
+    </string-array>
+
+    <integer-array name="playlist_option_resources">
         <item>@drawable/ic_outline_error_outline_24</item>
     </integer-array>
 
@@ -48,6 +54,12 @@
     <integer-array name="upload_option_resources">
         <item>@drawable/ic_baseline_upload_24</item>
         <item>@drawable/ic_baseline_note_add_24</item>
+    </integer-array>
+
+    <integer-array name="player_option_resources">
+        <item>@drawable/ic_baseline_check_24</item>
+        <item>@drawable/ic_baseline_check_24</item>
+        <item>@drawable/ic_baseline_check_24</item>
     </integer-array>
 
 

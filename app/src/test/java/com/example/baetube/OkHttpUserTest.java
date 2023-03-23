@@ -171,6 +171,36 @@ public class OkHttpUserTest
             {
 
             }
+
+            @Override
+            public void onRateResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSubscribeResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onUnSubscribeResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onReplyResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onNestedReplyResponse(String object)
+            {
+
+            }
         };
 
         Mockito.when(PreferenceManager.getPreferences(context)).thenReturn(sharedPreferences);
@@ -178,11 +208,10 @@ public class OkHttpUserTest
     }
 
     // Regist
-    @Ignore
     @Test
     public void testA() throws Exception
     {
-        UserDTO user = new UserDTO("test8@naver.com", "1234", "test8", 1, new Timestamp(System.currentTimeMillis()), "fcmToken", "00000000000", "test", null);
+        UserDTO user = new UserDTO("tncjftncjf@naver.com", "1234", "baesucheol", 1, new Timestamp(System.currentTimeMillis()), "fcmToken", "00000000000", "test", null);
         String url = "http://192.168.0.4:9090/Baetube_backEnd/api/user/regist";
 
         countDownLatch = new CountDownLatch(1);

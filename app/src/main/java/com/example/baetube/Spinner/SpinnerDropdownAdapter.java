@@ -20,13 +20,14 @@ public class SpinnerDropdownAdapter extends ArrayAdapter<SpinnerItem>
 
     private Context context;
     private ArrayList<SpinnerItem> list = null;
+    private boolean isSimple;
 
-
-    public SpinnerDropdownAdapter(@NonNull Context context, int resource, ArrayList<SpinnerItem> list)
+    public SpinnerDropdownAdapter(@NonNull Context context, int resource, ArrayList<SpinnerItem> list, boolean isSimple)
     {
         super(context, resource);
         this.context = context;
         this.list = list;
+        this.isSimple = isSimple;
     }
 
     @NonNull
@@ -46,13 +47,22 @@ public class SpinnerDropdownAdapter extends ArrayAdapter<SpinnerItem>
     {
         LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        SpinnerItem item = list.get(position);
+
+        if(isSimple)
+        {
+            convertView = layoutInflater.inflate(R.layout.spinner_dropdown_simple, parent, false);
+            TextView title = convertView.findViewById(R.id.spinner_dropdown_text_title);
+            title.setText(item.getTitle());
+
+            return convertView;
+        }
+
         convertView = layoutInflater.inflate(R.layout.spinner_dropdown, parent, false);
 
         ImageView icon = convertView.findViewById(R.id.spinner_dropdown_image_icon);
         TextView title = convertView.findViewById(R.id.spinner_dropdown_text_title);
         TextView description = convertView.findViewById(R.id.spinner_dropdown_text_description);
-
-        SpinnerItem item = list.get(position);
 
         icon.setImageResource(item.getImage());
         title.setText(item.getTitle());

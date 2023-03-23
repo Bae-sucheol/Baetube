@@ -52,6 +52,7 @@ public class UploadCommunityFragment extends Fragment implements View.OnClickLis
     private EditText title;
     private ConstraintLayout layoutDescription;
     private ConstraintLayout layoutPublic;
+    private TextView category;
 
     // 액티비티와 통신하기 위한 인터페이스
     private OnUploadDataListener onUploadDataListener;
@@ -244,6 +245,19 @@ public class UploadCommunityFragment extends Fragment implements View.OnClickLis
                 vote = voteData;
                 voteOptionList = voteOptions;
             }
+
+            @Override
+            public void onResponseCategory(String str, int position)
+            {
+
+            }
+
+            @Override
+            public void onResponseCalendar(int year, int month, int dayOfMonth)
+            {
+
+            }
+
         };
     }
 }

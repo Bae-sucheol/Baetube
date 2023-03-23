@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.baetube.DateToStringUtil;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.dto.ReplyDTO;
@@ -58,7 +59,7 @@ public class RecyclerViewReplyAdapter extends RecyclerView.Adapter<ReplyViewHold
         //ChannelDTO channelDTO = item.getChannelDTO();
 
         holder.channelName.setText(replyDTO.getName());
-        holder.date.setText(replyDTO.getDate().toString());
+        holder.date.setText(DateToStringUtil.dateToString(replyDTO.getDate()));
         //holder.nestedReplyLayout.setVisibility(View.GONE);
         holder.comment.setText(replyDTO.getComment());
 
@@ -73,6 +74,17 @@ public class RecyclerViewReplyAdapter extends RecyclerView.Adapter<ReplyViewHold
 
         holder.like.setText(String.valueOf(replyDTO.getLike()));
         holder.hate.setText(String.valueOf(replyDTO.getHate()));
+
+        // 댓글에 대댓글(답글)이 달려있다면 대댓글(답글)의 수를 출력해주어야한다.
+        // 댓글에 대댓글이 달려있지 않다면 해당 뷰들의 visibility를 Gone으로 설정하여 출력하지 않는다.
+        if(replyDTO.getNestedCount() == 0)
+        {
+            holder.nestedReplyLayout.setVisibility(View.GONE);
+        }
+        else
+        {
+            holder.nestedReplyCount.setText(String.valueOf(replyDTO.getNestedCount()) + "개");
+       }
     }
 
     @Override

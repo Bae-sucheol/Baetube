@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.baetube.DateToStringUtil;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.dto.NestedReplyDTO;
@@ -58,7 +59,7 @@ public class RecyclerViewNestedReplyAdapter extends RecyclerView.Adapter<ReplyVi
         //ChannelDTO cannelDTO = item.getChannelDTO();
 
         holder.channelName.setText(nestedReplyDTO.getName());
-        holder.date.setText(nestedReplyDTO.getDate().toString());
+        holder.date.setText(DateToStringUtil.dateToString(nestedReplyDTO.getDate()));
         //holder.nestedReplyLayout.setVisibility(View.GONE);
         holder.comment.setText(nestedReplyDTO.getComment());
 
@@ -73,6 +74,7 @@ public class RecyclerViewNestedReplyAdapter extends RecyclerView.Adapter<ReplyVi
 
         holder.like.setText(String.valueOf(nestedReplyDTO.getLike()));
         holder.hate.setText(String.valueOf(nestedReplyDTO.getHate()));
+        holder.nestedReplyLayout.setVisibility(View.GONE);
     }
 
     @Override

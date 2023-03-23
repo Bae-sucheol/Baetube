@@ -565,6 +565,48 @@ public class UploadActivity extends AppCompatActivity
 
                 finish();
             }
+
+            @Override
+            public void onRateResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSubscribeResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onUnSubscribeResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onReplyResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onNestedReplyResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSignInResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectRelatedVideoResponse(String object)
+            {
+
+            }
         };
     }
 

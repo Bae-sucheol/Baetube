@@ -14,6 +14,7 @@ import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
+import com.example.baetube.activity.MainActivity;
 import com.example.baetube.bottomsheetdialog.VideoFragment;
 import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
@@ -128,6 +129,7 @@ public class ChannelVideoFragment extends Fragment implements OnRecyclerViewClic
 
                 VideoOptionFragment videoOptionFragment = new VideoOptionFragment(getContext());
                 videoOptionFragment.show(getParentFragmentManager(), videoOptionFragment.getTag());
+                ((MainActivity)getContext()).setManagedVideoItem(list.get(position));
 
                 break;
             case R.id.recyclerview_video_layout_information :

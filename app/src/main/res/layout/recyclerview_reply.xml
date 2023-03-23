@@ -120,6 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/bottomsheetdialogfragment_reply_text_nested_reply"
+            android:clickable="false"
             style="@style/textview_style_clickable"/>
 
         <TextView
@@ -127,6 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10개"
+            android:clickable="false"
             style="@style/textview_style_clickable"/>
 
     </LinearLayout>

@@ -148,6 +148,36 @@ public class OkHttpNestedReplyTest
             {
 
             }
+
+            @Override
+            public void onRateResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSubscribeResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onUnSubscribeResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onReplyResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onNestedReplyResponse(String object)
+            {
+
+            }
         };
     }
 

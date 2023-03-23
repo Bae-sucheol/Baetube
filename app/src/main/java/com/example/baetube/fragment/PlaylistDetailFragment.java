@@ -141,6 +141,12 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
                 list.remove(position);
                 recyclerViewVideoAdapter.notifyItemRemoved(position);
             }
+
+            @Override
+            public void onSetVideoResolution(int position)
+            {
+
+            }
         };
 
         onModifyListener = new OnModifyListener()

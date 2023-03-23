@@ -193,6 +193,12 @@ public class SetVoteFragment extends Fragment implements OnRecyclerViewClickList
             {
 
             }
+
+            @Override
+            public void onSetVideoResolution(int position)
+            {
+                
+            }
         };
     }
 }

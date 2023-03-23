@@ -29,6 +29,7 @@ import com.example.baetube.OnFragmentInteractionListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
+import com.example.baetube.activity.MainActivity;
 import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
@@ -63,7 +64,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
     private LinearLayoutManager linearLayoutManager;
 
     private boolean isCalled;
-    private int state;
+    private boolean isFirst;
 
     public HomeFragment(OnCallbackResponseListener onCallbackResponseListener)
     {
@@ -151,7 +152,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
                     isCalled = true;
                 }
 
-                if(!list.isEmpty() && recyclerView.getChildCount() > 0)
+                if(!list.isEmpty() && recyclerView.getChildCount() > 0 && !isFirst)
                 {
                     // 현재 화면에 전부 보이는 첫 번째 뷰의 어댑터 위치를 반환한다.
                     int position = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
@@ -166,6 +167,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
                     FrameLayout layout = view.findViewById(R.id.recyclerview_video_layout_player);
 
                     onFragmentInteractionListener.onCompletelyVisible(layout, item.getVideoDTO().getUrl());
+
+                    isFirst = true;
                 }
 
             }
@@ -200,8 +203,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
 
             }
         });
-
-
 
         return view;
     }
@@ -336,6 +337,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
 
                 VideoOptionFragment videoOptionFragment = new VideoOptionFragment(getContext());
                 videoOptionFragment.show(getParentFragmentManager(), videoOptionFragment.getTag());
+                ((MainActivity)getContext()).setManagedVideoItem(list.get(position));
 
                 break;
             case R.id.recyclerview_video_layout_information :
@@ -378,4 +380,5 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
     {
         //onFragmentInteractionListener.onCompletelyVisible(layout, uuid);
     }
+
 }

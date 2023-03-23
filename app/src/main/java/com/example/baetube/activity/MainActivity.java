@@ -1,16 +1,23 @@
 package com.example.baetube.activity;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.GestureDetector;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,12 +33,17 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.baetube.Callback.ReturnableCallback;
+import com.example.baetube.DateToStringUtil;
 import com.example.baetube.DescriptionView;
 import com.example.baetube.FragmentTagUtil;
+import com.example.baetube.KeyboardState;
 import com.example.baetube.LinearInterpolation;
+import com.example.baetube.OkHttpUtil;
 import com.example.baetube.OnAttachViewListener;
 import com.example.baetube.OnBottomSheetInteractionListener;
 import com.example.baetube.OnCallbackResponseListener;
+import com.example.baetube.OnDialogInteractionListener;
 import com.example.baetube.OnFragmentInteractionListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.PreferenceManager;
@@ -40,13 +52,21 @@ import com.example.baetube.ReplyView;
 import com.example.baetube.TimestampUtil;
 import com.example.baetube.UserDisplay;
 import com.example.baetube.VideoBottomSheetCallback;
+import com.example.baetube.ViewType;
 import com.example.baetube.bottomsheetdialog.AddPlaylistFragment;
+import com.example.baetube.bottomsheetdialog.PlayerOptionFragment;
 import com.example.baetube.bottomsheetdialog.UploadOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.CommunityDTO;
+import com.example.baetube.dto.ContentsDTO;
+import com.example.baetube.dto.HistoryDTO;
 import com.example.baetube.dto.NestedReplyDTO;
 import com.example.baetube.dto.PlaylistDTO;
+import com.example.baetube.dto.PlaylistItemDTO;
+import com.example.baetube.dto.RateDTO;
 import com.example.baetube.dto.ReplyDTO;
+import com.example.baetube.dto.SubscribersDTO;
+import com.example.baetube.dto.UserDTO;
 import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.dto.ViewPagerFragmentData;
 import com.example.baetube.dto.VoteDTO;
@@ -61,7 +81,9 @@ import com.example.baetube.fragment.channel.ChannelHomeFragment;
 import com.example.baetube.fragment.channel.ChannelManageVideoFragment;
 import com.example.baetube.fragment.channel.ChannelPlaylistFragment;
 import com.example.baetube.fragment.channel.ChannelVideoFragment;
+import com.example.baetube.fragment.modify.ModifyVideoFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
+import com.example.baetube.recyclerview.item.RecyclerViewReplyItem;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -72,6 +94,7 @@ import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
+import com.google.android.exoplayer2.ui.StyledPlayerControlView;
 import com.google.android.exoplayer2.ui.StyledPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
@@ -84,6 +107,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -91,7 +115,7 @@ import java.util.List;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener, OnRecyclerViewClickListener,
-        View.OnClickListener, OnBottomSheetInteractionListener, OnAttachViewListener
+        View.OnClickListener, OnBottomSheetInteractionListener, OnAttachViewListener, View.OnFocusChangeListener
 {
     // 바텀 네비게이션
     private BottomNavigationView bottomNavigationView;
@@ -128,8 +152,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private ImageView addLibrary;
     private ImageView channelProfile;
     private ImageView profile;
-    private ImageView buttonPlayerPlay;
-    private ImageView buttonPlayerClose;
+    private ImageView bottomsheetPlayerPlayButton;
+    private ImageView bottomsheetPlayerCloseButton;
 
     private EditText reply;
 
@@ -165,6 +189,52 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     // 댓글, 설명뷰를 바텀시트 서브에 추가하기 위한 변수.
     private ReplyView replyView;
     private DescriptionView descriptionView;
+
+    // 플레이어 내부 요소
+    private ImageView playerPlayButton;
+    private ImageView playerPauseButton;
+    private ImageView playerFullscreenButton;
+    private ImageView playerSeekBack;
+    private ImageView playerSeekForward;
+    private ImageView playerOptionButton;
+
+    // 플레이어에 기능을 추가하기 위한 제스쳐
+    private GestureDetector.SimpleOnGestureListener simpleOnGestureListener;
+    private GestureDetector gestureDetector;
+
+    // 플레이어 컨트롤러의 visibility 상태.
+    private int playerControllerVisibility;
+
+    // 플레이어 전체화면 여부
+    private int playerScreenMode;
+
+    // 다이얼로그 관련 내용을 전달받기 위한 리스너
+    private OnDialogInteractionListener onDialogInteractionListener;
+
+    // 현재 동영상 URL을 저장하기 위한 변수
+    private String playerUrl;
+    private String currentPlayerResolution;
+    private OkHttpUtil okHttpUtil;
+
+    /* 댓글 답글 등 EditText를 입력할 때 키보드에 가려지게 되는데
+        * 화면의 UI 사이즈를 조절하는 것 보다.
+        * 가상키보드 위에 임시로 EditText를 생성하고 해당 EditText에 입력하면 화면이 가려져도
+        * 현재 작성하고 있는 내용을 바로바로 확인할 수 있다.
+    */
+    // 가상 키보드위에 출력할 레이아웃
+    private ConstraintLayout layoutKeyboardEdit;
+    // 작성 버튼
+    private ImageButton keyboardEditButton;
+    // 가상키보드로 입력할 EditText
+    private EditText keyboardEditInput;
+    // 가상키보드가 열리고 닫히는 것을 탐지하기 위한 리스너
+    private KeyboardState.HeightListener heightListener;
+    // 댓글인지 답글인지 구분하기 위한 boolean 변수
+    private boolean isReplyFocused;
+    // 현재 포커싱된 댓글의 data를 저장하기 위한 변수
+    private RecyclerViewReplyItem currentReplyItem;
+    // 동영상을 관리하거나 신고할 때 선택된 동영상을 저장하기 위한 변수
+    private RecyclerViewVideoItem managedVideoItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -225,15 +295,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item)
             {
-                switch(item.getItemId())
+                switch (item.getItemId())
                 {
                     // 홈 아이콘 클릭 시 해당 프래그먼트로 리플레이스
-                    case R.id.menu_bottom_navigation_home :
+                    case R.id.menu_bottom_navigation_home:
                         fragmentManager.beginTransaction().replace(R.id.activity_main_layout, new HomeFragment(onCallbackResponseListener),
                                 FragmentTagUtil.FRAGMENT_TAG_HOME).commit();
                         break;
                     // 업로드 아이콘 클릭 시.
-                    case R.id.menu_bottom_navigation_upload :
+                    case R.id.menu_bottom_navigation_upload:
 
                         String[] permissions = {
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -241,12 +311,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         };
 
                         // 배열로 저장한 권한 중 허용되지 않은 권한이 있는지 체크
-                        for (String pm : permissions){
+                        for (String pm : permissions)
+                        {
                             int result = ContextCompat.checkSelfPermission(getApplicationContext(), pm);
 
-                            if(result != PackageManager.PERMISSION_GRANTED)
+                            if (result != PackageManager.PERMISSION_GRANTED)
                             {
-                                ActivityCompat.requestPermissions(activity, permissions , 1);
+                                ActivityCompat.requestPermissions(activity, permissions, 1);
                                 break;
                             }
                         }
@@ -258,13 +329,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                         break;
                     // 구독 아이콘 클릭 시 해당 프래그먼트로 리플레이스
-                    case R.id.menu_bottom_navigation_subscribe :
+                    case R.id.menu_bottom_navigation_subscribe:
                         fragmentManager.beginTransaction().replace(R.id.activity_main_layout, new SubscribeFragment(onCallbackResponseListener),
                                 getResources().getString(R.string.fragment_tag_subscribe)).commit();
                         System.out.println("프래그먼트 커밋");
                         break;
                     // 보관함 아이콘 클릭 시 해당 프래그머늩로 리플레이스
-                    case R.id.menu_bottom_navigation_storage :
+                    case R.id.menu_bottom_navigation_storage:
                         fragmentManager.beginTransaction().replace(R.id.activity_main_layout, new StorageFragment(onCallbackResponseListener),
                                 FragmentTagUtil.FRAGMENT_TAG_STORAGE).commit();
                         break;
@@ -285,7 +356,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         title = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_text_title);
         viewCount = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_text_view_count);
         date = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_text_date);
-        buttonSubscribe = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_text_button_subscribe);;
+        buttonSubscribe = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_text_button_subscribe);
+
         channelName = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_text_channel_name);
         subscribeCount = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_text_subscribe_count);
         replyCount = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_text_reply_count);
@@ -301,8 +373,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         relatedVideoRecyclerView = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_recyclerview);
 
-        buttonPlayerPlay = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_image_player_play);
-        buttonPlayerClose = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_image_player_close);
+        bottomsheetPlayerPlayButton = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_image_player_play);
+        bottomsheetPlayerCloseButton = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_image_player_close);
 
         reply = bottomSheetVideo.findViewById(R.id.bottomsheetdialogfragment_video_edit_reply);
 
@@ -316,6 +388,22 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         bottomSheetSubBehavior = BottomSheetBehavior.from(bottomSheetSub);
         bottomSheetSubBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
+        // 플레이어 내부 요소
+        playerPlayButton = player.findViewById(R.id.exo_play);
+        playerPauseButton = player.findViewById(R.id.exo_pause);
+        playerFullscreenButton = player.findViewById(R.id.exo_fullscreen_button);
+        playerSeekBack = player.findViewById(R.id.exo_rew);
+        playerSeekForward = player.findViewById(R.id.exo_ffwd);
+        playerOptionButton = player.findViewById(R.id.exo_option);
+
+        layoutKeyboardEdit = findViewById(R.id.activity_main_layout_keyboard_edit);
+
+        keyboardEditButton = findViewById(R.id.activity_main_keyboard_edit_button_send);
+        keyboardEditInput = findViewById(R.id.activity_main_keyboard_edit_input);
+
+        playerScreenMode = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+
+        buttonSubscribe.setOnClickListener(this);
         buttonDetail.setOnClickListener(this);
         thumbUp.setOnClickListener(this);
         thumbDown.setOnClickListener(this);
@@ -323,10 +411,17 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         channelProfile.setOnClickListener(this);
         layoutWriteReply.setOnClickListener(this);
 
-        buttonPlayerPlay.setOnClickListener(this);
-        buttonPlayerClose.setOnClickListener(this);
+        bottomsheetPlayerPlayButton.setOnClickListener(this);
+        bottomsheetPlayerCloseButton.setOnClickListener(this);
 
-        bottomSheetPeekHeight = (int)(UserDisplay.getWidth() * 0.16);
+        playerPlayButton.setOnClickListener(this);
+        playerPauseButton.setOnClickListener(this);
+        playerFullscreenButton.setOnClickListener(this);
+        playerOptionButton.setOnClickListener(this);
+        keyboardEditButton.setOnClickListener(this);
+        reply.setOnFocusChangeListener(this);
+
+        bottomSheetPeekHeight = (int) (UserDisplay.getWidth() * 0.16);
 
         videoBottomSheetCallback = new VideoBottomSheetCallback(this,
                 player, layoutDescription, bottomSheetVideoBehavior, bottomSheetPeekHeight);
@@ -343,6 +438,67 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         relatedVideoRecyclerView.setAdapter(relatedVideoAdapter);
         relatedVideoAdapter.setOnRecyclerViewClickListener(this);
         relatedVideoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // 초기 컨트롤러의 visibility 는 Gone 이다.
+        playerControllerVisibility = View.GONE;
+
+        player.setControllerVisibilityListener(new StyledPlayerControlView.VisibilityListener()
+        {
+            @Override
+            public void onVisibilityChange(int visibility)
+            {
+                playerControllerVisibility = visibility;
+            }
+        });
+
+        setSimpleOnGestureListener();
+        gestureDetector = new GestureDetector(this, simpleOnGestureListener);
+        player.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent)
+            {
+                if (gestureDetector != null)
+                {
+                    return gestureDetector.onTouchEvent(motionEvent);
+                }
+
+                return true;
+            }
+        });
+
+        setOnDialogInteractionListener();
+
+        heightListener = new KeyboardState.HeightListener()
+        {
+            @Override
+            public void onHeightChanged(int height)
+            {
+                if(height == 0)
+                {
+                    layoutKeyboardEdit.setVisibility(View.GONE);
+                    keyboardEditInput.setText(null);
+                }
+                else
+                {
+                    Fragment loginFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_LOGIN);
+                    Fragment signInFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_SIGN_IN);
+
+                    if(loginFragment != null || signInFragment != null)
+                    {
+                        layoutKeyboardEdit.setVisibility(View.GONE);
+                        keyboardEditInput.setText(null);
+                    }
+                    else
+                    {
+                        layoutKeyboardEdit.setVisibility(View.VISIBLE);
+                        keyboardEditInput.requestFocus();
+                    }
+                }
+            }
+        };
+
+        new KeyboardState(this).init().setHeightListener(heightListener);
     }
 
     @Override
@@ -351,15 +507,20 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         super.onBackPressed();
     }
 
+    public void setManagedVideoItem(RecyclerViewVideoItem managedVideoItem)
+    {
+        this.managedVideoItem = managedVideoItem;
+    }
+
     @Override
     public void onVideoItemClick(RecyclerViewVideoItem videoItem)
     {
         currentVideoItem = videoItem;
 
-        setBottomSheetVideoInfo(videoItem);
+        setBottomSheetVideoInfo(videoItem.getVideoDTO(), videoItem.getChannelDTO());
 
         // 이전에 재생되던 항목의 썸네일을 visible로 플레이어는 보이지 않게 invisible로 설정.
-        if(focusedThumbnail != null)
+        if (focusedThumbnail != null)
         {
             focusedThumbnail.setVisibility(View.VISIBLE);
         }
@@ -370,14 +531,22 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         initializePlayer(player);
 
-        setMediaSource(currentVideoItem.getVideoDTO().getUrl());
+        setMediaSource(currentVideoItem.getVideoDTO().getUrl(), "1080");
+
+        // 임시로 20으로
+        requestViewVideo(20, videoItem.getVideoDTO().getVideoId());
+
+        requestRelatedVideo(videoItem.getVideoDTO().getVideoId());
+
+        // 임시로 4, 5
+        requestSelectSubscribe(videoItem.getChannelDTO().getChannelId(), 5);
     }
 
     @Override
     public void onCompletelyVisible(FrameLayout layout, String uuid)
     {
         // 화면에 바텀시트가 출력되어있다면 해당 기능을 사용하면 안된다.
-        if(bottomSheetVideoBehavior.getState() != BottomSheetBehavior.STATE_HIDDEN)
+        if (bottomSheetVideoBehavior.getState() != BottomSheetBehavior.STATE_HIDDEN)
         {
             return;
         }
@@ -386,7 +555,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         StyledPlayerView selectedPlayer = layout.findViewById(R.id.recyclerview_video_player);
 
         // 지금 포커싱된 플레이어가 이전에 포커싱된 플레이어라면(같은 플레이어라면) 무시
-        if(this.focusedPlayer == selectedPlayer)
+        if (this.focusedPlayer == selectedPlayer)
         {
             return;
         }
@@ -395,7 +564,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         ImageView thumbnail = layout.findViewById(R.id.recyclerview_video_image_thumbnail);
 
         // 이전에 재생되던 항목의 썸네일을 visible로 플레이어는 보이지 않게 invisible로 설정.
-        if(focusedThumbnail != null)
+        if (focusedThumbnail != null)
         {
             focusedThumbnail.setVisibility(View.VISIBLE);
         }
@@ -407,13 +576,20 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         releasePlayer(focusedPlayer);
         initializePlayer(selectedPlayer);
 
-        setMediaSource(uuid);
+        setMediaSource(uuid, "1080");
     }
 
     @Override
     public void onItemClick(View view, int position)
     {
+        switch (view.getId())
+        {
+            case R.id.recyclerview_reply_layout_nested_reply :
 
+                System.out.println("클릭했다!");
+
+                break;
+        }
     }
 
     @Override
@@ -430,7 +606,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     public void setRelatedVideoRecyclerView(List<VideoDTO> list)
     {
-        for(VideoDTO video : list)
+        for (VideoDTO video : list)
         {
             RecyclerViewVideoItem item = new RecyclerViewVideoItem();
             item.setVideoDTO(video);
@@ -438,70 +614,86 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         }
     }
 
-    /*
-
-    public void test()
-    {
-        String channel_names[] = {"홍길동", "이순신", "장영실", "김유신", "허준"};
-        String titles[] = {"쉽게 배우는 자바", "쉽게 배우는 학익진", "쉽게 배우는 거중기",
-                "쉽게 배우는 전투법", "쉽게 배우는 침술"};
-
-        for(int i = 0; i < 5; i++)
-        {
-            RecyclerViewVideoItem item = new RecyclerViewVideoItem();
-
-            ChannelDTO channelDTO = new ChannelDTO();
-            VideoDTO videoDTO = new VideoDTO();
-
-            //item.setChannelDTO(channelDTO);
-            item.setVideoDTO(videoDTO);
-            item.setViewType(ViewType.VIDEO_LARGE);
-
-            channelDTO.setName(channel_names[i]);
-            videoDTO.setDate(new Timestamp(System.currentTimeMillis()));
-            videoDTO.setTitle(titles[i]);
-            videoDTO.setViews(500);
-
-            relatedVideoList.add(item);
-        }
-
-    }
-
-     */
-
     @Override
     public void onClick(View view)
     {
         switch (view.getId())
         {
-            case R.id.bottomsheetdialogfragment_video_image_player_play :
+            case R.id.bottomsheetdialogfragment_video_image_player_play:
 
                 // 플레이 or 일시정지 기능
                 // icon 이미지도 바꿔야한다.
 
                 break;
-            case R.id.bottomsheetdialogfragment_video_image_player_close :
+            case R.id.bottomsheetdialogfragment_video_image_player_close:
 
                 bottomSheetVideoBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                releasePlayer(player);
+                relatedVideoList.clear();
 
                 break;
-            case R.id.bottomsheetdialogfragment_video_image_thumb_up :
+            case R.id.bottomsheetdialogfragment_video_image_thumb_up:
 
                 // 좋아요 기능
+                if (okHttpUtil == null)
+                {
+                    okHttpUtil = new OkHttpUtil();
+                }
+
+                // 평가 request
+                String url = "http://192.168.0.4:9090/Baetube_backEnd/api/rate";
+                RateDTO rate = new RateDTO(currentVideoItem.getVideoDTO().getContentsId(), 4, 1);
+                ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_RATE);
+
+                okHttpUtil.sendPostRequest(rate, url, returnableCallback);
+
+                // 좋아요를 누른 동영상 재생목록에 추가를 request
+                url = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/item/insert/like";
+                VideoDTO video = new VideoDTO();
+                video.setChannelId(4);
+                video.setVideoId(currentVideoItem.getVideoDTO().getVideoId());
+
+                returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
+
+                okHttpUtil.sendPostRequest(video, url, returnableCallback);
 
                 break;
-            case R.id.bottomsheetdialogfragment_video_image_thumb_down :
+            case R.id.bottomsheetdialogfragment_video_image_thumb_down:
 
                 // 싫어요 기능
+                if (okHttpUtil == null)
+                {
+                    okHttpUtil = new OkHttpUtil();
+                }
+
+                url = "http://192.168.0.4:9090/Baetube_backEnd/api/rate";
+                rate = new RateDTO(currentVideoItem.getVideoDTO().getContentsId(), 4, 0);
+                returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_RATE);
+
+                okHttpUtil.sendPostRequest(rate, url, returnableCallback);
+
+                // 좋아요를 누른 동영상 재생목록에 추가를 request
+                url = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/item/delete/like";
+                video = new VideoDTO();
+                video.setChannelId(4);
+                video.setVideoId(currentVideoItem.getVideoDTO().getVideoId());
+
+                returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
+
+                okHttpUtil.sendPostRequest(video, url, returnableCallback);
 
                 break;
-            case R.id.bottomsheetdialogfragment_video_image_add_library :
+            case R.id.bottomsheetdialogfragment_video_image_add_library:
 
+                /*
                 AddPlaylistFragment addPlaylistFragment = new AddPlaylistFragment(this);
                 addPlaylistFragment.show(fragmentManager, addPlaylistFragment.getTag());
+                */
+
+                requestSelectPlaylist();
 
                 break;
-            case R.id.bottomsheetdialogfragment_video_image_channel_profile :
+            case R.id.bottomsheetdialogfragment_video_image_channel_profile:
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.activity_main_layout, new ChannelBaseFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_CHANNEL_BASE);
@@ -509,41 +701,279 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 fragmentTransaction.commit();
 
                 break;
-            case R.id.bottomsheetdialogfragment_video_layout_reply :
+            case R.id.bottomsheetdialogfragment_video_layout_reply:
 
                 attachReplyView();
                 bottomSheetSubBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
                 break;
-            case R.id.bottomsheetdialogfragment_video_image_detail :
+            case R.id.bottomsheetdialogfragment_video_image_detail:
 
-                attachDescriptionView();
+                attachDescriptionView(currentVideoItem);
                 bottomSheetSubBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
                 break;
-            default :
+            case R.id.exo_play:
+                // 플레이어 플레이 버튼
+                playerPlayButton.setVisibility(View.GONE);
+                playerPauseButton.setVisibility(View.VISIBLE);
+                // 플레이어 플레이.
+                exoPlayer.play();
+
+                break;
+            case R.id.exo_pause:
+                // 플레이어 일시정지 버튼
+                playerPauseButton.setVisibility(View.GONE);
+                playerPlayButton.setVisibility(View.VISIBLE);
+                // 플레이어 일시정지
+                exoPlayer.pause();
+
+                break;
+            case R.id.exo_fullscreen_button:
+                // 플레이어 전체화면 버튼
+
+                // 일반모드(세로모드) 인 경우 가로 모드로 바꿔줘야 한다.
+                if (playerScreenMode == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                {
+                    playerScreenMode = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                    playerFullscreenButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_fullscreen_exit_24));
+
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+                    if (getSupportActionBar() != null)
+                    {
+                        getSupportActionBar().hide();
+                    }
+
+                    ViewGroup.LayoutParams layoutParams = player.getLayoutParams();
+
+                    layoutParams.width = layoutParams.MATCH_PARENT;
+                    layoutParams.height = layoutParams.MATCH_PARENT;
+
+                    layoutMinMenu.setVisibility(View.GONE);
+                    layoutDescription.setVisibility(View.GONE);
+                    relatedVideoRecyclerView.setVisibility(View.GONE);
+
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+                }
+                else // 랜드스케이프 모드(가로 모드)인 경우 세로 모드로 바꿔줘야 한다.
+                {
+                    playerScreenMode = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+                    playerFullscreenButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_fullscreen_24));
+
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+
+                    if (getSupportActionBar() != null)
+                    {
+                        getSupportActionBar().show();
+                    }
+
+                    ViewGroup.LayoutParams layoutParams = player.getLayoutParams();
+
+                    layoutParams.width = 0;
+                    layoutParams.height = 0;
+
+                    layoutMinMenu.setVisibility(View.VISIBLE);
+                    layoutDescription.setVisibility(View.VISIBLE);
+                    relatedVideoRecyclerView.setVisibility(View.VISIBLE);
+
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+
+                }
+
+                break;
+
+            case R.id.exo_option:
+
+                PlayerOptionFragment playerOptionFragment = new PlayerOptionFragment(this, onDialogInteractionListener, currentPlayerResolution);
+                playerOptionFragment.show(fragmentManager, playerOptionFragment.getTag());
+
+                break;
+
+            case R.id.bottomsheetdialogfragment_video_text_button_subscribe :
+
+                if(okHttpUtil == null)
+                {
+                    okHttpUtil = new OkHttpUtil();
+                }
+
+                Integer currentCount = Integer.parseInt(subscribeCount.getText().toString());
+
+                if(buttonSubscribe.getCurrentTextColor() == ContextCompat.getColor(this, R.color.red))
+                {
+                    url = "http://192.168.0.4:9090/Baetube_backEnd/api/subscribe/subscribe";
+                    SubscribersDTO subscribers = new SubscribersDTO(currentVideoItem.getChannelDTO().getChannelId(), 5);
+                    returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SUBSCRIBE);
+                    okHttpUtil.sendPostRequest(subscribers, url, returnableCallback);
+
+                    subscribeCount.setText(String.valueOf(currentCount + 1));
+                }
+                else
+                {
+                    url = "http://192.168.0.4:9090/Baetube_backEnd/api/subscribe/unsubscribe";
+                    SubscribersDTO subscribers = new SubscribersDTO(currentVideoItem.getChannelDTO().getChannelId(), 5);
+                    returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_UNSUBSCRIBE);
+                    okHttpUtil.sendPostRequest(subscribers, url, returnableCallback);
+
+                    subscribeCount.setText(String.valueOf(currentCount - 1));
+                }
+
+                break;
+
+            case R.id.activity_main_keyboard_edit_button_send :
+
+                    String comment = keyboardEditInput.getText().toString().trim();
+
+                    if(isReplyFocused)
+                    {
+                        ReplyDTO reply = new ReplyDTO(currentVideoItem.getVideoDTO().getContentsId(), currentVideoItem.getChannelDTO().getChannelId(), comment);
+                        url = "http://192.168.0.4:9090/Baetube_backEnd/api/reply/insert";
+                        returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_REPLY);
+                        okHttpUtil.sendPostRequest(reply, url, returnableCallback);
+                        keyboardEditInput.setText(null);
+                    }
+                    else
+                    {
+                        // 임시로 작성하는 채널id를 5로 한다.
+                        NestedReplyDTO nestedReply = new NestedReplyDTO(currentReplyItem.getReplyDTO().getReplyId(), 5, comment, currentReplyItem.getReplyDTO().getAttachedId());
+                        url = "http://192.168.0.4:9090/Baetube_backEnd/api/nestedreply/insert";
+                        returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NESTED_REPLY);
+                        okHttpUtil.sendPostRequest(nestedReply, url, returnableCallback);
+                        keyboardEditInput.setText(null);
+                    }
+
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+                break;
+
+            default:
                 break;
         }
     }
 
-    private void setBottomSheetVideoInfo(RecyclerViewVideoItem videoInfo)
+    public void requestSelectPlaylist()
     {
-        VideoDTO videoItem = videoInfo.getVideoDTO();
-        ChannelDTO channelItem = videoInfo.getChannelDTO();
+        if(okHttpUtil == null)
+        {
+            okHttpUtil = new OkHttpUtil();
+        }
 
-        title.setText(videoItem.getTitle());
-        viewCount.setText(String.valueOf(videoItem.getViews()));
-        date.setText(videoItem.getDate().toString());
-        channelName.setText(channelItem.getName());
-        subscribeCount.setText(String.valueOf(channelItem.getSubs()));
-        replyCount.setText(String.valueOf(videoItem.getReplyCount()));
-        likeCount.setText(String.valueOf(videoItem.getLike()));
-        hateCount.setText(String.valueOf(videoItem.getHate()));
+        String playlistUrl = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/channel/4";
+
+        ReturnableCallback playlistCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_PLAYLIST);
+
+        okHttpUtil.sendGetRequest(playlistUrl, playlistCallback);
+    }
+
+    private void requestViewVideo(Integer userId, Integer videoId)
+    {
+        if (okHttpUtil == null)
+        {
+            okHttpUtil = new OkHttpUtil();
+        }
+
+        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/video/view_video/" + userId + "/" + videoId;
+
+        ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_VIEW_VIDEO);
+
+        okHttpUtil.sendGetRequest(url, returnableCallback);
+    }
+
+    private void requestSelectSubscribe(Integer channelId, Integer subscriberId)
+    {
+        if(okHttpUtil == null)
+        {
+            okHttpUtil = new OkHttpUtil();
+        }
+
+        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/subscribe/select/" + channelId + "/" + subscriberId;
+
+        ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_SUBSCRIBE);
+
+        okHttpUtil.sendGetRequest(url, returnableCallback);
+    }
+
+    public void requestDeleteVideo()
+    {
+        if(okHttpUtil == null)
+        {
+            okHttpUtil = new OkHttpUtil();
+        }
+
+        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/contents/delete";
+        ContentsDTO contents = new ContentsDTO(managedVideoItem.getVideoDTO().getContentsId(), 0);
+
+
+        ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
+
+        okHttpUtil.sendPostRequest(contents, url, returnableCallback);
+
+        setManagedVideoItem(null);
+    }
+
+    public void requestDeleteHistoryVideo()
+    {
+        if(okHttpUtil == null)
+        {
+            okHttpUtil = new OkHttpUtil();
+        }
+
+        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/history/delete";
+        // 임시로 유저id를 20으로 설정
+        HistoryDTO history = new HistoryDTO(20, managedVideoItem.getVideoDTO().getVideoId());
+
+
+        ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
+
+        okHttpUtil.sendPostRequest(history, url, returnableCallback);
+
+        setManagedVideoItem(null);
+    }
+
+    public void requestSignIn(UserDTO user)
+    {
+        if(okHttpUtil == null)
+        {
+            okHttpUtil = new OkHttpUtil();
+        }
+
+        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/user/regist";
+
+        ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SIGN_IN);
+
+        okHttpUtil.sendPostRequest(user, url, returnableCallback);
+    }
+
+    public void requestRelatedVideo(Integer videoId)
+    {
+        if(okHttpUtil == null)
+        {
+            okHttpUtil = new OkHttpUtil();
+        }
+        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/video/related/" + videoId;
+        ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_RELATED_VIDEO);
+        okHttpUtil.sendGetRequest(url, returnableCallback);
+    }
+
+    private void setBottomSheetVideoInfo(VideoDTO video, ChannelDTO channel)
+    {
+        title.setText(video.getTitle());
+        viewCount.setText(String.valueOf(video.getViews()));
+        date.setText(DateToStringUtil.dateToString(video.getDate()));
+        channelName.setText(channel.getName());
+        subscribeCount.setText(String.valueOf(channel.getSubs()));
+        replyCount.setText(String.valueOf(video.getReplyCount()));
+        likeCount.setText(String.valueOf(video.getLike()));
+        hateCount.setText(String.valueOf(video.getHate()));
     }
 
     private void resetView()
     {
-        if(bottomSheetSub.getChildCount() > 0)
+        if (bottomSheetSub.getChildCount() > 0)
         {
             bottomSheetSub.removeAllViews();
             replyView = null;
@@ -558,17 +988,17 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         bottomSheetSub.addView(replyView.onCreateView(getLayoutInflater(), bottomSheetSub));
     }
 
-    private void attachDescriptionView()
+    private void attachDescriptionView(RecyclerViewVideoItem currentVideoItem)
     {
         resetView();
-        descriptionView = new DescriptionView(this);
+        descriptionView = new DescriptionView(this, currentVideoItem);
         bottomSheetSub.addView(descriptionView.onCreateView(getLayoutInflater(), bottomSheetSub));
     }
 
     @Override
     public void onSlide(View bottomSheet, float slideOffset)
     {
-        if(slideOffset >= 0)
+        if (slideOffset >= 0)
         {
             bottomNavigationView.setY((int) UserDisplay.getHeight() - bottomBarHeight / 2 - navigationHeight * (1 - slideOffset));
             bottomSheet.setY(LinearInterpolation.Lerp(0, bottomNavigationView.getY() - bottomSheetPeekHeight, 1 - slideOffset));
@@ -580,16 +1010,16 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     {
         switch (view.getId())
         {
-            case R.id.bottomsheetdialogfragment_reply_image_close :
+            case R.id.bottomsheetdialogfragment_reply_image_close:
 
-            case R.id.bottomsheetdialogfragment_description_image_close :
+            case R.id.bottomsheetdialogfragment_description_image_close:
 
-            case R.id.bottomsheetdialogfragment_nested_reply_image_close :
+            case R.id.bottomsheetdialogfragment_nested_reply_image_close:
 
                 bottomSheetSubBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
                 break;
-            default :
+            default:
 
                 // 의도하지 않은 문제
 
@@ -671,6 +1101,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         DefaultTrackSelector trackSelector = new DefaultTrackSelector(this, trackSelectionFactory);
 
         exoPlayer = new ExoPlayer.Builder(this)
+                .setSeekBackIncrementMs(5000)
+                .setSeekForwardIncrementMs(5000)
                 .setRenderersFactory(renderersFactory)
                 .setTrackSelector(trackSelector)
                 .setBandwidthMeter(defaultBandwidthMeter)
@@ -679,13 +1111,16 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         exoPlayer.prepare();
     }
 
-    private void setMediaSource(String url)
+    private void setMediaSource(String url, String resolution)
     {
         String userAgent = Util.getUserAgent(this, "bae");
 
+        playerUrl = url;
+        currentPlayerResolution = resolution;
+
         // 주소(url)을 하드코딩이 아니라 xml로 따로 저장해야한다.
         MediaSource mediaSource = new HlsMediaSource.Factory(new DefaultHttpDataSource.Factory().setUserAgent(userAgent))
-                .createMediaSource(MediaItem.fromUri("http://192.168.0.4:9090/Baetube_backEnd/hls/" + url + "/1080/" + url + ".m3u8"));
+                .createMediaSource(MediaItem.fromUri("http://192.168.0.4:9090/Baetube_backEnd/hls/" + url + "/" + resolution + "/" + url + ".m3u8"));
         exoPlayer.setMediaSource(mediaSource);
 
         exoPlayer.setPlayWhenReady(true);
@@ -693,7 +1128,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     private void releaseExoPlayer()
     {
-        if(exoPlayer != null)
+        if (exoPlayer != null)
         {
             exoPlayer.clearVideoSurface();
             exoPlayer.stop();
@@ -702,20 +1137,130 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         }
     }
 
+    public void setCurrentReplyData(RecyclerViewReplyItem replyItem)
+    {
+        currentReplyItem = replyItem;
+    }
+
+    public void requestAddPlaylist(List<PlaylistDTO> checkedList)
+    {
+        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/item/insert/multi";
+        List<PlaylistItemDTO> playlistItemList = new ArrayList<>();
+
+        for (PlaylistDTO item : checkedList)
+        {
+            PlaylistItemDTO playlistItem = new PlaylistItemDTO(item.getPlaylistId(), managedVideoItem.getVideoDTO().getVideoId());
+            playlistItemList.add(playlistItem);
+        }
+
+        ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
+
+        okHttpUtil.sendPostRequest(playlistItemList, url, returnableCallback);
+
+        setManagedVideoItem(null);
+    }
+
+    public void commitModifyVideoFragment()
+    {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.activity_main_layout, new ModifyVideoFragment(onCallbackResponseListener));
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    private void setOnDialogInteractionListener()
+    {
+        onDialogInteractionListener = new OnDialogInteractionListener()
+        {
+            @Override
+            public void onAddVoteResponse(String voteItem)
+            {
+
+            }
+
+            @Override
+            public void onDeletePlaylistItem(int position)
+            {
+
+            }
+
+            @Override
+            public void onSetVideoResolution(int position)
+            {
+                String resolutions[] = {"1080", "720", "480"};
+
+                exoPlayer.pause();
+                long currentPosition = exoPlayer.getCurrentPosition();
+                setMediaSource(playerUrl, resolutions[position]);
+                exoPlayer.seekTo(currentPosition);
+            }
+
+
+        };
+    }
+
+    private void setSimpleOnGestureListener()
+    {
+        simpleOnGestureListener = new GestureDetector.SimpleOnGestureListener()
+        {
+            @Override
+            public boolean onDoubleTap(MotionEvent e)
+            {
+                //player.hideController();
+
+                // left
+                if (e.getX() < UserDisplay.getWidth() / 2)
+                {
+                    playerSeekBack.callOnClick();
+                } else // right
+                {
+                    playerSeekForward.callOnClick();
+                }
+
+                return true;
+            }
+
+            @Override
+            public boolean onDoubleTapEvent(MotionEvent e)
+            {
+                return true;
+            }
+
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e)
+            {
+                if (playerControllerVisibility == View.GONE)
+                {
+                    player.showController();
+                } else
+                {
+                    player.hideController();
+                }
+
+                return super.onSingleTapConfirmed(e);
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e)
+            {
+                return true;
+            }
+
+        };
+    }
 
     private void setOnCallbackResponseListener()
     {
         onCallbackResponseListener = new OnCallbackResponseListener()
         {
             @Override
-            public void onResponse(Response response)
+            public void onResponse(Response response) throws IOException
             {
-                if(!response.isSuccessful())
+                if (!response.isSuccessful())
                 {
                     System.out.println("error : " + response.message());
                     //Toast.makeText(getApplicationContext(), "error : " + response.message(), Toast.LENGTH_LONG).show();
-                }
-                else
+                } else
                 {
                     System.out.println("요청이 성공적으로 완료되었습니다.");
                     //Toast.makeText(getApplicationContext(), "요청이 성공적으로 완료되었습니다.", Toast.LENGTH_LONG).show();
@@ -723,7 +1268,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                 Fragment fragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_LOGIN);
 
-                if(fragment != null && fragment.isVisible())
+                if (fragment != null && fragment.isVisible())
                 {
                     fragmentManager.popBackStack();
                     return;
@@ -731,7 +1276,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                 fragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_ADD_STORAGE);
 
-                if(fragment != null && fragment.isVisible())
+                if (fragment != null && fragment.isVisible())
                 {
                     fragmentManager.popBackStack();
                     return;
@@ -770,13 +1315,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 Fragment channelBaseFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_BASE);
 
 
-                if(channelBaseFragment != null && channelBaseFragment.isVisible())
+                if (channelBaseFragment != null && channelBaseFragment.isVisible())
                 {
-                    ViewPagerFragmentData viewPagerFragmentData = ((ChannelBaseFragment)channelBaseFragment).getCurrentFragmentData();
+                    ViewPagerFragmentData viewPagerFragmentData = ((ChannelBaseFragment) channelBaseFragment).getCurrentFragmentData();
 
-                    if(viewPagerFragmentData.getTag().equals(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_HOME))
+                    if (viewPagerFragmentData.getTag().equals(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_HOME))
                     {
-                        ((ChannelHomeFragment)viewPagerFragmentData.getFragment()).setChannelData(channel);
+                        ((ChannelHomeFragment) viewPagerFragmentData.getFragment()).setChannelData(channel);
                     }
                 }
 
@@ -795,13 +1340,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 ChannelDTO[] array = new GsonBuilder().create().fromJson(object, ChannelDTO[].class);
                 List<ChannelDTO> channelList = Arrays.asList(array);
 
+                System.out.println("구독 정보 개수 : " + channelList.size());
+
                 // 구독 프래그먼트를 태그를 통해 가져온다
                 Fragment fragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_SUBSCRIBE);
 
                 // 가져온 프래그먼트가 null이 아니거나 visible이면 현재 프래그먼트가 구독 프래그먼트인 것.
-                if(fragment != null && fragment.isVisible())
+                if (fragment != null && fragment.isVisible())
                 {
-                    ((SubscribeFragment)fragment).setRecyclerViewScribe(channelList);
+                    ((SubscribeFragment) fragment).setRecyclerViewScribe(channelList);
                 }
 
             }
@@ -813,18 +1360,19 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                 // 받아온 json 배열을 List로 변환하여 핸들링한다.
                 CommunityDTO[] array = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, CommunityDTO[].class);
+                //builder.registerTypeAdapter(Date.class, new GsonDateFormatAdapter());
                 List<CommunityDTO> communityList = Arrays.asList(array);
 
                 Fragment channelBaseFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_BASE);
 
                 // 가져온 프래그먼트가 null이 아니거나 visible이면 현재 프래그먼트가 채널 홈 프래그먼트인 것.
-                if(channelBaseFragment != null && channelBaseFragment.isVisible())
+                if (channelBaseFragment != null && channelBaseFragment.isVisible())
                 {
-                    ViewPagerFragmentData viewPagerFragmentData = ((ChannelBaseFragment)channelBaseFragment).getCurrentFragmentData();
+                    ViewPagerFragmentData viewPagerFragmentData = ((ChannelBaseFragment) channelBaseFragment).getCurrentFragmentData();
 
-                    if(viewPagerFragmentData.getTag().equals(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_COMMUNITY))
+                    if (viewPagerFragmentData.getTag().equals(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_COMMUNITY))
                     {
-                        ((ChannelCommunityFragment)viewPagerFragmentData.getFragment()).setRecyclerViewCommunity(communityList);
+                        ((ChannelCommunityFragment) viewPagerFragmentData.getFragment()).setRecyclerViewCommunity(communityList);
                     }
 
                 }
@@ -863,29 +1411,85 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 PlaylistDTO[] array = new GsonBuilder().create().fromJson(object, PlaylistDTO[].class);
                 List<PlaylistDTO> playlistList = Arrays.asList(array);
 
+                if(bottomSheetVideoBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+                {
+                    AddPlaylistFragment addPlaylistFragment = new AddPlaylistFragment(MainActivity.this, playlistList);
+                    addPlaylistFragment.show(fragmentManager, addPlaylistFragment.getTag());
+                    return;
+                }
+
+                Fragment homeFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_HOME);
+
+                if(homeFragment != null && homeFragment.isVisible())
+                {
+                    AddPlaylistFragment addPlaylistFragment = new AddPlaylistFragment(MainActivity.this, playlistList);
+                    addPlaylistFragment.show(fragmentManager, addPlaylistFragment.getTag());
+                    return;
+                }
+
+                Fragment subscribeFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_SUBSCRIBE);
+
+                if(subscribeFragment != null && subscribeFragment.isVisible())
+                {
+                    AddPlaylistFragment addPlaylistFragment = new AddPlaylistFragment(MainActivity.this, playlistList);
+                    addPlaylistFragment.show(fragmentManager, addPlaylistFragment.getTag());
+                    return;
+                }
+
                 // 보관함 프래그먼트를 태그를 통해 가져온다
                 Fragment storageFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_STORAGE);
                 // 채널 프래그먼트를 태그를 통해 가져온다.
                 //Fragment channelfragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_CHANNEL);
 
                 // 가져온 프래그먼트가 null이 아니거나 visible이면 현재 프래그먼트가 구독 프래그먼트인 것.
-                if(storageFragment != null && storageFragment.isVisible())
+                if (storageFragment != null && storageFragment.isVisible())
                 {
-                    ((StorageFragment)storageFragment).setRecyclerViewStorage(playlistList);
+                    if(managedVideoItem != null)
+                    {
+                        AddPlaylistFragment addPlaylistFragment = new AddPlaylistFragment(MainActivity.this, playlistList);
+                        addPlaylistFragment.show(fragmentManager, addPlaylistFragment.getTag());
+                    }
+                    else
+                    {
+                        ((StorageFragment) storageFragment).setRecyclerViewStorage(playlistList);
+                    }
+                    return;
+                }
+
+                Fragment historyDetailFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_HISTORY_DETAIL);
+
+                if (historyDetailFragment != null && historyDetailFragment.isVisible())
+                {
+                    AddPlaylistFragment addPlaylistFragment = new AddPlaylistFragment(MainActivity.this, playlistList);
+                    addPlaylistFragment.show(fragmentManager, addPlaylistFragment.getTag());
+                    return;
                 }
 
                 Fragment channelBaseFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_BASE);
 
                 // 가져온 프래그먼트가 null이 아니거나 visible이면 현재 프래그먼트가 채널 홈 프래그먼트인 것.
-                if(channelBaseFragment != null && channelBaseFragment.isVisible())
+                if (channelBaseFragment != null && channelBaseFragment.isVisible())
                 {
-                    ViewPagerFragmentData viewPagerFragmentData = ((ChannelBaseFragment)channelBaseFragment).getCurrentFragmentData();
+                    ViewPagerFragmentData viewPagerFragmentData = ((ChannelBaseFragment) channelBaseFragment).getCurrentFragmentData();
 
-                    if(viewPagerFragmentData.getTag().equals(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_PLAYLIST))
+                    if (viewPagerFragmentData.getTag().equals(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_PLAYLIST))
                     {
-                        ((ChannelPlaylistFragment)viewPagerFragmentData.getFragment()).setRecyclerViewPlaylist(playlistList);
+                        ((ChannelPlaylistFragment) viewPagerFragmentData.getFragment()).setRecyclerViewPlaylist(playlistList);
                     }
+                    else
+                    {
+                        AddPlaylistFragment addPlaylistFragment = new AddPlaylistFragment(MainActivity.this, playlistList);
+                        addPlaylistFragment.show(fragmentManager, addPlaylistFragment.getTag());
+                    }
+                    return;
+                }
 
+                Fragment channelManageVideoFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_MANAGE_VIDEO);
+                if (channelManageVideoFragment != null && channelManageVideoFragment.isVisible())
+                {
+                    AddPlaylistFragment addPlaylistFragment = new AddPlaylistFragment(MainActivity.this, playlistList);
+                    addPlaylistFragment.show(fragmentManager, addPlaylistFragment.getTag());
+                    return;
                 }
 
             }
@@ -907,7 +1511,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 ArrayList<VideoDTO> videoList = new ArrayList<>();
                 ArrayList<ChannelDTO> channelList = new ArrayList<>();
 
-                for(int i = 0; i < elementArray.size(); i++)
+                for (int i = 0; i < elementArray.size(); i++)
                 {
                     JsonElement element = elementArray.get(i);
 
@@ -944,26 +1548,25 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 Fragment channelBaseFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_BASE);
 
                 // 가져온 프래그먼트가 null이 아니거나 visible이면 현재 프래그먼트가 채널 홈 프래그먼트인 것.
-                if(channelBaseFragment != null && channelBaseFragment.isVisible())
+                if (channelBaseFragment != null && channelBaseFragment.isVisible())
                 {
                     Fragment channelManageVideoFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_MANAGE_VIDEO);
 
-                    if(channelManageVideoFragment != null && channelManageVideoFragment.isVisible())
+                    if (channelManageVideoFragment != null && channelManageVideoFragment.isVisible())
                     {
-                        ((ChannelManageVideoFragment)channelManageVideoFragment).setRecyclerViewVideo(videoList, channelList);
+                        ((ChannelManageVideoFragment) channelManageVideoFragment).setRecyclerViewVideo(videoList, channelList);
 
                         return;
                     }
 
-                    ViewPagerFragmentData viewPagerFragmentData = ((ChannelBaseFragment)channelBaseFragment).getCurrentFragmentData();
+                    ViewPagerFragmentData viewPagerFragmentData = ((ChannelBaseFragment) channelBaseFragment).getCurrentFragmentData();
 
-                    if(viewPagerFragmentData.getTag().equals(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_HOME))
+                    if (viewPagerFragmentData.getTag().equals(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_HOME))
                     {
-                        ((ChannelHomeFragment)viewPagerFragmentData.getFragment()).setRecyclerViewVideo(videoList, channelList);
-                    }
-                    else if(viewPagerFragmentData.getTag().equals(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_VIDEO))
+                        ((ChannelHomeFragment) viewPagerFragmentData.getFragment()).setRecyclerViewVideo(videoList, channelList);
+                    } else if (viewPagerFragmentData.getTag().equals(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_VIDEO))
                     {
-                        ((ChannelVideoFragment)viewPagerFragmentData.getFragment()).setRecyclerViewVideo(videoList, channelList);
+                        ((ChannelVideoFragment) viewPagerFragmentData.getFragment()).setRecyclerViewVideo(videoList, channelList);
                     }
 
                 }
@@ -981,7 +1584,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 ArrayList<VideoDTO> videoList = new ArrayList<>();
                 ArrayList<ChannelDTO> channelList = new ArrayList<>();
 
-                for(int i = 0; i < elementArray.size(); i++)
+                for (int i = 0; i < elementArray.size(); i++)
                 {
                     JsonElement element = elementArray.get(i);
 
@@ -1018,9 +1621,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 Fragment fragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_STORAGE);
 
                 // 가져온 프래그먼트가 null이 아니거나 visible이면 현재 프래그먼트가 홈 프래그먼트인 것.
-                if(fragment != null && fragment.isVisible())
+                if (fragment != null && fragment.isVisible())
                 {
-                    ((StorageFragment)fragment).setRecyclerViewVideoHistory(videoList, channelList);
+                    ((StorageFragment) fragment).setRecyclerViewVideoHistory(videoList, channelList);
                 }
             }
 
@@ -1033,7 +1636,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 ArrayList<VideoDTO> videoList = new ArrayList<>();
                 ArrayList<ChannelDTO> channelList = new ArrayList<>();
 
-                for(int i = 0; i < elementArray.size(); i++)
+                for (int i = 0; i < elementArray.size(); i++)
                 {
                     JsonElement element = elementArray.get(i);
 
@@ -1072,9 +1675,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 Fragment fragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_HOME);
 
                 // 가져온 프래그먼트가 null이 아니거나 visible이면 현재 프래그먼트가 홈 프래그먼트인 것.
-                if(fragment != null)
+                if (fragment != null)
                 {
-                    ((HomeFragment)fragment).setRecyclerViewVideo(videoList, channelList);
+                    ((HomeFragment) fragment).setRecyclerViewVideo(videoList, channelList);
                 }
 
             }
@@ -1088,7 +1691,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 ArrayList<VideoDTO> videoList = new ArrayList<>();
                 ArrayList<ChannelDTO> channelList = new ArrayList<>();
 
-                for(int i = 0; i < elementArray.size(); i++)
+                for (int i = 0; i < elementArray.size(); i++)
                 {
                     JsonElement element = elementArray.get(i);
 
@@ -1127,9 +1730,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 Fragment fragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_PLAYLIST_DETAIL);
 
                 // 가져온 프래그먼트가 null이 아니거나 visible이면 현재 프래그먼트가 홈 프래그먼트인 것.
-                if(fragment != null && fragment.isVisible())
+                if (fragment != null && fragment.isVisible())
                 {
-                    ((PlaylistDetailFragment)fragment).setRecyclerViewVideo(videoList, channelList);
+                    ((PlaylistDetailFragment) fragment).setRecyclerViewVideo(videoList, channelList);
                 }
             }
 
@@ -1147,7 +1750,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 ArrayList<VideoDTO> videoList = new ArrayList<>();
                 ArrayList<ChannelDTO> channelList = new ArrayList<>();
 
-                for(int i = 0; i < elementArray.size(); i++)
+                for (int i = 0; i < elementArray.size(); i++)
                 {
                     JsonElement element = elementArray.get(i);
 
@@ -1184,15 +1787,53 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 Fragment fragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_SUBSCRIBE);
 
                 // 가져온 프래그먼트가 null이 아니거나 visible이면 현재 프래그먼트가 구독 프래그먼트인 것.
-                if(fragment != null && fragment.isVisible())
+                if (fragment != null && fragment.isVisible())
                 {
-                    ((SubscribeFragment)fragment).setRecyclerViewVideo(videoList, channelList);
+                    ((SubscribeFragment) fragment).setRecyclerViewVideo(videoList, channelList);
                 }
             }
 
             @Override
             public void onSelectViewVideoResponse(String object)
             {
+                // Gson의 JsonParser를 사용하여 String을 파싱.
+                JsonParser parser = new JsonParser();
+                JsonElement element = parser.parse(object);
+
+                Integer videoId = element.getAsJsonObject().get("videoId").getAsInt();
+                Long contentsId = element.getAsJsonObject().get("contentsId").getAsLong();
+                Integer channelId = element.getAsJsonObject().get("channelId").getAsInt();
+                String url = element.getAsJsonObject().get("url").getAsString();
+                String thumbnail = element.getAsJsonObject().get("thumbnail").getAsString();
+                String title = element.getAsJsonObject().get("title").getAsString();
+                String info = element.getAsJsonObject().get("info").getAsString();
+                String location = element.getAsJsonObject().get("location").getAsString();
+                Integer age = element.getAsJsonObject().get("age").getAsInt();
+                Integer views = element.getAsJsonObject().get("views").getAsInt();
+                Integer like = element.getAsJsonObject().get("like").getAsInt();
+                Integer hate = element.getAsJsonObject().get("hate").getAsInt();
+                Integer replyCount = element.getAsJsonObject().get("replyCount").getAsInt();
+                String date = element.getAsJsonObject().get("date").getAsString();
+                Integer categoryId = element.getAsJsonObject().get("categoryId").getAsInt();
+                String profile = element.getAsJsonObject().get("profile").getAsString();
+                String name = element.getAsJsonObject().get("name").getAsString();
+                Integer subs = element.getAsJsonObject().get("subs").getAsInt();
+
+                VideoDTO video = new VideoDTO(videoId, contentsId, url, thumbnail, title, info, location, age, views, like, hate, replyCount,
+                        TimestampUtil.StringToTimestamp(date), categoryId);
+                ChannelDTO channel = new ChannelDTO();
+                channel.setSubs(subs);
+                channel.setChannelId(channelId);
+                channel.setProfile(profile);
+                channel.setName(name);
+
+                runOnUiThread(new Runnable(){
+                    @Override
+                    public void run()
+                    {
+                        setBottomSheetVideoInfo(video, channel);
+                    }
+                });
 
             }
 
@@ -1205,7 +1846,30 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             @Override
             public void onSelectSubscribeResponse(String object)
             {
+                if(object == null || object.isEmpty())
+                {
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            buttonSubscribe.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                            buttonSubscribe.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+                        }
+                    });
 
+                    return;
+                }
+
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                            buttonSubscribe.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+                            buttonSubscribe.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_subscribe_border));
+                    }
+                });
             }
 
             @Override
@@ -1213,12 +1877,204 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             {
                 Fragment fragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_ADD_STORAGE);
 
-                if(fragment != null && fragment.isVisible())
+                if (fragment != null && fragment.isVisible())
                 {
-                    ((AddStorageFragment)fragment).requestInsertPlaylistItems(Integer.parseInt(object));
+                    ((AddStorageFragment) fragment).requestInsertPlaylistItems(Integer.parseInt(object));
                 }
+            }
+
+            @Override
+            public void onRateResponse(String object)
+            {
+                // 바텀시트비디오가 expanded 인 경우.
+                if (bottomSheetVideoBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+                {
+                    // 로그인을 성공하면 accessToken, refreshToken을 반환하기 때문에 따로 핸들링
+                    // Gson의 JsonParser를 사용하여 String을 파싱.
+                    JsonParser parser = new JsonParser();
+                    JsonElement element = parser.parse(object);
+
+                    // like, hate을 가져온다.
+                    String like = element.getAsJsonObject().get("like").getAsString();
+                    String hate = element.getAsJsonObject().get("hate").getAsString();
+
+                    System.out.println("like : " + like);
+                    System.out.println("hate : " + hate);
+
+                    likeCount.setText(like);
+                    hateCount.setText(hate);
+                }
+            }
+
+            @Override
+            public void onSubscribeResponse(String object)
+            {
+                System.out.println("구독했습니다.");
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        buttonSubscribe.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+                        buttonSubscribe.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_subscribe_border));
+                    }
+                });
+            }
+
+            @Override
+            public void onUnSubscribeResponse(String object)
+            {
+                System.out.println("구독을 취소 했습니다.");
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        buttonSubscribe.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                        buttonSubscribe.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+                    }
+                });
+            }
+
+            @Override
+            public void onReplyResponse(String object)
+            {
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        replyCount.setText(String.valueOf(Integer.parseInt(replyCount.getText().toString()) + 1));
+                    }
+                });
+
+                replyView.clearReplyList();
+                replyView.requestReply();
+            }
+
+            @Override
+            public void onNestedReplyResponse(String object)
+            {
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        replyCount.setText(String.valueOf(Integer.parseInt(replyCount.getText().toString()) + 1));
+                    }
+                });
+
+                replyView.clearNestedReplyList();
+                replyView.requestNestedReply(currentReplyItem.getReplyDTO().getReplyId());
+            }
+
+            @Override
+            public void onSignInResponse(String object)
+            {
+                fragmentManager.popBackStack();
+            }
+
+            @Override
+            public void onSelectRelatedVideoResponse(String object)
+            {
+                // 받아온 json 배열을 List로 변환하여 핸들링한다.
+                JsonParser parser = new JsonParser();
+                JsonArray elementArray = parser.parse(object).getAsJsonArray();
+                ArrayList<VideoDTO> videoList = new ArrayList<>();
+                ArrayList<ChannelDTO> channelList = new ArrayList<>();
+
+                for (int i = 0; i < elementArray.size(); i++)
+                {
+                    JsonElement element = elementArray.get(i);
+
+                    Integer videoId = element.getAsJsonObject().get("videoId").getAsInt();
+                    Long contentsId = element.getAsJsonObject().get("contentsId").getAsLong();
+                    Integer channelId = element.getAsJsonObject().get("channelId").getAsInt();
+                    String url = element.getAsJsonObject().get("url").getAsString();
+                    String thumbnail = element.getAsJsonObject().get("thumbnail").getAsString();
+                    String title = element.getAsJsonObject().get("title").getAsString();
+                    String info = element.getAsJsonObject().get("info").getAsString();
+                    String location = element.getAsJsonObject().get("location").getAsString();
+                    Integer age = element.getAsJsonObject().get("age").getAsInt();
+                    Integer views = element.getAsJsonObject().get("views").getAsInt();
+                    Integer like = element.getAsJsonObject().get("like").getAsInt();
+                    Integer hate = element.getAsJsonObject().get("hate").getAsInt();
+                    Integer replyCount = element.getAsJsonObject().get("replyCount").getAsInt();
+                    String date = element.getAsJsonObject().get("date").getAsString();
+                    Integer categoryId = element.getAsJsonObject().get("categoryId").getAsInt();
+                    String profile = element.getAsJsonObject().get("profile").getAsString();
+                    String name = element.getAsJsonObject().get("name").getAsString();
+                    Integer subs = element.getAsJsonObject().get("subs").getAsInt();
+
+                    VideoDTO video = new VideoDTO(videoId, contentsId, url, thumbnail, title, info, location, age, views, like, hate, replyCount,
+                            TimestampUtil.StringToTimestamp(date), categoryId);
+                    ChannelDTO channel = new ChannelDTO();
+                    channel.setChannelId(channelId);
+                    channel.setProfile(profile);
+                    channel.setName(name);
+                    channel.setSubs(subs);
+
+                    videoList.add(video);
+                    channelList.add(channel);
+                }
+
+                relatedVideoRecyclerView(videoList, channelList);
             }
         };
     }
 
+    public void relatedVideoRecyclerView(List<VideoDTO> videoList, ArrayList<ChannelDTO> channelList)
+    {
+
+        for(int i = 0; i < videoList.size(); i++)
+        {
+            RecyclerViewVideoItem item = new RecyclerViewVideoItem();
+            item.setViewType(ViewType.VIDEO_LARGE);
+            item.setVideoDTO(videoList.get(i));
+            item.setChannelDTO(channelList.get(i));
+
+            relatedVideoList.add(item);
+        }
+
+        runOnUiThread(new Runnable(){
+            @Override
+            public void run()
+            {
+                relatedVideoAdapter.notifyDataSetChanged();
+            }
+        });
+
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean b)
+    {
+        if(!b)
+        {
+            return;
+        }
+
+        switch (view.getId())
+        {
+            case R.id.bottomsheetdialogfragment_nested_reply_edit_reply :
+
+                isReplyFocused = false;
+
+                break;
+            case R.id.bottomsheetdialogfragment_video_edit_reply :
+
+
+
+            case R.id.bottomsheetdialogfragment_reply_edit_reply :
+
+                isReplyFocused = true;
+
+                break;
+        }
+    }
+
+    public void setBottomNavigationViewVisible(int visibility)
+    {
+        bottomNavigationView.setVisibility(visibility);
+    }
 }

@@ -11,9 +11,11 @@ public class CommunityOptionFragment extends BaseOptionFragment implements OnRec
 {
     private static TypedArray resources;
     private static String options[];
+    private Context context;
 
     public CommunityOptionFragment(Context context)
     {
+        this.context = context;
         resources = context.getResources().obtainTypedArray(R.array.community_option_resources);
         options = context.getResources().getStringArray(R.array.community_option_texts);
 
@@ -26,13 +28,17 @@ public class CommunityOptionFragment extends BaseOptionFragment implements OnRec
         switch (position)
         {
             case 0 :
-                //
+                // 신고
+                CommunityReportFragment communityReportFragment = new CommunityReportFragment(context);
+                communityReportFragment.show(getParentFragmentManager(), communityReportFragment.getTag());
                 break;
 
             case 1 :
                 //
                 break;
         }
+
+        dismiss();
     }
 
     @Override

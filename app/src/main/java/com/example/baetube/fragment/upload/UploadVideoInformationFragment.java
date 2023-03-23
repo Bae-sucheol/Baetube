@@ -32,7 +32,7 @@ import com.example.baetube.OnSetFragmentListener;
 import com.example.baetube.OnUploadDataListener;
 import com.example.baetube.R;
 import com.example.baetube.activity.UploadActivity;
-import com.example.baetube.bottomsheetdialog.AddPlaylistFragment;
+import com.example.baetube.bottomsheetdialog.SetCategoryFragment;
 import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.fragment.set.SetAgeFragment;
@@ -63,6 +63,11 @@ public class UploadVideoInformationFragment extends Fragment implements View.OnC
     private TextView visible;
     // 동영상 제목을 입력하는 인풋
     private EditText title;
+    // 선택된 카테고리를 출력하는 뷰
+    private TextView category;
+    // 선택된 위치를 출력하는 뷰
+    private TextView location;
+
     /*
      * 설명, 공개, 위치, 재생목록에 추가 레이아웃으로 단순히
      * 클릭하여 해당 프래그먼트로 전환하기 위한 용도로 사용한다.
@@ -70,6 +75,7 @@ public class UploadVideoInformationFragment extends Fragment implements View.OnC
     private ConstraintLayout layoutDescription;
     private ConstraintLayout layoutVisible;
     private ConstraintLayout layoutLocation;
+    private ConstraintLayout layoutCategory;
     private ConstraintLayout layoutPlaylist;
 
     // 액티비티와 통신하기 위한 인터페이스
@@ -84,9 +90,14 @@ public class UploadVideoInformationFragment extends Fragment implements View.OnC
     // 선택한 공개 여부를 저장하기 위한 객체
     private Integer selectedVisible;
 
+    // 선택된 동영상 파일
     private File selectedFile;
 
+    // 선택된 썸네일 비트맵
     private Bitmap selectedThumbnail;
+
+    // 선택된 카테고리 id
+    private Integer categoryId;
 
     public UploadVideoInformationFragment(File file, OnUploadDataListener onUploadDataListener)
     {
@@ -122,10 +133,13 @@ public class UploadVideoInformationFragment extends Fragment implements View.OnC
         description = view.findViewById(R.id.fragment_upload_video_information_text_description);
         visible = view.findViewById(R.id.fragment_upload_video_information_text_visible);
         title = view.findViewById(R.id.fragment_upload_video_information_edit_title);
+        category = view.findViewById(R.id.fragment_upload_video_information_text_category);
+        location = view.findViewById(R.id.fragment_upload_video_information_text_location);
 
         layoutDescription = view.findViewById(R.id.fragment_upload_video_information_layout_description);
         layoutVisible = view.findViewById(R.id.fragment_upload_video_information_layout_visible);
         layoutLocation = view.findViewById(R.id.fragment_upload_video_information_layout_location);
+        layoutCategory = view.findViewById(R.id.fragment_upload_video_information_layout_category);
         layoutPlaylist = view.findViewById(R.id.fragment_upload_video_information_layout_playlist);
 
         // 클릭 리스너 등록
@@ -133,6 +147,7 @@ public class UploadVideoInformationFragment extends Fragment implements View.OnC
         layoutDescription.setOnClickListener(this);
         layoutVisible.setOnClickListener(this);
         layoutLocation.setOnClickListener(this);
+        layoutCategory.setOnClickListener(this);
         layoutPlaylist.setOnClickListener(this);
 
         setThumbnail(selectedFile);
@@ -170,29 +185,37 @@ public class UploadVideoInformationFragment extends Fragment implements View.OnC
 
             case R.id.fragment_upload_video_information_layout_description :
 
-                fragmentTransaction.replace(R.id.activity_upload_layout_main, new SetDescriptionFragment(onSetFragmentListener));
+                fragmentTransaction.add(R.id.activity_upload_layout_main, new SetDescriptionFragment(onSetFragmentListener));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
                 break;
             case R.id.fragment_upload_video_information_layout_visible :
 
-                fragmentTransaction.replace(R.id.activity_upload_layout_main, new SetPublicFragment(onSetFragmentListener));
+                fragmentTransaction.add(R.id.activity_upload_layout_main, new SetPublicFragment(onSetFragmentListener));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
                 break;
             case R.id.fragment_upload_video_information_layout_location :
 
-                fragmentTransaction.replace(R.id.activity_upload_layout_main, new SetLocationFragment(onSetFragmentListener));
+                fragmentTransaction.add(R.id.activity_upload_layout_main, new SetLocationFragment(onSetFragmentListener));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
                 break;
+
+            case R.id.fragment_upload_video_information_layout_category :
+
+                SetCategoryFragment setCategoryFragment = new SetCategoryFragment(getContext(), onSetFragmentListener);
+                setCategoryFragment.show(getParentFragmentManager(), setCategoryFragment.getTag());
+
+                break;
+
             case R.id.fragment_upload_video_information_layout_playlist :
 
-                AddPlaylistFragment addPlaylistFragment = new AddPlaylistFragment(getContext());
-                addPlaylistFragment.show(fragmentManager, addPlaylistFragment.getTag());
+                //AddPlaylistFragment addPlaylistFragment = new AddPlaylistFragment(getContext());
+                //addPlaylistFragment.show(fragmentManager, addPlaylistFragment.getTag());
 
                 break;
         }
@@ -222,6 +245,7 @@ public class UploadVideoInformationFragment extends Fragment implements View.OnC
                 video.setInfo(description.getText().toString());
                 video.setVisible(selectedVisible);
                 video.setLocation(address);
+                video.setCategoryId(categoryId);
 
                 onUploadDataListener.onResponseVideoInformation(video);
                 onUploadDataListener.onResponseVideoThumbnail(selectedThumbnail);
@@ -297,6 +321,7 @@ public class UploadVideoInformationFragment extends Fragment implements View.OnC
             public void onResponseLocation(String str)
             {
                 address = str;
+                location.setText(str);
             }
 
             @Override
@@ -308,6 +333,19 @@ public class UploadVideoInformationFragment extends Fragment implements View.OnC
 
             @Override
             public void onResponseVote(VoteDTO voteData, List<VoteDTO> voteOptions)
+            {
+
+            }
+
+            @Override
+            public void onResponseCategory(String str, int position)
+            {
+                category.setText(str);
+                categoryId = position;
+            }
+
+            @Override
+            public void onResponseCalendar(int year, int month, int dayOfMonth)
             {
 
             }

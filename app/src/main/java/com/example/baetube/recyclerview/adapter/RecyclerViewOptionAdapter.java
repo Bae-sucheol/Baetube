@@ -50,8 +50,15 @@ public class RecyclerViewOptionAdapter extends RecyclerView.Adapter<OptionViewHo
     {
         RecyclerViewOptionItem item = list.get(position);
 
-        holder.icon.setImageResource(item.getResource());
         holder.option.setText(item.getOption());
+
+        if(item.getResource() == 0)
+        {
+            return;
+        }
+
+        holder.icon.setImageResource(item.getResource());
+
     }
 
     @Override

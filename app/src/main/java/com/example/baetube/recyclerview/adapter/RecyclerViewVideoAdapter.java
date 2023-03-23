@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.baetube.DateToStringUtil;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
@@ -115,7 +116,7 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
                 //holder.profile.setBackground(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_box_24));
                 holder.title.setText(videoDTO.getTitle());
                 holder.views.setText(String.valueOf(videoDTO.getViews()) + " · ");
-                holder.date.setText(videoDTO.getDate().toString());
+                holder.date.setText(DateToStringUtil.dateToString(videoDTO.getDate()));
                 holder.player.setVisibility(View.INVISIBLE);
                 holder.thumbnail.bringToFront();
 
@@ -140,9 +141,10 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
                 //holder.profile.setImageDrawable();
                 holder.title.setText(videoDTO.getTitle());
                 holder.views.setText(String.valueOf(videoDTO.getViews()) + " · ");
-                holder.date.setText(videoDTO.getDate().toString());
+                //holder.date.setText(DateToStringUtil.dateToString(videoDTO.getDate()));
                 holder.player.setVisibility(View.INVISIBLE);
                 holder.thumbnail.bringToFront();
+                holder.date.setText(DateToStringUtil.dateToString(videoDTO.getDate()));
 
                 break;
             case ViewType.VIDEO_DIVIDER :

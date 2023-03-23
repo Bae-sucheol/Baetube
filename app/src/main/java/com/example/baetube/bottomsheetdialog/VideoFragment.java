@@ -242,8 +242,8 @@ public class VideoFragment extends BottomSheetDialogFragment implements OnRecycl
                 break;
             case R.id.bottomsheetdialogfragment_video_image_add_library :
 
-                AddPlaylistFragment addPlaylistFragment = new AddPlaylistFragment(getContext());
-                addPlaylistFragment.show(getParentFragmentManager(), addPlaylistFragment.getTag());
+               //AddPlaylistFragment addPlaylistFragment = new AddPlaylistFragment(getContext());
+                //addPlaylistFragment.show(getParentFragmentManager(), addPlaylistFragment.getTag());
 
                 break;
             case R.id.bottomsheetdialogfragment_video_image_channel_profile :

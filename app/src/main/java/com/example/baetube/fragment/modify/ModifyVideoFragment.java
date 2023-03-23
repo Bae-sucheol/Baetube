@@ -1,18 +1,26 @@
 package com.example.baetube.fragment.modify;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+
+import com.example.baetube.OkHttpUtil;
+import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.R;
 
 public class ModifyVideoFragment extends Fragment
 {
     private View view;
+    private OnCallbackResponseListener onCallbackResponseListener;
+    private OkHttpUtil okHttpUtil;
+
+    public ModifyVideoFragment(OnCallbackResponseListener onCallbackResponseListener)
+    {
+        this.onCallbackResponseListener = onCallbackResponseListener;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

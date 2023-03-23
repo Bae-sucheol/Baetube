@@ -104,7 +104,7 @@ public class SetDescriptionFragment extends Fragment
              */
             case android.R.id.home :
 
-                getActivity().onBackPressed();
+                //getActivity().onBackPressed();
 
                 // 현재의 텍스트 내용을 넘겨준다.
                 String str = description.getText().toString();

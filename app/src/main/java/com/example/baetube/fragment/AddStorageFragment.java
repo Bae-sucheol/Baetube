@@ -129,6 +129,12 @@ public class AddStorageFragment extends Fragment implements OnRecyclerViewClickL
 
             }
 
+            @Override
+            public void onSetVideoResolution(int position)
+            {
+
+            }
+
         };
 
         // Inflate the layout for this fragment

@@ -26,8 +26,9 @@ import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
 import com.example.baetube.WidthProperty;
+import com.example.baetube.activity.MainActivity;
+import com.example.baetube.bottomsheetdialog.HistoryVideoOptionManageFragment;
 import com.example.baetube.bottomsheetdialog.VideoFragment;
-import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.dto.VoteDTO;
@@ -74,7 +75,7 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
 
         // 액티비티를 구하고 툴바를 적용시킨다.
         AppCompatActivity activity = (AppCompatActivity) getActivity();
-        //toolbar.setTitle("");
+        toolbar.setTitle("기록");
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -220,8 +221,10 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
                 break;
             case R.id.recyclerview_video_image_option :
 
-                VideoOptionFragment videoOptionFragment = new VideoOptionFragment(getContext());
-                videoOptionFragment.show(getParentFragmentManager(), videoOptionFragment.getTag());
+                HistoryVideoOptionManageFragment historyVideoOptionManageFragment = new HistoryVideoOptionManageFragment(getContext(), adapter, list, position);
+                historyVideoOptionManageFragment.show(getParentFragmentManager(), historyVideoOptionManageFragment.getTag());
+                System.out.println("했는뎅...");
+                ((MainActivity)getContext()).setManagedVideoItem(list.get(position));
 
                 break;
             case R.id.recyclerview_video_layout_information :
