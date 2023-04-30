@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.activity.MainActivity;
@@ -51,7 +49,7 @@ public class VideoOptionManageFragment extends BaseOptionFragment implements OnR
                 break;
             case 1 :
                 // 수정
-                ((MainActivity)context).commitModifyVideoFragment();
+                ((MainActivity)context).commitModifyVideoFragment(list.get(manageItemPosition).getVideoDTO().getVideoId());
                 dismiss();
                 break;
             case 2 :
@@ -94,7 +92,7 @@ public class VideoOptionManageFragment extends BaseOptionFragment implements OnR
     }
 
     @Override
-    public void onDismiss(@NonNull DialogInterface dialog)
+    public void onDismiss( DialogInterface dialog)
     {
         ((MainActivity)context).setManagedVideoItem(null);
         super.onDismiss(dialog);

@@ -6,19 +6,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.Callback.ReturnableCallback;
+import com.example.baetube.FragmentTagUtil;
 import com.example.baetube.OkHttpUtil;
 import com.example.baetube.OnCallbackResponseListener;
+import com.example.baetube.OnDialogInteractionListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.bottomsheetdialog.CommunityOptionFragment;
+import com.example.baetube.bottomsheetdialog.CommunityOptionManageFragment;
 import com.example.baetube.bottomsheetdialog.ReplyFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.CommunityDTO;
+import com.example.baetube.dto.RateDTO;
 import com.example.baetube.dto.VoteDTO;
+import com.example.baetube.fragment.modify.ModifyCommunityFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewCommunityAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewCommunityItem;
 import com.example.baetube.recyclerview.item.RecyclerViewVoteItem;
@@ -38,6 +45,9 @@ public class ChannelCommunityFragment extends Fragment implements OnRecyclerView
     private OnCallbackResponseListener onCallbackResponseListener;
 
     private OkHttpUtil okHttpUtil;
+    private OnDialogInteractionListener onDialogInteractionListener;
+
+    private Integer selectedPostion;
 
     public ChannelCommunityFragment(OnCallbackResponseListener onCallbackResponseListener)
     {
@@ -64,29 +74,126 @@ public class ChannelCommunityFragment extends Fragment implements OnRecyclerView
         recyclerView.setAdapter(recyclerViewCommunityAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         // Inflate the layout for this fragment
+
+        setOnDialogInteractionListener();
         return view;
+    }
+
+    private void setOnDialogInteractionListener()
+    {
+        onDialogInteractionListener = new OnDialogInteractionListener()
+        {
+            @Override
+            public void onAddVoteResponse(String voteItem)
+            {
+
+            }
+
+            @Override
+            public void onDeletePlaylistItem(int position)
+            {
+
+            }
+
+            @Override
+            public void onSetVideoResolution(int position)
+            {
+
+            }
+
+            @Override
+            public void onDeleteCommunity()
+            {
+                if(okHttpUtil == null)
+                {
+                    okHttpUtil = new OkHttpUtil();
+                }
+
+                String url = getString(R.string.api_url_community_delete);
+                ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
+                okHttpUtil.sendPostRequest(list.get(selectedPostion).getCommunityDTO(), url, returnableCallback);
+            }
+
+            @Override
+            public void onModifyCommunity()
+            {
+                FragmentManager fragmentManager = getParentFragment().getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.activity_main_layout, new ModifyCommunityFragment(onCallbackResponseListener, list.get(selectedPostion).getCommunityDTO().getCommunityId()),
+                        FragmentTagUtil.FRAGMENT_TAG_MODIFY_COMMUNITY);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+
+            @Override
+            public void onDeleteNotification()
+            {
+
+            }
+
+            @Override
+            public void onSelectChannel(int position, int channelId)
+            {
+
+            }
+        };
     }
 
     @Override
     public void onItemClick(View view, int position)
     {
-
+        selectedPostion = position;
         switch (view.getId())
         {
             case R.id.recyclerview_community_image_option :
 
-                CommunityOptionFragment communityOptionFragment = new CommunityOptionFragment(getContext());
-                communityOptionFragment.show(getParentFragmentManager(), communityOptionFragment.getTag());
+                ChannelBaseFragment channelBaseFragment = (ChannelBaseFragment)getParentFragment();
+                ChannelDTO myChannel = channelBaseFragment.getMyChannel();
+
+                System.out.println("channelId : " + list.get(position).getChannelDTO().getChannelId());
+                System.out.println("myChannelId : " + myChannel.getChannelId());
+
+                if(list.get(position).getChannelDTO().getChannelId() == myChannel.getChannelId())
+                {
+                    CommunityOptionManageFragment communityOptionManageFragment = new CommunityOptionManageFragment(getContext(), onDialogInteractionListener);
+                    communityOptionManageFragment.show(getParentFragmentManager(), communityOptionManageFragment.getTag());
+                }
+                else
+                {
+                    CommunityOptionFragment communityOptionFragment = new CommunityOptionFragment(getContext());
+                    communityOptionFragment.show(getParentFragmentManager(), communityOptionFragment.getTag());
+                }
 
                 break;
             case R.id.recyclerview_community_image_like :
 
                 // 좋아요 기능
+                if (okHttpUtil == null)
+                {
+                    okHttpUtil = new OkHttpUtil();
+                }
+
+                // 평가 request
+                String url = getString(R.string.api_url_rate) + "0";
+                RateDTO rate = new RateDTO(list.get(position).getCommunityDTO().getContentsId(), 1);
+                ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_RATE);
+
+                okHttpUtil.sendPostRequest(rate, url, returnableCallback);
 
                 break;
             case R.id.recyclerview_community_image_hate :
 
                 // 싫어요 기능
+                if (okHttpUtil == null)
+                {
+                    okHttpUtil = new OkHttpUtil();
+                }
+
+                url = getString(R.string.api_url_rate) + "0";
+                rate = new RateDTO(list.get(position).getCommunityDTO().getContentsId(), 0);
+                returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_RATE);
+
+                okHttpUtil.sendPostRequest(rate, url, returnableCallback);
 
                 break;
             case R.id.recyclerview_community_image_reply :

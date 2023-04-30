@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -22,6 +21,7 @@ import com.example.baetube.OkHttpUtil;
 import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.OnDialogInteractionListener;
 import com.example.baetube.OnRecyclerViewClickListener;
+import com.example.baetube.PreferenceManager;
 import com.example.baetube.R;
 import com.example.baetube.bottomsheetdialog.AddStorageDialogFragment;
 import com.example.baetube.dto.PlaylistDTO;
@@ -116,7 +116,7 @@ public class AddStorageFragment extends Fragment implements OnRecyclerViewClickL
                     playlist.setThumbnail(list.get(checkedItems.iterator().next()).getVideoDTO().getThumbnail());
                 }
 
-                String url = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/insert";
+                String url = getString(R.string.api_url_playlist_insert) + PreferenceManager.getChannelSequence(getContext().getApplicationContext());
 
                 ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_INSERT);
 
@@ -135,6 +135,30 @@ public class AddStorageFragment extends Fragment implements OnRecyclerViewClickL
 
             }
 
+            @Override
+            public void onDeleteCommunity()
+            {
+
+            }
+
+            @Override
+            public void onModifyCommunity()
+            {
+
+            }
+
+            @Override
+            public void onDeleteNotification()
+            {
+
+            }
+
+            @Override
+            public void onSelectChannel(int position, int channelId)
+            {
+
+            }
+
         };
 
         // Inflate the layout for this fragment
@@ -143,8 +167,6 @@ public class AddStorageFragment extends Fragment implements OnRecyclerViewClickL
 
     public void requestInsertPlaylistItems(Integer playlistId)
     {
-        System.out.println("생성된 playlistId : " + playlistId);
-
         if(checkedItems.isEmpty())
         {
             return;
@@ -152,7 +174,7 @@ public class AddStorageFragment extends Fragment implements OnRecyclerViewClickL
 
         List<PlaylistItemDTO> playlistItems = createPlaylistItemList(playlistId);
 
-        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/item/insert";
+        String url = getString(R.string.api_url_playlist_item_insert);
 
         ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
 
@@ -199,14 +221,14 @@ public class AddStorageFragment extends Fragment implements OnRecyclerViewClickL
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+    public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_only_next_button, menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    public boolean onOptionsItemSelected( MenuItem item)
     {
         switch (item.getItemId())
         {

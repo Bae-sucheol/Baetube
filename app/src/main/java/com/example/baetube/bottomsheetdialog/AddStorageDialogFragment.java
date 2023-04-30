@@ -10,15 +10,14 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.example.baetube.OnDialogInteractionListener;
 import com.example.baetube.R;
 import com.example.baetube.UserDisplay;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import org.jetbrains.annotations.Nullable;
 
 public class AddStorageDialogFragment extends BottomSheetDialogFragment implements View.OnClickListener
 {
@@ -61,7 +60,7 @@ public class AddStorageDialogFragment extends BottomSheetDialogFragment implemen
         return view;
     }
 
-    @NonNull
+
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
     {

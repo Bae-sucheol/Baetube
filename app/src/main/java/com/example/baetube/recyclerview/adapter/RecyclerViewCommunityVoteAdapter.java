@@ -35,9 +35,9 @@ public class RecyclerViewCommunityVoteAdapter extends RecyclerView.Adapter<Commu
         this.total = total;
     }
 
-    @NonNull
+
     @Override
-    public CommunityVoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public CommunityVoteViewHolder onCreateViewHolder( ViewGroup parent, int viewType)
     {
         if(context == null)
         {
@@ -54,7 +54,7 @@ public class RecyclerViewCommunityVoteAdapter extends RecyclerView.Adapter<Commu
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CommunityVoteViewHolder holder, int position)
+    public void onBindViewHolder( CommunityVoteViewHolder holder, int position)
     {
         RecyclerViewVoteItem item = list.get(position);
 
@@ -169,7 +169,7 @@ public class RecyclerViewCommunityVoteAdapter extends RecyclerView.Adapter<Commu
     }
 
     @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    public void onDetachedFromRecyclerView( RecyclerView recyclerView)
     {
         super.onDetachedFromRecyclerView(recyclerView);
         context = null;

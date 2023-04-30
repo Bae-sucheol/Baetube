@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.activity.MainActivity;
@@ -99,7 +97,7 @@ public class HistoryVideoOptionManageFragment extends BaseOptionFragment impleme
     }
 
     @Override
-    public void onDismiss(@NonNull DialogInterface dialog)
+    public void onDismiss( DialogInterface dialog)
     {
         ((MainActivity)context).setManagedVideoItem(null);
         super.onDismiss(dialog);

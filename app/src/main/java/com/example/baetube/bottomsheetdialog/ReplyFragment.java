@@ -54,7 +54,7 @@ public class ReplyFragment extends BottomSheetDialogFragment implements OnRecycl
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    public View onCreateView( LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         view = inflater.inflate(R.layout.bottomsheetdialogfragment_reply, container, false);
 
@@ -88,7 +88,7 @@ public class ReplyFragment extends BottomSheetDialogFragment implements OnRecycl
         return view;
     }
 
-    @NonNull
+
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
     {

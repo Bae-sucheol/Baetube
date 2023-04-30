@@ -21,6 +21,13 @@ public class RateDTO
         this.result = result;
     }
 
+    public RateDTO(Long contentsId, Integer value)
+    {
+        super();
+        this.contentsId = contentsId;
+        this.value = value;
+    }
+
     public RateDTO(Long contentsId, Integer channelId, Integer value)
     {
         this.contentsId = contentsId;

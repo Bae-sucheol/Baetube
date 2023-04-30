@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -27,10 +26,17 @@ public class SetDescriptionFragment extends Fragment
     private TextView currentCount;
 
     private OnSetFragmentListener onSetFragmentListener;
+    private String sourceDescription;
 
     public SetDescriptionFragment(OnSetFragmentListener onSetFragmentListener)
     {
         this.onSetFragmentListener = onSetFragmentListener;
+    }
+
+    public SetDescriptionFragment(OnSetFragmentListener onSetFragmentListener, String sourceDescription)
+    {
+        this.onSetFragmentListener = onSetFragmentListener;
+        this.sourceDescription = sourceDescription;
     }
 
     @Override
@@ -53,6 +59,11 @@ public class SetDescriptionFragment extends Fragment
 
         description = view.findViewById(R.id.fragment_set_description_edit);
         currentCount = view.findViewById(R.id.fragment_set_description_text_count_cur);
+
+        if(sourceDescription != null)
+        {
+            description.setText(sourceDescription);
+        }
 
         description.addTextChangedListener(new TextWatcher()
         {
@@ -85,14 +96,14 @@ public class SetDescriptionFragment extends Fragment
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+    public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_none, menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    public boolean onOptionsItemSelected( MenuItem item)
     {
         switch (item.getItemId())
         {

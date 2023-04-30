@@ -2,10 +2,15 @@ package com.example.baetube.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.GestureDetector;
@@ -21,7 +26,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -33,6 +41,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.baetube.Callback.ReturnableCallback;
 import com.example.baetube.DateToStringUtil;
 import com.example.baetube.DescriptionView;
@@ -56,23 +66,34 @@ import com.example.baetube.ViewType;
 import com.example.baetube.bottomsheetdialog.AddPlaylistFragment;
 import com.example.baetube.bottomsheetdialog.PlayerOptionFragment;
 import com.example.baetube.bottomsheetdialog.UploadOptionFragment;
+import com.example.baetube.dto.CategoryDTO;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.CommunityDTO;
 import com.example.baetube.dto.ContentsDTO;
+import com.example.baetube.dto.FileUploadDTO;
 import com.example.baetube.dto.HistoryDTO;
 import com.example.baetube.dto.NestedReplyDTO;
+import com.example.baetube.dto.NotificationDTO;
 import com.example.baetube.dto.PlaylistDTO;
 import com.example.baetube.dto.PlaylistItemDTO;
 import com.example.baetube.dto.RateDTO;
 import com.example.baetube.dto.ReplyDTO;
+import com.example.baetube.dto.SearchHistoryDTO;
 import com.example.baetube.dto.SubscribersDTO;
+import com.example.baetube.dto.TokenInfoDTO;
 import com.example.baetube.dto.UserDTO;
 import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.dto.ViewPagerFragmentData;
 import com.example.baetube.dto.VoteDTO;
+import com.example.baetube.fcm.MessagingService;
 import com.example.baetube.fragment.AddStorageFragment;
+import com.example.baetube.fragment.HistoryDetailFragment;
 import com.example.baetube.fragment.HomeFragment;
+import com.example.baetube.fragment.LoginFragment;
+import com.example.baetube.fragment.NotificationFragment;
 import com.example.baetube.fragment.PlaylistDetailFragment;
+import com.example.baetube.fragment.SearchFragment;
+import com.example.baetube.fragment.SearchResultFragment;
 import com.example.baetube.fragment.StorageFragment;
 import com.example.baetube.fragment.SubscribeFragment;
 import com.example.baetube.fragment.channel.ChannelBaseFragment;
@@ -81,8 +102,12 @@ import com.example.baetube.fragment.channel.ChannelHomeFragment;
 import com.example.baetube.fragment.channel.ChannelManageVideoFragment;
 import com.example.baetube.fragment.channel.ChannelPlaylistFragment;
 import com.example.baetube.fragment.channel.ChannelVideoFragment;
+import com.example.baetube.fragment.modify.ModifyChannelInformationFragment;
+import com.example.baetube.fragment.modify.ModifyCommunityFragment;
+import com.example.baetube.fragment.modify.ModifyPlaylistFragment;
 import com.example.baetube.fragment.modify.ModifyVideoFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
+import com.example.baetube.recyclerview.item.RecyclerViewNotificationItem;
 import com.example.baetube.recyclerview.item.RecyclerViewReplyItem;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
@@ -105,8 +130,10 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -162,6 +189,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private ConstraintLayout layoutMinMenu;
 
     private ExoPlayer exoPlayer;
+
+    private boolean isCallLogin = false;
 
     /*
      * 관련 동영상을 출력하기 위한 리사이클러뷰, 어댑터, 리스트
@@ -236,6 +265,55 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     // 동영상을 관리하거나 신고할 때 선택된 동영상을 저장하기 위한 변수
     private RecyclerViewVideoItem managedVideoItem;
 
+    // 액티비티 리절트 런처 = 예전에 사용하던 방식은 권장되지 않아 현재 방식을 적용
+    public ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>()
+            {
+                @Override
+                public void onActivityResult(ActivityResult result)
+                {
+                    if(result.getResultCode() == RESULT_OK)
+                    {
+                        Intent intent = result.getData();
+                        Uri uri = intent.getData();
+
+                        System.out.println("Uri : " + uri);
+                        System.out.println("path : " + uri.getPath());
+
+                        // /document/raw:경로 로 시작하기 때문에 그냥 넘기면 에러를 발생시켜 :를 구분자로 하여 2개로 나누어 뒷 부분을 경로로 사용한다.
+                        //String filePaths[] = uri.getPath().split(":", 2);
+
+                        //File file = new File(filePaths[1]);
+                        File file = new File(getRealPathFromURI(uri));
+
+                        ModifyChannelInformationFragment modifyChannelInformationFragment = (ModifyChannelInformationFragment) fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_MODIFY_CHANNEL_INFORMATION);
+
+                        if(modifyChannelInformationFragment != null)
+                        {
+                            modifyChannelInformationFragment.setImage(file);
+                            return;
+                        }
+
+                        ModifyCommunityFragment modifyCommunityFragment = (ModifyCommunityFragment) fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_MODIFY_COMMUNITY);
+
+                        if(modifyCommunityFragment != null)
+                        {
+                            modifyCommunityFragment.setImage(file);
+                            return;
+                        }
+
+                        ModifyVideoFragment modifyVideoFragment = (ModifyVideoFragment) fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_MODIFY_VIDEO);
+                        if(modifyVideoFragment != null)
+                        {
+                            modifyVideoFragment.setImage(file);
+                            return;
+                        }
+
+                        //FileUploadUtils.send2Server(file, player, getApplicationContext());
+                    }
+                }
+            });
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -256,6 +334,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         UserDisplay.setDensity(displayMetrics.density);
 
         setOnCallbackResponseListener();
+
+        System.out.println("다시 시작!");
 
         // 프래그먼트 매니저를 지정
         fragmentManager = getSupportFragmentManager();
@@ -293,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener()
         {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item)
+            public boolean onNavigationItemSelected(MenuItem item)
             {
                 switch (item.getItemId())
                 {
@@ -481,8 +561,25 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 }
                 else
                 {
+                    Fragment historyDetailFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_HISTORY_DETAIL);
+
+                    if(historyDetailFragment != null)
+                    {
+                        layoutKeyboardEdit.setVisibility(View.GONE);
+                        return;
+                    }
+
+                    Fragment searchFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_SEARCH);
+
+                    if(searchFragment != null)
+                    {
+                        layoutKeyboardEdit.setVisibility(View.GONE);
+                        return;
+                    }
+
                     Fragment loginFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_LOGIN);
                     Fragment signInFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_SIGN_IN);
+
 
                     if(loginFragment != null || signInFragment != null)
                     {
@@ -499,6 +596,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         };
 
         new KeyboardState(this).init().setHeightListener(heightListener);
+
+        // okHttpUtil에 컨텍스트 적용
+        OkHttpUtil.setApplicationContext(getApplicationContext());
+
+        // fcm 서비스를 위한 Intent 실행
+        Intent fcmIntent = new Intent(this, MessagingService.class);
+        startService(fcmIntent);
+
+        System.out.println("저장된 fcm토큰 : " + PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_FCM));
     }
 
     @Override
@@ -533,13 +639,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         setMediaSource(currentVideoItem.getVideoDTO().getUrl(), "1080");
 
-        // 임시로 20으로
-        requestViewVideo(20, videoItem.getVideoDTO().getVideoId());
+        requestViewVideo(videoItem.getVideoDTO().getVideoId());
 
         requestRelatedVideo(videoItem.getVideoDTO().getVideoId());
 
-        // 임시로 4, 5
-        requestSelectSubscribe(videoItem.getChannelDTO().getChannelId(), 5);
+        requestSelectSubscribe(videoItem.getChannelDTO().getChannelId());
+
+        requestChannelData();
     }
 
     @Override
@@ -641,14 +747,14 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 }
 
                 // 평가 request
-                String url = "http://192.168.0.4:9090/Baetube_backEnd/api/rate";
+                String url = getString(R.string.api_url_rate) + PreferenceManager.getChannelSequence(getApplicationContext());
                 RateDTO rate = new RateDTO(currentVideoItem.getVideoDTO().getContentsId(), 4, 1);
                 ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_RATE);
 
                 okHttpUtil.sendPostRequest(rate, url, returnableCallback);
 
                 // 좋아요를 누른 동영상 재생목록에 추가를 request
-                url = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/item/insert/like";
+                url = getString(R.string.api_url_insert_playlist_like) + PreferenceManager.getChannelSequence(getApplicationContext());
                 VideoDTO video = new VideoDTO();
                 video.setChannelId(4);
                 video.setVideoId(currentVideoItem.getVideoDTO().getVideoId());
@@ -666,14 +772,14 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                     okHttpUtil = new OkHttpUtil();
                 }
 
-                url = "http://192.168.0.4:9090/Baetube_backEnd/api/rate";
+                url = getString(R.string.api_url_rate) + PreferenceManager.getChannelSequence(getApplicationContext());
                 rate = new RateDTO(currentVideoItem.getVideoDTO().getContentsId(), 4, 0);
                 returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_RATE);
 
                 okHttpUtil.sendPostRequest(rate, url, returnableCallback);
 
                 // 좋아요를 누른 동영상 재생목록에 추가를 request
-                url = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/item/delete/like";
+                url = getString(R.string.api_url_delete_playlist_like) + PreferenceManager.getChannelSequence(getApplicationContext());
                 video = new VideoDTO();
                 video.setChannelId(4);
                 video.setVideoId(currentVideoItem.getVideoDTO().getVideoId());
@@ -696,7 +802,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             case R.id.bottomsheetdialogfragment_video_image_channel_profile:
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.activity_main_layout, new ChannelBaseFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_CHANNEL_BASE);
+                fragmentTransaction.replace(R.id.activity_main_layout, new ChannelBaseFragment(this, onCallbackResponseListener, currentVideoItem.getChannelDTO().getChannelId()), FragmentTagUtil.FRAGMENT_TAG_CHANNEL_BASE);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
@@ -804,16 +910,22 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                 if(buttonSubscribe.getCurrentTextColor() == ContextCompat.getColor(this, R.color.red))
                 {
+                    /*
                     url = "http://192.168.0.4:9090/Baetube_backEnd/api/subscribe/subscribe";
                     SubscribersDTO subscribers = new SubscribersDTO(currentVideoItem.getChannelDTO().getChannelId(), 5);
+
+                     */
+
+                    url = getString(R.string.api_url_subscribe) + PreferenceManager.getChannelSequence(getApplicationContext());
+                    Integer channelId = 4;
                     returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SUBSCRIBE);
-                    okHttpUtil.sendPostRequest(subscribers, url, returnableCallback);
+                    okHttpUtil.sendPostRequest(channelId, url, returnableCallback);
 
                     subscribeCount.setText(String.valueOf(currentCount + 1));
                 }
                 else
                 {
-                    url = "http://192.168.0.4:9090/Baetube_backEnd/api/subscribe/unsubscribe";
+                    url = getString(R.string.api_url_unsubscribe) + PreferenceManager.getChannelSequence(getApplicationContext());
                     SubscribersDTO subscribers = new SubscribersDTO(currentVideoItem.getChannelDTO().getChannelId(), 5);
                     returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_UNSUBSCRIBE);
                     okHttpUtil.sendPostRequest(subscribers, url, returnableCallback);
@@ -829,17 +941,17 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                     if(isReplyFocused)
                     {
-                        ReplyDTO reply = new ReplyDTO(currentVideoItem.getVideoDTO().getContentsId(), currentVideoItem.getChannelDTO().getChannelId(), comment);
-                        url = "http://192.168.0.4:9090/Baetube_backEnd/api/reply/insert";
+                        ReplyDTO reply = new ReplyDTO(currentVideoItem.getVideoDTO().getContentsId(), comment);
+                        url = getString(R.string.api_url_reply_insert) + PreferenceManager.getChannelSequence(getApplicationContext());
                         returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_REPLY);
                         okHttpUtil.sendPostRequest(reply, url, returnableCallback);
                         keyboardEditInput.setText(null);
                     }
                     else
                     {
-                        // 임시로 작성하는 채널id를 5로 한다.
-                        NestedReplyDTO nestedReply = new NestedReplyDTO(currentReplyItem.getReplyDTO().getReplyId(), 5, comment, currentReplyItem.getReplyDTO().getAttachedId());
-                        url = "http://192.168.0.4:9090/Baetube_backEnd/api/nestedreply/insert";
+                        // 임시로 작성하는 채널 시퀀스를 0으로 한다.
+                        NestedReplyDTO nestedReply = new NestedReplyDTO(currentReplyItem.getReplyDTO().getReplyId(), comment, currentReplyItem.getReplyDTO().getAttachedId());
+                        url = getString(R.string.api_url_nested_reply_insert) + PreferenceManager.getChannelSequence(getApplicationContext());
                         returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NESTED_REPLY);
                         okHttpUtil.sendPostRequest(nestedReply, url, returnableCallback);
                         keyboardEditInput.setText(null);
@@ -862,35 +974,35 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             okHttpUtil = new OkHttpUtil();
         }
 
-        String playlistUrl = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/channel/4";
+        String playlistUrl = getString(R.string.api_url_storage_channel) + PreferenceManager.getChannelSequence(getApplicationContext());
 
         ReturnableCallback playlistCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_PLAYLIST);
 
         okHttpUtil.sendGetRequest(playlistUrl, playlistCallback);
     }
 
-    private void requestViewVideo(Integer userId, Integer videoId)
+    private void requestViewVideo(Integer videoId)
     {
         if (okHttpUtil == null)
         {
             okHttpUtil = new OkHttpUtil();
         }
 
-        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/video/view_video/" + userId + "/" + videoId;
+        String url = getString(R.string.api_url_video_view) + videoId;
 
         ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_VIEW_VIDEO);
 
         okHttpUtil.sendGetRequest(url, returnableCallback);
     }
 
-    private void requestSelectSubscribe(Integer channelId, Integer subscriberId)
+    private void requestSelectSubscribe(Integer channelId)
     {
         if(okHttpUtil == null)
         {
             okHttpUtil = new OkHttpUtil();
         }
 
-        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/subscribe/select/" + channelId + "/" + subscriberId;
+        String url = getString(R.string.api_url_subscribe_select) + channelId + "/" + PreferenceManager.getChannelSequence(getApplicationContext());
 
         ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_SUBSCRIBE);
 
@@ -904,7 +1016,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             okHttpUtil = new OkHttpUtil();
         }
 
-        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/contents/delete";
+        String url = getString(R.string.api_url_contents_delete);
         ContentsDTO contents = new ContentsDTO(managedVideoItem.getVideoDTO().getContentsId(), 0);
 
 
@@ -922,7 +1034,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             okHttpUtil = new OkHttpUtil();
         }
 
-        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/history/delete";
+        String url = getString(R.string.api_url_history_delete);
         // 임시로 유저id를 20으로 설정
         HistoryDTO history = new HistoryDTO(20, managedVideoItem.getVideoDTO().getVideoId());
 
@@ -941,7 +1053,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             okHttpUtil = new OkHttpUtil();
         }
 
-        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/user/regist";
+        String url = getString(R.string.api_url_user_regist);
 
         ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SIGN_IN);
 
@@ -954,9 +1066,23 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         {
             okHttpUtil = new OkHttpUtil();
         }
-        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/video/related/" + videoId;
+        String url = getString(R.string.api_url_video_related) + videoId;
         ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_RELATED_VIDEO);
         okHttpUtil.sendGetRequest(url, returnableCallback);
+    }
+
+    public void requestSaveFCMToken(String token)
+    {
+        // 만약 로그인이 되어있지 않다면
+        // 토큰 값을 저장해놓고 로그인이 완료되면 다시 재발급할 수 있도록 만들어야 한다.
+        if(okHttpUtil == null)
+        {
+            okHttpUtil = new OkHttpUtil();
+        }
+
+        String url = getString(R.string.api_url_fcm_save);
+        ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SAVE_FCM_TOKEN);
+        okHttpUtil.sendPostRequest(token, url, returnableCallback);
     }
 
     private void setBottomSheetVideoInfo(VideoDTO video, ChannelDTO channel)
@@ -969,6 +1095,27 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         replyCount.setText(String.valueOf(video.getReplyCount()));
         likeCount.setText(String.valueOf(video.getLike()));
         hateCount.setText(String.valueOf(video.getHate()));
+
+        Glide.with(this)
+                .asBitmap()
+                .load(this.getString(R.string.api_url_image_profile) + channel.getProfile() + ".jpg") // or URI/path
+                .error(ContextCompat.getDrawable(this, R.drawable.ic_baseline_account_circle_24))
+                .override(channelProfile.getWidth(), channelProfile.getHeight())
+                .centerCrop()
+                .apply(new RequestOptions().circleCrop())
+                .into(channelProfile);
+    }
+
+    public void requestChannelData()
+    {
+        if(okHttpUtil == null)
+        {
+            okHttpUtil = new OkHttpUtil();
+        }
+
+        String url = getString(R.string.api_url_channel_data) + PreferenceManager.getChannelSequence(getApplicationContext());
+        ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_CHANNEL_DATA);
+        okHttpUtil.sendGetRequest(url, returnableCallback);
     }
 
     private void resetView()
@@ -1120,7 +1267,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         // 주소(url)을 하드코딩이 아니라 xml로 따로 저장해야한다.
         MediaSource mediaSource = new HlsMediaSource.Factory(new DefaultHttpDataSource.Factory().setUserAgent(userAgent))
-                .createMediaSource(MediaItem.fromUri("http://192.168.0.4:9090/Baetube_backEnd/hls/" + url + "/" + resolution + "/" + url + ".m3u8"));
+                .createMediaSource(MediaItem.fromUri(getString(R.string.api_url_hls) + url + "/" + resolution + "/" + url + ".m3u8"));
         exoPlayer.setMediaSource(mediaSource);
 
         exoPlayer.setPlayWhenReady(true);
@@ -1144,7 +1291,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     public void requestAddPlaylist(List<PlaylistDTO> checkedList)
     {
-        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/item/insert/multi";
+        String url = getString(R.string.api_url_playlist_item_insert_multi);
         List<PlaylistItemDTO> playlistItemList = new ArrayList<>();
 
         for (PlaylistDTO item : checkedList)
@@ -1160,10 +1307,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         setManagedVideoItem(null);
     }
 
-    public void commitModifyVideoFragment()
+    public void commitModifyVideoFragment(Integer videoId)
     {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.activity_main_layout, new ModifyVideoFragment(onCallbackResponseListener));
+        fragmentTransaction.replace(R.id.activity_main_layout, new ModifyVideoFragment(onCallbackResponseListener, videoId));
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
@@ -1193,6 +1340,30 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 long currentPosition = exoPlayer.getCurrentPosition();
                 setMediaSource(playerUrl, resolutions[position]);
                 exoPlayer.seekTo(currentPosition);
+            }
+
+            @Override
+            public void onDeleteCommunity()
+            {
+
+            }
+
+            @Override
+            public void onModifyCommunity()
+            {
+
+            }
+
+            @Override
+            public void onDeleteNotification()
+            {
+
+            }
+
+            @Override
+            public void onSelectChannel(int position, int channelId)
+            {
+
             }
 
 
@@ -1285,37 +1456,143 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             }
 
             @Override
-            public void onLoginUserResponse(String object)
+            public void onExpiredAccessTokenResponse()
             {
-                // 로그인을 성공하면 accessToken, refreshToken을 반환하기 때문에 따로 핸들링
+                // 엑세스 토큰이 만료되었다면 리프레시 토큰을 사용하여 엑세스 토큰을 재발급 받아야 한다.
+                if(okHttpUtil == null)
+                {
+                    okHttpUtil = new OkHttpUtil();
+                }
+
+                String url = getString(R.string.api_url_generate_access);
+                TokenInfoDTO tokenInfo = new TokenInfoDTO();
+                tokenInfo.setGrantType("Bearer");
+                tokenInfo.setAccessToken(PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_ACCESSKEY));
+                tokenInfo.setRefreshToken(PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_REFRESHKEY));
+
+                ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_GENERATE_ACCESS_TOKEN);
+                okHttpUtil.sendPostRequest(tokenInfo, url, returnableCallback);
+            }
+
+            @Override
+            public void onExpiredRefreshTokenResponse()
+            {
+                // 리프레시 토큰마저 만료되었다면 로그인 화면을 출력하여 로그인 후 토큰을 재발급 받을 수 있도록 한다.
+                System.out.println("저장된 fcm 토큰 === : " + PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_FCM));
+
+                if(!isCallLogin)
+                {
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.activity_main_layout, new LoginFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_LOGIN);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    isCallLogin = true;
+                }
+
+            }
+
+            @Override
+            public void onGeneratedAccessTokenResponse(String object)
+            {
+                // 리프레시 토큰이 유효하여 정상적으로 엑세스 토큰이 발급되었다면 엑세스 토큰을 저장해야 한다.
+                System.out.println("엑세스 토큰이 정상 발급 되었습니다.");
+
                 // Gson의 JsonParser를 사용하여 String을 파싱.
                 JsonParser parser = new JsonParser();
                 JsonElement element = parser.parse(object);
 
-                // accessToken, refreshToken을 가져온다.
+                // 엑세스 토큰을 삭제 후 새로 발급받은 엑세스 토큰을 적용한다.
+                PreferenceManager.removeKey(getApplicationContext(), PreferenceManager.PREFERENCES_ACCESSKEY);
                 String accessToken = element.getAsJsonObject().get("accessToken").getAsString();
-                String refreshToken = element.getAsJsonObject().get("refreshToken").getAsString();
-
-                // PreferenceManager를 사용하여 accessToken과 refreshToken을 저장한다.
-                PreferenceManager.clear(getApplicationContext());
                 PreferenceManager.setString(getApplicationContext(), PreferenceManager.PREFERENCES_ACCESSKEY, accessToken);
-                PreferenceManager.setString(getApplicationContext(), PreferenceManager.PREFERENCES_REFRESHKEY, refreshToken);
+
+                System.out.println("엑세스 토큰 재발급 완료.");
+
+                // 엑세스 토큰 발급이 완료되면 동영상을 다시 요청해야 한다.
+                String url = getString(R.string.api_url_category_select);
+
+                ReturnableCallback categoryCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_CATEGORY);
+
+                okHttpUtil.sendGetRequest(url, categoryCallback);
+
+                // 지금은 테스트용으로 임의의 값을 넣는다.
+                url = getString(R.string.api_url_video_main);
+
+                ReturnableCallback mainVideoCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_MAIN_VIDEO);
+
+                okHttpUtil.sendGetRequest(url, mainVideoCallback);
+            }
+
+            @Override
+            public void onLoginUserResponse(String object)
+            {
+
+                try
+                {
+                    isCallLogin = false;
+                    // 로그인을 성공하면 accessToken, refreshToken을 반환하기 때문에 따로 핸들링
+                    // Gson의 JsonParser를 사용하여 String을 파싱.
+                    JsonParser parser = new JsonParser();
+                    JsonElement element = parser.parse(object);
+
+                    // accessToken, refreshToken을 가져온다.
+                    String accessToken = element.getAsJsonObject().get("accessToken").getAsString();
+                    String refreshToken = element.getAsJsonObject().get("refreshToken").getAsString();
+
+                    // PreferenceManager를 사용하여 accessToken과 refreshToken을 저장한다.
+                    //PreferenceManager.clear(getApplicationContext());
+                    PreferenceManager.removeKey(getApplicationContext(), PreferenceManager.PREFERENCES_ACCESSKEY);
+                    PreferenceManager.removeKey(getApplicationContext(), PreferenceManager.PREFERENCES_REFRESHKEY);
+                    PreferenceManager.setString(getApplicationContext(), PreferenceManager.PREFERENCES_ACCESSKEY, accessToken);
+                    PreferenceManager.setString(getApplicationContext(), PreferenceManager.PREFERENCES_REFRESHKEY, refreshToken);
+
+                    System.out.println("로그인이 성공적으로 완료되었습니다.");
+
+                    // 만약 FCM 토큰으로 등록되어 있는 것이 있다면
+                    // default value 가 아니므로 FCM 토큰으로 등록된 것이 있다는 의미가 된다.
+                    String fcmToken = PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_FCM);
+                    System.out.println("fcmToken : " + fcmToken);
+
+                    if(!fcmToken.equals(PreferenceManager.DEFAULT_VALUE_STRING))
+                    {
+                        // 서버에 토큰 저장을 요청하고 SharedPreferences 에서 값을 삭제한다.
+                        requestSaveFCMToken(fcmToken);
+                        PreferenceManager.removeKey(getApplicationContext(), PreferenceManager.PREFERENCES_FCM);
+                    }
+
+                    Fragment loginFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_LOGIN);
+
+                    if(loginFragment != null && loginFragment.isVisible())
+                    {
+                        fragmentManager.popBackStack();
+                    }
+
+                }
+                catch (JsonParseException e) // 파싱에 실패했다면 로그인이 실패했다는 것.
+                {
+                    Fragment loginFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_LOGIN);
+
+                    if(loginFragment != null && loginFragment.isVisible())
+                    {
+                        ((LoginFragment)loginFragment).printError();
+                    }
+                }
+
             }
 
             @Override
             public void onVisitChannelResponse(String object)
             {
                 // 채널을 방문하면 방문한 채널 정보를 출력해줘야 한다.
+                System.out.println("object 출력 : " + object);
 
                 // 받아온 json 배열을 List로 변환하여 핸들링한다.
                 ChannelDTO channel = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, ChannelDTO.class);
 
-
                 // 구독 프래그먼트를 태그를 통해 가져온다
                 Fragment channelBaseFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_BASE);
 
-
-                if (channelBaseFragment != null && channelBaseFragment.isVisible())
+                if (channelBaseFragment != null)
                 {
                     ViewPagerFragmentData viewPagerFragmentData = ((ChannelBaseFragment) channelBaseFragment).getCurrentFragmentData();
 
@@ -1337,7 +1614,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 //ChannelDTO channel = new GsonBuilder().create().fromJson(object, ChannelDTO.class);
 
                 // 받아온 json 배열을 List로 변환하여 핸들링한다.
-                ChannelDTO[] array = new GsonBuilder().create().fromJson(object, ChannelDTO[].class);
+                ChannelDTO[] array = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, ChannelDTO[].class);
                 List<ChannelDTO> channelList = Arrays.asList(array);
 
                 System.out.println("구독 정보 개수 : " + channelList.size());
@@ -1497,7 +1774,16 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             @Override
             public void onSelectSearchHistoryResponse(String object)
             {
+                // 받아온 json 배열을 List로 변환하여 핸들링한다.
+                SearchHistoryDTO array[] = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, SearchHistoryDTO[].class);
+                List<SearchHistoryDTO> searchList = Arrays.asList(array);
 
+                SearchFragment searchFragment = (SearchFragment) fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_SEARCH);
+
+                if(searchFragment != null)
+                {
+                    searchFragment.setSearchList(searchList);
+                }
             }
 
             @Override
@@ -1507,7 +1793,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                 // 받아온 json 배열을 List로 변환하여 핸들링한다.
                 JsonParser parser = new JsonParser();
-                JsonArray elementArray = parser.parse(object).getAsJsonArray();
+                JsonArray elementArray = parser.parse(object.trim()).getAsJsonArray();
                 ArrayList<VideoDTO> videoList = new ArrayList<>();
                 ArrayList<ChannelDTO> channelList = new ArrayList<>();
 
@@ -1577,7 +1863,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             public void onSelectHistoryVideoResponse(String object)
             {
                 // 시청한 영상의 목록을 불러온다.
-                System.out.println("HistoryVideo 요청수신.");
                 // 받아온 json 배열을 List로 변환하여 핸들링한다.
                 JsonParser parser = new JsonParser();
                 JsonArray elementArray = parser.parse(object).getAsJsonArray();
@@ -1618,12 +1903,20 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 }
 
                 // 구독 프래그먼트를 태그를 통해 가져온다
-                Fragment fragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_STORAGE);
+                Fragment storageFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_STORAGE);
 
                 // 가져온 프래그먼트가 null이 아니거나 visible이면 현재 프래그먼트가 홈 프래그먼트인 것.
-                if (fragment != null && fragment.isVisible())
+                if (storageFragment != null && storageFragment.isVisible())
                 {
-                    ((StorageFragment) fragment).setRecyclerViewVideoHistory(videoList, channelList);
+                    ((StorageFragment) storageFragment).setRecyclerViewVideoHistory(videoList, channelList);
+                    return;
+                }
+
+                Fragment historyDetailFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_HISTORY_DETAIL);
+
+                if(historyDetailFragment != null)
+                {
+                    ((HistoryDetailFragment) historyDetailFragment).setHistoryList(videoList, channelList);
                 }
             }
 
@@ -1648,6 +1941,16 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                     String title = element.getAsJsonObject().get("title").getAsString();
                     String info = element.getAsJsonObject().get("info").getAsString();
                     String location = element.getAsJsonObject().get("location").getAsString();
+
+                    /*
+                    Integer age = null;
+
+                    if(!element.getAsJsonObject().get("age").isJsonNull())
+                    {
+                        age = element.getAsJsonObject().get("age").getAsInt();
+                    }
+
+                     */
                     Integer age = element.getAsJsonObject().get("age").getAsInt();
                     Integer views = element.getAsJsonObject().get("views").getAsInt();
                     Integer like = element.getAsJsonObject().get("like").getAsInt();
@@ -1889,7 +2192,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 // 바텀시트비디오가 expanded 인 경우.
                 if (bottomSheetVideoBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
                 {
-                    // 로그인을 성공하면 accessToken, refreshToken을 반환하기 때문에 따로 핸들링
                     // Gson의 JsonParser를 사용하여 String을 파싱.
                     JsonParser parser = new JsonParser();
                     JsonElement element = parser.parse(object);
@@ -2006,6 +2308,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                     String name = element.getAsJsonObject().get("name").getAsString();
                     Integer subs = element.getAsJsonObject().get("subs").getAsInt();
 
+                    if(currentVideoItem.getVideoDTO().getVideoId() == videoId)
+                    {
+                        continue;
+                    }
+
                     VideoDTO video = new VideoDTO(videoId, contentsId, url, thumbnail, title, info, location, age, views, like, hate, replyCount,
                             TimestampUtil.StringToTimestamp(date), categoryId);
                     ChannelDTO channel = new ChannelDTO();
@@ -2020,6 +2327,487 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                 relatedVideoRecyclerView(videoList, channelList);
             }
+
+            @Override
+            public void onSaveFCMTokenResponse(boolean result)
+            {
+                // jwt 토큰이 유효하여 fcm 토큰이 성공적으로 갱신되었다면.
+                if(result)
+                {
+                    // 그냥 토큰을 삭제한다.
+                    PreferenceManager.removeKey(getApplicationContext(), PreferenceManager.PREFERENCES_FCM);
+                }
+                // 실패했다면 다음 로그인 까지 남겨두어야 하므로 다른 행동을 취하지 않는다.
+
+            }
+
+            @Override
+            public void onSelectChannelDataResponse(String object)
+            {
+                ChannelDTO channel = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, ChannelDTO.class);
+
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        Glide.with(getBaseContext())
+                                .asBitmap()
+                                .load(getBaseContext().getString(R.string.api_url_image_profile) + channel.getProfile() + ".jpg")
+                                .error(ContextCompat.getDrawable(getBaseContext(), R.drawable.ic_baseline_account_circle_24))
+                                .override(profile.getWidth(), profile.getHeight())
+                                .centerCrop()
+                                .apply(new RequestOptions().circleCrop())
+                                .into(profile);
+                    }
+                });
+
+                Fragment modifyChannelInformationFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_MODIFY_CHANNEL_INFORMATION);
+
+                if(modifyChannelInformationFragment != null)
+                {
+                    ((ModifyChannelInformationFragment)modifyChannelInformationFragment).setChannelData(channel);
+                    return;
+                }
+
+                Fragment channelBaseFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_CHANNEL_BASE);
+
+                if(channelBaseFragment != null)
+                {
+                    ((ChannelBaseFragment)channelBaseFragment).setMyChannel(channel);
+                    return;
+                }
+
+                Fragment homeFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_HOME);
+
+                if(homeFragment != null)
+                {
+                    ((HomeFragment)homeFragment).setChannelData(channel);
+                    return;
+                }
+
+
+            }
+
+            @Override
+            public void onUpdateChannelResponse(String object)
+            {
+                // Gson의 JsonParser를 사용하여 String을 파싱.
+                JsonParser parser = new JsonParser();
+                JsonElement element = parser.parse(object);
+
+                // arts, profile을 가져온다.
+                String arts = element.getAsJsonObject().get("arts").getAsString();
+                String profile = element.getAsJsonObject().get("profile").getAsString();
+
+                if(arts != null && !arts.isEmpty())
+                {
+                    FileUploadDTO fileUpload = new FileUploadDTO(new File(PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_ARTS)),
+                            FileUploadDTO.TYPE_IMAGE, FileUploadDTO.PURPOSE_ARTS, arts);
+
+                    PreferenceManager.removeKey(getApplicationContext(), PreferenceManager.PREFERENCES_ARTS);
+
+                    ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
+                    okHttpUtil.sendFileRequest(fileUpload, returnableCallback);
+                }
+
+                if(profile != null && !profile.isEmpty())
+                {
+                    FileUploadDTO fileUpload = new FileUploadDTO(new File(PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_PROFILE)),
+                            FileUploadDTO.TYPE_IMAGE, FileUploadDTO.PURPOSE_PROFILE, profile);
+
+                    PreferenceManager.removeKey(getApplicationContext(), PreferenceManager.PREFERENCES_PROFILE);
+
+                    ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
+                    okHttpUtil.sendFileRequest(fileUpload, returnableCallback);
+                }
+
+            }
+
+            @Override
+            public void onSelectCommunityDataResponse(String object)
+            {
+                CommunityDTO community = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, CommunityDTO.class);
+
+                Fragment modifyCommunityFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_MODIFY_COMMUNITY);
+
+                if(modifyCommunityFragment != null)
+                {
+                    ((ModifyCommunityFragment)modifyCommunityFragment).setCommunityData(community);
+                }
+            }
+
+            @Override
+            public void onUpdateCommunityResponse(String object)
+            {
+                // Gson의 JsonParser를 사용하여 String을 파싱.
+                JsonParser parser = new JsonParser();
+                JsonElement element = parser.parse(object);
+
+                // imageUrl을 가져온다.
+                String imageUrl = element.getAsJsonObject().get("imageUrl").getAsString();
+
+                if(imageUrl != null && !imageUrl.isEmpty())
+                {
+                    FileUploadDTO fileUpload = new FileUploadDTO(new File(PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_COMMUNITY)),
+                            FileUploadDTO.TYPE_IMAGE, FileUploadDTO.PURPOSE_COMMUNITY, imageUrl);
+
+                    PreferenceManager.removeKey(getApplicationContext(), PreferenceManager.PREFERENCES_COMMUNITY);
+
+                    ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
+                    okHttpUtil.sendFileRequest(fileUpload, returnableCallback);
+                }
+
+            }
+
+            @Override
+            public void onSelectVideoDataResponse(String object)
+            {
+                VideoDTO video = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, VideoDTO.class);
+
+                Fragment modifyVideoFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_MODIFY_VIDEO);
+
+                if(modifyVideoFragment != null)
+                {
+                    ((ModifyVideoFragment)modifyVideoFragment).setVideoData(video);
+                }
+            }
+
+            @Override
+            public void onUpdateVideoResponse(String object)
+            {
+                // Gson의 JsonParser를 사용하여 String을 파싱.
+                JsonParser parser = new JsonParser();
+                JsonElement element = parser.parse(object);
+
+                // thumbnail을 가져온다.
+                String thumbnail = element.getAsJsonObject().get("thumbnail").getAsString();
+
+                if(thumbnail != null && !thumbnail.isEmpty())
+                {
+                    FileUploadDTO fileUpload = new FileUploadDTO(new File(PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_THUMBNAIL)),
+                            FileUploadDTO.TYPE_IMAGE, FileUploadDTO.PURPOSE_THUMBNAIL, thumbnail);
+
+                    PreferenceManager.removeKey(getApplicationContext(), PreferenceManager.PREFERENCES_THUMBNAIL);
+
+                    ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
+                    okHttpUtil.sendFileRequest(fileUpload, returnableCallback);
+                }
+            }
+
+            @Override
+            public void onSelectPlaylistDataResponse(String object)
+            {
+                PlaylistDTO playlist = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, PlaylistDTO.class);
+
+                Fragment modifyPlaylistFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_MODIFY_PLAYLIST);
+
+                if(modifyPlaylistFragment != null)
+                {
+                    ((ModifyPlaylistFragment)modifyPlaylistFragment).setPlaylistData(playlist);
+                }
+            }
+
+            @Override
+            public void onUpdatePlaylistResponse(String object)
+            {
+                // Gson의 JsonParser를 사용하여 String을 파싱.
+                JsonParser parser = new JsonParser();
+                JsonElement element = parser.parse(object);
+
+                // thumbnail을 가져온다.
+                String thumbnail = element.getAsJsonObject().get("thumbnail").getAsString();
+
+                if(thumbnail != null && !thumbnail.isEmpty())
+                {
+                    FileUploadDTO fileUpload = new FileUploadDTO(new File(PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_THUMBNAIL)),
+                            FileUploadDTO.TYPE_IMAGE, FileUploadDTO.PURPOSE_THUMBNAIL, thumbnail);
+
+                    PreferenceManager.removeKey(getApplicationContext(), PreferenceManager.PREFERENCES_THUMBNAIL);
+
+                    ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
+                    okHttpUtil.sendFileRequest(fileUpload, returnableCallback);
+                }
+            }
+
+            @Override
+            public void onSelectCategoryResponse(String object)
+            {
+                // 받아온 json 배열을 List로 변환하여 핸들링한다.
+                CategoryDTO[] array = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, CategoryDTO[].class);
+                List<CategoryDTO> categoryList = Arrays.asList(array);
+
+                HomeFragment homeFragment = (HomeFragment) fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_HOME);
+
+                if(homeFragment != null)
+                {
+                    homeFragment.setRecyclerViewCategory(categoryList);
+                }
+            }
+
+            @Override
+            public void onSelectSubscribersCommunityResponse(String object)
+            {
+                // 구독한 채널의 게시글 목록을 반환
+
+                // 받아온 json 배열을 List로 변환하여 핸들링한다.
+                CommunityDTO[] array = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, CommunityDTO[].class);
+                //builder.registerTypeAdapter(Date.class, new GsonDateFormatAdapter());
+                List<CommunityDTO> communityList = Arrays.asList(array);
+
+                Fragment subscribeFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_SUBSCRIBE);
+
+                // 가져온 프래그먼트가 null이 아니거나 visible이면 현재 프래그먼트가 채널 홈 프래그먼트인 것.
+                if (subscribeFragment != null && subscribeFragment.isVisible())
+                {
+                    ((SubscribeFragment)subscribeFragment).setRecyclerViewCommunity(communityList);
+                }
+            }
+
+            @Override
+            public void onSelectVideoNotificationResponse(String object)
+            {
+                NotificationFragment notificationFragment = (NotificationFragment) fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_NOTIFICATION);
+
+                // 비어있다면 따로 처리를 해준다.
+                if(object == null || object.isEmpty())
+                {
+                    if(notificationFragment != null)
+                    {
+                        notificationFragment.setListVideo(null);
+                    }
+
+                    return;
+                }
+
+                // 받아온 json 배열을 List로 변환하여 핸들링한다.
+                JsonParser parser = new JsonParser();
+                JsonArray elementArray = parser.parse(object).getAsJsonArray();
+                ArrayList<RecyclerViewNotificationItem> notificationList = new ArrayList<>();
+
+                boolean isDateDivide[] = new boolean[3];
+
+                for (int i = 0; i < elementArray.size(); i++)
+                {
+                    JsonElement element = elementArray.get(i);
+                    String date = element.getAsJsonObject().get("date").getAsString();
+
+                    if(DateToStringUtil.subtractFromNow(TimestampUtil.StringToTimestamp(date)) < DateToStringUtil.day && !isDateDivide[0])
+                    {
+                        notificationList.add(new RecyclerViewNotificationItem(ViewType.NOTIFICATION_DIVIDER, getString(R.string.notification_date_today)));
+                        isDateDivide[0] = true;
+                    }
+                    else if(DateToStringUtil.subtractFromNow(TimestampUtil.StringToTimestamp(date)) < DateToStringUtil.day * 7 && !isDateDivide[1])
+                    {
+                        notificationList.add(new RecyclerViewNotificationItem(ViewType.NOTIFICATION_DIVIDER, getString(R.string.notification_date_week)));
+                        isDateDivide[1] = true;
+                    }
+                    else if(DateToStringUtil.subtractFromNow(TimestampUtil.StringToTimestamp(date)) >= DateToStringUtil.day * 7 && !isDateDivide[2])
+                    {
+                        notificationList.add(new RecyclerViewNotificationItem(ViewType.NOTIFICATION_DIVIDER, getString(R.string.notification_date_other)));
+                        isDateDivide[2] = true;
+                    }
+
+                    Long contentsId = element.getAsJsonObject().get("contentsId").getAsLong();
+                    String videoDate = element.getAsJsonObject().get("videoDate").getAsString();
+                    Integer userId = element.getAsJsonObject().get("userId").getAsInt();
+                    Integer checked = element.getAsJsonObject().get("checked").getAsInt();
+                    Integer type = element.getAsJsonObject().get("type").getAsInt();
+                    Integer videoId = element.getAsJsonObject().get("videoId").getAsInt();
+                    Integer channelId = element.getAsJsonObject().get("channelId").getAsInt();
+                    String thumbnail = element.getAsJsonObject().get("thumbnail").getAsString();
+                    String title = element.getAsJsonObject().get("title").getAsString();
+                    String url = element.getAsJsonObject().get("url").getAsString();
+                    String profile = element.getAsJsonObject().get("profile").getAsString();
+                    String name = element.getAsJsonObject().get("name").getAsString();
+
+                    NotificationDTO notification = new NotificationDTO(userId, contentsId, TimestampUtil.StringToTimestamp(date), checked);
+                    VideoDTO video = new VideoDTO();
+                    video.setVideoId(videoId);
+                    video.setContentsId(contentsId);
+                    video.setTitle(title);
+                    video.setUrl(url);
+                    video.setThumbnail(thumbnail);
+                    video.setDate(TimestampUtil.StringToTimestamp(videoDate));
+                    ChannelDTO channel = new ChannelDTO();
+                    channel.setChannelId(channelId);
+                    channel.setProfile(profile);
+                    channel.setName(name);
+
+                    notificationList.add(new RecyclerViewNotificationItem(notification, channel, video, ViewType.NOTIFICATION_VIDEO));
+                }
+
+                if(notificationFragment != null)
+                {
+                    notificationFragment.setListVideo(notificationList);
+                }
+
+            }
+
+            @Override
+            public void onSelectCommunityNotificationResponse(String object)
+            {
+
+                NotificationFragment notificationFragment = (NotificationFragment) fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_NOTIFICATION);
+
+                // 비어있다면 따로 처리를 해준다.
+                if(object == null || object.isEmpty())
+                {
+                    if(notificationFragment != null)
+                    {
+                        notificationFragment.setListCommunity(null);
+                    }
+
+                    return;
+                }
+
+                // 받아온 json 배열을 List로 변환하여 핸들링한다.
+                JsonParser parser = new JsonParser();
+                JsonArray elementArray = parser.parse(object).getAsJsonArray();
+                ArrayList<RecyclerViewNotificationItem> notificationList = new ArrayList<>();
+
+                boolean isDateDivide[] = new boolean[3];
+
+                for (int i = 0; i < elementArray.size(); i++)
+                {
+                    JsonElement element = elementArray.get(i);
+
+                    String date = element.getAsJsonObject().get("date").getAsString();
+
+                    if(DateToStringUtil.subtractFromNow(TimestampUtil.StringToTimestamp(date)) < DateToStringUtil.day && !isDateDivide[0])
+                    {
+                        notificationList.add(new RecyclerViewNotificationItem(ViewType.NOTIFICATION_DIVIDER, getString(R.string.notification_date_today)));
+                        isDateDivide[0] = true;
+                    }
+                    else if(DateToStringUtil.subtractFromNow(TimestampUtil.StringToTimestamp(date)) < DateToStringUtil.day * 7 && !isDateDivide[1])
+                    {
+                        notificationList.add(new RecyclerViewNotificationItem(ViewType.NOTIFICATION_DIVIDER, getString(R.string.notification_date_week)));
+                        isDateDivide[1] = true;
+                    }
+                    else if(DateToStringUtil.subtractFromNow(TimestampUtil.StringToTimestamp(date)) >= DateToStringUtil.day * 7 && !isDateDivide[2])
+                    {
+                        notificationList.add(new RecyclerViewNotificationItem(ViewType.NOTIFICATION_DIVIDER, getString(R.string.notification_date_other)));
+                        isDateDivide[2] = true;
+                    }
+
+                    Long contentsId = element.getAsJsonObject().get("contentsId").getAsLong();
+                    Integer userId = element.getAsJsonObject().get("userId").getAsInt();
+                    Integer checked = element.getAsJsonObject().get("checked").getAsInt();
+                    Integer type = element.getAsJsonObject().get("type").getAsInt();
+                    Integer communityId = element.getAsJsonObject().get("communityId").getAsInt();
+                    Integer channelId = element.getAsJsonObject().get("channelId").getAsInt();
+                    String imageUrl = element.getAsJsonObject().get("imageUrl").getAsString();
+                    String comment = element.getAsJsonObject().get("comment").getAsString();
+                    String profile = element.getAsJsonObject().get("profile").getAsString();
+                    String name = element.getAsJsonObject().get("name").getAsString();
+
+                    NotificationDTO notification = new NotificationDTO(userId, contentsId, TimestampUtil.StringToTimestamp(date), checked);
+                    CommunityDTO community = new CommunityDTO();
+                    community.setChannelId(channelId);
+                    community.setCommunityId(communityId);
+                    community.setImageUrl(imageUrl);
+                    community.setComment(comment);
+                    ChannelDTO channel = new ChannelDTO();
+                    channel.setChannelId(channelId);
+                    channel.setProfile(profile);
+                    channel.setName(name);
+
+                    notificationList.add(new RecyclerViewNotificationItem(notification, channel, community, ViewType.NOTIFICATION_COMMUNITY));
+                }
+
+                if(notificationFragment != null)
+                {
+                    notificationFragment.setListCommunity(notificationList);
+                }
+            }
+
+            @Override
+            public void onSelectSearchVideoResponse(String object)
+            {
+                // 받아온 json 배열을 List로 변환하여 핸들링한다.
+                JsonParser parser = new JsonParser();
+                JsonArray elementArray = parser.parse(object).getAsJsonArray();
+                ArrayList<VideoDTO> videoList = new ArrayList<>();
+                ArrayList<ChannelDTO> channelList = new ArrayList<>();
+
+                for (int i = 0; i < elementArray.size(); i++)
+                {
+                    JsonElement element = elementArray.get(i);
+
+                    Integer videoId = element.getAsJsonObject().get("videoId").getAsInt();
+                    Long contentsId = element.getAsJsonObject().get("contentsId").getAsLong();
+                    Integer channelId = element.getAsJsonObject().get("channelId").getAsInt();
+                    String url = element.getAsJsonObject().get("url").getAsString();
+                    String thumbnail = element.getAsJsonObject().get("thumbnail").getAsString();
+                    String title = element.getAsJsonObject().get("title").getAsString();
+                    String info = element.getAsJsonObject().get("info").getAsString();
+                    String location = element.getAsJsonObject().get("location").getAsString();
+
+                    Integer age = element.getAsJsonObject().get("age").getAsInt();
+                    Integer views = element.getAsJsonObject().get("views").getAsInt();
+                    Integer like = element.getAsJsonObject().get("like").getAsInt();
+                    Integer hate = element.getAsJsonObject().get("hate").getAsInt();
+                    Integer replyCount = element.getAsJsonObject().get("replyCount").getAsInt();
+                    String date = element.getAsJsonObject().get("date").getAsString();
+                    Integer categoryId = element.getAsJsonObject().get("categoryId").getAsInt();
+                    String profile = element.getAsJsonObject().get("profile").getAsString();
+                    String name = element.getAsJsonObject().get("name").getAsString();
+                    Integer subs = element.getAsJsonObject().get("subs").getAsInt();
+
+                    VideoDTO video = new VideoDTO(videoId, contentsId, url, thumbnail, title, info, location, age, views, like, hate, replyCount,
+                            TimestampUtil.StringToTimestamp(date), categoryId);
+                    ChannelDTO channel = new ChannelDTO();
+                    channel.setChannelId(channelId);
+                    channel.setProfile(profile);
+                    channel.setName(name);
+                    channel.setSubs(subs);
+
+                    videoList.add(video);
+                    channelList.add(channel);
+                }
+
+                // 검색 결과 프래그먼트를 태그를 통해 가져온다
+                Fragment fragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_SEARCH_RESULT);
+
+                // 가져온 프래그먼트가 null이 아니거나 visible이면 현재 프래그먼트가 홈 프래그먼트인 것.
+                if (fragment != null)
+                {
+                    ((SearchResultFragment) fragment).setRecyclerViewVideo(videoList, channelList);
+                }
+            }
+
+            @Override
+            public void onSelectSearchChannelResponse(String object)
+            {
+                // 받아온 json 배열을 List로 변환하여 핸들링한다.
+                ChannelDTO array[] = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, ChannelDTO[].class);
+                List<ChannelDTO> channelList = Arrays.asList(array);
+
+                // 검색 결과 프래그먼트를 태그를 통해 가져온다
+                Fragment fragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_SEARCH_RESULT);
+
+                // 가져온 프래그먼트가 null이 아니거나 visible이면 현재 프래그먼트가 홈 프래그먼트인 것.
+                if (fragment != null)
+                {
+                    ((SearchResultFragment) fragment).setRecyclerViewChannel(channelList);
+                }
+            }
+
+            @Override
+            public void onSelectChannelDataAllResponse(String object)
+            {
+                // 받아온 json 배열을 List로 변환하여 핸들링한다.
+                ChannelDTO[] array = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, ChannelDTO[].class);
+                List<ChannelDTO> channelList = Arrays.asList(array);
+
+                HomeFragment homeFragment = (HomeFragment) fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_HOME);
+
+                if(homeFragment != null)
+                {
+                    homeFragment.showChannelSelectDialog(channelList);
+                }
+            }
+
         };
     }
 
@@ -2071,6 +2859,32 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                 break;
         }
+    }
+
+    private String getRealPathFromURI(Uri contentUri)
+    {
+        if (contentUri.getPath().startsWith("/storage"))
+        {
+            return contentUri.getPath();
+        }
+
+        String id = DocumentsContract.getDocumentId(contentUri).split(":")[1];
+        String[] columns = { MediaStore.Files.FileColumns.DATA };
+        String selection = MediaStore.Files.FileColumns._ID + " = " + id;
+        Cursor cursor = getContentResolver().query(MediaStore.Files.getContentUri("external"), columns, selection, null, null);
+        try
+        {
+            int columnIndex = cursor.getColumnIndex(columns[0]);
+            if (cursor.moveToFirst())
+            {
+                return cursor.getString(columnIndex);
+            }
+        }
+        finally
+        {
+            cursor.close();
+        }
+        return null;
     }
 
     public void setBottomNavigationViewVisible(int visibility)

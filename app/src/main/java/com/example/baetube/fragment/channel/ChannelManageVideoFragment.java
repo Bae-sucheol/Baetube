@@ -8,8 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -30,6 +28,8 @@ import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,10 +43,12 @@ public class ChannelManageVideoFragment extends Fragment implements OnRecyclerVi
 
     private OnCallbackResponseListener onCallbackResponseListener;
     private OkHttpUtil okHttpUtil;
+    private Integer channelId;
 
-    public ChannelManageVideoFragment(OnCallbackResponseListener onCallbackResponseListener)
+    public ChannelManageVideoFragment(OnCallbackResponseListener onCallbackResponseListener, Integer channelId)
     {
         this.onCallbackResponseListener = onCallbackResponseListener;
+        this.channelId = channelId;
     }
 
     @Override
@@ -87,14 +89,14 @@ public class ChannelManageVideoFragment extends Fragment implements OnRecyclerVi
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+    public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_sub, menu);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    public void onViewCreated( View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
 
@@ -104,7 +106,7 @@ public class ChannelManageVideoFragment extends Fragment implements OnRecyclerVi
 
         // 채널 동영상 정보를 가져온다.
 
-        String videoUrl = "http://192.168.0.4:9090/Baetube_backEnd/api/video/channel_video/4";
+        String videoUrl = "http://192.168.0.4:9090/Baetube_backEnd/api/video/channel_video/" + channelId;
 
         ReturnableCallback videoCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_CHANNEL_VIDEO);
 
@@ -112,7 +114,7 @@ public class ChannelManageVideoFragment extends Fragment implements OnRecyclerVi
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    public boolean onOptionsItemSelected( MenuItem item)
     {
         switch (item.getItemId())
         {

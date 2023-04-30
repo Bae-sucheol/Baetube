@@ -12,9 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.example.baetube.R;
 import com.example.baetube.UserDisplay;
 import com.example.baetube.activity.MainActivity;
@@ -22,6 +19,8 @@ import com.example.baetube.dto.PlaylistDTO;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +88,7 @@ public class AddPlaylistFragment extends BottomSheetDialogFragment implements Vi
         return view;
     }
 
-    @NonNull
+
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
     {

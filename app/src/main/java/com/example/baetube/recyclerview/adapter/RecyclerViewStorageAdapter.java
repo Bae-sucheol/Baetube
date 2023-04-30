@@ -5,9 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.dto.PlaylistDTO;
@@ -29,9 +30,9 @@ public class RecyclerViewStorageAdapter extends RecyclerView.Adapter<StorageView
         this.list = list;
     }
 
-    @NonNull
+
     @Override
-    public StorageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public StorageViewHolder onCreateViewHolder( ViewGroup parent, int viewType)
     {
         if(context == null)
         {
@@ -48,12 +49,11 @@ public class RecyclerViewStorageAdapter extends RecyclerView.Adapter<StorageView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StorageViewHolder holder, int position)
+    public void onBindViewHolder( StorageViewHolder holder, int position)
     {
         if(position == 0)
         {
-            // 일단 하드코딩 추후 변경
-            holder.name.setText("새 재생목록");
+            holder.name.setText(context.getString(R.string.add_new_playlist_text));
             holder.count.setVisibility(View.GONE);
             holder.thumbnail.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_add_24));
 
@@ -64,7 +64,14 @@ public class RecyclerViewStorageAdapter extends RecyclerView.Adapter<StorageView
 
         PlaylistDTO playlistDTO = item.getPlaylistDTO();
 
-        //holder.thumbnail.setImageDrawable();
+        Glide.with(context)
+                .asBitmap()
+                .load(context.getString(R.string.api_url_image_thumbnail) + item.getPlaylistDTO().getThumbnail() + ".jpg") // or URI/path
+                .error(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_circle_24))
+                .override(holder.thumbnail.getWidth(), holder.thumbnail.getHeight())
+                .centerCrop()
+                .into(holder.thumbnail);
+
         holder.name.setText(playlistDTO.getName());
         holder.count.setText(String.valueOf(playlistDTO.getVideoCount()));
     }
@@ -76,7 +83,7 @@ public class RecyclerViewStorageAdapter extends RecyclerView.Adapter<StorageView
     }
 
     @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    public void onDetachedFromRecyclerView( RecyclerView recyclerView)
     {
         super.onDetachedFromRecyclerView(recyclerView);
         context = null;

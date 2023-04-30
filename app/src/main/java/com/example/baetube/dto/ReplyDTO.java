@@ -39,6 +39,12 @@ public class ReplyDTO
         this.profile = profile;
     }
 
+    public ReplyDTO(Long attachedId, String comment)
+    {
+        this.attachedId = attachedId;
+        this.comment = comment;
+    }
+
     public ReplyDTO(Long attachedId, Integer channelId, String comment, Timestamp date)
     {
         super();

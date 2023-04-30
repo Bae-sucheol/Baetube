@@ -39,6 +39,24 @@ public class OkHttpSubscribeTest
             }
 
             @Override
+            public void onExpiredAccessTokenResponse()
+            {
+
+            }
+
+            @Override
+            public void onExpiredRefreshTokenResponse()
+            {
+
+            }
+
+            @Override
+            public void onGeneratedAccessTokenResponse(String object)
+            {
+
+            }
+
+            @Override
             public void onLoginUserResponse(String object)
             {
             }
@@ -173,6 +191,24 @@ public class OkHttpSubscribeTest
             {
 
             }
+
+            @Override
+            public void onSignInResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectRelatedVideoResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSaveFCMTokenResponse(boolean result)
+            {
+
+            }
         };
     }
 
@@ -199,7 +235,7 @@ public class OkHttpSubscribeTest
     public void TestB() throws Exception
     {
         SubscribersDTO subscribers = new SubscribersDTO(4, 5);
-        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/subscribe/unsubscribe";
+        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/subscribe/unsubscribe/0";
 
         countDownLatch = new CountDownLatch(1);
 

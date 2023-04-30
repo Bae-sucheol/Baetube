@@ -11,149 +11,42 @@
         android:id="@+id/fragment_search_result_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:background="@color/white">
 
         <include
             layout="@layout/toolbar"
             android:id="@+id/toolbar" />
 
-        <HorizontalScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_search_result_recyclerview_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-            <LinearLayout
-                android:id="@+id/fragment_search_result_category_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/white"
-                style="@style/top_menu_style">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textview_fragment_search_result_category"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/top_menu_text_style"
-                        android:text="@string/home_category"
-                        android:background="@drawable/textview_rounded_rectangle"/>
-
-                    <LinearLayout
-                        android:layout_width="2dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:background="@color/top_menu_border"
-                        style="@style/top_menu_text_style"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/top_menu_text_style"
-                        android:text="test"
-                        android:background="@drawable/textview_rounded_rectangle_more"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/top_menu_text_style"
-                        android:text="test"
-                        android:background="@drawable/textview_rounded_rectangle_more"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/top_menu_text_style"
-                        android:text="test"
-                        android:background="@drawable/textview_rounded_rectangle_more"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/top_menu_text_style"
-                        android:text="test"
-                        android:background="@drawable/textview_rounded_rectangle_more"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/top_menu_text_style"
-                        android:text="test"
-                        android:background="@drawable/textview_rounded_rectangle_more"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/top_menu_text_style"
-                        android:text="test"
-                        android:background="@drawable/textview_rounded_rectangle_more"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/top_menu_text_style"
-                        android:text="test"
-                        android:background="@drawable/textview_rounded_rectangle_more"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/top_menu_text_style"
-                        android:text="test"
-                        android:background="@drawable/textview_rounded_rectangle_more"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/top_menu_text_style"
-                        android:text="test"
-                        android:background="@drawable/textview_rounded_rectangle_more"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/top_menu_text_style"
-                        android:text="test"
-                        android:background="@drawable/textview_rounded_rectangle_more"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/top_menu_text_style"
-                        android:text="test"
-                        android:background="@drawable/textview_rounded_rectangle_more"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/top_menu_text_style"
-                        android:text="test"
-                        android:background="@drawable/textview_rounded_rectangle_more"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </HorizontalScrollView>
+            android:layout_marginVertical="@dimen/margin_xsmall"
+            android:layout_marginHorizontal="@dimen/margin_small"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_search_result_recyclerview"
+        android:id="@+id/fragment_search_result_recyclerview_video"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginBottom="?attr/actionBarSize"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scroll_behavior" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_search_result_recyclerview_channel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_marginBottom="?attr/actionBarSize"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scroll_behavior" />
 

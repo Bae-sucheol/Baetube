@@ -1,5 +1,6 @@
 package com.example.baetube.fragment.channel;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -8,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -16,9 +16,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.baetube.Callback.ReturnableCallback;
 import com.example.baetube.ChannelPagerAdapter;
 import com.example.baetube.ChannelTabStrategy;
+import com.example.baetube.FragmentTagUtil;
+import com.example.baetube.OkHttpUtil;
 import com.example.baetube.OnCallbackResponseListener;
+import com.example.baetube.PreferenceManager;
 import com.example.baetube.R;
 import com.example.baetube.ViewPagerCallback;
 import com.example.baetube.bottomsheetdialog.ChannelReportFragment;
@@ -44,11 +48,15 @@ public class ChannelBaseFragment extends Fragment
     private ViewPagerCallback onPageChangeCallback;
 
     private ChannelDTO channel;
+    private ChannelDTO myChannel;
 
-    public ChannelBaseFragment(OnCallbackResponseListener onCallbackResponseListener)
+    private OkHttpUtil okHttpUtil;
+
+    public ChannelBaseFragment(Context context, OnCallbackResponseListener onCallbackResponseListener, Integer channelId)
     {
         this.onCallbackResponseListener = onCallbackResponseListener;
-        onPageChangeCallback = new ViewPagerCallback(onCallbackResponseListener);
+        onPageChangeCallback = new ViewPagerCallback(context, onCallbackResponseListener, channelId);
+        System.out.println("채널 id : " + channelId);
     }
 
     @Override
@@ -92,8 +100,22 @@ public class ChannelBaseFragment extends Fragment
         viewPager.registerOnPageChangeCallback(onPageChangeCallback);
         viewPager.setOffscreenPageLimit(5);
 
+        requestMyChannelData();
+
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void requestMyChannelData()
+    {
+        if(okHttpUtil == null)
+        {
+            okHttpUtil = new OkHttpUtil();
+        }
+
+        String url = getString(R.string.api_url_channel_data) + PreferenceManager.getChannelSequence(getContext().getApplicationContext());
+        ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_CHANNEL_DATA);
+        okHttpUtil.sendGetRequest(url, returnableCallback);
     }
 
     public ViewPagerFragmentData getCurrentFragmentData()
@@ -102,14 +124,14 @@ public class ChannelBaseFragment extends Fragment
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+    public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_sub, menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    public boolean onOptionsItemSelected( MenuItem item)
     {
         switch (item.getItemId())
         {
@@ -122,7 +144,7 @@ public class ChannelBaseFragment extends Fragment
 
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.activity_main_layout, new SearchFragment());
+                fragmentTransaction.replace(R.id.activity_main_layout, new SearchFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_SEARCH);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
@@ -159,5 +181,15 @@ public class ChannelBaseFragment extends Fragment
     public ChannelDTO getChannel()
     {
         return channel;
+    }
+
+    public void setMyChannel(ChannelDTO channel)
+    {
+        this.myChannel = channel;
+    }
+
+    public ChannelDTO getMyChannel()
+    {
+        return myChannel;
     }
 }

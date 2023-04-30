@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,9 +35,9 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
 
     private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
-    @NonNull
+
     @Override
-    public VideoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public VideoViewHolder onCreateViewHolder( ViewGroup parent, int viewType)
     {
         if(context == null)
         {
@@ -85,7 +84,7 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VideoViewHolder holder, int position)
+    public void onBindViewHolder( VideoViewHolder holder, int position)
     {
         RecyclerViewVideoItem item = list.get(position);
 
@@ -100,14 +99,14 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
 
                 Glide.with(context)
                         .asBitmap()
-                        .load("http://192.168.0.4:9090/Baetube_backEnd/api/image/thumbnail/" + item.getVideoDTO().getThumbnail() + ".jpg") // or URI/path
+                        .load(context.getString(R.string.api_url_image_thumbnail) + item.getVideoDTO().getThumbnail() + ".jpg") // or URI/path
                         .error(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_circle_24))
                         .override(holder.thumbnail.getWidth(), holder.thumbnail.getHeight())
                         .centerCrop()
                         .into(holder.thumbnail);
                 Glide.with(context)
                         .asBitmap()
-                        .load("http://192.168.0.4:9090/Baetube_backEnd/api/image/profile/" + item.getChannelDTO().getProfile() + ".jpg")
+                        .load(context.getString(R.string.api_url_image_profile) + item.getChannelDTO().getProfile() + ".jpg")
                         .error(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_circle_24))
                         .override(holder.profile.getWidth(), holder.profile.getHeight())
                         .centerCrop()
@@ -131,7 +130,7 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
 
                 Glide.with(context)
                         .asBitmap()
-                        .load("http://192.168.0.4:9090/Baetube_backEnd/api/image/thumbnail/" + item.getVideoDTO().getThumbnail() + ".jpg") // or URI/path
+                        .load(context.getString(R.string.api_url_image_thumbnail) + item.getVideoDTO().getThumbnail() + ".jpg") // or URI/path
                         .error(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_circle_24))
                         .override(holder.thumbnail.getWidth(), holder.thumbnail.getHeight())
                         .centerCrop()
@@ -203,7 +202,7 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<VideoViewHold
     }
 
     @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    public void onDetachedFromRecyclerView( RecyclerView recyclerView)
     {
         super.onDetachedFromRecyclerView(recyclerView);
         context = null;

@@ -1,5 +1,7 @@
 package com.example.baetube;
 
+import android.content.Context;
+
 import com.example.baetube.dto.FileUploadDTO;
 import com.google.gson.GsonBuilder;
 
@@ -20,6 +22,13 @@ public class OkHttpUtil
             .writeTimeout(600, TimeUnit.SECONDS)
             .build();
 
+    private static Context applicationContext;
+
+    public static void setApplicationContext(Context context)
+    {
+        applicationContext = context;
+    }
+
     private String createContent(Object object)
     {
         String content = new GsonBuilder()
@@ -34,6 +43,7 @@ public class OkHttpUtil
     {
         Request request = new Request.Builder()
                 .url(url)
+                .addHeader("Authorization", "Bearer " + PreferenceManager.getString(applicationContext, PreferenceManager.PREFERENCES_ACCESSKEY))
                 .post(RequestBody.create(MediaType.parse("application/json"), content))
                 .build();
 
@@ -44,6 +54,7 @@ public class OkHttpUtil
     {
         Request request = new Request.Builder()
                 .url(url)
+                .addHeader("Authorization", "Bearer " + PreferenceManager.getString(applicationContext, PreferenceManager.PREFERENCES_ACCESSKEY))
                 .get()
                 .build();
 
@@ -55,6 +66,8 @@ public class OkHttpUtil
         String content = createContent(object);
         Request request = createPostRequest(url, content);
 
+        System.out.println(content);
+
         okHttpClient.newCall(request).enqueue(callback);
     }
 
@@ -62,10 +75,12 @@ public class OkHttpUtil
     {
         Request request = createGetRequest(url);
 
+        System.out.println("header : " + request.header("Authorization"));
+
         okHttpClient.newCall(request).enqueue(callback);
     }
 
-    public static void sendFileRequest(FileUploadDTO fileUploadDTO, Callback callback)
+    public void sendFileRequest(FileUploadDTO fileUploadDTO, Callback callback)
     {
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -77,7 +92,8 @@ public class OkHttpUtil
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://192.168.0.4:9090/Baetube_backEnd/api/file/upload")
+                .url(applicationContext.getString(R.string.api_url_file_upload))
+                .addHeader("Authorization", "Bearer " + PreferenceManager.getString(applicationContext, PreferenceManager.PREFERENCES_ACCESSKEY))
                 .post(requestBody)
                 .build();
 

@@ -23,7 +23,7 @@ tools:context=".fragment.modify.ModifyChannelInformationFragment">
     </com.google.android.material.appbar.AppBarLayout>
 
     <ImageView
-        android:id="@+id/fragment_modify_channel_information_image_thumbnail"
+        android:id="@+id/fragment_modify_channel_information_image_arts"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="443dp"
@@ -35,14 +35,14 @@ tools:context=".fragment.modify.ModifyChannelInformationFragment">
         app:layout_constraintWidth_percent="1.0" />
 
     <ImageView
-        android:id="@+id/fragment_modify_channel_information_button_change_thumbnail"
+        android:id="@+id/fragment_modify_channel_information_button_change_arts"
         android:layout_width="@dimen/size_icon_medium"
         android:layout_height="@dimen/size_icon_medium"
         android:layout_marginBottom="6dp"
         android:background="@drawable/ic_baseline_autorenew_24"
         android:layout_margin="@dimen/margin_medium"
         app:layout_constraintStart_toStartOf="@+id/fragment_modify_channel_information_appbar"
-        app:layout_constraintTop_toTopOf="@+id/fragment_modify_channel_information_image_thumbnail" />
+        app:layout_constraintTop_toTopOf="@+id/fragment_modify_channel_information_image_arts" />
 
     <LinearLayout
         android:id="@+id/linearLayout6"
@@ -51,8 +51,8 @@ tools:context=".fragment.modify.ModifyChannelInformationFragment">
         android:layout_marginHorizontal="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_xsmall"
         android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="@+id/fragment_modify_channel_information_image_thumbnail"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_modify_channel_information_image_thumbnail">
+        app:layout_constraintStart_toStartOf="@+id/fragment_modify_channel_information_image_arts"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_modify_channel_information_image_arts">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,7 +69,7 @@ tools:context=".fragment.modify.ModifyChannelInformationFragment">
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <EditText
-                android:id="@+id/fragment_modify_channel_information_edit_title"
+                android:id="@+id/fragment_modify_channel_information_edit_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_medium"
@@ -80,6 +80,7 @@ tools:context=".fragment.modify.ModifyChannelInformationFragment">
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_modify_channel_information_layout_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="@dimen/margin_xsmall">

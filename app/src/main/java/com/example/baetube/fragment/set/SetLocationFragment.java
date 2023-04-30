@@ -13,7 +13,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.baetube.OnSetFragmentListener;
@@ -62,14 +61,14 @@ public class SetLocationFragment extends Fragment
         });
 
         // html 파일 호출
-        webView.loadUrl("http://192.168.0.4:9090/Baetube_backEnd/api/address");
+        webView.loadUrl(getString(R.string.api_url_address));
 
         // Inflate the layout for this fragment
         return view;
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    public boolean onOptionsItemSelected( MenuItem item)
     {
         switch (item.getItemId())
         {

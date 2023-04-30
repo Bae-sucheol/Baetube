@@ -75,6 +75,8 @@
                             android:layout_height="0dp"
                             android:background="@null"
                             android:gravity="center_vertical"
+                            android:imeOptions="actionSearch"
+                            android:inputType="text"
                             android:hint="@string/history_detail_text_search_hint"
                             app:layout_constraintStart_toEndOf="@+id/fragment_history_detail_image_search"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -92,6 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:layout_marginBottom="@dimen/history_detail_bottom_margin"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_behavior="@string/appbar_scroll_behavior" />
 

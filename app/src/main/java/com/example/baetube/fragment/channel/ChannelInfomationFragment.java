@@ -9,13 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.baetube.FragmentTagUtil;
 import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.R;
 import com.example.baetube.bottomsheetdialog.ChannelReportFragment;
@@ -114,7 +114,7 @@ public class ChannelInfomationFragment extends Fragment
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+    public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_sub, menu);
@@ -128,7 +128,7 @@ public class ChannelInfomationFragment extends Fragment
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    public boolean onOptionsItemSelected( MenuItem item)
     {
         switch (item.getItemId())
         {
@@ -141,7 +141,7 @@ public class ChannelInfomationFragment extends Fragment
 
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.activity_main_layout, new SearchFragment());
+                fragmentTransaction.replace(R.id.activity_main_layout, new SearchFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_SEARCH);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 

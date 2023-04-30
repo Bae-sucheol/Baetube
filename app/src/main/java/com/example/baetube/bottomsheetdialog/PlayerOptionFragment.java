@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +24,8 @@ import com.example.baetube.recyclerview.item.RecyclerViewOptionItem;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -81,7 +81,7 @@ public class PlayerOptionFragment extends BottomSheetDialogFragment implements O
         return view;
     }
 
-    @NonNull
+
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
     {

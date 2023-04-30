@@ -21,6 +21,7 @@ import com.example.baetube.FragmentTagUtil;
 import com.example.baetube.OkHttpUtil;
 import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.OnUploadDataListener;
+import com.example.baetube.PreferenceManager;
 import com.example.baetube.R;
 import com.example.baetube.VideoListCallable;
 import com.example.baetube.dto.ChannelDTO;
@@ -232,9 +233,8 @@ public class UploadActivity extends AppCompatActivity
                 okHttpUtil = new OkHttpUtil();
 
                 videoInformation.setChannelId(4);
-                videoInformation.setCategoryId(1);
 
-                String url = "http://192.168.0.4:9090/Baetube_backEnd/api/video/insert";
+                String url = getString(R.string.api_url_video_insert) + PreferenceManager.getChannelSequence(getApplicationContext());
 
                 ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_INSERT);
 
@@ -278,7 +278,7 @@ public class UploadActivity extends AppCompatActivity
                     communityInformation.setImageUrl("noneImage");
                 }
 
-                String url = "http://192.168.0.4:9090/Baetube_backEnd/api/community/insert";
+                String url = getString(R.string.api_url_community_insert) + PreferenceManager.getChannelSequence(getApplicationContext());
 
                 ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_INSERT);
 
@@ -341,8 +341,10 @@ public class UploadActivity extends AppCompatActivity
         }
     }
 
-    private String getRealPathFromURI(Uri contentUri) {
-        if (contentUri.getPath().startsWith("/storage")) {
+    private String getRealPathFromURI(Uri contentUri)
+    {
+        if (contentUri.getPath().startsWith("/storage"))
+        {
             return contentUri.getPath();
         }
 
@@ -350,12 +352,16 @@ public class UploadActivity extends AppCompatActivity
         String[] columns = { MediaStore.Files.FileColumns.DATA };
         String selection = MediaStore.Files.FileColumns._ID + " = " + id;
         Cursor cursor = getContentResolver().query(MediaStore.Files.getContentUri("external"), columns, selection, null, null);
-        try {
+        try
+        {
             int columnIndex = cursor.getColumnIndex(columns[0]);
-            if (cursor.moveToFirst()) {
+            if (cursor.moveToFirst())
+            {
                 return cursor.getString(columnIndex);
             }
-        } finally {
+        }
+        finally
+        {
             cursor.close();
         }
         return null;
@@ -373,6 +379,24 @@ public class UploadActivity extends AppCompatActivity
                 {
                     System.out.println("삽입 완료.");
                 }
+            }
+
+            @Override
+            public void onExpiredAccessTokenResponse()
+            {
+
+            }
+
+            @Override
+            public void onExpiredRefreshTokenResponse()
+            {
+
+            }
+
+            @Override
+            public void onGeneratedAccessTokenResponse(String object)
+            {
+
             }
 
             @Override
@@ -490,6 +514,7 @@ public class UploadActivity extends AppCompatActivity
                 JsonElement element = parser.parse(object);
 
                 String insertType = element.getAsJsonObject().get("insertType").getAsString();
+                System.out.println("insert type : " + insertType);
 
                 // 동영상 삽입 요청 후 받는 반환값 처리
                 if(insertType.equals("video"))
@@ -536,7 +561,7 @@ public class UploadActivity extends AppCompatActivity
                         // 요청 전 삽입 요청할 객체에 받아온 게시글의 id를 삽입하여 보낸다.
                         vote.setCommunityId(communityId);
 
-                        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/vote/insert";
+                        String url = getString(R.string.api_url_vote_insert);
 
                         ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_INSERT);
 
@@ -556,14 +581,22 @@ public class UploadActivity extends AppCompatActivity
                         vote.setVoteId(voteId);
                     }
 
-                    String url = "http://192.168.0.4:9090/Baetube_backEnd/api/vote/insert/option/multi";
+                    String url = getString(R.string.api_url_vote_insert_option_multi);
 
                     ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
 
                     okHttpUtil.sendPostRequest(voteOptionList, url, returnableCallback);
                 }
 
-                finish();
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        finish();
+                    }
+                });
+
             }
 
             @Override
@@ -607,6 +640,103 @@ public class UploadActivity extends AppCompatActivity
             {
 
             }
+
+            @Override
+            public void onSaveFCMTokenResponse(boolean result)
+            {
+
+            }
+
+            @Override
+            public void onSelectChannelDataResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onUpdateChannelResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectCommunityDataResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onUpdateCommunityResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectVideoDataResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onUpdateVideoResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectPlaylistDataResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onUpdatePlaylistResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectCategoryResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectSubscribersCommunityResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectVideoNotificationResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectCommunityNotificationResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectSearchVideoResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectSearchChannelResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectChannelDataAllResponse(String object)
+            {
+
+            }
+
         };
     }
 

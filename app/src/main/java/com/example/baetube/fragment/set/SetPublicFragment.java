@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -76,14 +75,14 @@ public class SetPublicFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+    public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_none, menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    public boolean onOptionsItemSelected( MenuItem item)
     {
         switch (item.getItemId())
         {
@@ -95,7 +94,7 @@ public class SetPublicFragment extends Fragment implements View.OnClickListener
              */
             case android.R.id.home :
 
-                getActivity().onBackPressed();
+                //getActivity().onBackPressed();
                 onSetFragmentListener.onResponsePublic(visible);
 
             default :

@@ -213,7 +213,7 @@ public class OkHttpPlaylistTest
 
         System.out.println(" content : " + content);
 
-        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/delete";
+        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/delete/0";
 
         countDownLatch = new CountDownLatch(1);
 

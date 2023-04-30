@@ -12,8 +12,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,6 +26,8 @@ import com.example.baetube.recyclerview.adapter.RecyclerViewNestedReplyAdapter;
 import com.example.baetube.recyclerview.adapter.RecyclerViewReplyAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewNestedReplyItem;
 import com.example.baetube.recyclerview.item.RecyclerViewReplyItem;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +74,7 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
         onAttachViewListener = (OnAttachViewListener)context;
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container)
+    public View onCreateView( LayoutInflater inflater, @Nullable ViewGroup container)
     {
         view = inflater.inflate(R.layout.bottomsheetdialogfragment_reply, container, false);
 
@@ -126,7 +126,7 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
             okHttpUtil = new OkHttpUtil();
         }
 
-        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/reply/select/" + contentsId;
+        String url = context.getString(R.string.api_url_reply_select) + contentsId;
 
         System.out.println("url : " + url);
 
@@ -142,7 +142,7 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
             okHttpUtil = new OkHttpUtil();
         }
 
-        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/nestedreply/select/" + replyId;
+        String url = context.getString(R.string.api_url_nested_reply_select) + replyId;
 
         ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_NESTED_REPLY);
 

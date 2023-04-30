@@ -2,21 +2,44 @@ package com.example.baetube.recyclerview.item;
 
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.CommunityDTO;
+import com.example.baetube.dto.NotificationDTO;
 import com.example.baetube.dto.VideoDTO;
 
 public class RecyclerViewNotificationItem
 {
-    private int notificationId;
+    private NotificationDTO notificationDTO;
     private ChannelDTO channelDTO;
     private VideoDTO videoDTO;
     private CommunityDTO communityDTO;
     private int viewType;
     private String divideString;
 
-    // getter
-    public int getNotificationId()
+    public RecyclerViewNotificationItem(NotificationDTO notificationDTO, ChannelDTO channelDTO, VideoDTO videoDTO, int viewType)
     {
-        return notificationId;
+        this.notificationDTO = notificationDTO;
+        this.channelDTO = channelDTO;
+        this.videoDTO = videoDTO;
+        this.viewType = viewType;
+    }
+
+    public RecyclerViewNotificationItem(NotificationDTO notificationDTO, ChannelDTO channelDTO, CommunityDTO communityDTO, int viewType)
+    {
+        this.notificationDTO = notificationDTO;
+        this.channelDTO = channelDTO;
+        this.communityDTO = communityDTO;
+        this.viewType = viewType;
+    }
+
+    public RecyclerViewNotificationItem(int viewType, String divideString)
+    {
+        this.viewType = viewType;
+        this.divideString = divideString;
+    }
+
+    // getter
+    public NotificationDTO getNotificationDTO()
+    {
+        return notificationDTO;
     }
 
     public VideoDTO getVideoDTO()
@@ -45,9 +68,9 @@ public class RecyclerViewNotificationItem
     }
 
     // setter
-    public void setNotificationId(int notificationId)
+    public void setNotificationDTO(NotificationDTO notificationDTO)
     {
-        this.notificationId = notificationId;
+        this.notificationDTO = notificationDTO;
     }
 
     public void setVideoDTO(VideoDTO videoDTO)

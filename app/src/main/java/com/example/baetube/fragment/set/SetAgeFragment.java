@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -82,14 +81,14 @@ public class SetAgeFragment extends Fragment implements View.OnClickListener, Ra
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+    public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_none, menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    public boolean onOptionsItemSelected( MenuItem item)
     {
         switch (item.getItemId())
         {
@@ -136,6 +135,7 @@ public class SetAgeFragment extends Fragment implements View.OnClickListener, Ra
 
                 // 체크한 항목을 검사하여 적용한다.
                 applyToPolicy();
+                System.out.println("age : " + age);
                 onSetFragmentListener.onResponseAge(age);
 
                 break;
@@ -178,11 +178,11 @@ public class SetAgeFragment extends Fragment implements View.OnClickListener, Ra
     {
         if(child && !adult)
         {
-            age = 0;
+            age = 2;
         }
         else if(!child && !adult)
         {
-            age = null;
+            age = 0;
         }
         else if(!child && adult)
         {

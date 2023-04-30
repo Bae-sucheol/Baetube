@@ -81,6 +81,8 @@
     <string name="subscribe_filter_latest">최신순</string>
     <string name="subscribe_filter_alphabet">가나다순</string>
     <string name="subscribe_manage">관리</string>
+    <string name="subscribe_back">뒤로</string>
+    <string name="subscribe_delete">일괄삭제</string>
 
     <string name="playlist_detail_text_button_play">재생</string>
     <string name="playlist_detail_text_button_shuffle">셔플</string>
@@ -111,6 +113,8 @@
 
     <string name="modify_community_text_description">설명 추가</string>
     <string name="modify_community_text_vote">투표 추가</string>
+
+    <string name="modify_playlist_text_description">설명 추가</string>
 
     <string name="modify_channel_information_text_description">설명</string>
     <string name="modify_channel_information_text_link">링크</string>
@@ -169,6 +173,17 @@
     <string name="bottomsheetdialogfragment_description_text_description_title">설명</string>
     <string name="bottomsheetdialogfragment_description_text_description_like_count">좋아요 수</string>
     <string name="bottomsheetdialogfragment_description_text_description_view_count">조회수</string>
+
+    <!--
+    * 새 재생목록 텍스트
+    -->
+    <string name="add_new_playlist_text">새 재생목록</string>
+
+    <!--
+        * baetube notification 관련 채널 id
+    -->
+    <string name="default_notification_channel_id">baetube</string>
+
     <!--
         * 앱바 스크롤 옵션
     -->
@@ -202,6 +217,10 @@
     <string name="notification_text_video">에서 업로드한 동영상 : </string>
     <string name="notification_text_communication">에서 업로드한 게시글 : </string>
     <string name="title_activity_upload">UploadActivity</string>
+
+    <string name="subscribe_text">구독</string>
+    <string name="subscribed_text">구독 중</string>
+
     <!--
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.
@@ -294,6 +313,82 @@
     <string name="fragment_sign_in_error_address">주소를 작성해주세요.</string>
     <string name="fragment_sign_in_error_phone">전화번호 형식이 맞지 않습니다.</string>
 
+    <!--
+    * 로그인 에러 텍스트
+    -->
+    <string name="fragment_login_error">이메일과 비밀번호를 확인해주세요.</string>
+
+    <!--
+    * restapi url
+    -->
+    <string name="api_url_file_upload">http://192.168.0.4:9090/Baetube_backEnd/api/file/upload</string>
+    <string name="api_url_reply_select">http://192.168.0.4:9090/Baetube_backEnd/api/reply/select/</string>
+    <string name="api_url_nested_reply_select">http://192.168.0.4:9090/Baetube_backEnd/api/nestedreply/select/</string>
+    <string name="api_url_channel_visit">http://192.168.0.4:9090/Baetube_backEnd/api/channel/visit/</string>
+    <string name="api_url_video_channel">http://192.168.0.4:9090/Baetube_backEnd/api/video/channel_video/</string>
+    <string name="api_url_playlist_channel">http://192.168.0.4:9090/Baetube_backEnd/api/playlist/channel/</string>
+    <string name="api_url_community_visit">http://192.168.0.4:9090/Baetube_backEnd/api/community/channel_visit/</string>
+    <string name="api_url_rate">http://192.168.0.4:9090/Baetube_backEnd/api/rate/</string>
+    <string name="api_url_insert_playlist_like">http://192.168.0.4:9090/Baetube_backEnd/api/playlist/item/insert/like/</string>
+    <string name="api_url_delete_playlist_like">http://192.168.0.4:9090/Baetube_backEnd/api/playlist/item/delete/like/</string>
+    <string name="apu_url_delete_playlist_item">http://192.168.0.4:9090/Baetube_backEnd/api/playlist/item/delete</string>
+    <string name="api_url_subscribe">http://192.168.0.4:9090/Baetube_backEnd/api/subscribe/subscribe/</string>
+    <string name="api_url_unsubscribe">http://192.168.0.4:9090/Baetube_backEnd/api/subscribe/unsubscribe/</string>
+    <string name="api_url_reply_insert">http://192.168.0.4:9090/Baetube_backEnd/api/reply/insert/</string>
+    <string name="api_url_nested_reply_insert">http://192.168.0.4:9090/Baetube_backEnd/api/nestedreply/insert/</string>
+    <string name="api_url_video_view">http://192.168.0.4:9090/Baetube_backEnd/api/video/view_video/</string>
+    <string name="api_url_subscribe_select">http://192.168.0.4:9090/Baetube_backEnd/api/subscribe/select/</string>
+    <string name="api_url_contents_delete">http://192.168.0.4:9090/Baetube_backEnd/api/contents/delete</string>
+    <string name="api_url_history_delete">http://192.168.0.4:9090/Baetube_backEnd/api/history/delete</string>
+    <string name="api_url_user_regist">http://192.168.0.4:9090/Baetube_backEnd/api/user/regist</string>
+    <string name="api_url_video_related">http://192.168.0.4:9090/Baetube_backEnd/api/video/related/</string>
+    <string name="api_url_fcm_save">http://192.168.0.4:9090/Baetube_backEnd/api/fcm/save</string>
+    <string name="api_url_hls">http://192.168.0.4:9090/Baetube_backEnd/hls/</string>
+    <string name="api_url_playlist_item_insert_multi">http://192.168.0.4:9090/Baetube_backEnd/api/playlist/item/insert/multi</string>
+    <string name="api_url_generate_access">http://192.168.0.4:9090/Baetube_backEnd/api/generate/access</string>
+    <string name="api_url_video_main">http://192.168.0.4:9090/Baetube_backEnd/api/video/main_video</string>
+    <string name="api_url_video_insert">http://192.168.0.4:9090/Baetube_backEnd/api/video/insert/</string>
+    <string name="api_url_community_insert">http://192.168.0.4:9090/Baetube_backEnd/api/community/insert/</string>
+    <string name="api_url_vote_insert">http://192.168.0.4:9090/Baetube_backEnd/api/vote/insert</string>
+    <string name="api_url_vote_insert_option_multi">http://192.168.0.4:9090/Baetube_backEnd/api/vote/insert/option/multi</string>
+    <string name="api_url_playlist_insert">http://192.168.0.4:9090/Baetube_backEnd/api/playlist/insert/</string>
+    <string name="api_url_playlist_item_insert">http://192.168.0.4:9090/Baetube_backEnd/api/playlist/item/insert</string>
+    <string name="api_url_user_login">http://192.168.0.4:9090/Baetube_backEnd/api/user/login</string>
+    <string name="api_url_video_history">http://192.168.0.4:9090/Baetube_backEnd/api/video/history</string>
+    <string name="api_url_storage_channel">http://192.168.0.4:9090/Baetube_backEnd/api/storage/channel/</string>
+    <string name="api_url_subscribers_channel">http://192.168.0.4:9090/Baetube_backEnd/api/channel/subscribers/</string>
+    <string name="api_url_video_subscribe">http://192.168.0.4:9090/Baetube_backEnd/api/video/subscribe_video/</string>
+    <string name="api_url_image_thumbnail">http://192.168.0.4:9090/Baetube_backEnd/api/image/thumbnail/</string>
+    <string name="api_url_address">http://192.168.0.4:9090/Baetube_backEnd/api/address</string>
+    <string name="api_url_image_profile">http://192.168.0.4:9090/Baetube_backEnd/api/image/profile/</string>
+    <string name="api_url_channel_data">http://192.168.0.4:9090/Baetube_backEnd/api/channel/data/</string>
+    <string name="apu_url_channel_data_all">http://192.168.0.4:9090/Baetube_backEnd/api/channel/data/all</string>
+    <string name="api_url_channel_update">http://192.168.0.4:9090/Baetube_backEnd/api/channel/update</string>
+    <string name="api_url_image_arts">http://192.168.0.4:9090/Baetube_backEnd/api/image/arts/</string>
+    <string name="api_url_community_data">http://192.168.0.4:9090/Baetube_backEnd/api/community/select/</string>
+    <string name="api_url_community_update">http://192.168.0.4:9090/Baetube_backEnd/api/community/update</string>
+    <string name="api_url_video_data">http://192.168.0.4:9090/Baetube_backEnd/api/video/data/</string>
+    <string name="api_url_video_update">http://192.168.0.4:9090/Baetube_backEnd/api/video/update</string>
+    <string name="api_url_image_community">http://192.168.0.4:9090/Baetube_backEnd/api/image/community/</string>
+    <string name="api_url_playlist_data">http://192.168.0.4:9090/Baetube_backEnd/api/playlist/data/</string>
+    <string name="api_url_playlist_update">http://192.168.0.4:9090/Baetube_backEnd/api/playlist/update</string>
+    <string name="api_url_community_delete">http://192.168.0.4:9090/Baetube_backEnd/api/community/delete</string>
+    <string name="api_url_category_select">http://192.168.0.4:9090/Baetube_backEnd/api/category/select</string>
+    <string name="api_url_subscribers_community_select">http://192.168.0.4:9090/Baetube_backEnd/api/community/select/subscribe/</string>
+    <string name="api_url_notification_video_select">http://192.168.0.4:9090/Baetube_backEnd/api/notification/select/video</string>
+    <string name="api_url_notification_community_select">http://192.168.0.4:9090/Baetube_backEnd/api/notification/select/community</string>
+    <string name="api_url_notification_delete">http://192.168.0.4:9090/Baetube_backEnd/api/notification/delete</string>
+    <string name="api_url_search_history_select">http://192.168.0.4:9090/Baetube_backEnd/api/search_history/select</string>
+    <string name="api_url_search_history_insert">http://192.168.0.4:9090/Baetube_backEnd/api/search_history/insert</string>
+    <string name="api_url_search_history_delete">http://192.168.0.4:9090/Baetube_backEnd/api/search_history/delete</string>
+    <string name='api_url_search_video'>http://192.168.0.4:9090/Baetube_backEnd/api/video/search/</string>
+    <string name='api_url_search_channel'>http://192.168.0.4:9090/Baetube_backEnd/api/channel/search/</string>
+
+    <!--
+    * 토스트 메시지
+    -->
+    <string name="toast_warning_keywords">텍스트를 입력해주세요.</string>
+
 
     <!--
     * 배열
@@ -364,6 +459,12 @@
         <item>신고</item>
     </string-array>
 
+    <string-array name="community_option_manage_texts">
+        <item>수정</item>
+        <item>삭제</item>
+        <item>취소</item>
+    </string-array>
+
     <string-array name="upload_option_texts">
         <item>동영상 업로드</item>
         <item>게시물 작성</item>
@@ -373,6 +474,11 @@
         <item>1080p</item>
         <item>720p</item>
         <item>480p</item>
+    </string-array>
+
+    <string-array name="notification_option_texts">
+        <item>삭제</item>
+        <item>취소</item>
     </string-array>
 
     <!--
@@ -417,6 +523,62 @@
         <item>희롱 또는 괴롭힘</item>
         <item>자살 또는 자해</item>
         <item>잘못된 정보</item>
+    </string-array>
+
+    <!--
+    * 구독 카테고리
+    -->
+    <string-array name="category_subscribe">
+        <item>동영상</item>
+        <item>게시글</item>
+    </string-array>
+
+    <!--
+    * 구독 디테일 카테고리
+    -->
+    <string-array name="category_subscribe_detail">
+        <item>최신순</item>
+        <item>가나다순</item>
+    </string-array>
+
+    <!--
+    * 보관함 재생목록 카테고리
+    -->
+    <string-array name="category_storage">
+        <item>최신순</item>
+        <item>가나다순</item>
+    </string-array>
+
+    <!--
+   * 채널 동영상 카테고리
+   -->
+    <string-array name="category_channel_video">
+        <item>최신순</item>
+        <item>인기순</item>
+    </string-array>
+
+    <!--
+  * 채널 재생목록 카테고리
+  -->
+    <string-array name="category_channel_playlist">
+        <item>최신순</item>
+        <item>가나다순</item>
+    </string-array>
+
+    <!--
+    * 알람 카테고리
+    -->
+    <string-array name="category_notification">
+        <item>동영상</item>
+        <item>게시글</item>
+    </string-array>
+
+    <!--
+    * 검색 결과 카테고리
+    -->
+    <string-array name="category_search_result">
+        <item>동영상</item>
+        <item>채널</item>
     </string-array>
 
 </resources>

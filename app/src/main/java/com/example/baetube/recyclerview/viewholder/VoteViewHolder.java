@@ -13,7 +13,7 @@ public class VoteViewHolder extends RecyclerView.ViewHolder
 {
     public TextView comment;
 
-    public VoteViewHolder(@NonNull View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
+    public VoteViewHolder( View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
     {
         super(itemView);
 

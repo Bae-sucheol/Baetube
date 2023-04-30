@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.OnRecyclerViewClickListener;
@@ -27,9 +26,9 @@ public class RecyclerViewOptionAdapter extends RecyclerView.Adapter<OptionViewHo
         this.list = list;
     }
 
-    @NonNull
+
     @Override
-    public OptionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public OptionViewHolder onCreateViewHolder( ViewGroup parent, int viewType)
     {
         if(context == null)
         {
@@ -46,7 +45,7 @@ public class RecyclerViewOptionAdapter extends RecyclerView.Adapter<OptionViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OptionViewHolder holder, int position)
+    public void onBindViewHolder( OptionViewHolder holder, int position)
     {
         RecyclerViewOptionItem item = list.get(position);
 
@@ -91,7 +90,7 @@ public class RecyclerViewOptionAdapter extends RecyclerView.Adapter<OptionViewHo
     }
 
     @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    public void onDetachedFromRecyclerView( RecyclerView recyclerView)
     {
         super.onDetachedFromRecyclerView(recyclerView);
         context = null;

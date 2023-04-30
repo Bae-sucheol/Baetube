@@ -4,13 +4,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 
-public class NotificationViewHolder extends RecyclerView.ViewHolder
+public class NotificationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 {
     public ImageView profile;
     public ImageView thumbnail;
@@ -18,7 +17,9 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder
     public TextView title;
     public TextView date;
 
-    public NotificationViewHolder(@NonNull View itemView)
+    private OnRecyclerViewClickListener onRecyclerViewClickListener;
+
+    public NotificationViewHolder( View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
     {
         super(itemView);
 
@@ -27,5 +28,27 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder
         option = itemView.findViewById(R.id.recyclerview_notification_image_option);
         title = itemView.findViewById(R.id.recyclerview_notification_text_title);
         date = itemView.findViewById(R.id.recyclerview_notification_text_date);
+
+        this.onRecyclerViewClickListener = onRecyclerViewClickListener;
+
+        profile.setOnClickListener(this);
+        thumbnail.setOnClickListener(this);
+        option.setOnClickListener(this);
+        title.setOnClickListener(this);
+        date.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view)
+    {
+        int position = getAdapterPosition();
+
+        if(position != RecyclerView.NO_POSITION)
+        {
+            if(onRecyclerViewClickListener != null)
+            {
+                onRecyclerViewClickListener.onItemClick(view, position);
+            }
+        }
     }
 }

@@ -15,8 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -120,7 +118,7 @@ public class UploadCommunityFragment extends Fragment implements View.OnClickLis
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+    public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_none, menu);
@@ -146,14 +144,14 @@ public class UploadCommunityFragment extends Fragment implements View.OnClickLis
 
             case R.id.fragment_upload_community_layout_description :
 
-                fragmentTransaction.replace(R.id.activity_upload_layout_main, new SetDescriptionFragment(onSetFragmentListener));
+                fragmentTransaction.add(R.id.activity_upload_layout_main, new SetDescriptionFragment(onSetFragmentListener));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
                 break;
             case R.id.fragment_upload_community_layout_public :
 
-                fragmentTransaction.replace(R.id.activity_upload_layout_main, new SetVoteFragment(onSetFragmentListener));
+                fragmentTransaction.add(R.id.activity_upload_layout_main, new SetVoteFragment(onSetFragmentListener));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
@@ -163,6 +161,7 @@ public class UploadCommunityFragment extends Fragment implements View.OnClickLis
 
                 // 임의로 설정했다.
                 community.setChannelId(4);
+                community.setName("test");
                 onUploadDataListener.onResponseCommunityImage(selectedImage);
                 onUploadDataListener.onResponseCommunityInformation(community);
                 onUploadDataListener.onResponseCommunityVote(vote, voteOptionList);
@@ -174,7 +173,7 @@ public class UploadCommunityFragment extends Fragment implements View.OnClickLis
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    public boolean onOptionsItemSelected( MenuItem item)
     {
         switch (item.getItemId())
         {
@@ -197,14 +196,14 @@ public class UploadCommunityFragment extends Fragment implements View.OnClickLis
                 .into(new CustomTarget<Bitmap>() {
 
                     @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition)
+                    public void onResourceReady( Bitmap resource, Transition<? super Bitmap> transition)
                     {
                         thumbnail.setImageBitmap(resource);
                         selectedImage = resource;
                     }
 
                     @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder)
+                    public void onLoadCleared(Drawable placeholder)
                     {
 
                     }
@@ -219,6 +218,7 @@ public class UploadCommunityFragment extends Fragment implements View.OnClickLis
             public void onResponseDescription(String str)
             {
                 community.setComment(str);
+                System.out.println(str);
             }
 
             @Override

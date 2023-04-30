@@ -11,13 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,21 +21,22 @@ import com.example.baetube.Callback.ReturnableCallback;
 import com.example.baetube.OkHttpUtil;
 import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.OnDialogInteractionListener;
+import com.example.baetube.OnFragmentInteractionListener;
 import com.example.baetube.OnModifyListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
 import com.example.baetube.bottomsheetdialog.PlaylistOptionManageFragment;
-import com.example.baetube.bottomsheetdialog.VideoFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.PlaylistDTO;
 import com.example.baetube.dto.PlaylistItemDTO;
 import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.dto.VoteDTO;
-import com.example.baetube.fragment.modify.ModifyPlaylistFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewPlaylistItem;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +59,7 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
 
     private OnCallbackResponseListener onCallbackResponseListener;
     private OnDialogInteractionListener onDialogInteractionListener;
+    private OnFragmentInteractionListener onFragmentInteractionListener;
     private OnModifyListener onModifyListener;
 
     private OkHttpUtil okHttpUtil;
@@ -130,7 +128,7 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
             @Override
             public void onDeletePlaylistItem(int position)
             {
-                String url = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/item/delete";
+                String url = getString(R.string.apu_url_delete_playlist_item);
 
                 ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
 
@@ -144,6 +142,30 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
 
             @Override
             public void onSetVideoResolution(int position)
+            {
+
+            }
+
+            @Override
+            public void onDeleteCommunity()
+            {
+
+            }
+
+            @Override
+            public void onModifyCommunity()
+            {
+
+            }
+
+            @Override
+            public void onDeleteNotification()
+            {
+
+            }
+
+            @Override
+            public void onSelectChannel(int position, int channelId)
             {
 
             }
@@ -174,12 +196,14 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
 
         };
 
+        onFragmentInteractionListener = (OnFragmentInteractionListener) getContext();
+
         // Inflate the layout for this fragment
         return view;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    public void onViewCreated( View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
 
@@ -199,14 +223,14 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+    public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_sub, menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    public boolean onOptionsItemSelected( MenuItem item)
     {
         switch (item.getItemId())
         {
@@ -232,8 +256,8 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
         {
             case R.id.recyclerview_video_image_thumbnail :
 
-                VideoFragment videoFragment = new VideoFragment(onCallbackResponseListener);
-                videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+                RecyclerViewVideoItem item = list.get(position);
+                onFragmentInteractionListener.onVideoItemClick(item);
 
                 break;
             case R.id.recyclerview_video_image_option :
@@ -244,8 +268,8 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
                 break;
             case R.id.recyclerview_video_layout_information :
 
-                videoFragment = new VideoFragment(onCallbackResponseListener);
-                videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+                item = list.get(position);
+                onFragmentInteractionListener.onVideoItemClick(item);
 
                 break;
 
@@ -296,11 +320,13 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
         {
             case R.id.fragment_playlist_detail_button_edit :
 
+                /*
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.activity_main_layout, new ModifyPlaylistFragment(recyclerViewPlaylistItem , onModifyListener));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+                 */
 
                 break;
             case R.id.fragment_playlist_detail_button_play :

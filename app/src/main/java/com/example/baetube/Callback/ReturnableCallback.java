@@ -3,6 +3,7 @@ package com.example.baetube.Callback;
 import com.example.baetube.OnCallbackResponseListener;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -35,6 +36,26 @@ public class ReturnableCallback implements Callback
     public static final int CALLBACK_NESTED_REPLY = 22;
     public static final int CALLBACK_SIGN_IN = 23;
     public static final int CALLBACK_SELECT_RELATED_VIDEO = 24;
+    public static final int CALLBACK_SAVE_FCM_TOKEN = 25;
+    public static final int CALLBACK_GENERATE_ACCESS_TOKEN = 26;
+    public static final int CALLBACK_SELECT_CHANNEL_DATA = 27;
+    public static final int CALLBACK_UPDATE_CHANNEL = 28;
+    public static final int CALLBACK_SELECT_COMMUNITY_DATA = 29;
+    public static final int CALLBACK_UPDATE_COMMUNITY = 30;
+    public static final int CALLBACK_SELECT_VIDEO_DATA = 31;
+    public static final int CALLBACK_UPDATE_VIDEO = 32;
+    public static final int CALLBACK_SELECT_PLAYLIST_DATA = 33;
+    public static final int CALLBACK_UPDATE_PLAYLIST = 34;
+    public static final int CALLBACK_SELECT_CATEGORY = 35;
+    public static final int CALLBACK_SELECT_SUBSCRIBERS_COMMUNITY = 36;
+    public static final int CALLBACK_SELECT_COMMUNITY_NOTIFICATION = 37;
+    public static final int CALLBACK_SELECT_VIDEO_NOTIFICATION = 38;
+    public static final int CALLBACK_SELECT_SEARCH_VIDEO = 39;
+    public static final int CALLBACK_SELECT_SEARCH_CHANNEL = 40;
+    public static final int CALLBACK_SELECT_CHANNEL_DATA_ALL = 41;
+
+    private static final String EXPIRED_ACCESS_TOKEN = "ExpiredAccessToken";
+    private static final String EXPIRED_REFRESH_TOKEN = "ExpiredRefreshTokenException";
 
     private OnCallbackResponseListener onCallbackResponseListener;
     private int type;
@@ -57,12 +78,29 @@ public class ReturnableCallback implements Callback
     public void onFailure(Call call, IOException e)
     {
         e.printStackTrace();
+
     }
 
     @Override
     public void onResponse(Call call, Response response) throws IOException
     {
         String object = response.body().string();
+        String header = response.header("Exception", "");
+
+        // 만약 엑세스 토큰 만료 예외 헤더가 존재할 경우
+        // 관련 메소드를 실행시킨다.
+        if(header.equals(EXPIRED_ACCESS_TOKEN) && type != CALLBACK_GENERATE_ACCESS_TOKEN)
+        {
+            System.out.println("엑세스토큰 만료 에러");
+            onCallbackResponseListener.onExpiredAccessTokenResponse();
+            return;
+        }
+        else if(header.equals(EXPIRED_REFRESH_TOKEN))
+        {
+            System.out.println("리프레시 토큰 만료 에러");
+            onCallbackResponseListener.onExpiredRefreshTokenResponse();
+            return;
+        }
 
         switch (type)
         {
@@ -99,6 +137,7 @@ public class ReturnableCallback implements Callback
                 break;
 
             case CALLBACK_SELECT_CHANNEL_VIDEO :
+                System.out.println("내용 : " + object);
                 onCallbackResponseListener.onSelectChannelVideoResponse(object);
                 break;
 
@@ -160,6 +199,82 @@ public class ReturnableCallback implements Callback
 
             case CALLBACK_SELECT_RELATED_VIDEO :
                 onCallbackResponseListener.onSelectRelatedVideoResponse(object);
+                break;
+
+            case CALLBACK_SAVE_FCM_TOKEN :
+
+                    // 만약 응답 결과가 충돌이라면 토큰이 유효하지 않다는 의미.
+                    if(response.code() == HttpURLConnection.HTTP_FORBIDDEN)
+                    {
+                        onCallbackResponseListener.onSaveFCMTokenResponse(false);
+                        return;
+                    }
+                    onCallbackResponseListener.onSaveFCMTokenResponse(true);
+
+                break;
+
+            case CALLBACK_GENERATE_ACCESS_TOKEN :
+                onCallbackResponseListener.onGeneratedAccessTokenResponse(object);
+                break;
+
+            case CALLBACK_SELECT_CHANNEL_DATA :
+                onCallbackResponseListener.onSelectChannelDataResponse(object);
+                break;
+
+            case CALLBACK_UPDATE_CHANNEL :
+                onCallbackResponseListener.onUpdateChannelResponse(object);
+                break;
+
+            case CALLBACK_SELECT_COMMUNITY_DATA :
+                onCallbackResponseListener.onSelectCommunityDataResponse(object);
+                break;
+
+            case CALLBACK_UPDATE_COMMUNITY :
+                onCallbackResponseListener.onUpdateCommunityResponse(object);
+                break;
+
+            case CALLBACK_SELECT_VIDEO_DATA :
+                onCallbackResponseListener.onSelectVideoDataResponse(object);
+                break;
+
+            case CALLBACK_UPDATE_VIDEO :
+                onCallbackResponseListener.onUpdateVideoResponse(object);
+                break;
+
+            case CALLBACK_SELECT_PLAYLIST_DATA :
+                onCallbackResponseListener.onSelectPlaylistDataResponse(object);
+                break;
+
+            case CALLBACK_UPDATE_PLAYLIST :
+                onCallbackResponseListener.onUpdatePlaylistResponse(object);
+                break;
+
+            case CALLBACK_SELECT_CATEGORY :
+                onCallbackResponseListener.onSelectCategoryResponse(object);
+                break;
+
+            case CALLBACK_SELECT_SUBSCRIBERS_COMMUNITY :
+                onCallbackResponseListener.onSelectSubscribersCommunityResponse(object);
+                break;
+
+            case CALLBACK_SELECT_COMMUNITY_NOTIFICATION :
+                onCallbackResponseListener.onSelectCommunityNotificationResponse(object);
+                break;
+
+            case CALLBACK_SELECT_VIDEO_NOTIFICATION :
+                onCallbackResponseListener.onSelectVideoNotificationResponse(object);
+                break;
+
+            case CALLBACK_SELECT_SEARCH_VIDEO :
+                onCallbackResponseListener.onSelectSearchVideoResponse(object);
+                break;
+
+            case CALLBACK_SELECT_SEARCH_CHANNEL :
+                onCallbackResponseListener.onSelectSearchChannelResponse(object);
+                break;
+
+            case CALLBACK_SELECT_CHANNEL_DATA_ALL :
+                onCallbackResponseListener.onSelectChannelDataAllResponse(object);
                 break;
 
             default :

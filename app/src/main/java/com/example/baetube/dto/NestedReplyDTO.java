@@ -104,6 +104,14 @@ public class NestedReplyDTO
         this.attachedId = attachedId;
     }
 
+    public NestedReplyDTO(Integer replyId, String comment, Long attachedId)
+    {
+        super();
+        this.replyId = replyId;
+        this.comment = comment;
+        this.attachedId = attachedId;
+    }
+
     // getter
     public Integer getNestedReplyId()
     {

@@ -22,7 +22,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <ImageView
-        android:id="@+id/fragment_modify_community_image_thumbnail"
+        android:id="@+id/fragment_modify_community_image_community"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="443dp"
@@ -34,14 +34,14 @@
         app:layout_constraintWidth_percent="1.0" />
 
     <ImageView
-        android:id="@+id/fragment_modify_community_button_change_thumbnail"
+        android:id="@+id/fragment_modify_community_button_change_community"
         android:layout_width="@dimen/size_icon_medium"
         android:layout_height="@dimen/size_icon_medium"
         android:layout_marginBottom="6dp"
         android:background="@drawable/ic_baseline_autorenew_24"
         android:layout_margin="@dimen/margin_medium"
         app:layout_constraintStart_toStartOf="@+id/fragment_modify_community_appbar"
-        app:layout_constraintTop_toTopOf="@+id/fragment_modify_community_image_thumbnail" />
+        app:layout_constraintTop_toTopOf="@+id/fragment_modify_community_image_community" />
 
     <LinearLayout
         android:id="@+id/linearLayout6"
@@ -50,8 +50,8 @@
         android:layout_marginHorizontal="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_xsmall"
         android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="@+id/fragment_modify_community_image_thumbnail"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_modify_community_image_thumbnail">
+        app:layout_constraintStart_toStartOf="@+id/fragment_modify_community_image_community"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_modify_community_image_community">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,6 +113,7 @@
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_modify_community_layout_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="@dimen/margin_xsmall">
@@ -167,12 +168,13 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_modify_community_layout_vote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="@dimen/margin_xsmall">
 
             <ImageView
-                android:id="@+id/fragment_modify_community_image_visible"
+                android:id="@+id/fragment_modify_community_image_vote"
                 android:layout_width="@dimen/size_icon_small"
                 android:layout_height="@dimen/size_icon_small"
                 android:background="@drawable/ic_baseline_outlined_flag_24"
@@ -187,8 +189,8 @@
                 android:layout_marginHorizontal="@dimen/margin_small"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fragment_modify_community_button_visible"
-                app:layout_constraintStart_toEndOf="@+id/fragment_modify_community_image_visible"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_modify_community_button_vote"
+                app:layout_constraintStart_toEndOf="@+id/fragment_modify_community_image_vote"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
@@ -201,7 +203,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/fragment_modify_community_button_visible"
+                android:id="@+id/fragment_modify_community_button_vote"
                 android:layout_width="@dimen/size_icon_small"
                 android:layout_height="@dimen/size_icon_small"
                 android:gravity="center"

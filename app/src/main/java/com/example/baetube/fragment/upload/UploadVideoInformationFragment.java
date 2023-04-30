@@ -16,8 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -39,6 +37,8 @@ import com.example.baetube.fragment.set.SetAgeFragment;
 import com.example.baetube.fragment.set.SetDescriptionFragment;
 import com.example.baetube.fragment.set.SetLocationFragment;
 import com.example.baetube.fragment.set.SetPublicFragment;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.List;
@@ -159,7 +159,7 @@ public class UploadVideoInformationFragment extends Fragment implements View.OnC
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+    public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_only_next_button, menu);
@@ -222,7 +222,7 @@ public class UploadVideoInformationFragment extends Fragment implements View.OnC
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    public boolean onOptionsItemSelected( MenuItem item)
     {
         switch (item.getItemId())
         {
@@ -266,7 +266,7 @@ public class UploadVideoInformationFragment extends Fragment implements View.OnC
                 .into(new CustomTarget<Bitmap>() {
 
                     @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition)
+                    public void onResourceReady( Bitmap resource, @Nullable Transition<? super Bitmap> transition)
                     {
                         thumbnail.setImageBitmap(resource);
                         selectedThumbnail = resource;
@@ -327,6 +327,7 @@ public class UploadVideoInformationFragment extends Fragment implements View.OnC
             @Override
             public void onResponseAge(Integer value)
             {
+                System.out.println("업로드 요청");
                 onUploadDataListener.onResponseVideoAge(value);
                 onUploadDataListener.onResponseUploadVideoRequest();
             }

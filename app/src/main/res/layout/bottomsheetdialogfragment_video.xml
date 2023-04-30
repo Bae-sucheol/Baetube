@@ -93,9 +93,10 @@
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/bottomsheetdialogfragment_video_layout_description"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bottomsheetdialogfragment_video_player">
 
             <com.google.android.material.appbar.AppBarLayout
@@ -378,7 +379,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scroll_behavior" />
+                app:layout_behavior="@string/appbar_scroll_behavior"/>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -390,6 +391,7 @@
         android:layout_height="match_parent"
         app:behavior_hideable="true"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
 
     </FrameLayout>
 

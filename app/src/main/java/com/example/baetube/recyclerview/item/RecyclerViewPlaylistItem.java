@@ -29,4 +29,5 @@ public class RecyclerViewPlaylistItem
     {
         this.channelDTO = channelDTO;
     }
+
 }

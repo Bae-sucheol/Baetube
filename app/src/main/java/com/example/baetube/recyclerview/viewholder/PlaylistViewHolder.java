@@ -5,7 +5,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.OnRecyclerViewClickListener;
@@ -22,7 +21,7 @@ public class PlaylistViewHolder extends RecyclerView.ViewHolder implements View.
 
     private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
-    public PlaylistViewHolder(@NonNull View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
+    public PlaylistViewHolder( View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
     {
         super(itemView);
 

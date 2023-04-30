@@ -5,14 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.baetube.DateToStringUtil;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.CommunityDTO;
+import com.example.baetube.dto.NotificationDTO;
 import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.recyclerview.item.RecyclerViewNotificationItem;
@@ -33,9 +36,13 @@ public class RecyclerViewNotificationAdapter extends RecyclerView.Adapter<Notifi
         this.list = list;
     }
 
-    @NonNull
+    public void setList(ArrayList<RecyclerViewNotificationItem> list)
+    {
+        this.list = list;
+    }
+
     @Override
-    public NotificationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public NotificationViewHolder onCreateViewHolder( ViewGroup parent, int viewType)
     {
         if(context == null)
         {
@@ -69,13 +76,13 @@ public class RecyclerViewNotificationAdapter extends RecyclerView.Adapter<Notifi
                 break;
         }
 
-        NotificationViewHolder viewHolder = new NotificationViewHolder(view);
+        NotificationViewHolder viewHolder = new NotificationViewHolder(view, onRecyclerViewClickListener);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position)
+    public void onBindViewHolder( NotificationViewHolder holder, int position)
     {
         RecyclerViewNotificationItem item = list.get(position);
 
@@ -84,11 +91,25 @@ public class RecyclerViewNotificationAdapter extends RecyclerView.Adapter<Notifi
 
             case ViewType.NOTIFICATION_VIDEO:
 
+                NotificationDTO notificationDTO = item.getNotificationDTO();
                 ChannelDTO channelDTO = item.getChannelDTO();
                 VideoDTO videoDTO = item.getVideoDTO();
 
-                //holder.profile.setImageResource();
-                //holder.thumbnail.setImageResource();
+                Glide.with(context)
+                        .asBitmap()
+                        .load(context.getString(R.string.api_url_image_profile) + channelDTO.getProfile() + ".jpg") // or URI/path
+                        .error(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_circle_24))
+                        .override(holder.profile.getWidth(), holder.profile.getHeight())
+                        .centerCrop()
+                        .into(holder.profile);
+
+                Glide.with(context)
+                        .asBitmap()
+                        .load(context.getString(R.string.api_url_image_thumbnail) + videoDTO.getThumbnail() + ".jpg") // or URI/path
+                        .error(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_circle_24))
+                        .override(holder.thumbnail.getWidth(), holder.thumbnail.getHeight())
+                        .centerCrop()
+                        .into(holder.thumbnail);
 
                 StringBuffer stringBuffer = new StringBuffer();
 
@@ -97,17 +118,31 @@ public class RecyclerViewNotificationAdapter extends RecyclerView.Adapter<Notifi
                 stringBuffer.append(videoDTO.getTitle());
 
                 holder.title.setText(stringBuffer.toString());
-                holder.date.setText(videoDTO.getDate().toString());
+                holder.date.setText(DateToStringUtil.dateToString(notificationDTO.getDate()));
 
                 break;
 
             case ViewType.NOTIFICATION_COMMUNITY:
 
+                notificationDTO = item.getNotificationDTO();
                 channelDTO = item.getChannelDTO();
                 CommunityDTO communityDTO = item.getCommunityDTO();
 
-                //holder.profile.setImageResource();
-                //holder.thumbnail.setImageResource();
+                Glide.with(context)
+                        .asBitmap()
+                        .load(context.getString(R.string.api_url_image_profile) + channelDTO.getProfile() + ".jpg") // or URI/path
+                        .error(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_circle_24))
+                        .override(holder.profile.getWidth(), holder.profile.getHeight())
+                        .centerCrop()
+                        .into(holder.profile);
+
+                Glide.with(context)
+                        .asBitmap()
+                        .load(context.getString(R.string.api_url_image_community) + communityDTO.getImageUrl() + ".jpg") // or URI/path
+                        .error(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_circle_24))
+                        .override(holder.thumbnail.getWidth(), holder.thumbnail.getHeight())
+                        .centerCrop()
+                        .into(holder.thumbnail);
 
                 stringBuffer = new StringBuffer();
 
@@ -116,7 +151,7 @@ public class RecyclerViewNotificationAdapter extends RecyclerView.Adapter<Notifi
                 stringBuffer.append(communityDTO.getComment());
 
                 holder.title.setText(stringBuffer.toString());
-                holder.date.setText(communityDTO.getDate().toString());
+                holder.date.setText(DateToStringUtil.dateToString(notificationDTO.getDate()));
 
                 break;
 
@@ -133,11 +168,14 @@ public class RecyclerViewNotificationAdapter extends RecyclerView.Adapter<Notifi
 
     }
 
-
-
     @Override
     public int getItemCount()
     {
+        if(list == null)
+        {
+            return 0;
+        }
+
         return list.size();
     }
 
@@ -150,7 +188,7 @@ public class RecyclerViewNotificationAdapter extends RecyclerView.Adapter<Notifi
     @Override
     public void onItemClick(View view, int position)
     {
-
+        onRecyclerViewClickListener.onItemClick(view, position);
     }
 
     @Override
@@ -171,7 +209,7 @@ public class RecyclerViewNotificationAdapter extends RecyclerView.Adapter<Notifi
     }
 
     @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    public void onDetachedFromRecyclerView( RecyclerView recyclerView)
     {
         super.onDetachedFromRecyclerView(recyclerView);
         context = null;

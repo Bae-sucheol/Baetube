@@ -1,14 +1,13 @@
 package com.example.baetube;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.ViewPagerFragmentData;
 import com.example.baetube.fragment.channel.ChannelCommunityFragment;
-import com.example.baetube.fragment.channel.ChannelInfomationFragment;
 import com.example.baetube.fragment.channel.ChannelHomeFragment;
+import com.example.baetube.fragment.channel.ChannelInfomationFragment;
 import com.example.baetube.fragment.channel.ChannelPlaylistFragment;
 import com.example.baetube.fragment.channel.ChannelVideoFragment;
 
@@ -23,7 +22,7 @@ public class ChannelPagerAdapter extends FragmentStateAdapter
     private ChannelPlaylistFragment channelPlaylistFragment;
     private ChannelVideoFragment channelVideoFragment;
 
-    public ChannelPagerAdapter(@NonNull Fragment fragment, int count, OnCallbackResponseListener onCallbackResponseListener)
+    public ChannelPagerAdapter( Fragment fragment, int count, OnCallbackResponseListener onCallbackResponseListener)
     {
         super(fragment);
         this.count = count;
@@ -79,7 +78,7 @@ public class ChannelPagerAdapter extends FragmentStateAdapter
         return new ViewPagerFragmentData(fragment, tag);
     }
 
-    @NonNull
+
     @Override
     public Fragment createFragment(int position)
     {

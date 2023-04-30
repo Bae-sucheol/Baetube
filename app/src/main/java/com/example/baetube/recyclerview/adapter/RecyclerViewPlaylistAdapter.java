@@ -5,12 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
-
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.PlaylistDTO;
 import com.example.baetube.dto.VoteDTO;
@@ -31,9 +31,9 @@ public class RecyclerViewPlaylistAdapter extends RecyclerView.Adapter<PlaylistVi
 
     private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
-    @NonNull
+
     @Override
-    public PlaylistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public PlaylistViewHolder onCreateViewHolder( ViewGroup parent, int viewType)
     {
         if(context == null)
         {
@@ -50,14 +50,21 @@ public class RecyclerViewPlaylistAdapter extends RecyclerView.Adapter<PlaylistVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PlaylistViewHolder holder, int position)
+    public void onBindViewHolder( PlaylistViewHolder holder, int position)
     {
         RecyclerViewPlaylistItem item = list.get(position);
 
         PlaylistDTO playlistDTO = item.getPlaylistDTO();
         ChannelDTO channelDTO = item.getChannelDTO();
 
-        //holder.thumbnail.setImageDrawable();
+        Glide.with(context)
+                .asBitmap()
+                .load(context.getString(R.string.api_url_image_thumbnail) + item.getPlaylistDTO().getThumbnail() + ".jpg") // or URI/path
+                .error(ContextCompat.getDrawable(context, R.drawable.ic_baseline_account_circle_24))
+                .override(holder.thumbnail.getWidth(), holder.thumbnail.getHeight())
+                .centerCrop()
+                .into(holder.thumbnail);
+
         holder.title.setText(playlistDTO.getName());
         holder.channelName.setText(channelDTO.getName());
 
@@ -99,7 +106,7 @@ public class RecyclerViewPlaylistAdapter extends RecyclerView.Adapter<PlaylistVi
     }
 
     @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    public void onDetachedFromRecyclerView( RecyclerView recyclerView)
     {
         super.onDetachedFromRecyclerView(recyclerView);
         context = null;

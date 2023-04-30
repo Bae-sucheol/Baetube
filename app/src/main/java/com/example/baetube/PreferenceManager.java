@@ -8,7 +8,13 @@ public class PreferenceManager
     public static final String PREFERENCES_NAME = "preference";
     public static final String PREFERENCES_ACCESSKEY = "accessToken";
     public static final String PREFERENCES_REFRESHKEY = "refreshToken";
-    private static final String DEFAULT_VALUE_STRING = "";
+    public static final String PREFERENCES_FCM = "fcmToken";
+    public static final String PREFERENCES_ARTS = "arts";
+    public static final String PREFERENCES_PROFILE = "profile";
+    public static final String PREFERENCES_THUMBNAIL = "thumbnail";
+    public static final String PREFERENCES_COMMUNITY = "community";
+    public static final String PREFERENCES_CHANNEL_SEQUENCE = "channelSequence";
+    public static final String DEFAULT_VALUE_STRING = "";
 
     public static SharedPreferences getPreferences(Context context)
     {
@@ -47,7 +53,7 @@ public class PreferenceManager
      * @param context
      * @param key
      */
-    public static void removekey(Context context, String key)
+    public static void removeKey(Context context, String key)
     {
         SharedPreferences sharedPreferences = getPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -65,6 +71,21 @@ public class PreferenceManager
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.commit();
+    }
+
+    public static String getChannelSequence(Context context)
+    {
+        String value = getString(context, PreferenceManager.PREFERENCES_CHANNEL_SEQUENCE);
+
+        // 기존에 설정된 값이 존재하지 않는다면 값을 0으로 설정하고 0을 반환
+        if(value == PreferenceManager.DEFAULT_VALUE_STRING)
+        {
+            setString(context, PREFERENCES_CHANNEL_SEQUENCE, "0");
+            return "0";
+        }
+
+        // 기존에 설정된 값이 존재한다면 해당 값을 리턴한다.
+        return value;
     }
 
 }

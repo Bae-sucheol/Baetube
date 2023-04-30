@@ -1,6 +1,5 @@
 package com.example.baetube;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
@@ -12,13 +11,13 @@ public class AnalysisPagerAdapter extends FragmentStateAdapter
 {
     private int count;
 
-    public AnalysisPagerAdapter(@NonNull Fragment fragment, int count)
+    public AnalysisPagerAdapter( Fragment fragment, int count)
     {
         super(fragment);
         this.count = count;
     }
 
-    @NonNull
+
     @Override
     public Fragment createFragment(int position)
     {

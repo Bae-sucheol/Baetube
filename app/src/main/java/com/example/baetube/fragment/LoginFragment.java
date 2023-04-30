@@ -6,9 +6,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -29,6 +29,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener
 
     private Button logInButton;
     private TextView signInButton;
+
+    private EditText editEmail;
+    private EditText editPassword;
+    private TextView errorLogin;
 
     private OnCallbackResponseListener onCallbackResponseListener;
     private OkHttpUtil okHttpUtil;
@@ -59,6 +63,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener
 
         logInButton = view.findViewById(R.id.fragment_login_button_login);
         signInButton = view.findViewById(R.id.fragment_login_button_sign_in);
+        editEmail = view.findViewById(R.id.fragment_login_edit_email);
+        editPassword = view.findViewById(R.id.fragment_login_edit_password);
+        errorLogin = view.findViewById(R.id.fragment_login_text_error);
 
         logInButton.setOnClickListener(this);
         signInButton.setOnClickListener(this);
@@ -70,7 +77,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    public boolean onOptionsItemSelected(MenuItem item)
     {
         switch (item.getItemId())
         {
@@ -89,15 +96,23 @@ public class LoginFragment extends Fragment implements View.OnClickListener
             case R.id.fragment_login_button_login :
 
                 // 로그인 버튼을 누르면 로그인 요청.
-                okHttpUtil = new OkHttpUtil();
+                if(okHttpUtil == null)
+                {
+                    okHttpUtil = new OkHttpUtil();
+                }
+
+                String email = editEmail.getText().toString();
+                String password = editPassword.getText().toString();
 
                 UserDTO user = new UserDTO();
-                user.setEmail("testtest@naver.com");
-                user.setPassword("1234");
+                user.setEmail(email);
+                user.setPassword(password);
 
-                String url = "http://192.168.0.4:9090/Baetube_backEnd/api/user/login";
+                System.out.println("로그인 요청");
 
-                ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
+                String url = getString(R.string.api_url_user_login);
+
+                ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_LOGIN_USER);
 
                 okHttpUtil.sendPostRequest(user, url, returnableCallback);
 
@@ -115,6 +130,18 @@ public class LoginFragment extends Fragment implements View.OnClickListener
 
                 break;
         }
+    }
+
+    public void printError()
+    {
+        getActivity().runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                errorLogin.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override

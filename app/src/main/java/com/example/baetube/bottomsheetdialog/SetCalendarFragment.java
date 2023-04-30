@@ -67,7 +67,7 @@ public class SetCalendarFragment extends BottomSheetDialogFragment implements Vi
         return view;
     }
 
-    @NonNull
+
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
     {

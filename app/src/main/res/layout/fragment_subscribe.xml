@@ -11,88 +11,59 @@
         android:id="@+id/fragment_subscribe_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:fitsSystemWindows="true">
 
     <include
         layout="@layout/toolbar"
         android:id="@+id/toolbar" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="@color/white"
         style="@style/top_menu_style"
         app:layout_scrollFlags="scroll|enterAlways">
 
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_subscribe_list_recyclerview"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/fragment_subscribe_list_recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scroll_behavior"
-                />
-
-        </LinearLayout>
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scroll_behavior"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/fragment_subscribe_text_button_detail"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_subscribe_recyclerview_category"/>
 
         <TextView
             android:id="@+id/fragment_subscribe_text_button_detail"
-            android:layout_weight="1"
             android:gravity="center"
             android:layout_gravity="center"
-            android:layout_width="@dimen/width_subscribe_button"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/subscribe_detail"
             android:singleLine="true"
-            style="@style/textview_style_clickable" />
+            style="@style/textview_style_clickable"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_subscribe_list_recyclerview"/>
 
-    </LinearLayout>
-
-
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:background="@color/white"
-        app:layout_scrollFlags="scroll|enterAlways">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_subscribe_recyclerview_category"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/margin_xsmall"
             android:orientation="horizontal"
-            style="@style/top_menu_style">
+            android:background="@color/white"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_subscribe_list_recyclerview"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/top_menu_text_style"
-                android:text="test"
-                android:background="@drawable/textview_rounded_rectangle_more"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/top_menu_text_style"
-                android:text="test"
-                android:background="@drawable/textview_rounded_rectangle_more"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/top_menu_text_style"
-                android:text="test"
-                android:background="@drawable/textview_rounded_rectangle_more"/>
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -102,6 +73,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginBottom="?attr/actionBarSize"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scroll_behavior"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_subscribe_community_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scroll_behavior"
         />

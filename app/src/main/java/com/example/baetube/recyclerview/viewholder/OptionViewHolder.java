@@ -4,7 +4,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +16,7 @@ public class OptionViewHolder extends RecyclerView.ViewHolder
     public ImageView icon;
     public TextView option;
 
-    public OptionViewHolder(@NonNull View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
+    public OptionViewHolder( View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
     {
         super(itemView);
 

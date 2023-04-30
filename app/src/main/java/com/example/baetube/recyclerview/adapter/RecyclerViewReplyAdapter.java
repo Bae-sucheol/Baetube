@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,9 +31,9 @@ public class RecyclerViewReplyAdapter extends RecyclerView.Adapter<ReplyViewHold
         this.list = list;
     }
 
-    @NonNull
+
     @Override
-    public ReplyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public ReplyViewHolder onCreateViewHolder( ViewGroup parent, int viewType)
     {
         if(context == null)
         {
@@ -51,7 +50,7 @@ public class RecyclerViewReplyAdapter extends RecyclerView.Adapter<ReplyViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ReplyViewHolder holder, int position)
+    public void onBindViewHolder( ReplyViewHolder holder, int position)
     {
         RecyclerViewReplyItem item = list.get(position);
 
@@ -65,7 +64,7 @@ public class RecyclerViewReplyAdapter extends RecyclerView.Adapter<ReplyViewHold
 
         Glide.with(context)
                 .asBitmap()
-                .load("http://192.168.0.4:9090/Baetube_backEnd/api/image/profile/" + item.getReplyDTO().getProfile() + ".jpg")
+                .load(context.getString(R.string.api_url_image_profile) + item.getReplyDTO().getProfile() + ".jpg")
                 .error(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_circle_24))
                 .override(holder.profile.getWidth(), holder.profile.getHeight())
                 .centerCrop()
@@ -117,7 +116,7 @@ public class RecyclerViewReplyAdapter extends RecyclerView.Adapter<ReplyViewHold
     }
 
     @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    public void onDetachedFromRecyclerView( RecyclerView recyclerView)
     {
         super.onDetachedFromRecyclerView(recyclerView);
         context = null;

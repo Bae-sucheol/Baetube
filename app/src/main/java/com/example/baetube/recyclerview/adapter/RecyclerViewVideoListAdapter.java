@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -29,9 +28,9 @@ public class RecyclerViewVideoListAdapter extends RecyclerView.Adapter<VideoList
         this.list = list;
     }
 
-    @NonNull
+
     @Override
-    public VideoListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public VideoListViewHolder onCreateViewHolder( ViewGroup parent, int viewType)
     {
         if(context == null)
         {
@@ -57,7 +56,7 @@ public class RecyclerViewVideoListAdapter extends RecyclerView.Adapter<VideoList
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VideoListViewHolder holder, int position)
+    public void onBindViewHolder( VideoListViewHolder holder, int position)
     {
         File item = list.get(position);
 
@@ -99,7 +98,7 @@ public class RecyclerViewVideoListAdapter extends RecyclerView.Adapter<VideoList
     }
 
     @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    public void onDetachedFromRecyclerView( RecyclerView recyclerView)
     {
         super.onDetachedFromRecyclerView(recyclerView);
         context = null;

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.OnRecyclerViewClickListener;
@@ -26,9 +25,9 @@ public class ReclyclerViewVoteAdapter extends RecyclerView.Adapter<VoteViewHolde
         this.list = list;
     }
 
-    @NonNull
+
     @Override
-    public VoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public VoteViewHolder onCreateViewHolder( ViewGroup parent, int viewType)
     {
         if(context == null)
         {
@@ -45,7 +44,7 @@ public class ReclyclerViewVoteAdapter extends RecyclerView.Adapter<VoteViewHolde
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VoteViewHolder holder, int position)
+    public void onBindViewHolder( VoteViewHolder holder, int position)
     {
         String item = list.get(position);
 
@@ -82,7 +81,7 @@ public class ReclyclerViewVoteAdapter extends RecyclerView.Adapter<VoteViewHolde
     }
 
     @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    public void onDetachedFromRecyclerView( RecyclerView recyclerView)
     {
         super.onDetachedFromRecyclerView(recyclerView);
         context = null;

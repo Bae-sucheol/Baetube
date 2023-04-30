@@ -7,10 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -41,7 +40,7 @@ public class DescriptionView implements View.OnClickListener
         onAttachViewListener = (OnAttachViewListener)context;
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container)
+    public View onCreateView( LayoutInflater inflater, @Nullable ViewGroup container)
     {
         view = inflater.inflate(R.layout.bottomsheetdialogfragment_description, container, false);
 

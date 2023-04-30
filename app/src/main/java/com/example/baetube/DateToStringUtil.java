@@ -4,21 +4,17 @@ import java.sql.Timestamp;
 
 public class DateToStringUtil
 {
-    private static long second = 1000;
-    private static long minute = second * 60;
-    private static long hour = minute * 60;
-    private static long day = hour * 24;
-    private static long week = day * 7;
-    private static long month = week * 4;
-    private static long year = day * 365;
+    public static long second = 1000;
+    public static long minute = second * 60;
+    public static long hour = minute * 60;
+    public static long day = hour * 24;
+    public static long week = day * 7;
+    public static long month = week * 4;
+    public static long year = day * 365;
 
     public static String dateToString(Timestamp date)
     {
-        long now = System.currentTimeMillis() + hour * 9;
-
-        long uploaded = date.getTime();
-
-        long sub = now - uploaded;
+        long sub = subtractFromNow(date);
 
         long timeUnit;
         String suffix;
@@ -65,4 +61,14 @@ public class DateToStringUtil
 
         return  stringBuilder.toString();
     }
+
+    public static long subtractFromNow(Timestamp date)
+    {
+        long now = System.currentTimeMillis() + hour * 9;
+
+        long uploaded = date.getTime();
+
+        return now - uploaded;
+    }
+
 }

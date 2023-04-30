@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -104,14 +103,14 @@ public class SetVoteFragment extends Fragment implements OnRecyclerViewClickList
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+    public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_none, menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    public boolean onOptionsItemSelected( MenuItem item)
     {
         switch (item.getItemId())
         {
@@ -198,6 +197,30 @@ public class SetVoteFragment extends Fragment implements OnRecyclerViewClickList
             public void onSetVideoResolution(int position)
             {
                 
+            }
+
+            @Override
+            public void onDeleteCommunity()
+            {
+
+            }
+
+            @Override
+            public void onModifyCommunity()
+            {
+
+            }
+
+            @Override
+            public void onDeleteNotification()
+            {
+                
+            }
+
+            @Override
+            public void onSelectChannel(int position, int channelId)
+            {
+
             }
         };
     }

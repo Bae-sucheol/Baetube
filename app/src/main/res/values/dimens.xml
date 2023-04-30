@@ -62,7 +62,6 @@
     <dimen name="width_home_drawer">200dp</dimen>
     <dimen name="height_videoinfo">100dp</dimen>
 
-    <dimen name="width_subscribe_button">80dp</dimen>
     <dimen name="width_history_button">180dp</dimen>
 
     <dimen name="height_history_info">60dp</dimen>
@@ -89,5 +88,7 @@
     inner_frame_layout_padding (below variable) on round screens.
     -->
     <dimen name="inner_frame_layout_padding">5dp</dimen>
+
+    <dimen name="history_detail_bottom_margin">100dp</dimen>
 
 </resources>

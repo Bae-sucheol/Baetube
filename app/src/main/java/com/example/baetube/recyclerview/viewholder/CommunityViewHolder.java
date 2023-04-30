@@ -4,7 +4,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.OnRecyclerViewClickListener;
@@ -28,7 +27,7 @@ public class CommunityViewHolder extends RecyclerView.ViewHolder implements View
 
     private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
-    public CommunityViewHolder(@NonNull View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
+    public CommunityViewHolder( View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
     {
         super(itemView);
 

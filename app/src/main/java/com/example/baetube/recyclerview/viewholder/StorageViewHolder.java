@@ -5,12 +5,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
-import com.example.baetube.bottomsheetdialog.PlaylistOptionFragment;
 
 public class StorageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 {
@@ -21,7 +19,7 @@ public class StorageViewHolder extends RecyclerView.ViewHolder implements View.O
 
     private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
-    public StorageViewHolder(@NonNull View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
+    public StorageViewHolder( View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
     {
         super(itemView);
 

@@ -5,7 +5,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.OnRecyclerViewClickListener;
@@ -28,7 +27,7 @@ public class ReplyViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
     private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
-    public ReplyViewHolder(@NonNull View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
+    public ReplyViewHolder( View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
     {
         super(itemView);
 

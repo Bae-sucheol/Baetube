@@ -4,7 +4,6 @@ import android.os.Environment;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.Callable;
 
 public class VideoListCallable implements Callable<ArrayList<File>>
@@ -18,11 +17,21 @@ public class VideoListCallable implements Callable<ArrayList<File>>
 
     private ArrayList<File> getVideoList()
     {
-        ArrayList<File> fileList;
+        ArrayList<File> fileList = new ArrayList<>();
         File downloadFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         File videoFiles[] = downloadFile.listFiles();
 
-        fileList = new ArrayList<>(Arrays.asList(videoFiles));
+        for (int i = 0; i < videoFiles.length; i++)
+        {
+            String pathSplit[] = videoFiles[i].getPath().split("[.]");
+
+            int length = pathSplit.length;
+
+            if(!pathSplit[length - 1].equals("jpg") && !pathSplit[length - 1].equals("png"))
+            {
+                fileList.add(videoFiles[i]);
+            }
+        }
 
         return fileList;
     }

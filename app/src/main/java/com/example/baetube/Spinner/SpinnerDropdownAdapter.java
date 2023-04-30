@@ -22,7 +22,7 @@ public class SpinnerDropdownAdapter extends ArrayAdapter<SpinnerItem>
     private ArrayList<SpinnerItem> list = null;
     private boolean isSimple;
 
-    public SpinnerDropdownAdapter(@NonNull Context context, int resource, ArrayList<SpinnerItem> list, boolean isSimple)
+    public SpinnerDropdownAdapter( Context context, int resource, ArrayList<SpinnerItem> list, boolean isSimple)
     {
         super(context, resource);
         this.context = context;
@@ -30,15 +30,15 @@ public class SpinnerDropdownAdapter extends ArrayAdapter<SpinnerItem>
         this.isSimple = isSimple;
     }
 
-    @NonNull
+
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
+    public View getView(int position, @Nullable View convertView,  ViewGroup parent)
     {
         return getCustomView(position, convertView, parent);
     }
 
     @Override
-    public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
+    public View getDropDownView(int position, @Nullable View convertView,  ViewGroup parent)
     {
         return getCustomView(position, convertView, parent);
     }

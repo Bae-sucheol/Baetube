@@ -3,17 +3,19 @@ package com.example.baetube.fragment;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -21,6 +23,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.baetube.Callback.ReturnableCallback;
+import com.example.baetube.OkHttpUtil;
 import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
@@ -35,8 +39,8 @@ import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HistoryDetailFragment extends Fragment implements OnRecyclerViewClickListener, View.OnClickListener, View.OnFocusChangeListener
 {
@@ -55,9 +59,10 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
 
     private OnCallbackResponseListener onCallbackResponseListener;
 
-    public HistoryDetailFragment(ArrayList<RecyclerViewVideoItem> list, OnCallbackResponseListener onCallbackResponseListener)
+    private OkHttpUtil okHttpUtil;
+
+    public HistoryDetailFragment(OnCallbackResponseListener onCallbackResponseListener)
     {
-        this.list = list;
         this.onCallbackResponseListener = onCallbackResponseListener;
     }
 
@@ -86,9 +91,7 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
          * 3. 리사이클러뷰 어댑터 설정
          * 4. 리사이클러뷰 레이아웃 매니저 설정
          */
-
-        setHistoryList();
-
+        list = new ArrayList<>();
         recyclerView = view.findViewById(R.id.fragment_history_detail_recyclerview);
         adapter = new RecyclerViewVideoAdapter(list);
         recyclerView.setAdapter(adapter);
@@ -96,7 +99,6 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         search = view.findViewById(R.id.fragment_history_detail_edit_search);
-        search.setTag("asdasdasdasdsadasdasd");
         buttonCancel = view.findViewById(R.id.fragment_history_detail_text_button_cancel);
         layoutSearch = view.findViewById(R.id.fragment_history_detail_layout_search);
 
@@ -105,28 +107,102 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
 
         animationDuration = getContext().getResources().getInteger(R.integer.animation_duration_histort_detail);
 
+        search.setOnEditorActionListener(new TextView.OnEditorActionListener()
+        {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent)
+            {
+                switch (i)
+                {
+                    case EditorInfo.IME_ACTION_SEARCH :
+
+                        String keywords = textView.getText().toString().trim();
+
+                        if(keywords == null || keywords.isEmpty())
+                        {
+                            Toast.makeText(getContext(), getString(R.string.toast_warning_keywords), Toast.LENGTH_SHORT);
+                            return true;
+                        }
+
+                        requestHistoryVideo(keywords);
+                        hideKeyPad();
+
+                        break;
+                }
+
+                return true;
+            }
+        });
+
+        requestHistoryVideo();
+
         // Inflate the layout for this fragment
         return view;
     }
 
-    private void setHistoryList()
+    private void requestHistoryVideo()
     {
-        for(RecyclerViewVideoItem item : list)
+        if(okHttpUtil == null)
         {
-            item.setViewType(ViewType.VIDEO_MEDIUM);
+            okHttpUtil = new OkHttpUtil();
         }
+
+        String url = getString(R.string.api_url_video_history);
+
+        ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_HISTORY_VIDEO);
+
+        okHttpUtil.sendGetRequest(url, returnableCallback);
     }
 
+    private void requestHistoryVideo(String keywords)
+    {
+        if(okHttpUtil == null)
+        {
+            okHttpUtil = new OkHttpUtil();
+        }
+
+        String url = getString(R.string.api_url_video_history) + "/" + keywords;
+
+        ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_HISTORY_VIDEO);
+
+        okHttpUtil.sendGetRequest(url, returnableCallback);
+    }
+
+    public void setHistoryList(List< VideoDTO > videoList, List< ChannelDTO > channelList)
+    {
+        if(!list.isEmpty())
+        {
+            list.clear();
+        }
+
+        for(int i = 0; i < videoList.size(); i++)
+        {
+            RecyclerViewVideoItem item = new RecyclerViewVideoItem();
+            item.setViewType(ViewType.VIDEO_MEDIUM);
+            item.setVideoDTO(videoList.get(i));
+            item.setChannelDTO(channelList.get(i));
+
+            list.add(item);
+        }
+
+        getActivity().runOnUiThread(new Runnable(){
+            @Override
+            public void run()
+            {
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+    public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_sub, menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    public boolean onOptionsItemSelected( MenuItem item)
     {
         switch (item.getItemId())
         {
@@ -135,77 +211,6 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void test()
-    {
-        String channel_names[] = {"홍길동", "이순신", "장영실", "김유신", "허준"};
-        String titles[] = {"쉽게 배우는 자바", "쉽게 배우는 학익진", "쉽게 배우는 거중기",
-                "쉽게 배우는 전투법", "쉽게 배우는 침술"};
-
-        RecyclerViewVideoItem item = new RecyclerViewVideoItem();
-
-        ChannelDTO channelDTO = new ChannelDTO();
-        VideoDTO videoDTO = new VideoDTO();
-
-        item.setChannelDTO(channelDTO);
-        item.setVideoDTO(videoDTO);
-
-        item.setViewType(ViewType.VIDEO_DIVIDER);
-        videoDTO.setDate(new Timestamp(System.currentTimeMillis()));
-
-        list.add(item);
-
-        for(int i = 0; i < 5; i++)
-        {
-            item = new RecyclerViewVideoItem();
-
-            channelDTO = new ChannelDTO();
-            videoDTO = new VideoDTO();
-
-            item.setChannelDTO(channelDTO);
-            item.setVideoDTO(videoDTO);
-            item.setViewType(ViewType.VIDEO_MEDIUM);
-
-            channelDTO.setName(channel_names[i]);
-            videoDTO.setDate(new Timestamp(System.currentTimeMillis()));
-            videoDTO.setTitle(titles[i]);
-            videoDTO.setViews(500);
-
-            list.add(item);
-        }
-
-        item = new RecyclerViewVideoItem();
-
-        channelDTO = new ChannelDTO();
-        videoDTO = new VideoDTO();
-
-        item.setChannelDTO(channelDTO);
-        item.setVideoDTO(videoDTO);
-
-        item.setViewType(ViewType.VIDEO_DIVIDER);
-        videoDTO.setDate(new Timestamp(System.currentTimeMillis()));
-
-        list.add(item);
-
-        for(int i = 0; i < 5; i++)
-        {
-            item = new RecyclerViewVideoItem();
-
-            channelDTO = new ChannelDTO();
-            videoDTO = new VideoDTO();
-
-            item.setChannelDTO(channelDTO);
-            item.setVideoDTO(videoDTO);
-            item.setViewType(ViewType.VIDEO_MEDIUM);
-
-            channelDTO.setName(channel_names[i]);
-            videoDTO.setDate(new Timestamp(System.currentTimeMillis()));
-            videoDTO.setTitle(titles[i]);
-            videoDTO.setViews(500);
-
-            list.add(item);
-        }
     }
 
     @Override
@@ -258,7 +263,9 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
         {
             case R.id.fragment_history_detail_text_button_cancel :
 
+                requestHistoryVideo();
                 search.clearFocus();
+                search.setText(null);
                 hideKeyPad();
 
                 break;

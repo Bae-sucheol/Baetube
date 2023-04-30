@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.OnRecyclerViewClickListener;
@@ -31,9 +30,9 @@ public class RecyclerViewSubscribeAdapter extends RecyclerView.Adapter<Subscribe
         this.list = list;
     }
 
-    @NonNull
+
     @Override
-    public SubscribeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public SubscribeViewHolder onCreateViewHolder( ViewGroup parent, int viewType)
     {
         if(context == null)
         {
@@ -65,7 +64,7 @@ public class RecyclerViewSubscribeAdapter extends RecyclerView.Adapter<Subscribe
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SubscribeViewHolder holder, int position)
+    public void onBindViewHolder( SubscribeViewHolder holder, int position)
     {
         RecyclerViewSubscribeItem item = list.get(position);
 
@@ -77,7 +76,7 @@ public class RecyclerViewSubscribeAdapter extends RecyclerView.Adapter<Subscribe
         }
 
         //holder.profile.setImageDrawable();
-        holder.channel_name.setText(channelDTO.getName());
+        holder.channelName.setText(channelDTO.getName());
 
     }
 
@@ -123,7 +122,7 @@ public class RecyclerViewSubscribeAdapter extends RecyclerView.Adapter<Subscribe
     }
 
     @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    public void onDetachedFromRecyclerView( RecyclerView recyclerView)
     {
         super.onDetachedFromRecyclerView(recyclerView);
         context = null;

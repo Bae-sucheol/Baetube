@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -66,9 +65,9 @@ public class RecyclerViewCommunityAdapter extends RecyclerView.Adapter<Community
         };
     }
 
-    @NonNull
+
     @Override
-    public CommunityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public CommunityViewHolder onCreateViewHolder( ViewGroup parent, int viewType)
     {
         if(context == null)
         {
@@ -85,7 +84,7 @@ public class RecyclerViewCommunityAdapter extends RecyclerView.Adapter<Community
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CommunityViewHolder holder, int position)
+    public void onBindViewHolder( CommunityViewHolder holder, int position)
     {
         RecyclerViewCommunityItem item = list.get(position);
 
@@ -94,14 +93,14 @@ public class RecyclerViewCommunityAdapter extends RecyclerView.Adapter<Community
 
         Glide.with(context)
                 .asBitmap()
-                .load("http://192.168.0.4:9090/Baetube_backEnd/api/image/community/" + communityDTO.getImageUrl() + ".jpg") // or URI/path
+                .load(context.getString(R.string.api_url_image_community) + communityDTO.getImageUrl() + ".jpg") // or URI/path
                 .error(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_circle_24))
                 .override(holder.content.getWidth(), holder.content.getHeight())
                 .centerCrop()
                 .into(holder.content);
         Glide.with(context)
                 .asBitmap()
-                .load("http://192.168.0.4:9090/Baetube_backEnd/api/image/profile/" + channelDTO.getProfile() + ".jpg")
+                .load(context.getString(R.string.api_url_image_profile) + channelDTO.getProfile() + ".jpg")
                 .error(ContextCompat.getDrawable(context,R.drawable.ic_baseline_account_circle_24))
                 .override(holder.profile.getWidth(), holder.profile.getHeight())
                 .centerCrop()
@@ -186,7 +185,7 @@ public class RecyclerViewCommunityAdapter extends RecyclerView.Adapter<Community
     }
 
     @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    public void onDetachedFromRecyclerView( RecyclerView recyclerView)
     {
         super.onDetachedFromRecyclerView(recyclerView);
         context = null;

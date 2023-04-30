@@ -6,12 +6,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -24,23 +23,28 @@ import com.example.baetube.OkHttpUtil;
 import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.OnFragmentInteractionListener;
 import com.example.baetube.OnRecyclerViewClickListener;
+import com.example.baetube.PreferenceManager;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
 import com.example.baetube.activity.MainActivity;
 import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
+import com.example.baetube.dto.CategoryDTO;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.PlaylistDTO;
 import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.dto.VoteDTO;
+import com.example.baetube.recyclerview.adapter.RecyclerViewCategoryAdapter;
 import com.example.baetube.recyclerview.adapter.RecyclerViewStorageAdapter;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewPlaylistItem;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-public class StorageFragment extends Fragment implements OnRecyclerViewClickListener, View.OnClickListener, OnFragmentInteractionListener
+public class StorageFragment extends Fragment implements OnRecyclerViewClickListener, View.OnClickListener
 {
     private View view;
     private TextView buttonDetail;
@@ -59,6 +63,13 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
 
     private LinearLayoutManager videoHistoryLayoutManager;
     private LinearLayoutManager storageLayoutManager;
+    private LinearLayoutManager linearLayoutManagerCategory;
+
+    private RecyclerView recyclerViewCategory;
+    private RecyclerViewCategoryAdapter recyclerViewCategoryAdapter;
+    private ArrayList<CategoryDTO> listCategory;
+
+    private Integer selectedPosition = 0;
 
     private boolean isCalled;
 
@@ -152,13 +163,13 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
                 if (!isCalled)
                 {
                     // 지금은 테스트용으로 임의의 값을 넣는다.
-                    String historyVideoUrl = "http://192.168.0.4:9090/Baetube_backEnd/api/video/history_video/20";
+                    String historyVideoUrl = getString(R.string.api_url_video_history);
 
                     ReturnableCallback historyVideoCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_HISTORY_VIDEO);
 
                     okHttpUtil.sendGetRequest(historyVideoUrl, historyVideoCallback);
 
-                    String playlistUrl = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/channel/4";
+                    String playlistUrl = getString(R.string.api_url_storage_channel) + PreferenceManager.getChannelSequence(getContext().getApplicationContext());
 
                     ReturnableCallback playlistCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_PLAYLIST);
 
@@ -175,6 +186,42 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
 
         onFragmentInteractionListener = (OnFragmentInteractionListener) getContext();
 
+        // 리스트 초기화
+        listCategory = new ArrayList<>();
+
+        // 리사이클러뷰 요소 찾기
+        recyclerViewCategory = view.findViewById(R.id.fragment_storage_recyclerview_category);
+
+        // 리사이클러뷰 어댑터 객체 생성
+        recyclerViewCategoryAdapter = new RecyclerViewCategoryAdapter(listCategory);
+
+        // 리사이클러뷰에 어댑터 설정
+        recyclerViewCategory.setAdapter(recyclerViewCategoryAdapter);
+
+        // 리사이클러뷰 어댑터에 클릭리스너 등록
+        recyclerViewCategoryAdapter.setOnRecyclerViewClickListener(this);
+
+        linearLayoutManagerCategory = new LinearLayoutManager(getContext())
+        {
+            @Override
+            public void onLayoutCompleted(RecyclerView.State state)
+            {
+                super.onLayoutCompleted(state);
+
+                View view = linearLayoutManagerCategory.findViewByPosition(selectedPosition);
+                TextView textView = view.findViewById(R.id.recyclerview_category_text_category);
+                textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview_rounded_rectangle_selected));
+                textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+            }
+        };
+
+
+        linearLayoutManagerCategory.setOrientation(RecyclerView.HORIZONTAL);
+
+        recyclerViewCategory.setLayoutManager(linearLayoutManagerCategory);
+
+        setCategory();
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -183,11 +230,11 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
     private void setBasicStorageList()
     {
         RecyclerViewPlaylistItem itemAdd = new RecyclerViewPlaylistItem();
-        storageList.add(itemAdd);
+        storageList.add(0, itemAdd);
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+    public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_main, menu);
@@ -259,7 +306,7 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.activity_main_layout,
-                        new HistoryDetailFragment((ArrayList<RecyclerViewVideoItem>)videoHistoryList.clone(), onCallbackResponseListener)
+                        new HistoryDetailFragment(onCallbackResponseListener)
                         , FragmentTagUtil.FRAGMENT_TAG_HISTORY_DETAIL);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
@@ -280,7 +327,16 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
                 //videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
 
                 RecyclerViewVideoItem item = videoHistoryList.get(position);
-                this.onVideoItemClick(item);
+                onFragmentInteractionListener.onVideoItemClick(item);
+
+                break;
+            case R.id.recyclerview_video_image_thumbnail :
+
+                //VideoFragment videoFragment = new VideoFragment(onCallbackResponseListener);
+                //videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+
+                item = videoHistoryList.get(position);
+                onFragmentInteractionListener.onVideoItemClick(item);
 
                 break;
             case R.id.recyclerview_video_image_option :
@@ -319,6 +375,77 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
                 fragmentTransaction.commit();
 
                 break;
+
+            case R.id.recyclerview_category_text_category :
+
+                if(selectedPosition != null)
+                {
+                    //item = list.get(selectedPosition);
+                    view = linearLayoutManagerCategory.findViewByPosition(selectedPosition);
+                    TextView category = view.findViewById(R.id.recyclerview_category_text_category);
+                    category.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview_rounded_rectangle));
+                    category.setTextColor(ContextCompat.getColor(getContext(), R.color.dark_gray));
+                }
+
+                // 새 재생목록을 삭제한다.
+                storageList.remove(0);
+
+                // 만약 동영상(첫 번째) 카테고리를 클릭하였고, 이전에 선택한 카테고리와 다르다면.
+                if(position == 0)
+                {
+                    Collections.sort(storageList,new Comparator<RecyclerViewPlaylistItem>()
+                    {
+                        @Override
+                        public int compare(RecyclerViewPlaylistItem o1, RecyclerViewPlaylistItem o2)
+                        {
+                            // 최신순이기 때문에 playlistId를 기준으로 오름차순 정렬하면 된다.
+                            if(o1.getPlaylistDTO().getPlaylistId() < o2.getPlaylistDTO().getPlaylistId())
+                            {
+                                return -1;
+                            }
+                            else if(o1.getPlaylistDTO().getPlaylistId() > o2.getPlaylistDTO().getPlaylistId())
+                            {
+                                return 1;
+                            }
+                            else
+                            {
+                                return 0;
+                            }
+                        }
+                    });
+
+                    // 마지막에 새 재생목록을 추가한다.
+                    setBasicStorageList();
+
+                }
+                else
+                {
+
+                    Collections.sort(storageList,new Comparator<RecyclerViewPlaylistItem>()
+                    {
+                        @Override
+                        public int compare(RecyclerViewPlaylistItem o1, RecyclerViewPlaylistItem o2)
+                        {
+                            return o1.getPlaylistDTO().getName().compareTo(o2.getPlaylistDTO().getName());
+                        }
+                    });
+
+                    // 마지막에 새 재생목록을 추가한다.
+                    setBasicStorageList();
+                }
+
+                selectedPosition = position;
+
+                //item = list.get(selectedPosition);
+                view = linearLayoutManagerCategory.findViewByPosition(selectedPosition);
+                TextView category = view.findViewById(R.id.recyclerview_category_text_category);
+                category.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview_rounded_rectangle_selected));
+                category.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+
+                recyclerViewStorageAdapter.notifyDataSetChanged();
+
+                break;
+
             default :
                 break;
         }
@@ -336,10 +463,11 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
 
     }
 
+    /*
     @Override
     public void onVideoItemClick(RecyclerViewVideoItem videoItem)
     {
-        //onFragmentInteractionListener.onVideoItemClick(uuid, item.getVideoDTO().getContentsId());
+        onFragmentInteractionListener.onVideoItemClick(videoItem);
     }
 
     @Override
@@ -347,9 +475,23 @@ public class StorageFragment extends Fragment implements OnRecyclerViewClickList
     {
 
     }
+     */
 
     public boolean isCalled()
     {
         return isCalled;
+    }
+
+    private void setCategory()
+    {
+        String categories[] = getResources().getStringArray(R.array.category_storage);
+
+        for (int i = 0; i < categories.length; i++)
+        {
+            CategoryDTO category = new CategoryDTO(i, categories[i]);
+            listCategory.add(category);
+        }
+
+        recyclerViewCategoryAdapter.notifyDataSetChanged();
     }
 }

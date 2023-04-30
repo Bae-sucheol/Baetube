@@ -25,7 +25,7 @@ public class VideoCheckableViewHolder extends RecyclerView.ViewHolder implements
 
     private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
-    public VideoCheckableViewHolder(@NonNull View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
+    public VideoCheckableViewHolder( View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
     {
         super(itemView);
 

@@ -17,11 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.baetube.FragmentTagUtil;
 import com.example.baetube.OkHttpUtil;
 import com.example.baetube.OnCallbackResponseListener;
+import com.example.baetube.OnFragmentInteractionListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
 import com.example.baetube.activity.MainActivity;
-import com.example.baetube.bottomsheetdialog.VideoFragment;
 import com.example.baetube.bottomsheetdialog.VideoOptionFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
@@ -40,6 +40,8 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
     private RecyclerView recyclerView;
     private RecyclerViewVideoAdapter recyclerViewVideoAdapter;
     private ArrayList<RecyclerViewVideoItem> list;
+
+    private OnFragmentInteractionListener onFragmentInteractionListener;
 
     private ImageView profile;
     private ImageView expand;
@@ -100,6 +102,8 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
         buttonSubscribe.setOnClickListener(this);
         buttonManageVideo.setOnClickListener(this);
 
+        onFragmentInteractionListener = (OnFragmentInteractionListener)getContext();
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -111,8 +115,8 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
         {
             case R.id.recyclerview_video_image_thumbnail :
 
-                VideoFragment videoFragment = new VideoFragment(onCallbackResponseListener);
-                videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+                RecyclerViewVideoItem item = list.get(position);
+                onFragmentInteractionListener.onVideoItemClick(item);
 
                 break;
             case R.id.recyclerview_video_image_option :
@@ -124,8 +128,8 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
                 break;
             case R.id.recyclerview_video_layout_information :
 
-                videoFragment = new VideoFragment(onCallbackResponseListener);
-                videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+                item = list.get(position);
+                onFragmentInteractionListener.onVideoItemClick(item);
 
                 break;
 
@@ -148,7 +152,7 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
 
     /*
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    public void onViewCreated( View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
 
@@ -175,6 +179,7 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
 
     public void setChannelData(ChannelDTO channel)
     {
+
         getActivity().runOnUiThread(new Runnable(){
             @Override
             public void run()
@@ -188,6 +193,11 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
                 videoCount.setText(channel.getVideoCount().toString());
                 channelDescription.setText(channel.getDescription());
                 // 기타 이미지 설정은 추후에.
+
+                if(channel.getChannelId() != channelBaseFragment.getMyChannel().getChannelId())
+                {
+                    layoutManage.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -247,16 +257,20 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
 
                 fragmentManager = getParentFragment().getParentFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.activity_main_layout, new ModifyChannelInformationFragment());
+                fragmentTransaction.replace(R.id.activity_main_layout, new ModifyChannelInformationFragment(onCallbackResponseListener),
+                        FragmentTagUtil.FRAGMENT_TAG_MODIFY_CHANNEL_INFORMATION);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
                 break;
             case R.id.fragment_channel_home_text_button_manage_video :
 
+                ChannelBaseFragment channelBaseFragment = (ChannelBaseFragment)getParentFragment();
+                Integer channelId = channelBaseFragment.getChannel().getChannelId();
+
                 fragmentManager = getParentFragment().getParentFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.activity_main_layout, new ChannelManageVideoFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_CHANNEL_MANAGE_VIDEO);
+                fragmentTransaction.add(R.id.activity_main_layout, new ChannelManageVideoFragment(onCallbackResponseListener, channelId), FragmentTagUtil.FRAGMENT_TAG_CHANNEL_MANAGE_VIDEO);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
@@ -266,4 +280,5 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
                 break;
         }
     }
+
 }

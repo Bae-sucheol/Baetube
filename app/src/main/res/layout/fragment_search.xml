@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/margin_xsmall"
         android:fitsSystemWindows="true"
+        android:outlineProvider="none"
         android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageView
-                android:id="@+id/fragment_search_image_button_tts"
+                android:id="@+id/fragment_search_image_button_stt"
                 android:layout_width="@dimen/size_icon_small"
                 android:layout_height="@dimen/size_icon_small"
                 android:src="@drawable/ic_baseline_mic_24"
@@ -38,12 +39,16 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <EditText
+                android:id="@+id/fragment_search_text_search"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/size_icon_small"
+                android:paddingHorizontal="@dimen/padding_small"
                 android:background="@drawable/search_input_background"
                 android:layout_marginHorizontal="@dimen/margin_medium"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
                 app:layout_constraintStart_toEndOf="@+id/fragment_search_image_button_back"
-                app:layout_constraintEnd_toStartOf="@+id/fragment_search_image_button_tts"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_search_image_button_stt"
                 app:layout_constraintTop_toTopOf="@+id/fragment_search_image_button_back"
                 app:layout_constraintBottom_toBottomOf="@+id/fragment_search_image_button_back"/>
 

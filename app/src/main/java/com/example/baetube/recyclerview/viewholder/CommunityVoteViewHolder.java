@@ -4,7 +4,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baetube.OnRecyclerViewClickListener;
@@ -18,7 +17,7 @@ public class CommunityVoteViewHolder extends RecyclerView.ViewHolder implements 
     public TextView percentage;
     private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
-    public CommunityVoteViewHolder(@NonNull View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
+    public CommunityVoteViewHolder( View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
     {
         super(itemView);
 

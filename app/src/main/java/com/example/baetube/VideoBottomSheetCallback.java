@@ -40,13 +40,13 @@ public class VideoBottomSheetCallback extends BottomSheetBehavior.BottomSheetCal
     }
 
     @Override
-    public void onStateChanged(@NonNull View bottomSheet, int newState)
+    public void onStateChanged( View bottomSheet, int newState)
     {
         state = newState;
     }
     // 선형 보간법을 통해 offset이 0.1 까지 갈 때까지 선형적으로 높이가 줄어드는 형태로 만들어야 한다.
     @Override
-    public void onSlide(@NonNull View bottomSheet, float slideOffset)
+    public void onSlide( View bottomSheet, float slideOffset)
     {
         float interval = 1 - slideOffset;
 

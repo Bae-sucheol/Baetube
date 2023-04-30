@@ -19,12 +19,55 @@ public class CommunityDTO
     private String option;
     private Integer count;
     private Integer selectedChannelId;
+    private String name;
+    private String profile;
 
     // constructor
 
     public CommunityDTO()
     {
         super();
+    }
+
+    public CommunityDTO(Integer communityId, Long contentsId, Integer channelId, Integer likeCount, Integer hateCount, Integer replyCount, String imageUrl, String comment, Timestamp date, Integer voteId, String title, Integer voteOptionId, String option, Integer count, Integer selectedChannelId, String name, String profile)
+    {
+        this.communityId = communityId;
+        this.contentsId = contentsId;
+        this.channelId = channelId;
+        this.likeCount = likeCount;
+        this.hateCount = hateCount;
+        this.replyCount = replyCount;
+        this.imageUrl = imageUrl;
+        this.comment = comment;
+        this.date = date;
+        this.voteId = voteId;
+        this.title = title;
+        this.voteOptionId = voteOptionId;
+        this.option = option;
+        this.count = count;
+        this.selectedChannelId = selectedChannelId;
+        this.name = name;
+        this.profile = profile;
+    }
+
+    public CommunityDTO(Integer communityId, Long contentsId, Integer channelId, Integer likeCount, Integer hateCount, Integer replyCount, String imageUrl, String comment, Timestamp date, Integer voteId, String title, Integer voteOptionId, String option, Integer count, Integer selectedChannelId, String name)
+    {
+        this.communityId = communityId;
+        this.contentsId = contentsId;
+        this.channelId = channelId;
+        this.likeCount = likeCount;
+        this.hateCount = hateCount;
+        this.replyCount = replyCount;
+        this.imageUrl = imageUrl;
+        this.comment = comment;
+        this.date = date;
+        this.voteId = voteId;
+        this.title = title;
+        this.voteOptionId = voteOptionId;
+        this.option = option;
+        this.count = count;
+        this.selectedChannelId = selectedChannelId;
+        this.name = name;
     }
 
     public CommunityDTO(Integer communityId, Long contentsId, Integer channelId, Integer likeCount, Integer hateCount, Integer replyCount, String imageUrl, String comment, Timestamp date, Integer voteId, String title, Integer voteOptionId, String option, Integer count, Integer selectedChannelId)
@@ -90,6 +133,8 @@ public class CommunityDTO
         this.comment = comment;
         this.date = date;
     }
+
+
 
     // getter
     public Integer getCommunityId()
@@ -160,6 +205,16 @@ public class CommunityDTO
         return selectedChannelId;
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
+    public String getProfile()
+    {
+        return profile;
+    }
+
     // setter
     public void setCommunityId(Integer communityId)
     {
@@ -226,5 +281,15 @@ public class CommunityDTO
     public void setSelectedChannelId(Integer selectedChannelId)
     {
         this.selectedChannelId = selectedChannelId;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public void setProfile(String profile)
+    {
+        this.profile = profile;
     }
 }

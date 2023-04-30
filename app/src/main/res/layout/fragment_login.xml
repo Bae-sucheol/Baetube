@@ -72,6 +72,15 @@
                 style="@style/textview_style_normal"
                 android:padding="@dimen/padding_small"/>
 
+            <TextView
+                android:id="@+id/fragment_login_text_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:text="@string/fragment_login_error"
+                android:visibility="gone"
+                style="@style/textview_style_normal" />
+
             <Button
                 android:id="@+id/fragment_login_button_login"
                 android:layout_width="wrap_content"

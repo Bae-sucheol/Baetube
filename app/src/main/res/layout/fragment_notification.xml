@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".fragment.NotificationFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -18,34 +19,22 @@
         layout="@layout/toolbar_no_scroll"
         android:id="@+id/toolbar" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_notification_recyclerview_category"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_small"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/margin_small">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/top_menu_text_style"
-                android:text="test"
-                android:background="@drawable/textview_rounded_rectangle_more" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/top_menu_text_style"
-                android:text="test"
-                android:background="@drawable/textview_rounded_rectangle_more"/>
-
-        </LinearLayout>
+            android:background="@color/white"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_notification_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scroll_behavior" />

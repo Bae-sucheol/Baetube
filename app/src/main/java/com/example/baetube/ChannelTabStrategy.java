@@ -1,7 +1,5 @@
 package com.example.baetube;
 
-import androidx.annotation.NonNull;
-
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -15,7 +13,7 @@ public class ChannelTabStrategy implements TabLayoutMediator.TabConfigurationStr
     }
 
     @Override
-    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position)
+    public void onConfigureTab( TabLayout.Tab tab, int position)
     {
         tab.setText(titles[position]);
     }

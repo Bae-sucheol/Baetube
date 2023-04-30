@@ -1,9 +1,12 @@
 package com.example.baetube.dto;
 
+import java.sql.Timestamp;
+
 public class SubscribersDTO
 {
     private Integer channelId;
     private Integer subscriberId;
+    private Timestamp date;
 
     public SubscribersDTO()
     {
@@ -17,6 +20,13 @@ public class SubscribersDTO
         this.subscriberId = subscriberId;
     }
 
+    public SubscribersDTO(Integer channelId, Integer subscriberId, Timestamp date)
+    {
+        this.channelId = channelId;
+        this.subscriberId = subscriberId;
+        this.date = date;
+    }
+
     // getter
     public Integer getChannelId()
     {
@@ -28,6 +38,11 @@ public class SubscribersDTO
         return subscriberId;
     }
 
+    public Timestamp getDate()
+    {
+        return date;
+    }
+
     // setter
     public void setChannelId(Integer channelId)
     {
@@ -37,5 +52,10 @@ public class SubscribersDTO
     public void setSubscriberId(Integer subscriberId)
     {
         this.subscriberId = subscriberId;
+    }
+
+    public void setDate(Timestamp date)
+    {
+        this.date = date;
     }
 }

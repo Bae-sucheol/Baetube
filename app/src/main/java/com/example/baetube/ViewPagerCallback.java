@@ -1,19 +1,25 @@
 package com.example.baetube;
 
+import android.content.Context;
+
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.baetube.Callback.ReturnableCallback;
 
 public class ViewPagerCallback extends ViewPager2.OnPageChangeCallback
 {
+    private Context context;
     private OnCallbackResponseListener onCallbackResponseListener;
     private OkHttpUtil okHttpUtil;
     private boolean visited[] = new boolean[5];
+    private Integer channelId;
 
-    public ViewPagerCallback(OnCallbackResponseListener onCallbackResponseListener)
+    public ViewPagerCallback(Context context , OnCallbackResponseListener onCallbackResponseListener, Integer channelId)
     {
         super();
+        this.context = context;
         this.onCallbackResponseListener = onCallbackResponseListener;
+        this.channelId = channelId;
     }
 
     @Override
@@ -32,8 +38,7 @@ public class ViewPagerCallback extends ViewPager2.OnPageChangeCallback
 
                 okHttpUtil = new OkHttpUtil();
 
-                // 채널 Id를 기입해야 한다. 지금은 테스트용으로 임의의 값을 넣는다.
-                String url = "http://192.168.0.4:9090/Baetube_backEnd/api/channel/visit/4";
+                String url = context.getString(R.string.api_url_channel_visit)  + channelId;
 
                 ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_VISIT_CHANNEL);
 
@@ -41,7 +46,7 @@ public class ViewPagerCallback extends ViewPager2.OnPageChangeCallback
 
                 // 채널 동영상 정보를 가져온다.
 
-                url = "http://192.168.0.4:9090/Baetube_backEnd/api/video/channel_video/4";
+                url = context.getString(R.string.api_url_video_channel) + channelId;
 
                 returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_CHANNEL_VIDEO);
 
@@ -54,7 +59,7 @@ public class ViewPagerCallback extends ViewPager2.OnPageChangeCallback
 
                 // 채널 동영상 정보를 가져온다.
 
-                url = "http://192.168.0.4:9090/Baetube_backEnd/api/video/channel_video/4";
+                url = context.getString(R.string.api_url_video_channel) + channelId;
 
                 returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_CHANNEL_VIDEO);
 
@@ -67,7 +72,7 @@ public class ViewPagerCallback extends ViewPager2.OnPageChangeCallback
 
                 // 채널 동영상 정보를 가져온다.
 
-                url = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/channel/4";
+                url = context.getString(R.string.api_url_playlist_channel) + channelId;
 
                 returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_PLAYLIST);
 
@@ -80,7 +85,7 @@ public class ViewPagerCallback extends ViewPager2.OnPageChangeCallback
 
                 // 채널 커뮤니티 정보를 가져온다.
 
-                url = "http://192.168.0.4:9090/Baetube_backEnd/api/community/channel_visit/5/4";
+                url = context.getString(R.string.api_url_community_visit) + channelId + "/" + PreferenceManager.getChannelSequence(context.getApplicationContext());
 
                 returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_VISIT_COMMUNITY);
 

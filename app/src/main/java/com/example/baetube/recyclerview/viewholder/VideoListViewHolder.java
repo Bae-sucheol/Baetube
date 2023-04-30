@@ -13,7 +13,7 @@ public class VideoListViewHolder extends RecyclerView.ViewHolder
 {
     public ImageView thumbnail;
 
-    public VideoListViewHolder(@NonNull View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
+    public VideoListViewHolder( View itemView, OnRecyclerViewClickListener onRecyclerViewClickListener)
     {
         super(itemView);
 

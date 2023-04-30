@@ -14,35 +14,15 @@
         android:background="@color/white"
         android:fitsSystemWindows="true">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_channel_video_recyclerview_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_small"
+            android:layout_marginVertical="@dimen/margin_xsmall"
             android:orientation="horizontal"
-            app:layout_scrollFlags="scroll|enterAlways"
-            style="@style/top_menu_style">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/top_menu_text_style"
-                android:text="test"
-                android:background="@drawable/textview_rounded_rectangle_more"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/top_menu_text_style"
-                android:text="test"
-                android:background="@drawable/textview_rounded_rectangle_more"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/top_menu_text_style"
-                android:text="test"
-                android:background="@drawable/textview_rounded_rectangle_more"/>
-
-        </LinearLayout>
+            android:background="@color/white"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,9 +31,9 @@ public class RecyclerViewVideoCheckableAdapter extends RecyclerView.Adapter<Vide
 
     private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
-    @NonNull
+
     @Override
-    public VideoCheckableViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public VideoCheckableViewHolder onCreateViewHolder( ViewGroup parent, int viewType)
     {
         if (context == null)
         {
@@ -51,7 +50,7 @@ public class RecyclerViewVideoCheckableAdapter extends RecyclerView.Adapter<Vide
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VideoCheckableViewHolder holder, int position)
+    public void onBindViewHolder( VideoCheckableViewHolder holder, int position)
     {
         RecyclerViewVideoCheckableItem item = list.get(position);
 
@@ -63,7 +62,7 @@ public class RecyclerViewVideoCheckableAdapter extends RecyclerView.Adapter<Vide
 
         Glide.with(context)
                 .asBitmap()
-                .load("http://192.168.0.4:9090/Baetube_backEnd/api/image/thumbnail/" + item.getVideoDTO().getThumbnail() + ".jpg") // or URI/path
+                .load(context.getString(R.string.api_url_image_thumbnail) + item.getVideoDTO().getThumbnail() + ".jpg") // or URI/path
                 .error(ContextCompat.getDrawable(context, R.drawable.ic_baseline_account_circle_24))
                 .override(holder.thumbnail.getWidth(), holder.thumbnail.getHeight())
                 .centerCrop()
@@ -112,7 +111,7 @@ public class RecyclerViewVideoCheckableAdapter extends RecyclerView.Adapter<Vide
     }
 
     @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    public void onDetachedFromRecyclerView( RecyclerView recyclerView)
     {
         super.onDetachedFromRecyclerView(recyclerView);
         context = null;

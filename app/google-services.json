@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "241378473120",
+    "project_id": "baetube-cfe4a",
+    "storage_bucket": "baetube-cfe4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241378473120:android:6b6febdd2cd0b57efa45c5",
+        "android_client_info": {
+          "package_name": "com.example.baetube"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "241378473120-36e54kcheqtrtoadu53gcfhmmr9d50jt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.baetube",
+            "certificate_hash": "6fcaff8172b59732b39d6364715872534872faaf"
+          }
+        },
+        {
+          "client_id": "241378473120-1sg1fvoj9rvvc1e7n8na0vfoqnjl44ri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAst0y2YKz3Chv_1IiGRNlLt4gUaPhkUME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "241378473120-1sg1fvoj9rvvc1e7n8na0vfoqnjl44ri.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
