@@ -343,7 +343,14 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         //HomeFragment homeFragment = new HomeFragment(onCallbackResponseListener);
         //homeFragment.setActivityResultLauncher(activityResultLauncher);
 
-        fragmentManager.beginTransaction().replace(R.id.activity_main_layout, new HomeFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_HOME).addToBackStack(null).commit();
+        if(PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_ACCESSKEY).equals(PreferenceManager.DEFAULT_VALUE_STRING))
+        {
+            fragmentManager.beginTransaction().replace(R.id.activity_main_layout, new LoginFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_LOGIN).addToBackStack(null).commit();
+        }
+        else
+        {
+            fragmentManager.beginTransaction().replace(R.id.activity_main_layout, new HomeFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_HOME).addToBackStack(null).commit();
+        }
 
         // 프래그먼트 매니저에 HomeFragment를 추가하고 커밋한다. ( 첫 화면 지정 )
         //fragmentManager.beginTransaction().replace(R.id.activity_main_layout, homeFragment).addToBackStack(null).commit();
@@ -1037,7 +1044,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         String url = getString(R.string.api_url_history_delete);
         // 임시로 유저id를 20으로 설정
         HistoryDTO history = new HistoryDTO(20, managedVideoItem.getVideoDTO().getVideoId());
-
 
         ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
 
@@ -2130,7 +2136,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 channel.setProfile(profile);
                 channel.setName(name);
 
-                runOnUiThread(new Runnable(){
+                runOnUiThread(new Runnable()
+                {
                     @Override
                     public void run()
                     {
@@ -2435,6 +2442,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 {
                     ((ModifyCommunityFragment)modifyCommunityFragment).setCommunityData(community);
                 }
+
             }
 
             @Override
