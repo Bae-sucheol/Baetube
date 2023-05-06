@@ -737,6 +737,18 @@ public class UploadActivity extends AppCompatActivity
 
             }
 
+            @Override
+            public void onSelectNewNotifications(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectUserDataResponse(String object)
+            {
+
+            }
+
         };
     }
 

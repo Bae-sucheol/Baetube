@@ -308,6 +308,18 @@ public class MessagingService extends FirebaseMessagingService
 
             }
 
+            @Override
+            public void onSelectNewNotifications(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectUserDataResponse(String object)
+            {
+
+            }
+
         };
 
         // fcm 토큰 저장을 요청한다.

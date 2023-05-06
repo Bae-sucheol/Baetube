@@ -45,6 +45,7 @@ import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.dto.VoteDTO;
 import com.example.baetube.fragment.channel.ChannelBaseFragment;
 import com.example.baetube.fragment.modify.ModifyChannelInformationFragment;
+import com.example.baetube.fragment.modify.ModifyUserInformationFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewCategoryAdapter;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
@@ -60,6 +61,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
 
     private LinearLayout layoutProfile;
     private LinearLayout layoutAccountManage;
+    private LinearLayout layoutChannelManage;
     private LinearLayout layoutMyChannel;
     private LinearLayout layoutLogout;
     private LinearLayout layoutBack;
@@ -91,6 +93,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
 
     private ChannelDTO channel;
 
+    // 알림 관련 요소들
+    private FrameLayout layoutNotification;
+    private TextView textNotificationCount;
+
     public HomeFragment(OnCallbackResponseListener onCallbackResponseListener)
     {
         this.onCallbackResponseListener = onCallbackResponseListener;
@@ -115,12 +121,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
 
         activity.setSupportActionBar(toolbar);
 
+        // 툴바에 알림 레이아웃
+        layoutNotification = (FrameLayout) LayoutInflater.from(getContext()).inflate(R.layout.notification_icon, null);
+
         // 드로워 레이아웃 요소 찾기
         drawerLayout = view.findViewById(R.id.fragment_home_drawer);
 
         // 드로워 메뉴 레이아웃 요소 찾기
         layoutProfile = view.findViewById(R.id.fragment_home_drawer_image_profile_layout);
         layoutAccountManage = view.findViewById(R.id.fragment_home_drawer_account_manage_layout);
+        layoutChannelManage = view.findViewById(R.id.fragment_home_drawer_channel_manage_layout);
         layoutMyChannel = view.findViewById(R.id.fragment_home_drawer_my_channel_layout);
         layoutLogout = view.findViewById(R.id.fragment_home_drawer_logout_layout);
         layoutBack = view.findViewById(R.id.fragment_home_drawer_back_layout);
@@ -131,6 +141,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
         // 클릭 리스너 등록
         layoutProfile.setOnClickListener(this);
         layoutAccountManage.setOnClickListener(this);
+        layoutChannelManage.setOnClickListener(this);
         layoutMyChannel.setOnClickListener(this);
         layoutLogout.setOnClickListener(this);
         layoutBack.setOnClickListener(this);
@@ -226,6 +237,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
 
                     okHttpUtil.sendGetRequest(url, mainVideoCallback);
 
+                    url = getString(R.string.api_url_select_new_notifications);
+
+                    ReturnableCallback newNotificationCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_NEW_NOTIFICATION);
+
+                    okHttpUtil.sendGetRequest(url, newNotificationCallback);
+
                     isCalled = true;
                 }
 
@@ -312,6 +329,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar_main, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.menu_toolbar_notification);
+        menuItem.setActionView(layoutNotification);
+        layoutNotification.setOnClickListener(this);
+        View view = menuItem.getActionView();
+        textNotificationCount = view.findViewById(R.id.notification_count);
     }
 
     @Override
@@ -367,11 +390,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
                 fragmentTransaction.commit();
 
                 break;
-            case R.id.fragment_home_drawer_account_manage_layout :
+
+            case R.id.fragment_home_drawer_channel_manage_layout :
 
                 fragmentManager = getParentFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.activity_main_layout, new ModifyChannelInformationFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_MODIFY_CHANNEL_INFORMATION);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+                break;
+            case R.id.fragment_home_drawer_account_manage_layout :
+
+                fragmentManager = getParentFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.activity_main_layout, new ModifyUserInformationFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_MODIFY_USER_INFORMATION);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
@@ -407,6 +440,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
 
                 break;
 
+            case R.id.notification_icon_layout :
+
+                // 알람 프래그먼트 호출
+                fragmentTransaction = getParentFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.activity_main_layout, new NotificationFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_NOTIFICATION);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
             default :
                 break;
         }
@@ -427,6 +468,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
         okHttpUtil.sendGetRequest(url, returnableCallback);
     }
      */
+
+    public void setNewNotifications(Integer count)
+    {
+        getActivity().runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                textNotificationCount.setVisibility(View.VISIBLE);
+                textNotificationCount.setText(count.toString());
+            }
+        });
+
+    }
 
     private void requestChannelDataAll()
     {

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:layout_marginBottom="@dimen/margin_large"
+    tools:context=".fragment.SignInFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/fragment_modify_user_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <include
+            layout="@layout/toolbar"
+            android:id="@+id/toolbar" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="?attr/actionBarSize"
+        app:layout_behavior="@string/appbar_scroll_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/input_border"
+                android:padding="@dimen/padding_medium"
+                android:layout_margin="@dimen/margin_medium">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/modify_user_email"
+                    style="@style/textview_style_normal"
+                    android:padding="0dp"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    android:textSize="@dimen/textsize_large"/>
+
+                <TextView
+                    android:id="@+id/fragment_modify_user_text_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/textview_style_normal"
+                    android:padding="@dimen/padding_small"/>
+
+                <TextView
+                    android:id="@+id/fragment_modify_user_text_error_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_email"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/modify_user_password"
+                    style="@style/textview_style_normal"
+                    android:padding="0dp"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    android:textSize="@dimen/textsize_large"/>
+
+                <EditText
+                    android:id="@+id/fragment_modify_user_edit_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/modify_user_password_hint"
+                    android:background="@drawable/input_border"
+                    style="@style/textview_style_normal"
+                    android:padding="@dimen/padding_small"/>
+
+                <TextView
+                    android:id="@+id/fragment_modify_user_text_error_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_password"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/modify_user_password_check"
+                    style="@style/textview_style_normal"
+                    android:padding="0dp"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    android:textSize="@dimen/textsize_large"/>
+
+                <EditText
+                    android:id="@+id/fragment_modify_user_edit_password_new"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/modify_user_password_check_hint"
+                    android:background="@drawable/input_border"
+                    style="@style/textview_style_normal"
+                    android:padding="@dimen/padding_small"
+                    android:layout_marginBottom="@dimen/margin_medium"/>
+
+                <TextView
+                    android:id="@+id/fragment_modify_user_text_error_password_check"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_password"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/fragment_modify_user_button_change_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/modify_user_button_text_change_password"
+                    android:layout_margin="@dimen/margin_medium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize_large"
+                    android:backgroundTint="@color/clickable_text_color"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/input_border"
+                android:padding="@dimen/padding_medium"
+                android:layout_margin="@dimen/margin_medium">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/modify_user_name"
+                    style="@style/textview_style_normal"
+                    android:padding="0dp"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    android:textSize="@dimen/textsize_large"/>
+
+                <TextView
+                    android:id="@+id/fragment_modify_user_text_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/textview_style_normal"
+                    android:padding="@dimen/padding_small"/>
+
+                <TextView
+                    android:id="@+id/fragment_modify_user_text_error_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_name"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/modify_user_birth"
+                    style="@style/textview_style_normal"
+                    android:padding="0dp"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    android:textSize="@dimen/textsize_large"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/fragment_modify_user_edit_birth_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input_border"
+                        android:hint="@string/modify_user_birth_year_hint"
+                        style="@style/textview_style_normal"
+                        android:padding="@dimen/padding_small"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/modify_user_birth_year"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/margin_xsmall"
+                        style="@style/textview_style_normal"
+                        android:paddingLeft="0dp"/>
+
+                    <EditText
+                        android:id="@+id/fragment_modify_user_edit_birth_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input_border"
+                        android:hint="@string/modify_user_birth_month_hint"
+                        style="@style/textview_style_normal"
+                        android:padding="@dimen/padding_small"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/modify_user_birth_month"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/margin_xsmall"
+                        style="@style/textview_style_normal"
+                        android:paddingLeft="0dp"/>
+
+                    <EditText
+                        android:id="@+id/fragment_modify_user_edit_birth_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input_border"
+                        android:hint="@string/modify_user_birth_day_hint"
+                        style="@style/textview_style_normal"
+                        android:padding="@dimen/padding_small"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/modify_user_birth_day"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/margin_xsmall"
+                        style="@style/textview_style_normal"
+                        android:paddingLeft="0dp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/fragment_modify_user_text_error_birth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_birth"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/modify_user_birth"
+                    style="@style/textview_style_normal"
+                    android:padding="0dp"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    android:textSize="@dimen/textsize_large"/>
+
+                <RadioGroup
+                    android:id="@+id/fragment_modify_user_radio_group_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/margin_medium">
+
+                    <RadioButton
+                        android:id="@+id/fragment_modify_user_radio_gender_male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/modify_user_gender_male"
+                        android:paddingVertical="@dimen/padding_small"
+                        android:paddingHorizontal="@dimen/padding_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:button="@null"
+                        android:background="@drawable/radio_button_background"/>
+
+                    <RadioButton
+                        android:id="@+id/fragment_modify_user_radio_gender_female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/modify_user_gender_female"
+                        android:paddingVertical="@dimen/padding_small"
+                        android:paddingHorizontal="@dimen/padding_large"
+                        android:button="@null"
+                        android:background="@drawable/radio_button_background"/>
+
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/fragment_modify_user_text_error_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_gender"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/input_border"
+                android:padding="@dimen/padding_medium"
+                android:layout_margin="@dimen/margin_medium">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/modify_user_address"
+                    style="@style/textview_style_normal"
+                    android:padding="0dp"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    android:textSize="@dimen/textsize_large"/>
+
+                <EditText
+                    android:id="@+id/fragment_modify_user_edit_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/modify_user_address_hint"
+                    android:background="@drawable/input_border"
+                    style="@style/textview_style_normal"
+                    android:padding="@dimen/padding_small"/>
+
+                <TextView
+                    android:id="@+id/fragment_modify_user_text_error_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_address"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/modify_user_phone"
+                    style="@style/textview_style_normal"
+                    android:padding="0dp"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    android:textSize="@dimen/textsize_large"/>
+
+                <EditText
+                    android:id="@+id/fragment_modify_user_edit_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/modify_user_phone_hint"
+                    android:background="@drawable/input_border"
+                    style="@style/textview_style_normal"
+                    android:padding="@dimen/padding_small"
+                    android:layout_marginBottom="@dimen/margin_medium"/>
+
+                <TextView
+                    android:id="@+id/fragment_modify_user_text_error_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_xsmall"
+                    android:textColor="@color/red"
+                    android:text="@string/fragment_sign_in_error_phone"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/fragment_modify_user_button_modify_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/modify_user_button_text"
+                android:layout_margin="@dimen/margin_medium"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_large"
+                android:backgroundTint="@color/clickable_text_color"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

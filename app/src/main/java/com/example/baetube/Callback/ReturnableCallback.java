@@ -53,9 +53,13 @@ public class ReturnableCallback implements Callback
     public static final int CALLBACK_SELECT_SEARCH_VIDEO = 39;
     public static final int CALLBACK_SELECT_SEARCH_CHANNEL = 40;
     public static final int CALLBACK_SELECT_CHANNEL_DATA_ALL = 41;
+    public static final int CALLBACK_SELECT_NEW_NOTIFICATION = 42;
+    public static final int CALLBACK_SELECT_USER_DATA = 43;
 
     private static final String EXPIRED_ACCESS_TOKEN = "ExpiredAccessToken";
     private static final String EXPIRED_REFRESH_TOKEN = "ExpiredRefreshTokenException";
+
+    private static boolean isReissuingAccessToken = false;
 
     private OnCallbackResponseListener onCallbackResponseListener;
     private int type;
@@ -65,6 +69,16 @@ public class ReturnableCallback implements Callback
     {
         this.onCallbackResponseListener = onCallbackResponseListener;
         this.type = type;
+
+        if(type == CALLBACK_GENERATE_ACCESS_TOKEN && isReissuingAccessToken)
+        {
+            return;
+        }
+
+        if(type == CALLBACK_GENERATE_ACCESS_TOKEN && !isReissuingAccessToken)
+        {
+            isReissuingAccessToken = true;
+        }
     }
 
     public ReturnableCallback(OnCallbackResponseListener onCallbackResponseListener, int type, String message)
@@ -215,6 +229,7 @@ public class ReturnableCallback implements Callback
 
             case CALLBACK_GENERATE_ACCESS_TOKEN :
                 onCallbackResponseListener.onGeneratedAccessTokenResponse(object);
+                isReissuingAccessToken = false;
                 break;
 
             case CALLBACK_SELECT_CHANNEL_DATA :
@@ -275,6 +290,14 @@ public class ReturnableCallback implements Callback
 
             case CALLBACK_SELECT_CHANNEL_DATA_ALL :
                 onCallbackResponseListener.onSelectChannelDataAllResponse(object);
+                break;
+
+            case CALLBACK_SELECT_NEW_NOTIFICATION :
+                onCallbackResponseListener.onSelectNewNotifications(object);
+                break;
+
+            case CALLBACK_SELECT_USER_DATA :
+                onCallbackResponseListener.onSelectUserDataResponse(object);
                 break;
 
             default :

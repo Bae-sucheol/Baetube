@@ -27,5 +27,6 @@ public class FragmentTagUtil
     public static final String FRAGMENT_TAG_NOTIFICATION = "notification";
     public static final String FRAGMENT_TAG_SEARCH = "search";
     public static final String FRAGMENT_TAG_SEARCH_RESULT = "searchResult";
+    public static final String FRAGMENT_TAG_MODIFY_USER_INFORMATION = "modifyUserInformation";
 
 }

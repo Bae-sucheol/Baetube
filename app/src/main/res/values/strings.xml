@@ -21,6 +21,7 @@
     <string name="fragment_set_age_toolbar_title">시청자층 선택</string>
     <string name="fragment_set_vote_toolbar_title">투표추가</string>
     <string name="fragment_customer_service_toolbar_title">고객센터</string>
+    <string name="fragment_modify_user_toolbar_title">유저 </string>
 
     <string name="bottom_navigation_home">홈</string>
     <string name="bottom_navigation_upload">업로드</string>
@@ -34,6 +35,7 @@
 
     <string name="home_category">카테고리</string>
     <string name="home_drawer_login">로그인</string>
+    <string name="home_drawer_channel_manage">채널 관리</string>
     <string name="home_drawer_account_manage">계정 관리</string>
     <string name="home_drawer_my_channel">내 채널</string>
     <string name="home_drawer_logout">로그아웃</string>
@@ -75,6 +77,29 @@
     <string name="sign_in_phone">전화번호</string>
     <string name="sign_in_phone_hint">전화번호를 - 없이 입력해주세요.</string>
     <string name="sign_in_button_text">회원가입</string>
+
+    <string name="modify_user_email">이메일</string>
+    <string name="modify_user_password">기존 패스워드</string>
+    <string name="modify_user_password_hint">사용중이던 패스워드를 입력해주세요.</string>
+    <string name="modify_user_password_check">변경할 패스워드</string>
+    <string name="modify_user_password_check_hint">변경할 패스워드를 입력해주세요.</string>
+    <string name="modify_user_name">이름</string>
+    <string name="modify_user_birth">생년월일</string>
+    <string name="modify_user_birth_year">년</string>
+    <string name="modify_user_birth_year_hint">2022</string>
+    <string name="modify_user_birth_month">월</string>
+    <string name="modify_user_birth_month_hint">01</string>
+    <string name="modify_user_birth_day">일</string>
+    <string name="modify_user_birth_day_hint">15</string>
+    <string name="modify_user_gender">성별</string>
+    <string name="modify_user_gender_male">남성</string>
+    <string name="modify_user_gender_female">여성</string>
+    <string name="modify_user_address">주소</string>
+    <string name="modify_user_address_hint">클릭하여 주소를 검색하세요.</string>
+    <string name="modify_user_phone">전화번호</string>
+    <string name="modify_user_phone_hint">전화번호를 - 없이 입력해주세요.</string>
+    <string name="modify_user_button_text">수정</string>
+    <string name="modify_user_button_text_change_password">비밀번호 변경</string>
 
     <string name="unsubscribe">구독 취소</string>
 
@@ -383,6 +408,11 @@
     <string name="api_url_search_history_delete">http://192.168.0.4:9090/Baetube_backEnd/api/search_history/delete</string>
     <string name='api_url_search_video'>http://192.168.0.4:9090/Baetube_backEnd/api/video/search/</string>
     <string name='api_url_search_channel'>http://192.168.0.4:9090/Baetube_backEnd/api/channel/search/</string>
+    <string name="api_url_select_new_notifications">http://192.168.0.4:9090/Baetube_backEnd/api/notification/select/new</string>
+    <string name="api_url_notification_check">http://192.168.0.4:9090/Baetube_backEnd/api/notification/check</string>
+    <string name="api_url_select_user_data">http://192.168.0.4:9090/Baetube_backEnd/api/user/data</string>
+    <string name="api_url_change_password">http://192.168.0.4:9090/Baetube_backEnd/api/user/change_password</string>
+    <string name="api_url_user_update">http://192.168.0.4:9090/Baetube_backEnd/api/user/update</string>
 
     <!--
     * 토스트 메시지

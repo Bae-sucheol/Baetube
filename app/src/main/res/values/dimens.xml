@@ -91,4 +91,8 @@
 
     <dimen name="history_detail_bottom_margin">100dp</dimen>
 
+    <!--
+    * 알림 관련 값
+    -->
+    <dimen name="size_notification">18dp</dimen>
 </resources>

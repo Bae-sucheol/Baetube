@@ -146,6 +146,30 @@
       </LinearLayout>
 
       <LinearLayout
+          android:id="@+id/fragment_home_drawer_channel_manage_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:paddingTop="@dimen/margin_xsmall"
+          android:paddingBottom="@dimen/margin_xsmall"
+          android:background="@color/white">
+
+         <ImageView
+             android:layout_width="@dimen/size_icon_small"
+             android:layout_height="@dimen/size_icon_small"
+             android:background="@drawable/ic_baseline_settings_24"
+             android:layout_marginRight="@dimen/margin_small"/>
+
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:gravity="center_vertical"
+             android:text="@string/home_drawer_channel_manage"
+             style="@style/textview_style_home_drawer_normal"/>
+
+      </LinearLayout>
+
+      <LinearLayout
           android:id="@+id/fragment_home_drawer_my_channel_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"

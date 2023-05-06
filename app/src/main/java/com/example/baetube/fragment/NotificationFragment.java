@@ -138,6 +138,8 @@ public class NotificationFragment extends Fragment implements OnRecyclerViewClic
 
         requestVideoNotification();
 
+        requestCheckNotifications();
+
         onFragmentInteractionListener = (OnFragmentInteractionListener) getContext();
 
         setDialogInteractionListener();
@@ -170,6 +172,20 @@ public class NotificationFragment extends Fragment implements OnRecyclerViewClic
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void requestCheckNotifications()
+    {
+        if(okHttpUtil == null)
+        {
+            okHttpUtil = new OkHttpUtil();
+        }
+
+        String url = getString(R.string.api_url_notification_check);
+
+        ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
+
+        okHttpUtil.sendGetRequest(url, returnableCallback);
     }
 
     private void requestVideoNotification()

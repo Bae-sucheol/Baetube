@@ -50,4 +50,6 @@ public interface OnCallbackResponseListener
     public void onSelectSearchVideoResponse(String object);
     public void onSelectSearchChannelResponse(String object);
     public void onSelectChannelDataAllResponse(String object);
+    public void onSelectNewNotifications(String object);
+    public void onSelectUserDataResponse(String object);
 }

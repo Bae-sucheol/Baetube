@@ -105,6 +105,7 @@ import com.example.baetube.fragment.channel.ChannelVideoFragment;
 import com.example.baetube.fragment.modify.ModifyChannelInformationFragment;
 import com.example.baetube.fragment.modify.ModifyCommunityFragment;
 import com.example.baetube.fragment.modify.ModifyPlaylistFragment;
+import com.example.baetube.fragment.modify.ModifyUserInformationFragment;
 import com.example.baetube.fragment.modify.ModifyVideoFragment;
 import com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter;
 import com.example.baetube.recyclerview.item.RecyclerViewNotificationItem;
@@ -1502,6 +1503,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             {
                 // 리프레시 토큰이 유효하여 정상적으로 엑세스 토큰이 발급되었다면 엑세스 토큰을 저장해야 한다.
                 System.out.println("엑세스 토큰이 정상 발급 되었습니다.");
+                System.out.println("object : " + object);
 
                 // Gson의 JsonParser를 사용하여 String을 파싱.
                 JsonParser parser = new JsonParser();
@@ -1521,12 +1523,17 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                 okHttpUtil.sendGetRequest(url, categoryCallback);
 
-                // 지금은 테스트용으로 임의의 값을 넣는다.
                 url = getString(R.string.api_url_video_main);
 
                 ReturnableCallback mainVideoCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_MAIN_VIDEO);
 
                 okHttpUtil.sendGetRequest(url, mainVideoCallback);
+
+                url = getString(R.string.api_url_select_new_notifications);
+
+                ReturnableCallback newNotificationCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_NEW_NOTIFICATION);
+
+                okHttpUtil.sendGetRequest(url, newNotificationCallback);
             }
 
             @Override
@@ -2541,6 +2548,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             @Override
             public void onSelectCategoryResponse(String object)
             {
+                if(object.isEmpty() || object == null)
+                {
+                    return;
+                }
+
                 // 받아온 json 배열을 List로 변환하여 핸들링한다.
                 CategoryDTO[] array = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, CategoryDTO[].class);
                 List<CategoryDTO> categoryList = Arrays.asList(array);
@@ -2813,6 +2825,41 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 if(homeFragment != null)
                 {
                     homeFragment.showChannelSelectDialog(channelList);
+                }
+            }
+
+            @Override
+            public void onSelectNewNotifications(String object)
+            {
+                if(object == null || object.isEmpty())
+                {
+                    return;
+                }
+
+                // 받아온 json 배열을 List로 변환하여 핸들링한다.
+                NotificationDTO[] array = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, NotificationDTO[].class);
+                List<NotificationDTO> notificationList = Arrays.asList(array);
+
+                HomeFragment homeFragment = (HomeFragment) fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_HOME);
+
+                if(homeFragment != null)
+                {
+                    homeFragment.setNewNotifications(notificationList.size());
+                }
+            }
+
+            @Override
+            public void onSelectUserDataResponse(String object)
+            {
+                System.out.println("유저 정보를 받았습니다.");
+
+                UserDTO user = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, UserDTO.class);
+
+                ModifyUserInformationFragment modifyUserInformationFragment = (ModifyUserInformationFragment) fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_MODIFY_USER_INFORMATION);
+
+                if(modifyUserInformationFragment != null)
+                {
+                    modifyUserInformationFragment.setUserData(user);
                 }
             }
 

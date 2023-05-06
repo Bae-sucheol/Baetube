@@ -284,8 +284,12 @@ public class SignInFragment extends Fragment implements View.OnFocusChangeListen
             return false;
         }
 
+        System.out.println("year : " + editBirthYear.getText().toString());
+        System.out.println("month : " + editBirthMonth.getText().toString());
+        System.out.println("day : " + editBirthDay.getText().toString());
+
         // 생년월일 유효성 검사
-        if(!editBirthYear.getText().toString().isEmpty() && !editBirthMonth.getText().toString().isEmpty() && !editBirthDay.getText().toString().isEmpty())
+        if(editBirthYear.getText().toString().isEmpty() || editBirthMonth.getText().toString().isEmpty() || editBirthDay.getText().toString().isEmpty())
         {
             errorBirth.setVisibility(View.VISIBLE);
             errorBirth.requestFocus();
