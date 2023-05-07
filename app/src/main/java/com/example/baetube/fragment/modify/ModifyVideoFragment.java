@@ -178,7 +178,6 @@ public class ModifyVideoFragment extends Fragment implements View.OnClickListene
 
     private void requestUpdateVideo()
     {
-        System.out.println("변경 체크");
         boolean isChanged = false;
 
         currentVideoData.setTitle(editTitle.getText().toString());
@@ -219,8 +218,6 @@ public class ModifyVideoFragment extends Fragment implements View.OnClickListene
         {
             okHttpUtil = new OkHttpUtil();
         }
-
-        System.out.println("변경된 사항이 있으므로 업데이트를 요청합니다.");
 
         String url = getString(R.string.api_url_video_update);
 

@@ -28,6 +28,5 @@ public class DefaultCallback implements Callback
     @Override
     public void onResponse(Call call, Response response) throws IOException
     {
-        System.out.println(message);
     }
 }

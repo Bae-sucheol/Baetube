@@ -128,8 +128,6 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
 
         String url = context.getString(R.string.api_url_reply_select) + contentsId;
 
-        System.out.println("url : " + url);
-
         ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_REPLY);
 
         okHttpUtil.sendGetRequest(url, returnableCallback);
@@ -189,8 +187,6 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
         {
             return;
         }
-
-        System.out.println("다시 불러왔습니다.");
 
         for(int i = 0; i < nestedReplyItems.size(); i++)
         {

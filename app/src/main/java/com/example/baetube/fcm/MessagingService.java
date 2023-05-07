@@ -30,8 +30,6 @@ public class MessagingService extends FirebaseMessagingService
     {
         super.onNewToken(token);
 
-        System.out.println("새로운 fcm 토큰 발급 : " + token);
-
         // SharedPreferences 에 fcm 토큰을 저장한다.
         PreferenceManager.setString(getApplicationContext(), PreferenceManager.PREFERENCES_FCM, token);
 
@@ -212,7 +210,6 @@ public class MessagingService extends FirebaseMessagingService
                 if(result)
                 {
                     // 그냥 토큰을 삭제한다.
-                    System.out.println("저장된 fcm 토큰을 삭제했습니다.");
                     PreferenceManager.removeKey(getApplicationContext(), PreferenceManager.PREFERENCES_FCM);
                 }
                 // 실패했다면 다음 로그인 까지 남겨두어야 하므로 다른 행동을 취하지 않는다.

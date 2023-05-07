@@ -177,7 +177,6 @@ public class ModifyPlaylistFragment extends Fragment implements View.OnClickList
 
     private void requestUpdatePlaylist()
     {
-        System.out.println("변경 체크");
         boolean isChanged = false;
 
         currentPlaylistData.setName(playlistName.getText().toString());
@@ -206,8 +205,6 @@ public class ModifyPlaylistFragment extends Fragment implements View.OnClickList
         {
             okHttpUtil = new OkHttpUtil();
         }
-
-        System.out.println("변경된 사항이 있으므로 업데이트를 요청합니다.");
 
         String url = getString(R.string.api_url_playlist_update);
 

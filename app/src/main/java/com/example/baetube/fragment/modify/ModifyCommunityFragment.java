@@ -111,10 +111,7 @@ public class ModifyCommunityFragment extends Fragment implements View.OnClickLis
             okHttpUtil = new OkHttpUtil();
         }
 
-        System.out.println("정보를 요청합니다.");
-
         String url = getString(R.string.api_url_community_data) + sourceCommunityData.getCommunityId();
-        System.out.println("url : " + url);
         ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_COMMUNITY_DATA);
         okHttpUtil.sendGetRequest(url, returnableCallback);
     }
@@ -225,7 +222,6 @@ public class ModifyCommunityFragment extends Fragment implements View.OnClickLis
 
     private void requestUpdateCommunity()
     {
-        System.out.println("변경 체크");
         boolean isChanged = false;
 
         currentCommunityData.setTitle(editTitle.getText().toString());
@@ -254,8 +250,6 @@ public class ModifyCommunityFragment extends Fragment implements View.OnClickLis
         {
             okHttpUtil = new OkHttpUtil();
         }
-
-        System.out.println("변경된 사항이 있으므로 업데이트를 요청합니다.");
 
         String url = getString(R.string.api_url_community_update);
 

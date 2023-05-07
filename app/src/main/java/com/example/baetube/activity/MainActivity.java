@@ -278,9 +278,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         Intent intent = result.getData();
                         Uri uri = intent.getData();
 
-                        System.out.println("Uri : " + uri);
-                        System.out.println("path : " + uri.getPath());
-
                         // /document/raw:경로 로 시작하기 때문에 그냥 넘기면 에러를 발생시켜 :를 구분자로 하여 2개로 나누어 뒷 부분을 경로로 사용한다.
                         //String filePaths[] = uri.getPath().split(":", 2);
 
@@ -335,8 +332,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         UserDisplay.setDensity(displayMetrics.density);
 
         setOnCallbackResponseListener();
-
-        System.out.println("다시 시작!");
 
         // 프래그먼트 매니저를 지정
         fragmentManager = getSupportFragmentManager();
@@ -420,7 +415,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                     case R.id.menu_bottom_navigation_subscribe:
                         fragmentManager.beginTransaction().replace(R.id.activity_main_layout, new SubscribeFragment(onCallbackResponseListener),
                                 getResources().getString(R.string.fragment_tag_subscribe)).commit();
-                        System.out.println("프래그먼트 커밋");
                         break;
                     // 보관함 아이콘 클릭 시 해당 프래그머늩로 리플레이스
                     case R.id.menu_bottom_navigation_storage:
@@ -611,8 +605,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         // fcm 서비스를 위한 Intent 실행
         Intent fcmIntent = new Intent(this, MessagingService.class);
         startService(fcmIntent);
-
-        System.out.println("저장된 fcm토큰 : " + PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_FCM));
     }
 
     @Override
@@ -699,8 +691,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         switch (view.getId())
         {
             case R.id.recyclerview_reply_layout_nested_reply :
-
-                System.out.println("클릭했다!");
 
                 break;
         }
@@ -1440,7 +1430,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                     //Toast.makeText(getApplicationContext(), "error : " + response.message(), Toast.LENGTH_LONG).show();
                 } else
                 {
-                    System.out.println("요청이 성공적으로 완료되었습니다.");
                     //Toast.makeText(getApplicationContext(), "요청이 성공적으로 완료되었습니다.", Toast.LENGTH_LONG).show();
                 }
 
@@ -1485,7 +1474,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             public void onExpiredRefreshTokenResponse()
             {
                 // 리프레시 토큰마저 만료되었다면 로그인 화면을 출력하여 로그인 후 토큰을 재발급 받을 수 있도록 한다.
-                System.out.println("저장된 fcm 토큰 === : " + PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_FCM));
 
                 if(!isCallLogin)
                 {
@@ -1502,8 +1490,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             public void onGeneratedAccessTokenResponse(String object)
             {
                 // 리프레시 토큰이 유효하여 정상적으로 엑세스 토큰이 발급되었다면 엑세스 토큰을 저장해야 한다.
-                System.out.println("엑세스 토큰이 정상 발급 되었습니다.");
-                System.out.println("object : " + object);
 
                 // Gson의 JsonParser를 사용하여 String을 파싱.
                 JsonParser parser = new JsonParser();
@@ -1513,8 +1499,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 PreferenceManager.removeKey(getApplicationContext(), PreferenceManager.PREFERENCES_ACCESSKEY);
                 String accessToken = element.getAsJsonObject().get("accessToken").getAsString();
                 PreferenceManager.setString(getApplicationContext(), PreferenceManager.PREFERENCES_ACCESSKEY, accessToken);
-
-                System.out.println("엑세스 토큰 재발급 완료.");
 
                 // 엑세스 토큰 발급이 완료되면 동영상을 다시 요청해야 한다.
                 String url = getString(R.string.api_url_category_select);
@@ -1559,12 +1543,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                     PreferenceManager.setString(getApplicationContext(), PreferenceManager.PREFERENCES_ACCESSKEY, accessToken);
                     PreferenceManager.setString(getApplicationContext(), PreferenceManager.PREFERENCES_REFRESHKEY, refreshToken);
 
-                    System.out.println("로그인이 성공적으로 완료되었습니다.");
-
                     // 만약 FCM 토큰으로 등록되어 있는 것이 있다면
                     // default value 가 아니므로 FCM 토큰으로 등록된 것이 있다는 의미가 된다.
                     String fcmToken = PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_FCM);
-                    System.out.println("fcmToken : " + fcmToken);
 
                     if(!fcmToken.equals(PreferenceManager.DEFAULT_VALUE_STRING))
                     {
@@ -1597,7 +1578,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             public void onVisitChannelResponse(String object)
             {
                 // 채널을 방문하면 방문한 채널 정보를 출력해줘야 한다.
-                System.out.println("object 출력 : " + object);
 
                 // 받아온 json 배열을 List로 변환하여 핸들링한다.
                 ChannelDTO channel = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, ChannelDTO.class);
@@ -1620,7 +1600,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             @Override
             public void onSubscribersChannelResponse(String object)
             {
-                System.out.println("Subscribers 요청수신.");
                 // 구독한 채널의 채널 id, 채널명, 프로필 이미지를 반환한다.
                 // 구독한 채널 목록을 출력하는 목적.
 
@@ -1629,8 +1608,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 // 받아온 json 배열을 List로 변환하여 핸들링한다.
                 ChannelDTO[] array = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, ChannelDTO[].class);
                 List<ChannelDTO> channelList = Arrays.asList(array);
-
-                System.out.println("구독 정보 개수 : " + channelList.size());
 
                 // 구독 프래그먼트를 태그를 통해 가져온다
                 Fragment fragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_SUBSCRIBE);
@@ -1684,8 +1661,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 // 받아온 json 배열을 List로 변환하여 핸들링한다.
                 NestedReplyDTO[] array = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, NestedReplyDTO[].class);
                 List<NestedReplyDTO> nestedReplyList = Arrays.asList(array);
-
-                System.out.println("값을 전달합니다. - " + nestedReplyList.size());
 
                 replyView.setRecyclerViewNestedReply(nestedReplyList);
             }
@@ -2214,9 +2189,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                     String like = element.getAsJsonObject().get("like").getAsString();
                     String hate = element.getAsJsonObject().get("hate").getAsString();
 
-                    System.out.println("like : " + like);
-                    System.out.println("hate : " + hate);
-
                     likeCount.setText(like);
                     hateCount.setText(hate);
                 }
@@ -2225,7 +2197,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             @Override
             public void onSubscribeResponse(String object)
             {
-                System.out.println("구독했습니다.");
                 runOnUiThread(new Runnable()
                 {
                     @Override
@@ -2240,7 +2211,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             @Override
             public void onUnSubscribeResponse(String object)
             {
-                System.out.println("구독을 취소 했습니다.");
                 runOnUiThread(new Runnable()
                 {
                     @Override

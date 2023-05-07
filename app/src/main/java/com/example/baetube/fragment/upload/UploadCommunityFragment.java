@@ -218,7 +218,6 @@ public class UploadCommunityFragment extends Fragment implements View.OnClickLis
             public void onResponseDescription(String str)
             {
                 community.setComment(str);
-                System.out.println(str);
             }
 
             @Override

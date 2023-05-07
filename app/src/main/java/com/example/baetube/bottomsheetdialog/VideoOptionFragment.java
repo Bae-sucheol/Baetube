@@ -30,7 +30,6 @@ public class VideoOptionFragment extends BaseOptionFragment implements OnRecycle
         switch (position)
         {
             case 0 :
-                System.out.println("나중에 볼 동영상에 저장!");
                 break;
 
             case 1 :

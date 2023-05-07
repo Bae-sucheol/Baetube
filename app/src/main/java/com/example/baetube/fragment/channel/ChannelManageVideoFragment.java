@@ -100,8 +100,6 @@ public class ChannelManageVideoFragment extends Fragment implements OnRecyclerVi
     {
         super.onViewCreated(view, savedInstanceState);
 
-        System.out.println("정보를 요청했습니다.");
-
         okHttpUtil = new OkHttpUtil();
 
         // 채널 동영상 정보를 가져온다.

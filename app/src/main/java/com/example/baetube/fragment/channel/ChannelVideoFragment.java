@@ -151,8 +151,6 @@ public class ChannelVideoFragment extends Fragment implements OnRecyclerViewClic
             item.setVideoDTO(videoList.get(i));
             item.setChannelDTO(channelList.get(i));
 
-            System.out.println("title : " + videoList.get(i).getName());
-
             list.add(item);
         }
 

@@ -228,7 +228,6 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
 
                 HistoryVideoOptionManageFragment historyVideoOptionManageFragment = new HistoryVideoOptionManageFragment(getContext(), adapter, list, position);
                 historyVideoOptionManageFragment.show(getParentFragmentManager(), historyVideoOptionManageFragment.getTag());
-                System.out.println("했는뎅...");
                 ((MainActivity)getContext()).setManagedVideoItem(list.get(position));
 
                 break;

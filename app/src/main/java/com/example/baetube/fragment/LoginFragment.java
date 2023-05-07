@@ -108,8 +108,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener
                 user.setEmail(email);
                 user.setPassword(password);
 
-                System.out.println("로그인 요청");
-
                 String url = getString(R.string.api_url_user_login);
 
                 ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_LOGIN_USER);

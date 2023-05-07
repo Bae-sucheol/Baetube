@@ -244,11 +244,7 @@ public class UploadActivity extends AppCompatActivity
             @Override
             public void onResponseCommunityInformation(CommunityDTO communityData)
             {
-                System.out.println("여기서 적용이 되나요?");
-                System.out.println("communityData : " + communityData.getComment());
                 communityInformation = communityData;
-
-                System.out.println("communityInformation : " + communityInformation.getComment());
             }
 
             @Override
@@ -377,7 +373,6 @@ public class UploadActivity extends AppCompatActivity
                 // 투표 삽입까지 완벽하게 진행되었다면.
                 if(response.isSuccessful())
                 {
-                    System.out.println("삽입 완료.");
                 }
             }
 
@@ -498,7 +493,6 @@ public class UploadActivity extends AppCompatActivity
             @Override
             public void onInsertResponse(String object)
             {
-                System.out.println("response : " + object);
 
                 okHttpUtil = new OkHttpUtil();
 
@@ -514,7 +508,6 @@ public class UploadActivity extends AppCompatActivity
                 JsonElement element = parser.parse(object);
 
                 String insertType = element.getAsJsonObject().get("insertType").getAsString();
-                System.out.println("insert type : " + insertType);
 
                 // 동영상 삽입 요청 후 받는 반환값 처리
                 if(insertType.equals("video"))

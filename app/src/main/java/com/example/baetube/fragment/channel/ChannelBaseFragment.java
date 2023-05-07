@@ -56,7 +56,7 @@ public class ChannelBaseFragment extends Fragment
     {
         this.onCallbackResponseListener = onCallbackResponseListener;
         onPageChangeCallback = new ViewPagerCallback(context, onCallbackResponseListener, channelId);
-        System.out.println("채널 id : " + channelId);
+
     }
 
     @Override

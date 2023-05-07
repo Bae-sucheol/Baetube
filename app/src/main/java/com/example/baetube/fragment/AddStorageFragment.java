@@ -99,7 +99,6 @@ public class AddStorageFragment extends Fragment implements OnRecyclerViewClickL
             public void onAddVoteResponse(String playlistTitle)
             {
                 // 여기에 재생목록 업로드 요청.
-                System.out.println("재생목록 업로드 요청");
 
                 if(okHttpUtil == null)
                 {

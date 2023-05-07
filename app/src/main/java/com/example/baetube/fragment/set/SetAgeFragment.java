@@ -135,7 +135,6 @@ public class SetAgeFragment extends Fragment implements View.OnClickListener, Ra
 
                 // 체크한 항목을 검사하여 적용한다.
                 applyToPolicy();
-                System.out.println("age : " + age);
                 onSetFragmentListener.onResponseAge(age);
 
                 break;

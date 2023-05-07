@@ -26,6 +26,7 @@ import com.example.baetube.FragmentTagUtil;
 import com.example.baetube.OkHttpUtil;
 import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.OnRecyclerViewClickListener;
+import com.example.baetube.PreferenceManager;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
 import com.example.baetube.dto.CategoryDTO;
@@ -395,7 +396,7 @@ public class SubscribeDetailFragment extends Fragment implements OnRecyclerViewC
             okHttpUtil = new OkHttpUtil();
         }
 
-        String url = getString(R.string.api_url_unsubscribe) + 0;
+        String url = getString(R.string.api_url_unsubscribe) + PreferenceManager.getString(getContext().getApplicationContext(), PreferenceManager.PREFERENCES_CHANNEL_SEQUENCE);
 
         List<SubscribersDTO> subscribers = new ArrayList<>();
 
@@ -403,8 +404,6 @@ public class SubscribeDetailFragment extends Fragment implements OnRecyclerViewC
         {
             SubscribersDTO subscriber = new SubscribersDTO();
             subscriber.setChannelId(selectedList.get(i).getChannelDTO().getChannelId());
-            // 임시로 5로 설정
-            //subscriber.setSubscriberId(5);
 
             subscribers.add(subscriber);
         }
@@ -433,14 +432,12 @@ public class SubscribeDetailFragment extends Fragment implements OnRecyclerViewC
             okHttpUtil = new OkHttpUtil();
         }
 
-        String url = getString(R.string.api_url_unsubscribe) + 0;
+        String url = getString(R.string.api_url_unsubscribe) + PreferenceManager.getString(getContext().getApplicationContext(), PreferenceManager.PREFERENCES_CHANNEL_SEQUENCE);;
 
         List<SubscribersDTO> subscribers = new ArrayList<>();
 
         SubscribersDTO subscriber = new SubscribersDTO();
         subscriber.setChannelId(subscribeList.get(position).getChannelDTO().getChannelId());
-        // 임시로 5로 설정
-        subscriber.setSubscriberId(5);
         subscribers.add(subscriber);
 
         ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_UNSUBSCRIBE);

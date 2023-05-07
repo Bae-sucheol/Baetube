@@ -73,7 +73,6 @@ public class ModifyUserInformationFragment extends Fragment implements View.OnFo
     private Integer gender;
 
     private UserDTO currentUserData;
-    private UserDTO sourceUserData;
 
     public ModifyUserInformationFragment(OnCallbackResponseListener onCallbackResponseListener)
     {
@@ -328,8 +327,6 @@ public class ModifyUserInformationFragment extends Fragment implements View.OnFo
         {
             case android.R.id.home :
 
-                System.out.println("클릭했어용");
-
                 getParentFragmentManager().popBackStack();
 
         }
@@ -399,8 +396,6 @@ public class ModifyUserInformationFragment extends Fragment implements View.OnFo
     public void setUserData(UserDTO user)
     {
         currentUserData = user;
-        sourceUserData = new UserDTO(user.getUserId(), user.getEmail(), user.getPassword(), user.getName(), user.getGender(),
-                user.getBirth(), user.getFcmToken(), user.getPhone(), user.getAddress(), user.getRegDate());
 
         getActivity().runOnUiThread(new Runnable()
         {

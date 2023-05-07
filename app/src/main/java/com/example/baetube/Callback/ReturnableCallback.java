@@ -69,16 +69,6 @@ public class ReturnableCallback implements Callback
     {
         this.onCallbackResponseListener = onCallbackResponseListener;
         this.type = type;
-
-        if(type == CALLBACK_GENERATE_ACCESS_TOKEN && isReissuingAccessToken)
-        {
-            return;
-        }
-
-        if(type == CALLBACK_GENERATE_ACCESS_TOKEN && !isReissuingAccessToken)
-        {
-            isReissuingAccessToken = true;
-        }
     }
 
     public ReturnableCallback(OnCallbackResponseListener onCallbackResponseListener, int type, String message)
@@ -105,13 +95,11 @@ public class ReturnableCallback implements Callback
         // 관련 메소드를 실행시킨다.
         if(header.equals(EXPIRED_ACCESS_TOKEN) && type != CALLBACK_GENERATE_ACCESS_TOKEN)
         {
-            System.out.println("엑세스토큰 만료 에러");
             onCallbackResponseListener.onExpiredAccessTokenResponse();
             return;
         }
         else if(header.equals(EXPIRED_REFRESH_TOKEN))
         {
-            System.out.println("리프레시 토큰 만료 에러");
             onCallbackResponseListener.onExpiredRefreshTokenResponse();
             return;
         }
@@ -151,7 +139,6 @@ public class ReturnableCallback implements Callback
                 break;
 
             case CALLBACK_SELECT_CHANNEL_VIDEO :
-                System.out.println("내용 : " + object);
                 onCallbackResponseListener.onSelectChannelVideoResponse(object);
                 break;
 
@@ -305,5 +292,20 @@ public class ReturnableCallback implements Callback
                 break;
         }
 
+    }
+
+    public static boolean isReissuingAccessToken()
+    {
+        return isReissuingAccessToken;
+    }
+
+    public static void setIsReissuingAccessToken(boolean bool)
+    {
+        isReissuingAccessToken = bool;
+    }
+
+    public int getType()
+    {
+        return type;
     }
 }

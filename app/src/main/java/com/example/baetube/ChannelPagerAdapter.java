@@ -90,28 +90,24 @@ public class ChannelPagerAdapter extends FragmentStateAdapter
 
                 channelHomeFragment = new ChannelHomeFragment(onCallbackResponseListener);
                 fragment = channelHomeFragment;
-                System.out.println("channelHomeFragment");
 
                 break;
             case 1 :
 
                 channelVideoFragment = new ChannelVideoFragment(onCallbackResponseListener);
                 fragment = channelVideoFragment;
-                System.out.println("channelVideoFragment");
 
                 break;
             case 2 :
 
                 channelPlaylistFragment = new ChannelPlaylistFragment(onCallbackResponseListener);
                 fragment = channelPlaylistFragment;
-                System.out.println("channelPlaylistFragment");
 
                 break;
             case 3 :
 
                 channelCommunityFragment = new ChannelCommunityFragment(onCallbackResponseListener);
                 fragment = channelCommunityFragment;
-                System.out.println("channelCommunityFragment");
 
                 break;
 
@@ -119,7 +115,6 @@ public class ChannelPagerAdapter extends FragmentStateAdapter
 
                 channelInfomationFragment = new ChannelInfomationFragment(onCallbackResponseListener);
                 fragment = channelInfomationFragment;
-                System.out.println("channelInformationFragment");
 
                 break;
             default :

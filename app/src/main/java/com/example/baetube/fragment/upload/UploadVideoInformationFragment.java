@@ -327,7 +327,6 @@ public class UploadVideoInformationFragment extends Fragment implements View.OnC
             @Override
             public void onResponseAge(Integer value)
             {
-                System.out.println("업로드 요청");
                 onUploadDataListener.onResponseVideoAge(value);
                 onUploadDataListener.onResponseUploadVideoRequest();
             }

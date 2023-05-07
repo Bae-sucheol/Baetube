@@ -211,7 +211,6 @@ public class SubscribeFragment extends Fragment implements OnRecyclerViewClickLi
                 {
                     // 현재 화면에 전부 보이는 첫 번째 뷰의 어댑터 위치를 반환한다.
                     int position = linearLayoutManagerVideo.findFirstCompletelyVisibleItemPosition();
-                    System.out.println("리사이클러뷰 비디오 리스트 포지션 : " + position);
 
                     if(position != 0)
                     {

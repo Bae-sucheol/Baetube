@@ -191,22 +191,18 @@ public class ModifyChannelInformationFragment extends Fragment implements View.O
         // 채널 이름이 변경되었는지 확인
         if(!sourceChannelData.getName().equals(currentChannelData.getName()))
         {
-            System.out.println("이름이 변경되었습니다.");
             isChanged = true;
         }
         if(!sourceChannelData.getDescription().equals(currentChannelData.getDescription()))
         {
-            System.out.println("정보가 변경되었습니다.");
             isChanged = true;
         }
         if(!sourceChannelData.getArts().equals(currentChannelData.getArts()))
         {
-            System.out.println("채널 아트가 변경되었습니다.");
             isChanged = true;
         }
         if(!sourceChannelData.getProfile().equals(currentChannelData.getProfile()))
         {
-            System.out.println("프로필이 변경되었습니다.");
             isChanged = true;
         }
 
@@ -275,7 +271,6 @@ public class ModifyChannelInformationFragment extends Fragment implements View.O
 
     public void setChannelData(ChannelDTO data)
     {
-        System.out.println("채널 데이터 적용");
 
         getActivity().runOnUiThread(new Runnable()
         {

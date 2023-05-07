@@ -413,6 +413,8 @@
     <string name="api_url_select_user_data">http://192.168.0.4:9090/Baetube_backEnd/api/user/data</string>
     <string name="api_url_change_password">http://192.168.0.4:9090/Baetube_backEnd/api/user/change_password</string>
     <string name="api_url_user_update">http://192.168.0.4:9090/Baetube_backEnd/api/user/update</string>
+    <string name="api_url_vote_cancel">http://192.168.0.4:9090/Baetube_backEnd/api/vote/cancel</string>
+    <string name="api_url_vote_cast">http://192.168.0.4:9090/Baetube_backEnd/api/vote/cast</string>
 
     <!--
     * 토스트 메시지

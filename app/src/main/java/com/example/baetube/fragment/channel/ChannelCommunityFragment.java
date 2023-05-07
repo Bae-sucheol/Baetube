@@ -150,9 +150,6 @@ public class ChannelCommunityFragment extends Fragment implements OnRecyclerView
                 ChannelBaseFragment channelBaseFragment = (ChannelBaseFragment)getParentFragment();
                 ChannelDTO myChannel = channelBaseFragment.getMyChannel();
 
-                System.out.println("channelId : " + list.get(position).getChannelDTO().getChannelId());
-                System.out.println("myChannelId : " + myChannel.getChannelId());
-
                 if(list.get(position).getChannelDTO().getChannelId() == myChannel.getChannelId())
                 {
                     CommunityOptionManageFragment communityOptionManageFragment = new CommunityOptionManageFragment(getContext(), onDialogInteractionListener);
@@ -227,20 +224,16 @@ public class ChannelCommunityFragment extends Fragment implements OnRecyclerView
         // 임시로 사용.
         voteData.setCommunityId(4);
 
-        System.out.println("channelId : " + voteData.getCommunityId());
-        System.out.println("voteId : " + voteData.getVoteId());
-        System.out.println("voteOptionId : " + voteData.getVoteOptionId());
-
         // 임시로 하드코딩.
         String url;
 
         if(isCancel)
         {
-            url = "http://192.168.0.4:9090/Baetube_backEnd/api/vote/cancel";
+            url = getString(R.string.api_url_vote_cancel);
         }
         else
         {
-            url = "http://192.168.0.4:9090/Baetube_backEnd/api/vote/cast";
+            url = getString(R.string.api_url_vote_cast);
         }
 
 
