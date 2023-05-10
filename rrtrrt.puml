@@ -1,0 +1,180 @@
+@startuml
+class com.example.baetube.activity.ReturnableCallback {
++ {static} int CALLBACK_NONE
++ {static} int CALLBACK_LOGIN_USER
++ {static} int CALLBACK_VISIT_CHANNEL
++ {static} int CALLBACK_SUBSCRIBERS_CHANNEL
++ {static} int CALLBACK_VISIT_COMMUNITY
++ {static} int CALLBACK_SELECT_REPLY
++ {static} int CALLBACK_SELECT_NESTED_REPLY
++ {static} int CALLBACK_SELECT_PLAYLIST
++ {static} int CALLBACK_SELECT_SEARCH_HISTORY
++ {static} int CALLBACK_SELECT_CHANNEL_VIDEO
++ {static} int CALLBACK_SELECT_HISTORY_VIDEO
++ {static} int CALLBACK_SELECT_MAIN_VIDEO
++ {static} int CALLBACK_SELECT_PLAYLIST_VIDEO
++ {static} int CALLBACK_SELECT_SUBSCRIBE_VIDEO
++ {static} int CALLBACK_SELECT_VIEW_VIDEO
++ {static} int CALLBACK_SELECT_VOTE_OPTION
++ {static} int CALLBACK_SELECT_SUBSCRIBE
++ {static} int CALLBACK_INSERT
++ {static} int CALLBACK_RATE
++ {static} int CALLBACK_SUBSCRIBE
++ {static} int CALLBACK_UNSUBSCRIBE
++ {static} int CALLBACK_REPLY
++ {static} int CALLBACK_NESTED_REPLY
++ {static} int CALLBACK_SIGN_IN
++ {static} int CALLBACK_SELECT_RELATED_VIDEO
++ {static} int CALLBACK_SAVE_FCM_TOKEN
++ {static} int CALLBACK_GENERATE_ACCESS_TOKEN
++ {static} int CALLBACK_SELECT_CHANNEL_DATA
++ {static} int CALLBACK_UPDATE_CHANNEL
++ {static} int CALLBACK_SELECT_COMMUNITY_DATA
++ {static} int CALLBACK_UPDATE_COMMUNITY
++ {static} int CALLBACK_SELECT_VIDEO_DATA
++ {static} int CALLBACK_UPDATE_VIDEO
++ {static} int CALLBACK_SELECT_PLAYLIST_DATA
++ {static} int CALLBACK_UPDATE_PLAYLIST
++ {static} int CALLBACK_SELECT_CATEGORY
++ {static} int CALLBACK_SELECT_SUBSCRIBERS_COMMUNITY
++ {static} int CALLBACK_SELECT_COMMUNITY_NOTIFICATION
++ {static} int CALLBACK_SELECT_VIDEO_NOTIFICATION
++ {static} int CALLBACK_SELECT_SEARCH_VIDEO
++ {static} int CALLBACK_SELECT_SEARCH_CHANNEL
++ {static} int CALLBACK_SELECT_CHANNEL_DATA_ALL
++ {static} int CALLBACK_SELECT_NEW_NOTIFICATION
++ {static} int CALLBACK_SELECT_USER_DATA
+- {static} String EXPIRED_ACCESS_TOKEN
+- {static} String EXPIRED_REFRESH_TOKEN
+- {static} boolean isReissuingAccessToken
+- OnCallbackResponseListener onCallbackResponseListener
+- int type
+- String message
++ void onFailure(Call,IOException)
++ void onResponse(Call,Response)
++ {static} boolean isReissuingAccessToken()
++ {static} void setIsReissuingAccessToken(boolean)
++ int getType()
+}
+class com.example.baetube.activity.MainActivity {
+- BottomNavigationView bottomNavigationView
+- int navigationHeight
+- int bottomBarHeight
+- FragmentManager fragmentManager
+- CoordinatorLayout bottomSheetVideo
+- BottomSheetBehavior bottomSheetVideoBehavior
+- VideoBottomSheetCallback videoBottomSheetCallback
+- int bottomSheetPeekHeight
+- StyledPlayerView player
+- TextView title
+- TextView viewCount
+- TextView date
+- TextView buttonSubscribe
+- TextView channelName
+- TextView subscribeCount
+- TextView replyCount
+- TextView likeCount
+- TextView hateCount
+- ImageView buttonDetail
+- ImageView thumbUp
+- ImageView thumbDown
+- ImageView addLibrary
+- ImageView channelProfile
+- ImageView profile
+- ImageView bottomsheetPlayerPlayButton
+- ImageView bottomsheetPlayerCloseButton
+- EditText reply
+- ConstraintLayout layoutWriteReply
+- CoordinatorLayout layoutDescription
+- ConstraintLayout layoutMinMenu
+- ExoPlayer exoPlayer
+- boolean isCallLogin
+- RecyclerView relatedVideoRecyclerView
+- RecyclerViewVideoAdapter relatedVideoAdapter
+- ArrayList<RecyclerViewVideoItem> relatedVideoList
+- FrameLayout bottomSheetSub
+- BottomSheetBehavior bottomSheetSubBehavior
+- OnCallbackResponseListener onCallbackResponseListener
+- StyledPlayerView focusedPlayer
+- ImageView focusedThumbnail
+- RecyclerViewVideoItem currentVideoItem
+- ReplyView replyView
+- DescriptionView descriptionView
+- ImageView playerPlayButton
+- ImageView playerPauseButton
+- ImageView playerFullscreenButton
+- ImageView playerSeekBack
+- ImageView playerSeekForward
+- ImageView playerOptionButton
+- GestureDetector.SimpleOnGestureListener simpleOnGestureListener
+- GestureDetector gestureDetector
+- int playerControllerVisibility
+- int playerScreenMode
+- OnDialogInteractionListener onDialogInteractionListener
+- String playerUrl
+- String currentPlayerResolution
+- OkHttpUtil okHttpUtil
+- ConstraintLayout layoutKeyboardEdit
+- ImageButton keyboardEditButton
+- EditText keyboardEditInput
+- KeyboardState.HeightListener heightListener
+- boolean isReplyFocused
+- RecyclerViewReplyItem currentReplyItem
+- RecyclerViewVideoItem managedVideoItem
++ ActivityResultLauncher<Intent> activityResultLauncher
+# void onCreate(Bundle)
++ void onBackPressed()
++ void setManagedVideoItem(RecyclerViewVideoItem)
++ void onVideoItemClick(RecyclerViewVideoItem)
++ void onCompletelyVisible(FrameLayout,String)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setRelatedVideoRecyclerView(List<VideoDTO>)
++ void onClick(View)
++ void requestSelectPlaylist()
+- void requestViewVideo(Integer)
+- void requestSelectSubscribe(Integer)
++ void requestDeleteVideo()
++ void requestDeleteHistoryVideo()
++ void requestSignIn(UserDTO)
++ void requestRelatedVideo(Integer)
++ void requestSaveFCMToken(String)
+- void setBottomSheetVideoInfo(VideoDTO,ChannelDTO)
++ void requestChannelData()
+- void resetView()
+- void attachReplyView()
+- void attachDescriptionView(RecyclerViewVideoItem)
++ void onSlide(View,float)
++ void onAttachViewClick(View)
+# void onStart()
+# void onResume()
+# void onPause()
+# void onStop()
+- void initializePlayer(StyledPlayerView)
+- void releasePlayer(StyledPlayerView)
+- void initializeExoPlayer()
+- void setMediaSource(String,String)
+- void releaseExoPlayer()
++ void setCurrentReplyData(RecyclerViewReplyItem)
++ void requestAddPlaylist(List<PlaylistDTO>)
++ void commitModifyVideoFragment(Integer)
+- void setOnDialogInteractionListener()
+- void setSimpleOnGestureListener()
+- void setOnCallbackResponseListener()
++ void relatedVideoRecyclerView(List<VideoDTO>,ArrayList<ChannelDTO>)
++ void onFocusChange(View,boolean)
+- String getRealPathFromURI(Uri)
++ void setBottomNavigationViewVisible(int)
+}
+
+
+okhttp3.Callback <|.. com.example.baetube.activity.ReturnableCallback
+com.example.baetube.OnFragmentInteractionListener <|.. com.example.baetube.activity.MainActivity
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.activity.MainActivity
+com.example.baetube.activity.OnClickListener <|.. com.example.baetube.activity.MainActivity
+com.example.baetube.OnBottomSheetInteractionListener <|.. com.example.baetube.activity.MainActivity
+com.example.baetube.OnAttachViewListener <|.. com.example.baetube.activity.MainActivity
+com.example.baetube.activity.OnFocusChangeListener <|.. com.example.baetube.activity.MainActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.baetube.activity.MainActivity
+@enduml

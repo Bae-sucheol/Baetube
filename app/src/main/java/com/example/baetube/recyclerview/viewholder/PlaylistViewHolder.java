@@ -18,6 +18,7 @@ public class PlaylistViewHolder extends RecyclerView.ViewHolder implements View.
     public TextView channelName;
     public TextView videoCount;
     public ImageView option;
+    public TextView videoCountThumbnail;
 
     private OnRecyclerViewClickListener onRecyclerViewClickListener;
 
@@ -31,6 +32,7 @@ public class PlaylistViewHolder extends RecyclerView.ViewHolder implements View.
         channelName = itemView.findViewById(R.id.recyclerview_playlist_text_channel_name);
         videoCount = itemView.findViewById(R.id.recyclerview_playlist_text_video_count);
         option = itemView.findViewById(R.id.recyclerview_playlist_image_option);
+        videoCountThumbnail = itemView.findViewById(R.id.recyclerview_playlist_text_video_count_thumbnail);
 
         this.onRecyclerViewClickListener = onRecyclerViewClickListener;
 

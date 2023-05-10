@@ -67,6 +67,7 @@ public class RecyclerViewPlaylistAdapter extends RecyclerView.Adapter<PlaylistVi
 
         holder.title.setText(playlistDTO.getName());
         holder.channelName.setText(channelDTO.getName());
+        holder.videoCountThumbnail.setText(playlistDTO.getVideoCount().toString());
 
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("동영상 ");

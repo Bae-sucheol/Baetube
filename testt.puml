@@ -1,0 +1,773 @@
+@startuml
+class com.example.baetube.dto.ContentsUUID {
+- String VideoUUID
+- String ImageUUID
++ String getVideoUUID()
++ String getImageUUID()
++ void setVideoUUID(String)
++ void setImageUUID(String)
+}
+class com.example.baetube.dto.TokenInfoDTO {
+- String grantType
+- String accessToken
+- String refreshToken
++ String getGrantType()
++ String getAccessToken()
++ String getRefreshToken()
++ void setGrantType(String)
++ void setAccessToken(String)
++ void setRefreshToken(String)
+}
+class com.example.baetube.dto.FileUploadDTO {
++ {static} String TYPE_IMAGE
++ {static} String TYPE_VIDEO
++ {static} String PURPOSE_PROFILE
++ {static} String PURPOSE_THUMBNAIL
++ {static} String PURPOSE_ARTS
++ {static} String PURPOSE_COMMUNITY
++ {static} String PURPOSE_VIDEO
+- File file
+- String type
+- String purpose
+- String id
++ File getFile()
++ String getType()
++ String getPurpose()
++ String getId()
++ void setFile(File)
++ void setType(String)
++ void setPurpose(String)
++ void setId(String)
+}
+class com.example.baetube.dto.ReplyDTO {
+- Integer replyId
+- Long contentsId
+- Long attachedId
+- Integer channelId
+- String comment
+- Integer like
+- Integer hate
+- Timestamp date
+- Integer nestedCount
+- String name
+- String profile
++ Integer getReplyId()
++ Long getContentsId()
++ Long getAttachedId()
++ Integer getChannelId()
++ String getComment()
++ Integer getLike()
++ Integer getHate()
++ Timestamp getDate()
++ Integer getNestedCount()
++ String getName()
++ String getProfile()
++ void setReplyId(Integer)
++ void setContentsId(Long)
++ void setAttachedId(Long)
++ void setChannelId(Integer)
++ void setComment(String)
++ void setLike(Integer)
++ void setHate(Integer)
++ void setDate(Timestamp)
++ void setNestedCount(Integer)
++ void setName(String)
++ void setProfile(String)
+}
+class com.example.baetube.dto.PlaylistItemDTO {
+- Integer playlistId
+- Integer videoId
++ Integer getPlaylistId()
++ Integer getVideoId()
++ void setPlaylistId(Integer)
++ void setVideoId(Integer)
+}
+class com.example.baetube.OkHttpUtil {
+- {static} OkHttpClient okHttpClient
+- {static} Context applicationContext
++ {static} void setApplicationContext(Context)
+- String createContent(Object)
+- Request createPostRequest(String,String)
+- Request createGetRequest(String)
++ void sendPostRequest(Object,String,Callback)
++ void sendGetRequest(String,Callback)
++ void sendFileRequest(FileUploadDTO,Callback)
+- boolean checkReissuing(Callback)
+}
+class com.example.baetube.dto.SearchHistoryDTO {
+- Integer userId
+- String keywords
++ Integer getUserId()
++ String getKeywords()
++ void setUserId(Integer)
++ void setKeywords(String)
+}
+class com.example.baetube.activity.UploadActivity {
+- FragmentManager fragmentManager
+- FragmentTransaction fragmentTransaction
+- ExecutorService executorService
+- OnUploadDataListener onUploadDataListener
+- File selectedFile
+- Bitmap selectedImage
+- VideoDTO videoInformation
+- ChannelDTO channel
+- OkHttpUtil okHttpUtil
+- OnCallbackResponseListener onCallbackResponseListener
+- CommunityDTO communityInformation
+- VoteDTO vote
+- List<VoteDTO> voteOptionList
++ ActivityResultLauncher<Intent> activityResultLauncher
+# void onCreate(Bundle)
+- void init(int)
++ void onBackPressed()
+- void setOnUploadDataListener()
+- String saveBitmapConvertFile(Bitmap)
+- void DeleteCacheFile(String)
+- String getRealPathFromURI(Uri)
+- void setOnCallbackResponseListener()
+}
+class com.example.baetube.FileUploadUtils {
++ {static} void send2Server(File,StyledPlayerView,Context)
+}
+class com.example.baetube.dto.NotificationDTO {
+- Integer userId
+- Long contentsId
+- Timestamp date
+- Integer checked
++ Integer getUserId()
++ Long getContentsId()
++ Timestamp getDate()
++ Integer getChecked()
++ void setUserId(Integer)
++ void setContentsId(Long)
++ void setDate(Timestamp)
++ void setChecked(Integer)
+}
+class com.example.baetube.dto.SubscribersDTO {
+- Integer channelId
+- Integer subscriberId
+- Timestamp date
++ Integer getChannelId()
++ Integer getSubscriberId()
++ Timestamp getDate()
++ void setChannelId(Integer)
++ void setSubscriberId(Integer)
++ void setDate(Timestamp)
+}
+class com.example.baetube.dto.ViewPagerFragmentData {
+- Fragment fragment
+- String tag
++ Fragment getFragment()
++ String getTag()
++ void setTag(String)
++ void setFragment(Fragment)
+}
+class com.example.baetube.dto.RateDTO {
+- Long contentsId
+- Integer channelId
+- Integer value
+- Integer result
++ Long getContentsId()
++ Integer getChannelId()
++ Integer getValue()
++ Integer getResult()
++ void setContentsId(Long)
++ void setChannelId(Integer)
++ void setValue(Integer)
++ void setResult(Integer)
+}
+class com.example.baetube.dto.UserDTO {
+- Integer userId
+- String email
+- String password
+- String name
+- Integer gender
+- Timestamp birth
+- String fcmToken
+- String phone
+- String address
+- Timestamp regDate
++ int getUserId()
++ String getPassword()
++ String getName()
++ String getEmail()
++ Timestamp getBirth()
++ String getFcmToken()
++ String getPhone()
++ String getAddress()
++ Timestamp getRegDate()
++ Integer getGender()
++ void setUserId(int)
++ void setPassword(String)
++ void setName(String)
++ void setEmail(String)
++ void setBirth(Timestamp)
++ void setFcmToken(String)
++ void setPhone(String)
++ void setAddress(String)
++ void setRegDate(Timestamp)
++ void setGender(Integer)
+}
+class com.example.baetube.dto.PlaylistDTO {
+- Integer playlistId
+- Integer channelId
+- String name
+- Integer visible
+- Integer videoCount
+- String thumbnail
++ Integer getPlaylistId()
++ Integer getChannelId()
++ String getName()
++ Integer getVisible()
++ Integer getVideoCount()
++ String getThumbnail()
++ void setPlaylistId(Integer)
++ void setChannelId(Integer)
++ void setName(String)
++ void setVisible(Integer)
++ void setVideoCount(Integer)
++ void setThumbnail(String)
+}
+class com.example.baetube.dto.ChangePasswordRequest {
+- String email
+- String password
+- String newPassword
++ String getEmail()
++ String getPassword()
++ String getNewPassword()
++ void setEmail(String)
++ void setPassword(String)
++ void setNewPassword(String)
+}
+class com.example.baetube.dto.CommunityDTO {
+- Integer communityId
+- Long contentsId
+- Integer channelId
+- Integer likeCount
+- Integer hateCount
+- Integer replyCount
+- String imageUrl
+- String comment
+- Timestamp date
+- Integer voteId
+- String title
+- Integer voteOptionId
+- String option
+- Integer count
+- Integer selectedChannelId
+- String name
+- String profile
++ Integer getCommunityId()
++ Long getContentsId()
++ Integer getChannelId()
++ Integer getLikeCount()
++ Integer getHateCount()
++ Integer getReplyCount()
++ String getImageUrl()
++ String getComment()
++ Timestamp getDate()
++ Integer getVoteId()
++ String getTitle()
++ Integer getVoteOptionId()
++ String getOption()
++ Integer getCount()
++ Integer getSelectedChannelId()
++ String getName()
++ String getProfile()
++ void setCommunityId(Integer)
++ void setContentsId(Long)
++ void setChannelId(Integer)
++ void setLikeCount(Integer)
++ void setHateCount(Integer)
++ void setReplyCount(Integer)
++ void setImageUrl(String)
++ void setComment(String)
++ void setDate(Timestamp)
++ void setVoteId(Integer)
++ void setTitle(String)
++ void setVoteOptionId(Integer)
++ void setOption(String)
++ void setCount(Integer)
++ void setSelectedChannelId(Integer)
++ void setName(String)
++ void setProfile(String)
+}
+class com.example.baetube.activity.MainActivity {
+- BottomNavigationView bottomNavigationView
+- int navigationHeight
+- int bottomBarHeight
+- FragmentManager fragmentManager
+- CoordinatorLayout bottomSheetVideo
+- BottomSheetBehavior bottomSheetVideoBehavior
+- VideoBottomSheetCallback videoBottomSheetCallback
+- int bottomSheetPeekHeight
+- StyledPlayerView player
+- TextView title
+- TextView viewCount
+- TextView date
+- TextView buttonSubscribe
+- TextView channelName
+- TextView subscribeCount
+- TextView replyCount
+- TextView likeCount
+- TextView hateCount
+- ImageView buttonDetail
+- ImageView thumbUp
+- ImageView thumbDown
+- ImageView addLibrary
+- ImageView channelProfile
+- ImageView profile
+- ImageView bottomsheetPlayerPlayButton
+- ImageView bottomsheetPlayerCloseButton
+- EditText reply
+- ConstraintLayout layoutWriteReply
+- CoordinatorLayout layoutDescription
+- ConstraintLayout layoutMinMenu
+- ExoPlayer exoPlayer
+- boolean isCallLogin
+- RecyclerView relatedVideoRecyclerView
+- RecyclerViewVideoAdapter relatedVideoAdapter
+- ArrayList<RecyclerViewVideoItem> relatedVideoList
+- FrameLayout bottomSheetSub
+- BottomSheetBehavior bottomSheetSubBehavior
+- OnCallbackResponseListener onCallbackResponseListener
+- StyledPlayerView focusedPlayer
+- ImageView focusedThumbnail
+- RecyclerViewVideoItem currentVideoItem
+- ReplyView replyView
+- DescriptionView descriptionView
+- ImageView playerPlayButton
+- ImageView playerPauseButton
+- ImageView playerFullscreenButton
+- ImageView playerSeekBack
+- ImageView playerSeekForward
+- ImageView playerOptionButton
+- GestureDetector.SimpleOnGestureListener simpleOnGestureListener
+- GestureDetector gestureDetector
+- int playerControllerVisibility
+- int playerScreenMode
+- OnDialogInteractionListener onDialogInteractionListener
+- String playerUrl
+- String currentPlayerResolution
+- OkHttpUtil okHttpUtil
+- ConstraintLayout layoutKeyboardEdit
+- ImageButton keyboardEditButton
+- EditText keyboardEditInput
+- KeyboardState.HeightListener heightListener
+- boolean isReplyFocused
+- RecyclerViewReplyItem currentReplyItem
+- RecyclerViewVideoItem managedVideoItem
++ ActivityResultLauncher<Intent> activityResultLauncher
+# void onCreate(Bundle)
++ void onBackPressed()
++ void setManagedVideoItem(RecyclerViewVideoItem)
++ void onVideoItemClick(RecyclerViewVideoItem)
++ void onCompletelyVisible(FrameLayout,String)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setRelatedVideoRecyclerView(List<VideoDTO>)
++ void onClick(View)
++ void requestSelectPlaylist()
+- void requestViewVideo(Integer)
+- void requestSelectSubscribe(Integer)
++ void requestDeleteVideo()
++ void requestDeleteHistoryVideo()
++ void requestSignIn(UserDTO)
++ void requestRelatedVideo(Integer)
++ void requestSaveFCMToken(String)
+- void setBottomSheetVideoInfo(VideoDTO,ChannelDTO)
++ void requestChannelData()
+- void resetView()
+- void attachReplyView()
+- void attachDescriptionView(RecyclerViewVideoItem)
++ void onSlide(View,float)
++ void onAttachViewClick(View)
+# void onStart()
+# void onResume()
+# void onPause()
+# void onStop()
+- void initializePlayer(StyledPlayerView)
+- void releasePlayer(StyledPlayerView)
+- void initializeExoPlayer()
+- void setMediaSource(String,String)
+- void releaseExoPlayer()
++ void setCurrentReplyData(RecyclerViewReplyItem)
++ void requestAddPlaylist(List<PlaylistDTO>)
++ void commitModifyVideoFragment(Integer)
+- void setOnDialogInteractionListener()
+- void setSimpleOnGestureListener()
+- void setOnCallbackResponseListener()
++ void relatedVideoRecyclerView(List<VideoDTO>,ArrayList<ChannelDTO>)
++ void onFocusChange(View,boolean)
+- String getRealPathFromURI(Uri)
++ void setBottomNavigationViewVisible(int)
+}
+class com.example.baetube.SignInValidation {
++ {static} boolean isEmail(String)
++ {static} boolean isPhone(String)
++ {static} boolean isPassword(String)
++ {static} boolean isName(String)
+}
+class com.example.baetube.CountToStringUtil {
+- {static} Integer unit
++ {static} String countToString(Integer)
+}
+class com.example.baetube.dto.VideoDTO {
+- Integer videoId
+- Long contentsId
+- Integer channelId
+- String url
+- Integer visible
+- String thumbnail
+- String title
+- String info
+- String location
+- Integer age
+- Integer views
+- Integer like
+- Integer hate
+- Integer replyCount
+- Timestamp date
+- Integer categoryId
+- String profile
+- String name
+- Timestamp historyDate
+- Integer playlistItemId
+- Integer playlistId
+- Integer subs
++ Integer getVideoId()
++ Long getContentsId()
++ Integer getChannelId()
++ String getUrl()
++ Integer getVisible()
++ String getThumbnail()
++ String getTitle()
++ String getInfo()
++ String getLocation()
++ Integer getAge()
++ Integer getViews()
++ Integer getLike()
++ Integer getHate()
++ Integer getReplyCount()
++ Timestamp getDate()
++ Integer getCategoryId()
++ String getProfile()
++ String getName()
++ Timestamp getHistoryDate()
++ Integer getPlaylistItemId()
++ Integer getPlaylistId()
++ Integer getSubs()
++ void setVideoId(Integer)
++ void setContentsId(Long)
++ void setChannelId(Integer)
++ void setUrl(String)
++ void setVisible(Integer)
++ void setThumbnail(String)
++ void setTitle(String)
++ void setInfo(String)
++ void setLocation(String)
++ void setAge(Integer)
++ void setViews(Integer)
++ void setLike(Integer)
++ void setHate(Integer)
++ void setReplyCount(Integer)
++ void setDate(Timestamp)
++ void setCategoryId(Integer)
++ void setProfile(String)
++ void setName(String)
++ void setHistoryDate(Timestamp)
++ void setPlaylistItemId(Integer)
++ void setPlaylistId(Integer)
++ void setSubs(Integer)
+}
+class com.example.baetube.DateToStringUtil {
++ {static} long second
++ {static} long minute
++ {static} long hour
++ {static} long day
++ {static} long week
++ {static} long month
++ {static} long year
++ {static} String dateToString(Timestamp)
++ {static} long subtractFromNow(Timestamp)
+}
+class com.example.baetube.TimestampUtil {
++ {static} Timestamp StringToTimestamp(String)
+}
+class com.example.baetube.dto.VoteDTO {
+- Integer voteId
+- Integer communityId
+- String title
+- String comment
+- Integer voteOptionId
+- String option
+- Integer count
++ Integer getVoteId()
++ Integer getCommunityId()
++ String getTitle()
++ String getComment()
++ Integer getVoteOptionId()
++ String getOption()
++ Integer getCount()
++ void setVoteId(Integer)
++ void setCommunityId(Integer)
++ void setTitle(String)
++ void setComment(String)
++ void setVoteOptionId(Integer)
++ void setOption(String)
++ void setCount(Integer)
+}
+class com.example.baetube.dto.NestedReplyDTO {
+- Integer nestedReplyId
+- Integer replyId
+- Long contentsId
+- Integer channelId
+- String comment
+- Integer like
+- Integer hate
+- Timestamp date
+- String name
+- String profile
+- Long attachedId
++ Integer getNestedReplyId()
++ Integer getReplyId()
++ Long getContentsId()
++ Integer getChannelId()
++ String getComment()
++ Timestamp getDate()
++ String getName()
++ String getProfile()
++ Integer getLike()
++ Integer getHate()
++ Long getAttachedId()
++ void setNestedReplyId(Integer)
++ void setReplyId(Integer)
++ void setContentsId(Long)
++ void setChannelId(Integer)
++ void setComment(String)
++ void setDate(Timestamp)
++ void setName(String)
++ void setProfile(String)
++ void setLike(Integer)
++ void setHate(Integer)
++ void setAttachedId(Long)
+}
+interface com.example.baetube.OnCallbackResponseListener {
++ void onResponse(Response)
++ void onExpiredAccessTokenResponse()
++ void onExpiredRefreshTokenResponse()
++ void onGeneratedAccessTokenResponse(String)
++ void onLoginUserResponse(String)
++ void onVisitChannelResponse(String)
++ void onSubscribersChannelResponse(String)
++ void onVisitCommunityResponse(String)
++ void onSelectReplyResponse(String)
++ void onSelectNestedReplyResponse(String)
++ void onSelectPlaylistResponse(String)
++ void onSelectSearchHistoryResponse(String)
++ void onSelectChannelVideoResponse(String)
++ void onSelectHistoryVideoResponse(String)
++ void onSelectMainVideoResponse(String)
++ void onSelectPlaylistVideoResponse(String)
++ void onSelectSubscribeVideoResponse(String)
++ void onSelectViewVideoResponse(String)
++ void onSelectVoteOptionResponse(String)
++ void onSelectSubscribeResponse(String)
++ void onInsertResponse(String)
++ void onRateResponse(String)
++ void onSubscribeResponse(String)
++ void onUnSubscribeResponse(String)
++ void onReplyResponse(String)
++ void onNestedReplyResponse(String)
++ void onSignInResponse(String)
++ void onSelectRelatedVideoResponse(String)
++ void onSaveFCMTokenResponse(boolean)
++ void onSelectChannelDataResponse(String)
++ void onUpdateChannelResponse(String)
++ void onSelectCommunityDataResponse(String)
++ void onUpdateCommunityResponse(String)
++ void onSelectVideoDataResponse(String)
++ void onUpdateVideoResponse(String)
++ void onSelectPlaylistDataResponse(String)
++ void onUpdatePlaylistResponse(String)
++ void onSelectCategoryResponse(String)
++ void onSelectSubscribersCommunityResponse(String)
++ void onSelectVideoNotificationResponse(String)
++ void onSelectCommunityNotificationResponse(String)
++ void onSelectSearchVideoResponse(String)
++ void onSelectSearchChannelResponse(String)
++ void onSelectChannelDataAllResponse(String)
++ void onSelectNewNotifications(String)
++ void onSelectUserDataResponse(String)
+}
+class com.example.baetube.Callback.ReturnableCallback {
++ {static} int CALLBACK_NONE
++ {static} int CALLBACK_LOGIN_USER
++ {static} int CALLBACK_VISIT_CHANNEL
++ {static} int CALLBACK_SUBSCRIBERS_CHANNEL
++ {static} int CALLBACK_VISIT_COMMUNITY
++ {static} int CALLBACK_SELECT_REPLY
++ {static} int CALLBACK_SELECT_NESTED_REPLY
++ {static} int CALLBACK_SELECT_PLAYLIST
++ {static} int CALLBACK_SELECT_SEARCH_HISTORY
++ {static} int CALLBACK_SELECT_CHANNEL_VIDEO
++ {static} int CALLBACK_SELECT_HISTORY_VIDEO
++ {static} int CALLBACK_SELECT_MAIN_VIDEO
++ {static} int CALLBACK_SELECT_PLAYLIST_VIDEO
++ {static} int CALLBACK_SELECT_SUBSCRIBE_VIDEO
++ {static} int CALLBACK_SELECT_VIEW_VIDEO
++ {static} int CALLBACK_SELECT_VOTE_OPTION
++ {static} int CALLBACK_SELECT_SUBSCRIBE
++ {static} int CALLBACK_INSERT
++ {static} int CALLBACK_RATE
++ {static} int CALLBACK_SUBSCRIBE
++ {static} int CALLBACK_UNSUBSCRIBE
++ {static} int CALLBACK_REPLY
++ {static} int CALLBACK_NESTED_REPLY
++ {static} int CALLBACK_SIGN_IN
++ {static} int CALLBACK_SELECT_RELATED_VIDEO
++ {static} int CALLBACK_SAVE_FCM_TOKEN
++ {static} int CALLBACK_GENERATE_ACCESS_TOKEN
++ {static} int CALLBACK_SELECT_CHANNEL_DATA
++ {static} int CALLBACK_UPDATE_CHANNEL
++ {static} int CALLBACK_SELECT_COMMUNITY_DATA
++ {static} int CALLBACK_UPDATE_COMMUNITY
++ {static} int CALLBACK_SELECT_VIDEO_DATA
++ {static} int CALLBACK_UPDATE_VIDEO
++ {static} int CALLBACK_SELECT_PLAYLIST_DATA
++ {static} int CALLBACK_UPDATE_PLAYLIST
++ {static} int CALLBACK_SELECT_CATEGORY
++ {static} int CALLBACK_SELECT_SUBSCRIBERS_COMMUNITY
++ {static} int CALLBACK_SELECT_COMMUNITY_NOTIFICATION
++ {static} int CALLBACK_SELECT_VIDEO_NOTIFICATION
++ {static} int CALLBACK_SELECT_SEARCH_VIDEO
++ {static} int CALLBACK_SELECT_SEARCH_CHANNEL
++ {static} int CALLBACK_SELECT_CHANNEL_DATA_ALL
++ {static} int CALLBACK_SELECT_NEW_NOTIFICATION
++ {static} int CALLBACK_SELECT_USER_DATA
+- {static} String EXPIRED_ACCESS_TOKEN
+- {static} String EXPIRED_REFRESH_TOKEN
+- {static} boolean isReissuingAccessToken
+- OnCallbackResponseListener onCallbackResponseListener
+- int type
+- String message
++ void onFailure(Call,IOException)
++ void onResponse(Call,Response)
++ {static} boolean isReissuingAccessToken()
++ {static} void setIsReissuingAccessToken(boolean)
++ int getType()
+}
+class com.example.baetube.dto.HistoryDTO {
+- Integer userId
+- Integer videoId
+- Timestamp date
++ Integer getUserId()
++ Integer getVideoId()
++ Timestamp getDate()
++ void setUserId(Integer)
++ void setVideoId(Integer)
++ void setDate(Timestamp)
+}
+class com.example.baetube.dto.VoteResultDTO {
+- VoteDTO voteDTO
+- boolean isCancel
++ VoteDTO getVoteDTO()
++ boolean isCancel()
++ void setVoteDTO(VoteDTO)
++ void setCancel(boolean)
+}
+class com.example.baetube.dto.CategoryDTO {
+- Integer categoryId
+- String name
++ Integer getCategoryId()
++ String getName()
++ void setCategoryId(Integer)
++ void setName(String)
+}
+class com.example.baetube.dto.ChannelDTO {
+- Integer channelId
+- Integer userId
+- Integer subs
+- Integer videoCount
+- String name
+- String description
+- String arts
+- Timestamp regDate
+- String profile
++ Integer getChannelId()
++ Integer getUserId()
++ Integer getSubs()
++ Integer getVideoCount()
++ String getName()
++ String getDescription()
++ String getArts()
++ Timestamp getRegDate()
++ String getProfile()
++ void setChannelId(Integer)
++ void setUserId(Integer)
++ void setSubs(Integer)
++ void setVideoCount(Integer)
++ void setName(String)
++ void setDescription(String)
++ void setArts(String)
++ void setRegDate(Timestamp)
++ void setProfile(String)
+}
+class com.example.baetube.dto.ContentsDTO {
+- Long contentsId
+- Integer type
+- Integer like
+- Integer hate
+- Integer replyCount
++ Long getContentsId()
++ Integer getType()
++ Integer getLike()
++ Integer getHate()
++ Integer getReplyCount()
++ void setContentsId(Long)
++ void setType(Integer)
++ void setLike(Integer)
++ void setHate(Integer)
++ void setReplyCount(Integer)
+}
+class com.example.baetube.FragmentTagUtil {
++ {static} String FRAGMENT_TAG_HOME
++ {static} String FRAGMENT_TAG_SUBSCRIBE
++ {static} String FRAGMENT_TAG_STORAGE
++ {static} String FRAGMENT_TAG_CHANNEL_HOME
++ {static} String FRAGMENT_TAG_CHANNEL_VIDEO
++ {static} String FRAGMENT_TAG_CHANNEL_BASE
++ {static} String FRAGMENT_TAG_CHANNEL_PLAYLIST
++ {static} String FRAGMENT_TAG_CHANNEL_COMMUNITY
++ {static} String FRAGMENT_TAG_CHANNEL_INFORMATION
++ {static} String FRAGMENT_TAG_LOGIN
++ {static} String FRAGMENT_TAG_SIGN_IN
++ {static} String FRAGMENT_TAG_CHANNEL_MANAGE_VIDEO
++ {static} String FRAGMENT_TAG_UPLOAD_VIDEO_LIST
++ {static} String FRAGMENT_TAG_PLAYLIST_DETAIL
++ {static} String FRAGMENT_TAG_UPLOAD_COMMUNITY
++ {static} String FRAGMENT_TAG_UPLOAD_VIDEO
++ {static} String FRAGMENT_TAG_ADD_STORAGE
++ {static} String FRAGMENT_TAG_HISTORY_DETAIL
++ {static} String FRAGMENT_TAG_MODIFY_CHANNEL_INFORMATION
++ {static} String FRAGMENT_TAG_MODIFY_COMMUNITY
++ {static} String FRAGMENT_TAG_MODIFY_PLAYLIST
++ {static} String FRAGMENT_TAG_MODIFY_VIDEO
++ {static} String FRAGMENT_TAG_NOTIFICATION
++ {static} String FRAGMENT_TAG_SEARCH
++ {static} String FRAGMENT_TAG_SEARCH_RESULT
++ {static} String FRAGMENT_TAG_MODIFY_USER_INFORMATION
+}
+
+
+androidx.appcompat.app.AppCompatActivity <|-- com.example.baetube.activity.UploadActivity
+com.example.baetube.OnFragmentInteractionListener <|.. com.example.baetube.activity.MainActivity
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.activity.MainActivity
+com.example.baetube.activity.OnClickListener <|.. com.example.baetube.activity.MainActivity
+com.example.baetube.OnBottomSheetInteractionListener <|.. com.example.baetube.activity.MainActivity
+com.example.baetube.OnAttachViewListener <|.. com.example.baetube.activity.MainActivity
+com.example.baetube.activity.OnFocusChangeListener <|.. com.example.baetube.activity.MainActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.baetube.activity.MainActivity
+okhttp3.Callback <|.. com.example.baetube.Callback.ReturnableCallback
+@enduml

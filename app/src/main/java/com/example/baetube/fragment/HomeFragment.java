@@ -383,6 +383,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
         {
             case R.id.fragment_home_drawer_image_profile_layout :
 
+                if(channel != null)
+                {
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.activity_main_layout, new ChannelBaseFragment(getContext(), onCallbackResponseListener, channel.getChannelId()), FragmentTagUtil.FRAGMENT_TAG_CHANNEL_BASE);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    return;
+                }
+
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.add(R.id.activity_main_layout, new LoginFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_LOGIN);

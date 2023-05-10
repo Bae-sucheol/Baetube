@@ -1,0 +1,2892 @@
+@startuml
+class com.example.baetube.PreferenceManager {
++ {static} String PREFERENCES_NAME
++ {static} String PREFERENCES_ACCESSKEY
++ {static} String PREFERENCES_REFRESHKEY
++ {static} String PREFERENCES_FCM
++ {static} String PREFERENCES_ARTS
++ {static} String PREFERENCES_PROFILE
++ {static} String PREFERENCES_THUMBNAIL
++ {static} String PREFERENCES_COMMUNITY
++ {static} String PREFERENCES_CHANNEL_SEQUENCE
++ {static} String DEFAULT_VALUE_STRING
++ {static} SharedPreferences getPreferences(Context)
++ {static} void setString(Context,String,String)
++ {static} String getString(Context,String)
++ {static} void removeKey(Context,String)
++ {static} void clear(Context)
++ {static} String getChannelSequence(Context)
+}
+class com.example.baetube.recyclerview.viewholder.SearchHistoryViewHolder {
++ ConstraintLayout layout
++ ImageView icon
++ ImageView write
++ TextView keywords
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ void onClick(View)
++ boolean onLongClick(View)
+}
+class com.example.baetube.dto.FileUploadDTO {
++ {static} String TYPE_IMAGE
++ {static} String TYPE_VIDEO
++ {static} String PURPOSE_PROFILE
++ {static} String PURPOSE_THUMBNAIL
++ {static} String PURPOSE_ARTS
++ {static} String PURPOSE_COMMUNITY
++ {static} String PURPOSE_VIDEO
+- File file
+- String type
+- String purpose
+- String id
++ File getFile()
++ String getType()
++ String getPurpose()
++ String getId()
++ void setFile(File)
++ void setType(String)
++ void setPurpose(String)
++ void setId(String)
+}
+class com.example.baetube.fragment.modify.ModifyCommunityFragment {
+- View view
+- ImageView community
+- ImageView changeCommunity
+- ImageView profile
+- EditText editTitle
+- TextView channelName
+- TextView textCount
+- ConstraintLayout description
+- ConstraintLayout vote
+- CommunityDTO sourceCommunityData
+- CommunityDTO currentCommunityData
+- OkHttpUtil okHttpUtil
+- OnCallbackResponseListener onCallbackResponseListener
+- OnSetFragmentListener onSetFragmentListener
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void requestCommunityData()
++ void setImage(File)
++ void setCommunityData(CommunityDTO)
++ void onClick(View)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
+- void requestUpdateCommunity()
+- void setOnFragmentListener()
+}
+class com.example.baetube.fragment.NotificationFragment {
+- View view
+- RecyclerView recyclerView
+- RecyclerViewNotificationAdapter recyclerViewNotificationAdapter
+- ArrayList<RecyclerViewNotificationItem> listVideo
+- ArrayList<RecyclerViewNotificationItem> listCommunity
+- LinearLayoutManager linearLayoutManagerCategory
+- RecyclerView recyclerViewCategory
+- RecyclerViewCategoryAdapter recyclerViewCategoryAdapter
+- ArrayList<CategoryDTO> listCategory
+- OnCallbackResponseListener onCallbackResponseListener
+- Integer selectedPosition
+- OkHttpUtil okHttpUtil
+- OnFragmentInteractionListener onFragmentInteractionListener
+- OnDialogInteractionListener onDialogInteractionListener
+- int selectedNotificaiton
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
+- void requestCheckNotifications()
+- void requestVideoNotification()
+- void requestCommunityNotification()
++ void setListVideo(ArrayList<RecyclerViewNotificationItem>)
++ void setListCommunity(ArrayList<RecyclerViewNotificationItem>)
+- void setCategory()
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
+- void setDialogInteractionListener()
+}
+class com.example.baetube.bottomsheetdialog.ReplyFragment {
+- View view
+- RecyclerView recyclerView
+- RecyclerViewReplyAdapter adapter
+- ArrayList<RecyclerViewReplyItem> list
+- ImageView buttonClose
+- ImageView buttonCloseNested
+- ImageView buttonBackNested
+- ConstraintLayout layoutReply
+- CoordinatorLayout layoutNestedReply
+- int animationDuration
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ Dialog onCreateDialog(Bundle)
++ void setRatio(BottomSheetDialog)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void test()
++ void onClick(View)
+- void openNestedReply()
+- void closeNestedReply()
+}
+class com.example.baetube.TestMotionLayoutFragment {
+- View view
+- RecyclerView recyclerView
+- RecyclerViewVideoAdapter adapter
+- ArrayList<RecyclerViewVideoItem> list
+- VideoView player
+- TextView title
+- TextView viewCount
+- TextView date
+- TextView buttonSubscribe
+- TextView channelName
+- TextView subscribeCount
+- TextView replyCount
+- TextView likeCount
+- TextView hateCount
+- ImageView thumbUp
+- ImageView thumbDown
+- ImageView addLibrary
+- ImageView channelProfile
+- ImageView profile
+- EditText reply
+- ConstraintLayout layoutReply
+- OnCallbackResponseListener onCallbackResponseListener
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void test()
++ void onClick(View)
+}
+class com.example.baetube.dto.SearchHistoryDTO {
+- Integer userId
+- String keywords
++ Integer getUserId()
++ String getKeywords()
++ void setUserId(Integer)
++ void setKeywords(String)
+}
+class com.example.baetube.recyclerview.viewholder.CommunityVoteViewHolder {
++ ProgressBar progressBar
++ TextView option
++ TextView count
++ TextView percentage
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ void onClick(View)
+}
+class com.example.baetube.bottomsheetdialog.PlayerOptionFragment {
+- View view
+- TextView textTitle
+- RecyclerView recyclerView
+- ArrayList<RecyclerViewOptionItem> list
+- RecyclerViewOptionAdapter adapter
+- String title
+- {static} TypedArray resources
+- {static} String[] options
+- OnDialogInteractionListener onDialogInteractionListener
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ Dialog onCreateDialog(Bundle)
+- void setCurrentResolution(TypedArray,String[],String)
++ void setRatio(BottomSheetDialog)
++ void addItem(TypedArray,String[],int)
++ void setTitle(String)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
+}
+class com.example.baetube.recyclerview.viewholder.VideoListViewHolder {
++ ImageView thumbnail
+}
+class com.example.baetube.recyclerview.adapter.RecyclerViewReplyAdapter {
+- Context context
+- ArrayList<RecyclerViewReplyItem> list
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ ReplyViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(ReplyViewHolder,int)
++ int getItemCount()
++ void setOnRecyclerViewClickListener(OnRecyclerViewClickListener)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void onDetachedFromRecyclerView(RecyclerView)
+}
+class com.example.baetube.recyclerview.adapter.RecyclerViewPlaylistAdapter {
+- Context context
+- ArrayList<RecyclerViewPlaylistItem> list
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ PlaylistViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(PlaylistViewHolder,int)
++ int getItemCount()
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setOnRecyclerViewClickListener(OnRecyclerViewClickListener)
++ void onDetachedFromRecyclerView(RecyclerView)
+}
+class com.example.baetube.fragment.set.SetLocationFragment {
+- View view
+- WebView webView
+- OnSetFragmentListener onSetFragmentListener
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ boolean onOptionsItemSelected(MenuItem)
+}
+class com.example.baetube.fragment.set.SetLocationFragment$BridgeInterface {
++ void processDATA(String)
+}
+class com.example.baetube.dto.ViewPagerFragmentData {
+- Fragment fragment
+- String tag
++ Fragment getFragment()
++ String getTag()
++ void setTag(String)
++ void setFragment(Fragment)
+}
+class com.example.baetube.bottomsheetdialog.HistoryVideoOptionManageFragment {
+- {static} TypedArray resources
+- {static} String[] options
+- Context context
+- RecyclerViewVideoAdapter recyclerViewVideoAdapter
+- ArrayList<RecyclerViewVideoItem> list
+- int manageItemPosition
++ void onItemClick(View,int)
++ void onDismiss(DialogInterface)
++ void onItemLongClick(View,int)
+}
+class com.example.baetube.dto.SubscribersDTO {
+- Integer channelId
+- Integer subscriberId
+- Timestamp date
++ Integer getChannelId()
++ Integer getSubscriberId()
++ Timestamp getDate()
++ void setChannelId(Integer)
++ void setSubscriberId(Integer)
++ void setDate(Timestamp)
+}
+class com.example.baetube.recyclerview.item.RecyclerViewStorageVideoItem {
+- String displayName
+- Uri uri
+- Bitmap bitmap
++ String getDisplayName()
++ Uri getUri()
++ Bitmap getBitmap()
++ void setUri(Uri)
++ void setDisplayName(String)
++ void setBitmap(Bitmap)
+}
+class com.example.baetube.fragment.LoginFragment {
+- View view
+- Button logInButton
+- TextView signInButton
+- EditText editEmail
+- EditText editPassword
+- TextView errorLogin
+- OnCallbackResponseListener onCallbackResponseListener
+- OkHttpUtil okHttpUtil
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ boolean onOptionsItemSelected(MenuItem)
++ void onClick(View)
++ void printError()
++ void onDestroy()
+}
+class com.example.baetube.dto.UserDTO {
+- Integer userId
+- String email
+- String password
+- String name
+- Integer gender
+- Timestamp birth
+- String fcmToken
+- String phone
+- String address
+- Timestamp regDate
++ int getUserId()
++ String getPassword()
++ String getName()
++ String getEmail()
++ Timestamp getBirth()
++ String getFcmToken()
++ String getPhone()
++ String getAddress()
++ Timestamp getRegDate()
++ Integer getGender()
++ void setUserId(int)
++ void setPassword(String)
++ void setName(String)
++ void setEmail(String)
++ void setBirth(Timestamp)
++ void setFcmToken(String)
++ void setPhone(String)
++ void setAddress(String)
++ void setRegDate(Timestamp)
++ void setGender(Integer)
+}
+class com.example.baetube.KeyboardState {
+- Activity activity
+- View rootView
+- HeightListener heightListener
+- int heightMax
++ KeyboardState setHeightListener(HeightListener)
++ KeyboardState init()
++ void onGlobalLayout()
+}
+interface com.example.baetube.KeyboardState$HeightListener {
+~ void onHeightChanged(int)
+}
+class com.example.baetube.fragment.CustomerServiceFragment {
+- View view
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
+}
+class com.example.baetube.bottomsheetdialog.CommunityReportFragment {
+- int selectId
++ void onCheckedChanged(RadioGroup,int)
+}
+class com.example.baetube.recyclerview.viewholder.VideoViewHolder {
++ FrameLayout layoutPlayer
++ StyledPlayerView player
++ ImageView thumbnail
++ ImageView profile
++ ImageView option
++ TextView title
++ TextView views
++ TextView date
++ TextView channelName
++ LinearLayout layout
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ void onClick(View)
+}
+class com.example.baetube.PublicState {
++ {static} int PUBLIC
++ {static} int LINK
++ {static} int LOCK
+}
+class com.example.baetube.recyclerview.adapter.RecyclerViewChannelAdapter {
+- Context context
+- ArrayList<ChannelDTO> list
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ ChannelViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(ChannelViewHolder,int)
++ int getItemCount()
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setOnRecyclerViewClickListener(OnRecyclerViewClickListener)
++ void onDetachedFromRecyclerView(RecyclerView)
+}
+class com.example.baetube.bottomsheetdialog.AddStorageDialogFragment {
+- View view
+- TextView title
+- TextView buttonAdd
+- TextView buttonClose
+- EditText comment
+- OnDialogInteractionListener onDialogInteractionListener
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ Dialog onCreateDialog(Bundle)
++ void setRatio(BottomSheetDialog)
++ void onClick(View)
+}
+class com.example.baetube.fragment.channel.ChannelHomeFragment {
+- View view
+- RecyclerView recyclerView
+- RecyclerViewVideoAdapter recyclerViewVideoAdapter
+- ArrayList<RecyclerViewVideoItem> list
+- OnFragmentInteractionListener onFragmentInteractionListener
+- ImageView profile
+- ImageView expand
+- ImageView channelAnalysis
+- ImageView modifyChannel
+- TextView channelName
+- TextView buttonSubscribe
+- TextView subscribeCount
+- TextView videoCount
+- TextView channelDescription
+- TextView buttonManageVideo
+- LinearLayout layoutManage
+- OnCallbackResponseListener onCallbackResponseListener
+- OkHttpUtil okHttpUtil
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setChannelData(ChannelDTO)
++ void setRecyclerViewVideo(List<VideoDTO>,List<ChannelDTO>)
++ void onClick(View)
+}
+class com.example.baetube.Callback.DefaultCallback {
+- String message
++ void onFailure(Call,IOException)
++ void onResponse(Call,Response)
+}
+class com.example.baetube.bottomsheetdialog.ChannelReportFragment {
+- int selectId
++ void onCheckedChanged(RadioGroup,int)
+}
+class com.example.baetube.bottomsheetdialog.PlaylistOptionManageFragment {
+- {static} TypedArray resources
+- {static} String[] options
+- int position
+- OnDialogInteractionListener onDialogInteractionListener
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
+}
+class com.example.baetube.recyclerview.viewholder.ChannelViewHolder {
++ ImageView profile
++ ImageView option
++ TextView name
++ TextView subCount
++ TextView buttonSub
++ ConstraintLayout layout
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ void onClick(View)
+}
+class com.example.baetube.recyclerview.viewholder.PlaylistViewHolder {
++ LinearLayout layoutMain
++ ImageView thumbnail
++ TextView title
++ TextView channelName
++ TextView videoCount
++ ImageView option
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ void onClick(View)
+}
+class com.example.baetube.ViewPagerCallback {
+- Context context
+- OnCallbackResponseListener onCallbackResponseListener
+- OkHttpUtil okHttpUtil
+- boolean[] visited
+- Integer channelId
++ void onPageSelected(int)
+}
+class com.example.baetube.bottomsheetdialog.CommunityOptionManageFragment {
+- {static} TypedArray resources
+- {static} String[] options
+- Context context
+- OnDialogInteractionListener onDialogInteractionListener
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
+}
+class com.example.baetube.fragment.modify.ModifyUserInformationFragment {
+- View view
+- OnCallbackResponseListener onCallbackResponseListener
+- OkHttpUtil okHttpUtil
+- TextView textEmail
+- TextView textName
+- EditText editPassword
+- EditText editPasswordNew
+- EditText editBirthYear
+- EditText editBirthMonth
+- EditText editBirthDay
+- EditText editAddress
+- EditText editPhone
+- TextView errorEmail
+- TextView errorPassword
+- TextView errorPasswordCheck
+- TextView errorName
+- TextView errorBirth
+- TextView errorGender
+- TextView errorAddress
+- TextView errorPhone
+- RadioGroup radioGroupGender
+- Button buttonModify
+- Button buttonChangePassword
+- OnSetFragmentListener onSetFragmentListener
+- Integer gender
+- UserDTO currentUserData
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void requestUserData()
+- void requestChangePassword()
+- void requestUpdateUserData()
++ void onClick(View)
++ void onFocusChange(View,boolean)
++ boolean onOptionsItemSelected(MenuItem)
+- boolean validationData()
++ void onCheckedChanged(RadioGroup,int)
++ void setUserData(UserDTO)
+}
+class com.example.baetube.dto.VoteResultDTO {
+- VoteDTO voteDTO
+- boolean isCancel
++ VoteDTO getVoteDTO()
++ boolean isCancel()
++ void setVoteDTO(VoteDTO)
++ void setCancel(boolean)
+}
+class com.example.baetube.bottomsheetdialog.ReplyReportFragment {
+- int selectId
++ void onCheckedChanged(RadioGroup,int)
+}
+class com.example.baetube.dto.HistoryDTO {
+- Integer userId
+- Integer videoId
+- Timestamp date
++ Integer getUserId()
++ Integer getVideoId()
++ Timestamp getDate()
++ void setUserId(Integer)
++ void setVideoId(Integer)
++ void setDate(Timestamp)
+}
+class com.example.baetube.fragment.set.SetPublicFragment {
+- View view
+- ConstraintLayout layoutPublic
+- ConstraintLayout layoutLink
+- ConstraintLayout layoutLock
+- int selectNumber
+- View selectedView
+- OnSetFragmentListener onSetFragmentListener
+- Integer visible
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
++ void onClick(View)
+}
+class com.example.baetube.bottomsheetdialog.VideoOptionFragment {
+- {static} TypedArray resources
+- {static} String[] options
+- Context context
++ void onItemClick(View,int)
++ void onDismiss(DialogInterface)
++ void onItemLongClick(View,int)
+}
+class com.example.baetube.dto.ContentsDTO {
+- Long contentsId
+- Integer type
+- Integer like
+- Integer hate
+- Integer replyCount
++ Long getContentsId()
++ Integer getType()
++ Integer getLike()
++ Integer getHate()
++ Integer getReplyCount()
++ void setContentsId(Long)
++ void setType(Integer)
++ void setLike(Integer)
++ void setHate(Integer)
++ void setReplyCount(Integer)
+}
+class com.example.baetube.ChannelPagerAdapter {
+- int count
+- OnCallbackResponseListener onCallbackResponseListener
+- ChannelHomeFragment channelHomeFragment
+- ChannelCommunityFragment channelCommunityFragment
+- ChannelInfomationFragment channelInfomationFragment
+- ChannelPlaylistFragment channelPlaylistFragment
+- ChannelVideoFragment channelVideoFragment
++ ViewPagerFragmentData getCurrentFragmentData(int)
++ Fragment createFragment(int)
++ int getItemCount()
++ void setChannelInfomation(ChannelDTO)
+}
+interface com.example.baetube.OnLoadVideoListener {
++ void onResponse(ArrayList<File>)
+}
+class com.example.baetube.fragment.analysis.AnalysisTimeFragment {
+- View view
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+class com.example.baetube.recyclerview.viewholder.OptionViewHolder {
++ ConstraintLayout layout
++ ImageView icon
++ TextView option
+}
+class com.example.baetube.dto.ContentsUUID {
+- String VideoUUID
+- String ImageUUID
++ String getVideoUUID()
++ String getImageUUID()
++ void setVideoUUID(String)
++ void setImageUUID(String)
+}
+class com.example.baetube.bottomsheetdialog.ChannelSelectOptionFragment {
+- View view
+- TextView textTitle
+- RecyclerView recyclerView
+- ArrayList<ChannelDTO> list
+- RecyclerViewChannelAdapter adapter
+- String title
+- OnDialogInteractionListener onDialogInteractionListener
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ Dialog onCreateDialog(Bundle)
++ void setRatio(BottomSheetDialog)
++ void setTitle(String)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
+}
+class com.example.baetube.StorageUtil {
+- {static} String EXTERNAL_STORAGE
+- {static} String SECONDARY_STORAGES
+- {static} String EMULATED_STORAGE_TARGET
+- {static} String[] KNOWN_PHYSICAL_PATHS
++ {static} String[] getStorageDirectories(Context)
+- {static} Set<String> getExternalStorage(Context)
+- {static} String getEmulatedStorageTarget()
+- {static} String[] getAllSecondaryStorages()
+- {static} List<String> getAvailablePhysicalPaths()
+- {static} File[] getExternalFilesDirs(Context,String)
+}
+class com.example.baetube.fragment.channel.ChannelBaseFragment {
+- View view
+- ViewPager2 viewPager
+- ChannelPagerAdapter channelPagerAdapter
+- TabLayout tabLayout
+- TabLayoutMediator tabLayoutMediator
+- ChannelTabStrategy tabStrategy
+- OnCallbackResponseListener onCallbackResponseListener
+- ViewPagerCallback onPageChangeCallback
+- ChannelDTO channel
+- ChannelDTO myChannel
+- OkHttpUtil okHttpUtil
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void requestMyChannelData()
++ ViewPagerFragmentData getCurrentFragmentData()
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
++ void setChannel(ChannelDTO)
++ ChannelDTO getChannel()
++ void setMyChannel(ChannelDTO)
++ ChannelDTO getMyChannel()
+}
+class com.example.baetube.recyclerview.adapter.RecyclerViewVideoCheckableAdapter {
+- Context context
+- ArrayList<RecyclerViewVideoCheckableItem> list
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ VideoCheckableViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(VideoCheckableViewHolder,int)
++ int getItemCount()
++ long getItemId(int)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setOnRecyclerViewClickListener(OnRecyclerViewClickListener)
++ void onDetachedFromRecyclerView(RecyclerView)
+}
+class com.example.baetube.bottomsheetdialog.UploadOptionFragment {
+- {static} TypedArray resources
+- {static} String[] options
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
+}
+class com.example.baetube.fragment.HistoryDetailFragment {
+- View view
+- RecyclerView recyclerView
+- RecyclerViewVideoAdapter adapter
+- ArrayList<RecyclerViewVideoItem> list
+- EditText search
+- TextView buttonCancel
+- int slideDistance
+- int animationDuration
+- ConstraintLayout layoutSearch
+- OnCallbackResponseListener onCallbackResponseListener
+- OkHttpUtil okHttpUtil
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void requestHistoryVideo()
+- void requestHistoryVideo(String)
++ void setHistoryList(List<VideoDTO>,List<ChannelDTO>)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void onClick(View)
++ void onFocusChange(View,boolean)
+- void hideKeyPad()
+}
+class com.example.baetube.VideoBottomSheetCallback {
+- int height
+- int width
+- View player
+- View description
+- int state
+- BottomSheetBehavior behavior
+- int peekHeight
+- int peekWidth
+- OnBottomSheetInteractionListener onBottomSheetInteractionListener
++ void onStateChanged(View,int)
++ void onSlide(View,float)
++ boolean onTouch(View,MotionEvent)
+}
+interface com.example.baetube.OnSetFragmentListener {
++ void onResponseDescription(String)
++ void onResponsePublic(Integer)
++ void onResponseLocation(String)
++ void onResponseAge(Integer)
++ void onResponseVote(VoteDTO,List<VoteDTO>)
++ void onResponseCategory(String,int)
++ void onResponseCalendar(int,int,int)
+}
+class com.example.baetube.fragment.modify.ModifyThumbnailFragment {
+- View view
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+class com.example.baetube.fragment.upload.UploadVideoListFragment {
+- View view
+- RecyclerView recyclerView
+- RecyclerViewVideoListAdapter adapter
+- ArrayList<File> list
+- OnUploadDataListener onUploadDataListener
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setVideoList(ArrayList<File>)
+}
+class com.example.baetube.fragment.channel.ChannelPlaylistFragment {
+- View view
+- RecyclerView recyclerView
+- RecyclerViewPlaylistAdapter recyclerViewPlaylistAdapter
+- ArrayList<RecyclerViewPlaylistItem> list
+- OnCallbackResponseListener onCallbackResponseListener
+- LinearLayoutManager linearLayoutManagerCategory
+- RecyclerView recyclerViewCategory
+- RecyclerViewCategoryAdapter recyclerViewCategoryAdapter
+- ArrayList<CategoryDTO> listCategory
+- Integer selectedPosition
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setRecyclerViewPlaylist(List<PlaylistDTO>)
+- void setCategory()
+}
+class com.example.baetube.fragment.modify.ModifyVideoFragment {
+- View view
+- OnCallbackResponseListener onCallbackResponseListener
+- OkHttpUtil okHttpUtil
+- OnSetFragmentListener onSetFragmentListener
+- ImageView thumbnail
+- ImageView changeThumbnail
+- EditText editTitle
+- TextView textCount
+- TextView description
+- TextView age
+- ConstraintLayout layoutDescription
+- ConstraintLayout layoutVisible
+- ConstraintLayout layoutAge
+- ConstraintLayout layoutLocation
+- ConstraintLayout layoutAddPlaylist
+- VideoDTO sourceVideoData
+- VideoDTO currentVideoData
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void requestVideoData()
++ void setImage(File)
++ void setVideoData(VideoDTO)
+- void requestUpdateVideo()
++ void onClick(View)
+- void setOnFragmentListener()
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
+}
+class com.example.baetube.fragment.channel.ChannelAnalysisFragment {
+- View view
+- ViewPager2 viewPager
+- AnalysisPagerAdapter analysisPagerAdapter
+- TabLayout tabLayout
+- TabLayoutMediator tabLayoutMediator
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
+}
+class com.example.baetube.UploadType {
++ {static} int VIDEO
++ {static} int COMMUNITY
+}
+class com.example.baetube.bottomsheetdialog.VideoFragment {
+- View view
+- RecyclerView recyclerView
+- RecyclerViewVideoAdapter adapter
+- ArrayList<RecyclerViewVideoItem> list
+- VideoView player
+- TextView title
+- TextView viewCount
+- TextView date
+- TextView buttonSubscribe
+- TextView channelName
+- TextView subscribeCount
+- TextView replyCount
+- TextView likeCount
+- TextView hateCount
+- ImageView thumbUp
+- ImageView thumbDown
+- ImageView addLibrary
+- ImageView channelProfile
+- ImageView profile
+- ImageView buttonPlayerPlay
+- ImageView buttonPlayerClose
+- EditText reply
+- ConstraintLayout layoutReply
+- CoordinatorLayout layoutDescription
+- ConstraintLayout layoutMinMenu
+- OnCallbackResponseListener onCallbackResponseListener
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ Dialog onCreateDialog(Bundle)
++ void setRatio(BottomSheetDialog)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void test()
++ void onClick(View)
++ boolean onTouch(View,MotionEvent)
+}
+class com.example.baetube.recyclerview.item.RecyclerViewNestedReplyItem {
+- NestedReplyDTO nestedReplyDTO
+- ChannelDTO channelDTO
++ NestedReplyDTO getNestedReplyDTO()
++ ChannelDTO getChannelDTO()
++ void setNestedReplyDTO(NestedReplyDTO)
++ void setChannelDTO(ChannelDTO)
+}
+class com.example.baetube.fragment.channel.ChannelInfomationFragment {
+- View view
+- TextView channelDescription
+- TextView regDate
+- OnCallbackResponseListener onCallbackResponseListener
+- {static} String ARG_PARAM
+- boolean hasToolbar
++ {static} ChannelInfomationFragment newInstance(boolean,OnCallbackResponseListener)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ void setChannelInfomation(ChannelDTO)
++ boolean onOptionsItemSelected(MenuItem)
+}
+class com.example.baetube.recyclerview.item.RecyclerViewReplyItem {
+- ReplyDTO replyDTO
+- ChannelDTO channelDTO
++ ReplyDTO getReplyDTO()
++ ChannelDTO getChannelDTO()
++ void setReplyDTO(ReplyDTO)
++ void setChannelDTO(ChannelDTO)
+}
+interface com.example.baetube.OnModifyListener {
++ void OnModifyPlaylist(RecyclerViewPlaylistItem)
+}
+class com.example.baetube.bottomsheetdialog.PlaylistOptionFragment {
+- {static} TypedArray resources
+- {static} String[] options
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
+}
+class com.example.baetube.SignInValidation {
++ {static} boolean isEmail(String)
++ {static} boolean isPhone(String)
++ {static} boolean isPassword(String)
++ {static} boolean isName(String)
+}
+class com.example.baetube.activity.MainActivity {
+- BottomNavigationView bottomNavigationView
+- int navigationHeight
+- int bottomBarHeight
+- FragmentManager fragmentManager
+- CoordinatorLayout bottomSheetVideo
+- BottomSheetBehavior bottomSheetVideoBehavior
+- VideoBottomSheetCallback videoBottomSheetCallback
+- int bottomSheetPeekHeight
+- StyledPlayerView player
+- TextView title
+- TextView viewCount
+- TextView date
+- TextView buttonSubscribe
+- TextView channelName
+- TextView subscribeCount
+- TextView replyCount
+- TextView likeCount
+- TextView hateCount
+- ImageView buttonDetail
+- ImageView thumbUp
+- ImageView thumbDown
+- ImageView addLibrary
+- ImageView channelProfile
+- ImageView profile
+- ImageView bottomsheetPlayerPlayButton
+- ImageView bottomsheetPlayerCloseButton
+- EditText reply
+- ConstraintLayout layoutWriteReply
+- CoordinatorLayout layoutDescription
+- ConstraintLayout layoutMinMenu
+- ExoPlayer exoPlayer
+- boolean isCallLogin
+- RecyclerView relatedVideoRecyclerView
+- RecyclerViewVideoAdapter relatedVideoAdapter
+- ArrayList<RecyclerViewVideoItem> relatedVideoList
+- FrameLayout bottomSheetSub
+- BottomSheetBehavior bottomSheetSubBehavior
+- OnCallbackResponseListener onCallbackResponseListener
+- StyledPlayerView focusedPlayer
+- ImageView focusedThumbnail
+- RecyclerViewVideoItem currentVideoItem
+- ReplyView replyView
+- DescriptionView descriptionView
+- ImageView playerPlayButton
+- ImageView playerPauseButton
+- ImageView playerFullscreenButton
+- ImageView playerSeekBack
+- ImageView playerSeekForward
+- ImageView playerOptionButton
+- GestureDetector.SimpleOnGestureListener simpleOnGestureListener
+- GestureDetector gestureDetector
+- int playerControllerVisibility
+- int playerScreenMode
+- OnDialogInteractionListener onDialogInteractionListener
+- String playerUrl
+- String currentPlayerResolution
+- OkHttpUtil okHttpUtil
+- ConstraintLayout layoutKeyboardEdit
+- ImageButton keyboardEditButton
+- EditText keyboardEditInput
+- KeyboardState.HeightListener heightListener
+- boolean isReplyFocused
+- RecyclerViewReplyItem currentReplyItem
+- RecyclerViewVideoItem managedVideoItem
++ ActivityResultLauncher<Intent> activityResultLauncher
+# void onCreate(Bundle)
++ void onBackPressed()
++ void setManagedVideoItem(RecyclerViewVideoItem)
++ void onVideoItemClick(RecyclerViewVideoItem)
++ void onCompletelyVisible(FrameLayout,String)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setRelatedVideoRecyclerView(List<VideoDTO>)
++ void onClick(View)
++ void requestSelectPlaylist()
+- void requestViewVideo(Integer)
+- void requestSelectSubscribe(Integer)
++ void requestDeleteVideo()
++ void requestDeleteHistoryVideo()
++ void requestSignIn(UserDTO)
++ void requestRelatedVideo(Integer)
++ void requestSaveFCMToken(String)
+- void setBottomSheetVideoInfo(VideoDTO,ChannelDTO)
++ void requestChannelData()
+- void resetView()
+- void attachReplyView()
+- void attachDescriptionView(RecyclerViewVideoItem)
++ void onSlide(View,float)
++ void onAttachViewClick(View)
+# void onStart()
+# void onResume()
+# void onPause()
+# void onStop()
+- void initializePlayer(StyledPlayerView)
+- void releasePlayer(StyledPlayerView)
+- void initializeExoPlayer()
+- void setMediaSource(String,String)
+- void releaseExoPlayer()
++ void setCurrentReplyData(RecyclerViewReplyItem)
++ void requestAddPlaylist(List<PlaylistDTO>)
++ void commitModifyVideoFragment(Integer)
+- void setOnDialogInteractionListener()
+- void setSimpleOnGestureListener()
+- void setOnCallbackResponseListener()
++ void relatedVideoRecyclerView(List<VideoDTO>,ArrayList<ChannelDTO>)
++ void onFocusChange(View,boolean)
+- String getRealPathFromURI(Uri)
++ void setBottomNavigationViewVisible(int)
+}
+class com.example.baetube.bottomsheetdialog.AddPlaylistFragment {
+- View view
+- Context context
+- TextView title
+- LinearLayout layoutButtonGroup
+- CheckBox[] checkBoxes
+- TextView buttonAdd
+- TextView buttonClose
+- String reportTitle
+- String[] reportContents
+- List<PlaylistDTO> playlistList
+- List<PlaylistDTO> checkedList
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ Dialog onCreateDialog(Bundle)
++ void setRatio(BottomSheetDialog)
++ void setTitle(String)
++ void setRadioButtons(String[])
++ void initDialog(String,String[])
++ void onClick(View)
+}
+class com.example.baetube.bottomsheetdialog.SetCategoryFragment {
+- View view
+- TextView title
+- TextView buttonAdd
+- TextView buttonClose
+- Context context
+- Spinner spinner
+- ArrayList<SpinnerItem> list
+- SpinnerDropdownAdapter adapter
+- String dialogTitle
+- String[] options
+- OnSetFragmentListener onSetFragmentListener
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ Dialog onCreateDialog(Bundle)
++ void setRatio(BottomSheetDialog)
++ void setTitle(String)
++ void onClick(View)
+}
+class com.example.baetube.dto.VoteDTO {
+- Integer voteId
+- Integer communityId
+- String title
+- String comment
+- Integer voteOptionId
+- String option
+- Integer count
++ Integer getVoteId()
++ Integer getCommunityId()
++ String getTitle()
++ String getComment()
++ Integer getVoteOptionId()
++ String getOption()
++ Integer getCount()
++ void setVoteId(Integer)
++ void setCommunityId(Integer)
++ void setTitle(String)
++ void setComment(String)
++ void setVoteOptionId(Integer)
++ void setOption(String)
++ void setCount(Integer)
+}
+class com.example.baetube.recyclerview.adapter.RecyclerViewNotificationAdapter {
+- Context context
+- ArrayList<RecyclerViewNotificationItem> list
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ void setList(ArrayList<RecyclerViewNotificationItem>)
++ NotificationViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(NotificationViewHolder,int)
++ int getItemCount()
++ int getItemViewType(int)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setOnRecyclerViewClickListener(OnRecyclerViewClickListener)
++ void onDetachedFromRecyclerView(RecyclerView)
+}
+interface com.example.baetube.OnCallbackResponseListener {
++ void onResponse(Response)
++ void onExpiredAccessTokenResponse()
++ void onExpiredRefreshTokenResponse()
++ void onGeneratedAccessTokenResponse(String)
++ void onLoginUserResponse(String)
++ void onVisitChannelResponse(String)
++ void onSubscribersChannelResponse(String)
++ void onVisitCommunityResponse(String)
++ void onSelectReplyResponse(String)
++ void onSelectNestedReplyResponse(String)
++ void onSelectPlaylistResponse(String)
++ void onSelectSearchHistoryResponse(String)
++ void onSelectChannelVideoResponse(String)
++ void onSelectHistoryVideoResponse(String)
++ void onSelectMainVideoResponse(String)
++ void onSelectPlaylistVideoResponse(String)
++ void onSelectSubscribeVideoResponse(String)
++ void onSelectViewVideoResponse(String)
++ void onSelectVoteOptionResponse(String)
++ void onSelectSubscribeResponse(String)
++ void onInsertResponse(String)
++ void onRateResponse(String)
++ void onSubscribeResponse(String)
++ void onUnSubscribeResponse(String)
++ void onReplyResponse(String)
++ void onNestedReplyResponse(String)
++ void onSignInResponse(String)
++ void onSelectRelatedVideoResponse(String)
++ void onSaveFCMTokenResponse(boolean)
++ void onSelectChannelDataResponse(String)
++ void onUpdateChannelResponse(String)
++ void onSelectCommunityDataResponse(String)
++ void onUpdateCommunityResponse(String)
++ void onSelectVideoDataResponse(String)
++ void onUpdateVideoResponse(String)
++ void onSelectPlaylistDataResponse(String)
++ void onUpdatePlaylistResponse(String)
++ void onSelectCategoryResponse(String)
++ void onSelectSubscribersCommunityResponse(String)
++ void onSelectVideoNotificationResponse(String)
++ void onSelectCommunityNotificationResponse(String)
++ void onSelectSearchVideoResponse(String)
++ void onSelectSearchChannelResponse(String)
++ void onSelectChannelDataAllResponse(String)
++ void onSelectNewNotifications(String)
++ void onSelectUserDataResponse(String)
+}
+class com.example.baetube.recyclerview.item.RecyclerViewSubscribeItem {
+- ChannelDTO channelDTO
+- int viewType
++ ChannelDTO getChannelDTO()
++ int getViewType()
++ void setChannelDTO(ChannelDTO)
++ void setViewType(int)
+}
+class com.example.baetube.fragment.set.SetAgeFragment {
+- View view
+- TextView textButtonAdult
+- LinearLayout layoutAdult
+- OnSetFragmentListener onSetFragmentListener
+- boolean child
+- boolean adult
+- Integer age
+- RadioGroup radioGroupChild
+- RadioGroup radioGroupAdult
+- TextView buttonUpload
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
++ void onClick(View)
++ void onCheckedChanged(RadioGroup,int)
+- void applyToPolicy()
+}
+class com.example.baetube.dto.CategoryDTO {
+- Integer categoryId
+- String name
++ Integer getCategoryId()
++ String getName()
++ void setCategoryId(Integer)
++ void setName(String)
+}
+class com.example.baetube.dto.ChannelDTO {
+- Integer channelId
+- Integer userId
+- Integer subs
+- Integer videoCount
+- String name
+- String description
+- String arts
+- Timestamp regDate
+- String profile
++ Integer getChannelId()
++ Integer getUserId()
++ Integer getSubs()
++ Integer getVideoCount()
++ String getName()
++ String getDescription()
++ String getArts()
++ Timestamp getRegDate()
++ String getProfile()
++ void setChannelId(Integer)
++ void setUserId(Integer)
++ void setSubs(Integer)
++ void setVideoCount(Integer)
++ void setName(String)
++ void setDescription(String)
++ void setArts(String)
++ void setRegDate(Timestamp)
++ void setProfile(String)
+}
+class com.example.baetube.Spinner.SpinnerItem {
+- int image
+- String title
+- String description
++ int getImage()
++ String getTitle()
++ String getDescription()
++ void setImage(int)
++ void setTitle(String)
++ void setDescription(String)
+}
+class com.example.baetube.recyclerview.adapter.RecyclerViewStorageAdapter {
+- Context context
+- ArrayList<RecyclerViewPlaylistItem> list
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ StorageViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(StorageViewHolder,int)
++ int getItemCount()
++ void onDetachedFromRecyclerView(RecyclerView)
++ void setOnRecyclerViewClickListener(OnRecyclerViewClickListener)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
+}
+class com.example.baetube.recyclerview.item.RecyclerViewSearchHistoryItem {
+- String keywords
++ String getKeywords()
++ void setKeywords(String)
+}
+class com.example.baetube.fragment.SubscribeFragment {
+- View view
+- TextView buttonDetail
+- RecyclerView recyclerViewScribe
+- RecyclerViewSubscribeAdapter recyclerViewSubscribeAdapter
+- ArrayList<RecyclerViewSubscribeItem> recyclerViewSubscribeList
+- RecyclerView recyclerViewVideo
+- RecyclerViewVideoAdapter recyclerViewVideoAdapter
+- ArrayList<RecyclerViewVideoItem> recyclerViewVideoList
+- OkHttpUtil okHttpUtil
+- OnCallbackResponseListener onCallbackResponseListener
+- OnFragmentInteractionListener onFragmentInteractionListener
+- LinearLayoutManager linearLayoutManagerSubscribe
+- LinearLayoutManager linearLayoutManagerVideo
+- LinearLayoutManager linearLayoutManagerCommunity
+- LinearLayoutManager linearLayoutManagerCategory
+- RecyclerView recyclerViewCategory
+- RecyclerViewCategoryAdapter recyclerViewCategoryAdapter
+- ArrayList<CategoryDTO> listCategory
+- RecyclerView recyclerViewCommunity
+- RecyclerViewCommunityAdapter recyclerViewCommunityAdapter
+- ArrayList<RecyclerViewCommunityItem> listCommunity
+- Integer selectedPosition
+- boolean isVideoCalled
+- boolean isCommunityCalled
+- boolean isFirst
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ void setRecyclerViewScribe(List<ChannelDTO>)
++ void setRecyclerViewVideo(List<VideoDTO>,ArrayList<ChannelDTO>)
++ void setRecyclerViewCommunity(List<CommunityDTO>)
++ void onItemClick(View,int)
+- void requestCommunityData()
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void onClick(View)
++ void onVideoItemClick(RecyclerViewVideoItem)
++ void onCompletelyVisible(FrameLayout,String)
+- void setCategory()
+}
+class com.example.baetube.recyclerview.viewholder.CommunityViewHolder {
++ ImageView profile
++ ImageView content
++ ImageView option
++ ImageView like
++ ImageView hate
++ ImageView reply
++ TextView channelName
++ TextView date
++ TextView comment
++ TextView likeCount
++ TextView hateCount
++ TextView replyCount
++ RecyclerView recyclerViewVote
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ void onClick(View)
+}
+class com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter {
+- Context context
+- ArrayList<RecyclerViewVideoItem> list
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ VideoViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(VideoViewHolder,int)
++ int getItemCount()
++ int getItemViewType(int)
++ long getItemId(int)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setOnRecyclerViewClickListener(OnRecyclerViewClickListener)
++ void onDetachedFromRecyclerView(RecyclerView)
+}
+class com.example.baetube.fragment.SearchFragment {
+- View view
+- RecyclerView recyclerView
+- RecyclerViewSearchHistoryAdapter adapter
+- ArrayList<SearchHistoryDTO> list
+- OnCallbackResponseListener onCallbackResponseListener
+- OkHttpUtil okHttpUtil
+- TextView textSearch
+- ImageView buttonBack
+- ImageView buttonSTT
+- boolean isRecording
+- Intent intent
+- SpeechRecognizer speechRecognizer
+- RecognitionListener listener
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void requestInsertSearchHistory(String)
+- void requsetSearchHistory()
++ void setSearchList(List<SearchHistoryDTO>)
+- void openSearchResultFragment(String)
++ void onClick(View)
+- void startRecord()
+~ void stopRecord()
+- void checkPermission()
+- void requestDeleteSearchHistory(String)
+- void setOnRecognitionListener()
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
+}
+class com.example.baetube.dto.PlaylistItemDTO {
+- Integer playlistId
+- Integer videoId
++ Integer getPlaylistId()
++ Integer getVideoId()
++ void setPlaylistId(Integer)
++ void setVideoId(Integer)
+}
+class com.example.baetube.OkHttpUtil {
+- {static} OkHttpClient okHttpClient
+- {static} Context applicationContext
++ {static} void setApplicationContext(Context)
+- String createContent(Object)
+- Request createPostRequest(String,String)
+- Request createGetRequest(String)
++ void sendPostRequest(Object,String,Callback)
++ void sendGetRequest(String,Callback)
++ void sendFileRequest(FileUploadDTO,Callback)
+- boolean checkReissuing(Callback)
+}
+class com.example.baetube.fragment.channel.ChannelVideoFragment {
+- View view
+- RecyclerView recyclerView
+- RecyclerViewVideoAdapter recyclerViewVideoAdapter
+- ArrayList<RecyclerViewVideoItem> list
+- OnCallbackResponseListener onCallbackResponseListener
+- OkHttpUtil okHttpUtil
+- LinearLayoutManager linearLayoutManagerCategory
+- RecyclerView recyclerViewCategory
+- RecyclerViewCategoryAdapter recyclerViewCategoryAdapter
+- ArrayList<CategoryDTO> listCategory
+- OnFragmentInteractionListener onFragmentInteractionListener
+- Integer selectedPosition
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void setRecyclerViewVideo(List<VideoDTO>,List<ChannelDTO>)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
+- void setCategory()
+}
+class com.example.baetube.recyclerview.viewholder.NotificationViewHolder {
++ ImageView profile
++ ImageView thumbnail
++ ImageView option
++ TextView title
++ TextView date
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ void onClick(View)
+}
+class com.example.baetube.recyclerview.viewholder.CategoryViewHolder {
++ TextView category
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ void onClick(View)
+}
+class com.example.baetube.bottomsheetdialog.AddVoteFragment {
+- View view
+- TextView buttonAdd
+- TextView buttonClose
+- EditText comment
+- OnDialogInteractionListener onDialogInteractionListener
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ Dialog onCreateDialog(Bundle)
++ void setRatio(BottomSheetDialog)
++ void onClick(View)
+}
+class com.example.baetube.fragment.analysis.AnalysisSubscribeFragment {
+- View view
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+class com.example.baetube.activity.UploadActivity {
+- FragmentManager fragmentManager
+- FragmentTransaction fragmentTransaction
+- ExecutorService executorService
+- OnUploadDataListener onUploadDataListener
+- File selectedFile
+- Bitmap selectedImage
+- VideoDTO videoInformation
+- ChannelDTO channel
+- OkHttpUtil okHttpUtil
+- OnCallbackResponseListener onCallbackResponseListener
+- CommunityDTO communityInformation
+- VoteDTO vote
+- List<VoteDTO> voteOptionList
++ ActivityResultLauncher<Intent> activityResultLauncher
+# void onCreate(Bundle)
+- void init(int)
++ void onBackPressed()
+- void setOnUploadDataListener()
+- String saveBitmapConvertFile(Bitmap)
+- void DeleteCacheFile(String)
+- String getRealPathFromURI(Uri)
+- void setOnCallbackResponseListener()
+}
+class com.example.baetube.FileUploadUtils {
++ {static} void send2Server(File,StyledPlayerView,Context)
+}
+class com.example.baetube.fragment.HomeFragment {
+- View view
+- DrawerLayout drawerLayout
+- LinearLayout layoutProfile
+- LinearLayout layoutAccountManage
+- LinearLayout layoutChannelManage
+- LinearLayout layoutMyChannel
+- LinearLayout layoutLogout
+- LinearLayout layoutBack
+- TextView textName
+- ImageView profile
+- RecyclerView recyclerView
+- RecyclerViewVideoAdapter recyclerViewVideoAdapter
+- ArrayList<RecyclerViewVideoItem> list
+- ArrayList<RecyclerViewVideoItem> filteredList
+- RecyclerView recyclerViewCategory
+- RecyclerViewCategoryAdapter recyclerViewCategoryAdapter
+- ArrayList<CategoryDTO> listCategory
+- OnCallbackResponseListener onCallbackResponseListener
+- OnFragmentInteractionListener onFragmentInteractionListener
+- OnDialogInteractionListener onDialogInteractionListener
+- OkHttpUtil okHttpUtil
+- LinearLayoutManager linearLayoutManager
+- LinearLayoutManager linearLayoutManagerCategory
+- Integer selectedPosition
+- boolean isCalled
+- boolean isFirst
+- ChannelDTO channel
+- FrameLayout layoutNotification
+- TextView textNotificationCount
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
++ void onClick(View)
++ void setNewNotifications(Integer)
+- void requestChannelDataAll()
++ void setChannelData(ChannelDTO)
++ void setRecyclerViewVideo(List<VideoDTO>,ArrayList<ChannelDTO>)
++ void setRecyclerViewCategory(List<CategoryDTO>)
++ void showChannelSelectDialog(List<ChannelDTO>)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void onVideoItemClick(RecyclerViewVideoItem)
++ void onCompletelyVisible(FrameLayout,String)
+- void setOnDialogInteractionListener()
+}
+class com.example.baetube.recyclerview.adapter.RecyclerViewVideoListAdapter {
+- Context context
+- ArrayList<File> list
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ VideoListViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(VideoListViewHolder,int)
++ int getItemCount()
++ void setOnRecyclerViewClickListener(OnRecyclerViewClickListener)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void onDetachedFromRecyclerView(RecyclerView)
+}
+class com.example.baetube.bottomsheetdialog.BaseReportFragment {
+- View view
+- TextView title
+- TextView buttonReport
+- TextView buttonClose
+- RadioGroup radioGroup
+- RadioButton[] radioButtons
+- String reportTitle
+- String[] reportContents
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ Dialog onCreateDialog(Bundle)
++ void setRatio(BottomSheetDialog)
++ void setTitle(String)
++ void setRadioButtons(String[])
++ void initDialog(String,String[])
++ void onCheckedChanged(RadioGroup,int)
++ void onClick(View)
+}
+class com.example.baetube.recyclerview.item.RecyclerViewCommunityItem {
+- CommunityDTO communityDTO
+- ChannelDTO channelDTO
+- ArrayList<RecyclerViewVoteItem> voteList
++ CommunityDTO getCommunityDTO()
++ ChannelDTO getChannelDTO()
++ ArrayList<RecyclerViewVoteItem> getVoteList()
++ void setCommunityDTO(CommunityDTO)
++ void setChannelDTO(ChannelDTO)
++ void setVoteList(ArrayList<RecyclerViewVoteItem>)
+}
+class com.example.baetube.bottomsheetdialog.VideoReportFragment {
+- int selectId
++ void onCheckedChanged(RadioGroup,int)
+}
+class com.example.baetube.fragment.modify.ModifyPlaylistFragment {
+- View view
+- ImageView thumbnail
+- EditText playlistName
+- Spinner spinner
+- ArrayList<SpinnerItem> list
+- SpinnerDropdownAdapter adapter
+- {static} Integer[] value
+- OnCallbackResponseListener onCallbackResponseListener
+- PlaylistDTO sourcePlaylistData
+- PlaylistDTO currentPlaylistData
+- OkHttpUtil okHttpUtil
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void requestPlaylistData()
++ void setPlaylistData(PlaylistDTO)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
+- void initSpinner()
+- void requestUpdatePlaylist()
++ void onClick(View)
+}
+class com.example.baetube.bottomsheetdialog.VideoOptionManageFragment {
+- {static} TypedArray resources
+- {static} String[] options
+- Context context
+- RecyclerViewVideoAdapter recyclerViewVideoAdapter
+- ArrayList<RecyclerViewVideoItem> list
+- int manageItemPosition
++ void onItemClick(View,int)
++ void onDismiss(DialogInterface)
++ void onItemLongClick(View,int)
+}
+class com.example.baetube.VideoListCallable {
++ ArrayList<File> call()
+- ArrayList<File> getVideoList()
+}
+interface com.example.baetube.OnDialogInteractionListener {
++ void onAddVoteResponse(String)
++ void onDeletePlaylistItem(int)
++ void onSetVideoResolution(int)
++ void onDeleteCommunity()
++ void onModifyCommunity()
++ void onDeleteNotification()
++ void onSelectChannel(int,int)
+}
+class com.example.baetube.dto.CommunityDTO {
+- Integer communityId
+- Long contentsId
+- Integer channelId
+- Integer likeCount
+- Integer hateCount
+- Integer replyCount
+- String imageUrl
+- String comment
+- Timestamp date
+- Integer voteId
+- String title
+- Integer voteOptionId
+- String option
+- Integer count
+- Integer selectedChannelId
+- String name
+- String profile
++ Integer getCommunityId()
++ Long getContentsId()
++ Integer getChannelId()
++ Integer getLikeCount()
++ Integer getHateCount()
++ Integer getReplyCount()
++ String getImageUrl()
++ String getComment()
++ Timestamp getDate()
++ Integer getVoteId()
++ String getTitle()
++ Integer getVoteOptionId()
++ String getOption()
++ Integer getCount()
++ Integer getSelectedChannelId()
++ String getName()
++ String getProfile()
++ void setCommunityId(Integer)
++ void setContentsId(Long)
++ void setChannelId(Integer)
++ void setLikeCount(Integer)
++ void setHateCount(Integer)
++ void setReplyCount(Integer)
++ void setImageUrl(String)
++ void setComment(String)
++ void setDate(Timestamp)
++ void setVoteId(Integer)
++ void setTitle(String)
++ void setVoteOptionId(Integer)
++ void setOption(String)
++ void setCount(Integer)
++ void setSelectedChannelId(Integer)
++ void setName(String)
++ void setProfile(String)
+}
+class com.example.baetube.dto.ChangePasswordRequest {
+- String email
+- String password
+- String newPassword
++ String getEmail()
++ String getPassword()
++ String getNewPassword()
++ void setEmail(String)
++ void setPassword(String)
++ void setNewPassword(String)
+}
+class com.example.baetube.recyclerview.adapter.RecyclerViewCommunityAdapter {
+- Context context
+- ArrayList<RecyclerViewCommunityItem> list
+- OnRecyclerViewClickListener onRecyclerViewClickListener
+- OnRecyclerViewClickListener onVoteViewClickListener
++ CommunityViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(CommunityViewHolder,int)
++ int getItemCount()
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setOnRecyclerViewClickListener(OnRecyclerViewClickListener)
++ void onDetachedFromRecyclerView(RecyclerView)
+}
+class com.example.baetube.bottomsheetdialog.NotificationOptionFragment {
+- {static} TypedArray resources
+- {static} String[] options
+- Context context
+- OnDialogInteractionListener onDialogInteractionListener
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
+}
+class com.example.baetube.ViewType {
++ {static} int SUBSCRIBE_HORIZONTAL
++ {static} int SUBSCRIBE_VERTICAL
++ {static} int VIDEO_LARGE
++ {static} int VIDEO_MEDIUM
++ {static} int VIDEO_SMALL
++ {static} int VIDEO_DIVIDER
++ {static} int NOTIFICATION_VIDEO
++ {static} int NOTIFICATION_COMMUNITY
++ {static} int NOTIFICATION_DIVIDER
+}
+interface com.example.baetube.OnFragmentInteractionListener {
++ void onVideoItemClick(RecyclerViewVideoItem)
++ void onCompletelyVisible(FrameLayout,String)
+}
+interface com.example.baetube.OnRecyclerViewClickListener {
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
+}
+class com.example.baetube.bottomsheetdialog.PlaylistVideoOptionManageFragment {
+- {static} TypedArray resources
+- {static} String[] options
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
+}
+class com.example.baetube.recyclerview.viewholder.VideoCheckableViewHolder {
++ ImageView thumbnail
++ TextView title
++ TextView views
++ TextView date
++ TextView channelName
++ LinearLayout layout
++ CheckBox checkBox
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ void onClick(View)
+}
+class com.example.baetube.recyclerview.adapter.RecyclerViewSearchHistoryAdapter {
+- Context context
+- ArrayList<SearchHistoryDTO> list
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ SearchHistoryViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(SearchHistoryViewHolder,int)
++ int getItemCount()
++ void setOnRecyclerViewClickListener(OnRecyclerViewClickListener)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void onDetachedFromRecyclerView(RecyclerView)
+}
+class com.example.baetube.GsonDateFormatAdapter {
+- DateFormat dateFormat
++ JsonElement serialize(Date,Type,JsonSerializationContext)
++ Date deserialize(JsonElement,Type,JsonDeserializationContext)
+}
+interface com.example.baetube.OnAttachViewListener {
++ void onAttachViewClick(View)
+}
+class com.example.baetube.Spinner.SpinnerDropdownAdapter {
+- Context context
+- ArrayList<SpinnerItem> list
+- boolean isSimple
++ View getView(int,View,ViewGroup)
++ View getDropDownView(int,View,ViewGroup)
+- View getCustomView(int,View,ViewGroup)
++ int getCount()
+}
+class com.example.baetube.bottomsheetdialog.SetCalendarFragment {
+- View view
+- TextView title
+- TextView buttonAdd
+- TextView buttonClose
+- DatePicker datePicker
+- Context context
+- String dialogTitle
+- OnSetFragmentListener onSetFragmentListener
+- int year
+- int month
+- int dayOfMonth
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ Dialog onCreateDialog(Bundle)
++ void setRatio(BottomSheetDialog)
++ void setTitle(String)
++ void onClick(View)
++ void onDateChanged(DatePicker,int,int,int)
+}
+class com.example.baetube.UserDisplay {
+- {static} double width
+- {static} double height
+- {static} double ratio
+- {static} float density
++ {static} double getWidth()
++ {static} double getHeight()
++ {static} double getRatio()
++ {static} float getDensity()
++ {static} void setWidth(double)
++ {static} void setHeight(double)
++ {static} void setRatio(double)
++ {static} void setDensity(float)
+}
+class com.example.baetube.fragment.PlaylistDetailFragment {
+- View view
+- RecyclerView recyclerView
+- RecyclerViewVideoAdapter recyclerViewVideoAdapter
+- ArrayList<RecyclerViewVideoItem> list
+- TextView playlistName
+- TextView channelName
+- TextView videoCount
+- ImageView buttonEdit
+- LinearLayout buttonPlay
+- LinearLayout buttonShuffle
+- RecyclerViewPlaylistItem recyclerViewPlaylistItem
+- OnCallbackResponseListener onCallbackResponseListener
+- OnDialogInteractionListener onDialogInteractionListener
+- OnFragmentInteractionListener onFragmentInteractionListener
+- OnModifyListener onModifyListener
+- OkHttpUtil okHttpUtil
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onViewCreated(View,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setRecyclerViewVideo(List<VideoDTO>,ArrayList<ChannelDTO>)
++ void onClick(View)
+}
+class com.example.baetube.recyclerview.viewholder.StorageViewHolder {
++ LinearLayout layoutMain
++ ImageView thumbnail
++ TextView name
++ TextView count
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ void onClick(View)
+}
+class com.example.baetube.fragment.upload.UploadCommunityFragment {
+- View view
+- ImageView thumbnail
+- ImageView buttonChangeThumbnail
+- ImageView profile
+- TextView channelName
+- TextView buttonUpload
+- EditText title
+- ConstraintLayout layoutDescription
+- ConstraintLayout layoutPublic
+- TextView category
+- OnUploadDataListener onUploadDataListener
+- OnSetFragmentListener onSetFragmentListener
+- CommunityDTO community
+- Bitmap selectedImage
+- VoteDTO vote
+- List<VoteDTO> voteOptionList
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ void onClick(View)
++ boolean onOptionsItemSelected(MenuItem)
++ void setThumbnail(File)
++ void setOnSetFragmentListener()
+}
+class com.example.baetube.CustomVideoView {
+# void onMeasure(int,int)
+}
+class com.example.baetube.recyclerview.viewholder.VoteViewHolder {
++ TextView comment
+}
+class com.example.baetube.DateToStringUtil {
++ {static} long second
++ {static} long minute
++ {static} long hour
++ {static} long day
++ {static} long week
++ {static} long month
++ {static} long year
++ {static} String dateToString(Timestamp)
++ {static} long subtractFromNow(Timestamp)
+}
+class com.example.baetube.TimestampUtil {
++ {static} Timestamp StringToTimestamp(String)
+}
+class com.example.baetube.fragment.AddStorageFragment {
+- View view
+- RecyclerView recyclerView
+- RecyclerViewVideoCheckableAdapter adapter
+- ArrayList<RecyclerViewVideoCheckableItem> list
+- HashSet<Integer> checkedItems
+- EditText search
+- TextView buttonCancel
+- OnCallbackResponseListener onCallbackResponseListener
+- OnDialogInteractionListener onDialogInteractionListener
+- OkHttpUtil okHttpUtil
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void requestInsertPlaylistItems(Integer)
+- List<PlaylistItemDTO> createPlaylistItemList(Integer)
+- void makeCheckableList(ArrayList<RecyclerViewVideoItem>)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
+}
+class com.example.baetube.Callback.ReturnableCallback {
++ {static} int CALLBACK_NONE
++ {static} int CALLBACK_LOGIN_USER
++ {static} int CALLBACK_VISIT_CHANNEL
++ {static} int CALLBACK_SUBSCRIBERS_CHANNEL
++ {static} int CALLBACK_VISIT_COMMUNITY
++ {static} int CALLBACK_SELECT_REPLY
++ {static} int CALLBACK_SELECT_NESTED_REPLY
++ {static} int CALLBACK_SELECT_PLAYLIST
++ {static} int CALLBACK_SELECT_SEARCH_HISTORY
++ {static} int CALLBACK_SELECT_CHANNEL_VIDEO
++ {static} int CALLBACK_SELECT_HISTORY_VIDEO
++ {static} int CALLBACK_SELECT_MAIN_VIDEO
++ {static} int CALLBACK_SELECT_PLAYLIST_VIDEO
++ {static} int CALLBACK_SELECT_SUBSCRIBE_VIDEO
++ {static} int CALLBACK_SELECT_VIEW_VIDEO
++ {static} int CALLBACK_SELECT_VOTE_OPTION
++ {static} int CALLBACK_SELECT_SUBSCRIBE
++ {static} int CALLBACK_INSERT
++ {static} int CALLBACK_RATE
++ {static} int CALLBACK_SUBSCRIBE
++ {static} int CALLBACK_UNSUBSCRIBE
++ {static} int CALLBACK_REPLY
++ {static} int CALLBACK_NESTED_REPLY
++ {static} int CALLBACK_SIGN_IN
++ {static} int CALLBACK_SELECT_RELATED_VIDEO
++ {static} int CALLBACK_SAVE_FCM_TOKEN
++ {static} int CALLBACK_GENERATE_ACCESS_TOKEN
++ {static} int CALLBACK_SELECT_CHANNEL_DATA
++ {static} int CALLBACK_UPDATE_CHANNEL
++ {static} int CALLBACK_SELECT_COMMUNITY_DATA
++ {static} int CALLBACK_UPDATE_COMMUNITY
++ {static} int CALLBACK_SELECT_VIDEO_DATA
++ {static} int CALLBACK_UPDATE_VIDEO
++ {static} int CALLBACK_SELECT_PLAYLIST_DATA
++ {static} int CALLBACK_UPDATE_PLAYLIST
++ {static} int CALLBACK_SELECT_CATEGORY
++ {static} int CALLBACK_SELECT_SUBSCRIBERS_COMMUNITY
++ {static} int CALLBACK_SELECT_COMMUNITY_NOTIFICATION
++ {static} int CALLBACK_SELECT_VIDEO_NOTIFICATION
++ {static} int CALLBACK_SELECT_SEARCH_VIDEO
++ {static} int CALLBACK_SELECT_SEARCH_CHANNEL
++ {static} int CALLBACK_SELECT_CHANNEL_DATA_ALL
++ {static} int CALLBACK_SELECT_NEW_NOTIFICATION
++ {static} int CALLBACK_SELECT_USER_DATA
+- {static} String EXPIRED_ACCESS_TOKEN
+- {static} String EXPIRED_REFRESH_TOKEN
+- {static} boolean isReissuingAccessToken
+- OnCallbackResponseListener onCallbackResponseListener
+- int type
+- String message
++ void onFailure(Call,IOException)
++ void onResponse(Call,Response)
++ {static} boolean isReissuingAccessToken()
++ {static} void setIsReissuingAccessToken(boolean)
++ int getType()
+}
+class com.example.baetube.Callback.LoginUserCallback {
+- Context context
++ void onFailure(Call,IOException)
++ void onResponse(Call,Response)
+}
+class com.example.baetube.recyclerview.adapter.RecyclerViewCategoryAdapter {
+- Context context
+- ArrayList<CategoryDTO> list
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ CategoryViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(CategoryViewHolder,int)
++ int getItemCount()
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setOnRecyclerViewClickListener(OnRecyclerViewClickListener)
++ void onDetachedFromRecyclerView(RecyclerView)
+}
+class com.example.baetube.bottomsheetdialog.CommunityOptionFragment {
+- {static} TypedArray resources
+- {static} String[] options
+- Context context
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
+}
+class com.example.baetube.recyclerview.item.RecyclerViewVideoCheckableItem {
+- ChannelDTO channelDTO
+- VideoDTO videoDTO
+- boolean isChecked
++ ChannelDTO getChannelDTO()
++ VideoDTO getVideoDTO()
++ boolean isChecked()
++ void setChannelDTO(ChannelDTO)
++ void setVideoDTO(VideoDTO)
++ void setChecked(boolean)
+}
+interface com.example.baetube.OnBottomSheetInteractionListener {
++ void onSlide(View,float)
+}
+class com.example.baetube.dto.TokenInfoDTO {
+- String grantType
+- String accessToken
+- String refreshToken
++ String getGrantType()
++ String getAccessToken()
++ String getRefreshToken()
++ void setGrantType(String)
++ void setAccessToken(String)
++ void setRefreshToken(String)
+}
+class com.example.baetube.fragment.set.SetVoteFragment {
+- View view
+- RecyclerView recyclerView
+- ReclyclerViewVoteAdapter adapter
+- ArrayList<String> list
+- TextView countCur
+- TextView buttonAddVote
+- EditText title
+- VoteDTO vote
+- List<VoteDTO> voteOptions
+- OnSetFragmentListener onSetFragmentListener
+- OnDialogInteractionListener onDialogInteractionListener
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void onClick(View)
+- void setOnDialogInteractionListener()
+}
+class com.example.baetube.recyclerview.item.RecyclerViewVoteItem {
+- VoteDTO voteDTO
+- boolean isSelected
++ VoteDTO getVoteDTO()
++ boolean isSelected()
++ void setVoteDTO(VoteDTO)
++ void setSelected(boolean)
+}
+interface com.example.baetube.OnUploadDataListener {
++ void onResponseVideoFile(File)
++ void onResponseVideoThumbnail(Bitmap)
++ void onResponseVideoInformation(VideoDTO)
++ void onResponseVideoAge(Integer)
++ void onResponseUploadVideoRequest()
++ void onResponseCommunityInformation(CommunityDTO)
++ void onResponseCommunityImage(Bitmap)
++ void onResponseCommunityVote(VoteDTO,List<VoteDTO>)
++ void onResponseUploadCommunityRequest()
+}
+class com.example.baetube.recyclerview.adapter.RecyclerViewNestedReplyAdapter {
+- Context context
+- ArrayList<RecyclerViewNestedReplyItem> list
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ ReplyViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(ReplyViewHolder,int)
++ int getItemCount()
++ void setOnRecyclerViewClickListener(OnRecyclerViewClickListener)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void onDetachedFromRecyclerView(RecyclerView)
+}
+class com.example.baetube.AnalysisPagerAdapter {
+- int count
++ Fragment createFragment(int)
++ int getItemCount()
+}
+class com.example.baetube.recyclerview.adapter.RecyclerViewSubscribeAdapter {
+- Context context
+- ArrayList<RecyclerViewSubscribeItem> list
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ SubscribeViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(SubscribeViewHolder,int)
++ int getItemCount()
++ int getItemViewType(int)
++ void setOnRecyclerViewClickListener(OnRecyclerViewClickListener)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void onDetachedFromRecyclerView(RecyclerView)
+}
+class com.example.baetube.recyclerview.adapter.ReclyclerViewVoteAdapter {
+- Context context
+- ArrayList<String> list
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ VoteViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(VoteViewHolder,int)
++ int getItemCount()
++ void setOnRecyclerViewClickListener(OnRecyclerViewClickListener)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void onDetachedFromRecyclerView(RecyclerView)
+}
+class com.example.baetube.dto.ReplyDTO {
+- Integer replyId
+- Long contentsId
+- Long attachedId
+- Integer channelId
+- String comment
+- Integer like
+- Integer hate
+- Timestamp date
+- Integer nestedCount
+- String name
+- String profile
++ Integer getReplyId()
++ Long getContentsId()
++ Long getAttachedId()
++ Integer getChannelId()
++ String getComment()
++ Integer getLike()
++ Integer getHate()
++ Timestamp getDate()
++ Integer getNestedCount()
++ String getName()
++ String getProfile()
++ void setReplyId(Integer)
++ void setContentsId(Long)
++ void setAttachedId(Long)
++ void setChannelId(Integer)
++ void setComment(String)
++ void setLike(Integer)
++ void setHate(Integer)
++ void setDate(Timestamp)
++ void setNestedCount(Integer)
++ void setName(String)
++ void setProfile(String)
+}
+class com.example.baetube.recyclerview.item.RecyclerViewVideoItem {
+- ChannelDTO channelDTO
+- VideoDTO videoDTO
+- int viewType
++ ChannelDTO getChannelDTO()
++ VideoDTO getVideoDTO()
++ int getViewType()
++ void setChannelDTO(ChannelDTO)
++ void setVideoDTO(VideoDTO)
++ void setViewType(int)
+}
+class com.example.baetube.recyclerview.adapter.RecyclerViewOptionAdapter {
+- Context context
+- ArrayList<RecyclerViewOptionItem> list
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ OptionViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(OptionViewHolder,int)
++ int getItemCount()
++ void setOnRecyclerViewClickListener(OnRecyclerViewClickListener)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void onDetachedFromRecyclerView(RecyclerView)
+}
+class com.example.baetube.fragment.modify.ModifyChannelInformationFragment {
+- View view
+- ImageView arts
+- ImageView changeArts
+- ImageView profile
+- EditText editName
+- TextView description
+- ConstraintLayout layoutDescription
+- ChannelDTO sourceChannelData
+- ChannelDTO currentChannelData
+- OnSetFragmentListener onSetFragmentListener
+- OnCallbackResponseListener onCallbackResponseListener
+- OkHttpUtil okHttpUtil
+- boolean isSelectedArts
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
++ void onClick(View)
+- void requestUpdateChannel()
++ void setImage(File)
++ void setChannelData(ChannelDTO)
+- void setOnSetFragmentListener()
+}
+class com.example.baetube.fragment.SearchResultFragment {
+- View view
+- String keywords
+- OnCallbackResponseListener onCallbackResponseListener
+- OnFragmentInteractionListener onFragmentInteractionListener
+- OkHttpUtil okHttpUtil
+- LinearLayoutManager linearLayoutManagerCategory
+- RecyclerView recyclerViewCategory
+- RecyclerViewCategoryAdapter recyclerViewCategoryAdapter
+- ArrayList<CategoryDTO> listCategory
+- LinearLayoutManager linearLayoutManagerVideo
+- RecyclerView recyclerViewVideo
+- RecyclerViewVideoAdapter recyclerViewVideoAdapter
+- ArrayList<RecyclerViewVideoItem> listVideo
+- LinearLayoutManager linearLayoutManagerChannel
+- RecyclerView recyclerViewChannel
+- RecyclerViewChannelAdapter recyclerViewChannelAdapter
+- ArrayList<ChannelDTO> listChannel
+- Integer selectedPosition
+- boolean isCalled
+- boolean isFirst
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
+- void setCategory()
++ void setRecyclerViewVideo(List<VideoDTO>,ArrayList<ChannelDTO>)
++ void setRecyclerViewChannel(List<ChannelDTO>)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
+}
+class com.example.baetube.dto.NotificationDTO {
+- Integer userId
+- Long contentsId
+- Timestamp date
+- Integer checked
++ Integer getUserId()
++ Long getContentsId()
++ Timestamp getDate()
++ Integer getChecked()
++ void setUserId(Integer)
++ void setContentsId(Long)
++ void setDate(Timestamp)
++ void setChecked(Integer)
+}
+class com.example.baetube.fragment.upload.UploadVideoInformationFragment {
+- View view
+- ImageView thumbnail
+- ImageView buttonChangeThumbnail
+- ImageView profile
+- TextView channelName
+- TextView countCur
+- TextView description
+- TextView visible
+- EditText title
+- TextView category
+- TextView location
+- ConstraintLayout layoutDescription
+- ConstraintLayout layoutVisible
+- ConstraintLayout layoutLocation
+- ConstraintLayout layoutCategory
+- ConstraintLayout layoutPlaylist
+- OnUploadDataListener onUploadDataListener
+- OnSetFragmentListener onSetFragmentListener
+- String address
+- Integer selectedVisible
+- File selectedFile
+- Bitmap selectedThumbnail
+- Integer categoryId
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ void onClick(View)
++ boolean onOptionsItemSelected(MenuItem)
++ void setThumbnail(File)
++ void setOnSetFragmentListener()
+}
+class com.example.baetube.ReplyView {
+- Context context
+- View view
+- RecyclerView recyclerViewReply
+- RecyclerViewReplyAdapter replyAdapter
+- ArrayList<RecyclerViewReplyItem> replyList
+- ImageView buttonClose
+- ImageView buttonCloseNested
+- ImageView buttonBackNested
+- ConstraintLayout layoutReply
+- CoordinatorLayout layoutNestedReply
+- RecyclerView recyclerViewNestedReply
+- RecyclerViewNestedReplyAdapter nestedReplyAdapter
+- ArrayList<RecyclerViewNestedReplyItem> nestedReplyList
+- EditText editReply
+- EditText editNestedReply
+- OnAttachViewListener onAttachViewListener
+- int animationDuration
+- Long contentsId
+- OnCallbackResponseListener onCallbackResponseListener
+- OkHttpUtil okHttpUtil
++ View onCreateView(LayoutInflater,ViewGroup)
++ void requestReply()
++ void requestNestedReply(Integer)
++ void clearReplyList()
++ void clearNestedReplyList()
++ void setRecyclerViewReply(List<ReplyDTO>)
++ void setRecyclerViewNestedReply(List<NestedReplyDTO>)
++ void onClick(View)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void openNestedReply()
++ void closeNestedReply()
++ void onFocusChange(View,boolean)
+}
+class com.example.baetube.DescriptionView {
+- Context context
+- View view
+- ImageView buttonClose
+- ImageView profile
+- TextView channelName
+- TextView videoTitle
+- TextView likeCount
+- TextView viewCount
+- TextView date
+- TextView dateYear
+- TextView content
+- RecyclerViewVideoItem currentVideoItem
+- OnAttachViewListener onAttachViewListener
++ View onCreateView(LayoutInflater,ViewGroup)
++ void onClick(View)
+}
+class com.example.baetube.dto.RateDTO {
+- Long contentsId
+- Integer channelId
+- Integer value
+- Integer result
++ Long getContentsId()
++ Integer getChannelId()
++ Integer getValue()
++ Integer getResult()
++ void setContentsId(Long)
++ void setChannelId(Integer)
++ void setValue(Integer)
++ void setResult(Integer)
+}
+class com.example.baetube.LinearInterpolation {
++ {static} float Lerp(float,float,float)
+}
+class com.example.baetube.fragment.SubscribeDetailFragment {
+- View view
+- RecyclerView recyclerViewScribe
+- RecyclerViewSubscribeAdapter recyclerViewSubscribeAdapter
+- ArrayList<RecyclerViewSubscribeItem> subscribeList
+- ArrayList<RecyclerViewSubscribeItem> selectedList
+- int slideDistance
+- int animationDuration
+- TextView buttonDelete
+- TextView buttonManage
+- OkHttpUtil okHttpUtil
+- OnCallbackResponseListener onCallbackResponseListener
+- boolean isManageMode
+- LinearLayoutManager linearLayoutManagerCategory
+- RecyclerView recyclerViewCategory
+- RecyclerViewCategoryAdapter recyclerViewCategoryAdapter
+- ArrayList<CategoryDTO> listCategory
+- Integer selectedPosition
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void setSubscribeList()
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void onClick(View)
+- void requestUnsubscribe()
+- void requestUnsubscribe(int)
+- void setCategory()
+}
+class com.example.baetube.dto.PlaylistDTO {
+- Integer playlistId
+- Integer channelId
+- String name
+- Integer visible
+- Integer videoCount
+- String thumbnail
++ Integer getPlaylistId()
++ Integer getChannelId()
++ String getName()
++ Integer getVisible()
++ Integer getVideoCount()
++ String getThumbnail()
++ void setPlaylistId(Integer)
++ void setChannelId(Integer)
++ void setName(String)
++ void setVisible(Integer)
++ void setVideoCount(Integer)
++ void setThumbnail(String)
+}
+class com.example.baetube.recyclerview.viewholder.ReplyViewHolder {
++ ImageView profile
++ ImageView option
++ ImageView thumbUp
++ ImageView thumbDown
++ ImageView writeNestedReply
++ TextView channelName
++ TextView date
++ TextView comment
++ TextView like
++ TextView hate
++ TextView nestedReplyCount
++ LinearLayout nestedReplyLayout
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ void onClick(View)
+}
+class com.example.baetube.recyclerview.item.RecyclerViewPlaylistItem {
+- PlaylistDTO playlistDTO
+- ChannelDTO channelDTO
++ PlaylistDTO getPlaylistDTO()
++ ChannelDTO getChannelDTO()
++ void setPlaylistDTO(PlaylistDTO)
++ void setChannelDTO(ChannelDTO)
+}
+class com.example.baetube.ChannelTabStrategy {
+- String[] titles
++ void onConfigureTab(TabLayout.Tab,int)
+}
+class com.example.baetube.recyclerview.item.RecyclerViewNotificationItem {
+- NotificationDTO notificationDTO
+- ChannelDTO channelDTO
+- VideoDTO videoDTO
+- CommunityDTO communityDTO
+- int viewType
+- String divideString
++ NotificationDTO getNotificationDTO()
++ VideoDTO getVideoDTO()
++ CommunityDTO getCommunityDTO()
++ ChannelDTO getChannelDTO()
++ int getViewType()
++ String getDivideString()
++ void setNotificationDTO(NotificationDTO)
++ void setVideoDTO(VideoDTO)
++ void setCommunityDTO(CommunityDTO)
++ void setChannelDTO(ChannelDTO)
++ void setViewType(int)
++ void setDivideString(String)
+}
+class com.example.baetube.fragment.upload.UploadVideoSelectFragment {
+- View view
+- File file
+- Bitmap thumbnail
+- VideoView videoView
+- OnUploadDataListener onUploadDataListener
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
+}
+class com.example.baetube.fragment.set.SetDescriptionFragment {
+- {static} int MAX_LENGTH
+- View view
+- TextView description
+- TextView currentCount
+- OnSetFragmentListener onSetFragmentListener
+- String sourceDescription
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ boolean onOptionsItemSelected(MenuItem)
+}
+class com.example.baetube.fragment.channel.ChannelManageVideoFragment {
+- View view
+- RecyclerView recyclerView
+- RecyclerViewVideoAdapter recyclerViewVideoAdapter
+- ArrayList<RecyclerViewVideoItem> list
+- OnCallbackResponseListener onCallbackResponseListener
+- OkHttpUtil okHttpUtil
+- Integer channelId
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ void onViewCreated(View,Bundle)
++ boolean onOptionsItemSelected(MenuItem)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setRecyclerViewVideo(List<VideoDTO>,List<ChannelDTO>)
+}
+class com.example.baetube.CountToStringUtil {
+- {static} Integer unit
++ {static} String countToString(Integer)
+}
+class com.example.baetube.dto.VideoDTO {
+- Integer videoId
+- Long contentsId
+- Integer channelId
+- String url
+- Integer visible
+- String thumbnail
+- String title
+- String info
+- String location
+- Integer age
+- Integer views
+- Integer like
+- Integer hate
+- Integer replyCount
+- Timestamp date
+- Integer categoryId
+- String profile
+- String name
+- Timestamp historyDate
+- Integer playlistItemId
+- Integer playlistId
+- Integer subs
++ Integer getVideoId()
++ Long getContentsId()
++ Integer getChannelId()
++ String getUrl()
++ Integer getVisible()
++ String getThumbnail()
++ String getTitle()
++ String getInfo()
++ String getLocation()
++ Integer getAge()
++ Integer getViews()
++ Integer getLike()
++ Integer getHate()
++ Integer getReplyCount()
++ Timestamp getDate()
++ Integer getCategoryId()
++ String getProfile()
++ String getName()
++ Timestamp getHistoryDate()
++ Integer getPlaylistItemId()
++ Integer getPlaylistId()
++ Integer getSubs()
++ void setVideoId(Integer)
++ void setContentsId(Long)
++ void setChannelId(Integer)
++ void setUrl(String)
++ void setVisible(Integer)
++ void setThumbnail(String)
++ void setTitle(String)
++ void setInfo(String)
++ void setLocation(String)
++ void setAge(Integer)
++ void setViews(Integer)
++ void setLike(Integer)
++ void setHate(Integer)
++ void setReplyCount(Integer)
++ void setDate(Timestamp)
++ void setCategoryId(Integer)
++ void setProfile(String)
++ void setName(String)
++ void setHistoryDate(Timestamp)
++ void setPlaylistItemId(Integer)
++ void setPlaylistId(Integer)
++ void setSubs(Integer)
+}
+class com.example.baetube.WidthProperty {
++ Integer get(View)
++ void set(View,Integer)
+}
+class com.example.baetube.dto.NestedReplyDTO {
+- Integer nestedReplyId
+- Integer replyId
+- Long contentsId
+- Integer channelId
+- String comment
+- Integer like
+- Integer hate
+- Timestamp date
+- String name
+- String profile
+- Long attachedId
++ Integer getNestedReplyId()
++ Integer getReplyId()
++ Long getContentsId()
++ Integer getChannelId()
++ String getComment()
++ Timestamp getDate()
++ String getName()
++ String getProfile()
++ Integer getLike()
++ Integer getHate()
++ Long getAttachedId()
++ void setNestedReplyId(Integer)
++ void setReplyId(Integer)
++ void setContentsId(Long)
++ void setChannelId(Integer)
++ void setComment(String)
++ void setDate(Timestamp)
++ void setName(String)
++ void setProfile(String)
++ void setLike(Integer)
++ void setHate(Integer)
++ void setAttachedId(Long)
+}
+class com.example.baetube.recyclerview.adapter.RecyclerViewCommunityVoteAdapter {
+- Context context
+- ArrayList<RecyclerViewVoteItem> list
+- OnRecyclerViewClickListener onVoteViewClickListener
+- int total
+- int selectIndex
+- View selectedView
++ CommunityVoteViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(CommunityVoteViewHolder,int)
++ int getItemCount()
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ VoteResultDTO selectVote(View,int)
++ void setOnVoteViewClickListener(OnRecyclerViewClickListener)
++ void onDetachedFromRecyclerView(RecyclerView)
+- int getPercentage(int,int)
+}
+class com.example.baetube.recyclerview.viewholder.SubscribeViewHolder {
++ FrameLayout layout
++ LinearLayout layoutBack
++ LinearLayout layoutFront
++ ImageView profile
++ TextView channelName
+- OnRecyclerViewClickListener onRecyclerViewClickListener
++ void onClick(View)
++ boolean onLongClick(View)
+}
+class com.example.baetube.fragment.SignInFragment {
+- View view
+- EditText editEmail
+- EditText editPassword
+- EditText editPasswordCheck
+- EditText editName
+- EditText editBirthYear
+- EditText editBirthMonth
+- EditText editBirthDay
+- EditText editAddress
+- EditText editPhone
+- TextView errorEmail
+- TextView errorPassword
+- TextView errorPasswordCheck
+- TextView errorName
+- TextView errorBirth
+- TextView errorGender
+- TextView errorAddress
+- TextView errorPhone
+- RadioGroup radioGroupGender
+- Button buttonSignIn
+- OnCallbackResponseListener onCallbackResponseListener
+- OnSetFragmentListener onSetFragmentListener
+- Integer gender
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ void onFocusChange(View,boolean)
++ void onClick(View)
+- boolean validationData()
++ void onCheckedChanged(RadioGroup,int)
+}
+class com.example.baetube.fragment.analysis.AnalysisViewFragment {
+- View view
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+class com.example.baetube.bottomsheetdialog.BaseOptionFragment {
+- View view
+- TextView textTitle
+- RecyclerView recyclerView
+- ArrayList<RecyclerViewOptionItem> list
+- RecyclerViewOptionAdapter adapter
+- String title
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ Dialog onCreateDialog(Bundle)
++ void setRatio(BottomSheetDialog)
++ void addItem(TypedArray,String[])
++ void setTitle(String)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
+}
+class com.example.baetube.fragment.StorageFragment {
+- View view
+- TextView buttonDetail
+- RecyclerView recyclerViewVideoHistory
+- RecyclerViewVideoAdapter recyclerViewVideoHistoryAdapter
+- ArrayList<RecyclerViewVideoItem> videoHistoryList
+- RecyclerView recyclerViewVideoStorage
+- RecyclerViewStorageAdapter recyclerViewStorageAdapter
+- ArrayList<RecyclerViewPlaylistItem> storageList
+- OkHttpUtil okHttpUtil
+- OnCallbackResponseListener onCallbackResponseListener
+- OnFragmentInteractionListener onFragmentInteractionListener
+- LinearLayoutManager videoHistoryLayoutManager
+- LinearLayoutManager storageLayoutManager
+- LinearLayoutManager linearLayoutManagerCategory
+- RecyclerView recyclerViewCategory
+- RecyclerViewCategoryAdapter recyclerViewCategoryAdapter
+- ArrayList<CategoryDTO> listCategory
+- Integer selectedPosition
+- boolean isCalled
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void setBasicStorageList()
++ void onCreateOptionsMenu(Menu,MenuInflater)
++ void setRecyclerViewVideoHistory(List<VideoDTO>,List<ChannelDTO>)
++ void setRecyclerViewStorage(List<PlaylistDTO>)
++ void onClick(View)
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ boolean isCalled()
+- void setCategory()
+}
+class com.example.baetube.recyclerview.item.RecyclerViewOptionItem {
+- int resource
+- String option
++ int getResource()
++ String getOption()
++ void setResource(int)
++ void setOption(String)
+}
+class com.example.baetube.FragmentTagUtil {
++ {static} String FRAGMENT_TAG_HOME
++ {static} String FRAGMENT_TAG_SUBSCRIBE
++ {static} String FRAGMENT_TAG_STORAGE
++ {static} String FRAGMENT_TAG_CHANNEL_HOME
++ {static} String FRAGMENT_TAG_CHANNEL_VIDEO
++ {static} String FRAGMENT_TAG_CHANNEL_BASE
++ {static} String FRAGMENT_TAG_CHANNEL_PLAYLIST
++ {static} String FRAGMENT_TAG_CHANNEL_COMMUNITY
++ {static} String FRAGMENT_TAG_CHANNEL_INFORMATION
++ {static} String FRAGMENT_TAG_LOGIN
++ {static} String FRAGMENT_TAG_SIGN_IN
++ {static} String FRAGMENT_TAG_CHANNEL_MANAGE_VIDEO
++ {static} String FRAGMENT_TAG_UPLOAD_VIDEO_LIST
++ {static} String FRAGMENT_TAG_PLAYLIST_DETAIL
++ {static} String FRAGMENT_TAG_UPLOAD_COMMUNITY
++ {static} String FRAGMENT_TAG_UPLOAD_VIDEO
++ {static} String FRAGMENT_TAG_ADD_STORAGE
++ {static} String FRAGMENT_TAG_HISTORY_DETAIL
++ {static} String FRAGMENT_TAG_MODIFY_CHANNEL_INFORMATION
++ {static} String FRAGMENT_TAG_MODIFY_COMMUNITY
++ {static} String FRAGMENT_TAG_MODIFY_PLAYLIST
++ {static} String FRAGMENT_TAG_MODIFY_VIDEO
++ {static} String FRAGMENT_TAG_NOTIFICATION
++ {static} String FRAGMENT_TAG_SEARCH
++ {static} String FRAGMENT_TAG_SEARCH_RESULT
++ {static} String FRAGMENT_TAG_MODIFY_USER_INFORMATION
+}
+class com.example.baetube.fcm.MessagingService {
++ void onMessageReceived(RemoteMessage)
++ void onNewToken(String)
+}
+class com.example.baetube.fragment.channel.ChannelCommunityFragment {
+- View view
+- RecyclerView recyclerView
+- RecyclerViewCommunityAdapter recyclerViewCommunityAdapter
+- ArrayList<RecyclerViewCommunityItem> list
+- OnCallbackResponseListener onCallbackResponseListener
+- OkHttpUtil okHttpUtil
+- OnDialogInteractionListener onDialogInteractionListener
+- Integer selectedPostion
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void setOnDialogInteractionListener()
++ void onItemClick(View,int)
++ void onItemLongClick(View,int)
++ void onCastVoteOption(VoteDTO,boolean)
++ void setRecyclerViewCommunity(List<CommunityDTO>)
+}
+
+
+com.example.baetube.recyclerview.viewholder.OnClickListener <|.. com.example.baetube.recyclerview.viewholder.SearchHistoryViewHolder
+com.example.baetube.recyclerview.viewholder.OnLongClickListener <|.. com.example.baetube.recyclerview.viewholder.SearchHistoryViewHolder
+com.example.baetube.recyclerview.viewholder.ViewHolder <|-- com.example.baetube.recyclerview.viewholder.SearchHistoryViewHolder
+com.example.baetube.fragment.modify.OnClickListener <|.. com.example.baetube.fragment.modify.ModifyCommunityFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.modify.ModifyCommunityFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.NotificationFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.NotificationFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.bottomsheetdialog.ReplyFragment
+com.example.baetube.bottomsheetdialog.OnClickListener <|.. com.example.baetube.bottomsheetdialog.ReplyFragment
+com.google.android.material.bottomsheet.BottomSheetDialogFragment <|-- com.example.baetube.bottomsheetdialog.ReplyFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.TestMotionLayoutFragment
+com.example.baetube.OnClickListener <|.. com.example.baetube.TestMotionLayoutFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.TestMotionLayoutFragment
+com.example.baetube.recyclerview.viewholder.OnClickListener <|.. com.example.baetube.recyclerview.viewholder.CommunityVoteViewHolder
+com.example.baetube.recyclerview.viewholder.ViewHolder <|-- com.example.baetube.recyclerview.viewholder.CommunityVoteViewHolder
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.bottomsheetdialog.PlayerOptionFragment
+com.google.android.material.bottomsheet.BottomSheetDialogFragment <|-- com.example.baetube.bottomsheetdialog.PlayerOptionFragment
+com.example.baetube.recyclerview.viewholder.ViewHolder <|-- com.example.baetube.recyclerview.viewholder.VideoListViewHolder
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.RecyclerViewReplyAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.RecyclerViewReplyAdapter
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.RecyclerViewPlaylistAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.RecyclerViewPlaylistAdapter
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.set.SetLocationFragment
+com.example.baetube.fragment.set.SetLocationFragment +.. com.example.baetube.fragment.set.SetLocationFragment$BridgeInterface
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.bottomsheetdialog.HistoryVideoOptionManageFragment
+com.example.baetube.bottomsheetdialog.BaseOptionFragment <|-- com.example.baetube.bottomsheetdialog.HistoryVideoOptionManageFragment
+com.example.baetube.fragment.OnClickListener <|.. com.example.baetube.fragment.LoginFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.LoginFragment
+com.example.baetube.OnGlobalLayoutListener <|.. com.example.baetube.KeyboardState
+android.widget.PopupWindow <|-- com.example.baetube.KeyboardState
+com.example.baetube.KeyboardState +.. com.example.baetube.KeyboardState$HeightListener
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.CustomerServiceFragment
+com.example.baetube.bottomsheetdialog.BaseReportFragment <|-- com.example.baetube.bottomsheetdialog.CommunityReportFragment
+com.example.baetube.recyclerview.viewholder.OnClickListener <|.. com.example.baetube.recyclerview.viewholder.VideoViewHolder
+com.example.baetube.recyclerview.viewholder.ViewHolder <|-- com.example.baetube.recyclerview.viewholder.VideoViewHolder
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.RecyclerViewChannelAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.RecyclerViewChannelAdapter
+com.example.baetube.bottomsheetdialog.OnClickListener <|.. com.example.baetube.bottomsheetdialog.AddStorageDialogFragment
+com.google.android.material.bottomsheet.BottomSheetDialogFragment <|-- com.example.baetube.bottomsheetdialog.AddStorageDialogFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.channel.ChannelHomeFragment
+com.example.baetube.fragment.channel.OnClickListener <|.. com.example.baetube.fragment.channel.ChannelHomeFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.channel.ChannelHomeFragment
+okhttp3.Callback <|.. com.example.baetube.Callback.DefaultCallback
+com.example.baetube.bottomsheetdialog.BaseReportFragment <|-- com.example.baetube.bottomsheetdialog.ChannelReportFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.bottomsheetdialog.PlaylistOptionManageFragment
+com.example.baetube.bottomsheetdialog.BaseOptionFragment <|-- com.example.baetube.bottomsheetdialog.PlaylistOptionManageFragment
+com.example.baetube.recyclerview.viewholder.OnClickListener <|.. com.example.baetube.recyclerview.viewholder.ChannelViewHolder
+com.example.baetube.recyclerview.viewholder.ViewHolder <|-- com.example.baetube.recyclerview.viewholder.ChannelViewHolder
+com.example.baetube.recyclerview.viewholder.OnClickListener <|.. com.example.baetube.recyclerview.viewholder.PlaylistViewHolder
+com.example.baetube.recyclerview.viewholder.ViewHolder <|-- com.example.baetube.recyclerview.viewholder.PlaylistViewHolder
+com.example.baetube.OnPageChangeCallback <|-- com.example.baetube.ViewPagerCallback
+com.example.baetube.bottomsheetdialog.BaseOptionFragment <|-- com.example.baetube.bottomsheetdialog.CommunityOptionManageFragment
+com.example.baetube.fragment.modify.OnFocusChangeListener <|.. com.example.baetube.fragment.modify.ModifyUserInformationFragment
+com.example.baetube.fragment.modify.OnClickListener <|.. com.example.baetube.fragment.modify.ModifyUserInformationFragment
+com.example.baetube.fragment.modify.OnCheckedChangeListener <|.. com.example.baetube.fragment.modify.ModifyUserInformationFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.modify.ModifyUserInformationFragment
+com.example.baetube.bottomsheetdialog.BaseReportFragment <|-- com.example.baetube.bottomsheetdialog.ReplyReportFragment
+com.example.baetube.fragment.set.OnClickListener <|.. com.example.baetube.fragment.set.SetPublicFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.set.SetPublicFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.bottomsheetdialog.VideoOptionFragment
+com.example.baetube.bottomsheetdialog.BaseOptionFragment <|-- com.example.baetube.bottomsheetdialog.VideoOptionFragment
+androidx.viewpager2.adapter.FragmentStateAdapter <|-- com.example.baetube.ChannelPagerAdapter
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.analysis.AnalysisTimeFragment
+com.example.baetube.recyclerview.viewholder.ViewHolder <|-- com.example.baetube.recyclerview.viewholder.OptionViewHolder
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.bottomsheetdialog.ChannelSelectOptionFragment
+com.google.android.material.bottomsheet.BottomSheetDialogFragment <|-- com.example.baetube.bottomsheetdialog.ChannelSelectOptionFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.channel.ChannelBaseFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.RecyclerViewVideoCheckableAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.RecyclerViewVideoCheckableAdapter
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.bottomsheetdialog.UploadOptionFragment
+com.example.baetube.bottomsheetdialog.BaseOptionFragment <|-- com.example.baetube.bottomsheetdialog.UploadOptionFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.HistoryDetailFragment
+com.example.baetube.fragment.OnClickListener <|.. com.example.baetube.fragment.HistoryDetailFragment
+com.example.baetube.fragment.OnFocusChangeListener <|.. com.example.baetube.fragment.HistoryDetailFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.HistoryDetailFragment
+com.example.baetube.OnBottomSheetInteractionListener <|.. com.example.baetube.VideoBottomSheetCallback
+com.example.baetube.OnTouchListener <|.. com.example.baetube.VideoBottomSheetCallback
+com.example.baetube.BottomSheetCallback <|-- com.example.baetube.VideoBottomSheetCallback
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.modify.ModifyThumbnailFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.upload.UploadVideoListFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.upload.UploadVideoListFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.channel.ChannelPlaylistFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.channel.ChannelPlaylistFragment
+com.example.baetube.fragment.modify.OnClickListener <|.. com.example.baetube.fragment.modify.ModifyVideoFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.modify.ModifyVideoFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.channel.ChannelAnalysisFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.bottomsheetdialog.VideoFragment
+com.example.baetube.bottomsheetdialog.OnClickListener <|.. com.example.baetube.bottomsheetdialog.VideoFragment
+com.example.baetube.bottomsheetdialog.OnTouchListener <|.. com.example.baetube.bottomsheetdialog.VideoFragment
+com.google.android.material.bottomsheet.BottomSheetDialogFragment <|-- com.example.baetube.bottomsheetdialog.VideoFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.channel.ChannelInfomationFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.bottomsheetdialog.PlaylistOptionFragment
+com.example.baetube.bottomsheetdialog.BaseOptionFragment <|-- com.example.baetube.bottomsheetdialog.PlaylistOptionFragment
+com.example.baetube.OnFragmentInteractionListener <|.. com.example.baetube.activity.MainActivity
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.activity.MainActivity
+com.example.baetube.activity.OnClickListener <|.. com.example.baetube.activity.MainActivity
+com.example.baetube.OnBottomSheetInteractionListener <|.. com.example.baetube.activity.MainActivity
+com.example.baetube.OnAttachViewListener <|.. com.example.baetube.activity.MainActivity
+com.example.baetube.activity.OnFocusChangeListener <|.. com.example.baetube.activity.MainActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.baetube.activity.MainActivity
+com.example.baetube.bottomsheetdialog.OnClickListener <|.. com.example.baetube.bottomsheetdialog.AddPlaylistFragment
+com.google.android.material.bottomsheet.BottomSheetDialogFragment <|-- com.example.baetube.bottomsheetdialog.AddPlaylistFragment
+com.example.baetube.bottomsheetdialog.OnClickListener <|.. com.example.baetube.bottomsheetdialog.SetCategoryFragment
+com.google.android.material.bottomsheet.BottomSheetDialogFragment <|-- com.example.baetube.bottomsheetdialog.SetCategoryFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.RecyclerViewNotificationAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.RecyclerViewNotificationAdapter
+com.example.baetube.fragment.set.OnClickListener <|.. com.example.baetube.fragment.set.SetAgeFragment
+com.example.baetube.fragment.set.OnCheckedChangeListener <|.. com.example.baetube.fragment.set.SetAgeFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.set.SetAgeFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.RecyclerViewStorageAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.RecyclerViewStorageAdapter
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.SubscribeFragment
+com.example.baetube.fragment.OnClickListener <|.. com.example.baetube.fragment.SubscribeFragment
+com.example.baetube.OnFragmentInteractionListener <|.. com.example.baetube.fragment.SubscribeFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.SubscribeFragment
+com.example.baetube.recyclerview.viewholder.OnClickListener <|.. com.example.baetube.recyclerview.viewholder.CommunityViewHolder
+com.example.baetube.recyclerview.viewholder.ViewHolder <|-- com.example.baetube.recyclerview.viewholder.CommunityViewHolder
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.RecyclerViewVideoAdapter
+com.example.baetube.fragment.OnClickListener <|.. com.example.baetube.fragment.SearchFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.SearchFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.SearchFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.channel.ChannelVideoFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.channel.ChannelVideoFragment
+com.example.baetube.recyclerview.viewholder.OnClickListener <|.. com.example.baetube.recyclerview.viewholder.NotificationViewHolder
+com.example.baetube.recyclerview.viewholder.ViewHolder <|-- com.example.baetube.recyclerview.viewholder.NotificationViewHolder
+com.example.baetube.recyclerview.viewholder.OnClickListener <|.. com.example.baetube.recyclerview.viewholder.CategoryViewHolder
+com.example.baetube.recyclerview.viewholder.ViewHolder <|-- com.example.baetube.recyclerview.viewholder.CategoryViewHolder
+com.example.baetube.bottomsheetdialog.OnClickListener <|.. com.example.baetube.bottomsheetdialog.AddVoteFragment
+com.google.android.material.bottomsheet.BottomSheetDialogFragment <|-- com.example.baetube.bottomsheetdialog.AddVoteFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.analysis.AnalysisSubscribeFragment
+androidx.appcompat.app.AppCompatActivity <|-- com.example.baetube.activity.UploadActivity
+com.example.baetube.fragment.OnClickListener <|.. com.example.baetube.fragment.HomeFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.HomeFragment
+com.example.baetube.OnFragmentInteractionListener <|.. com.example.baetube.fragment.HomeFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.HomeFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.RecyclerViewVideoListAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.RecyclerViewVideoListAdapter
+com.example.baetube.bottomsheetdialog.OnCheckedChangeListener <|.. com.example.baetube.bottomsheetdialog.BaseReportFragment
+com.example.baetube.bottomsheetdialog.OnClickListener <|.. com.example.baetube.bottomsheetdialog.BaseReportFragment
+com.google.android.material.bottomsheet.BottomSheetDialogFragment <|-- com.example.baetube.bottomsheetdialog.BaseReportFragment
+com.example.baetube.bottomsheetdialog.BaseReportFragment <|-- com.example.baetube.bottomsheetdialog.VideoReportFragment
+com.example.baetube.fragment.modify.OnClickListener <|.. com.example.baetube.fragment.modify.ModifyPlaylistFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.modify.ModifyPlaylistFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.bottomsheetdialog.VideoOptionManageFragment
+com.example.baetube.bottomsheetdialog.BaseOptionFragment <|-- com.example.baetube.bottomsheetdialog.VideoOptionManageFragment
+java.util.concurrent.Callable <|.. com.example.baetube.VideoListCallable
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.RecyclerViewCommunityAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.RecyclerViewCommunityAdapter
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.bottomsheetdialog.NotificationOptionFragment
+com.example.baetube.bottomsheetdialog.BaseOptionFragment <|-- com.example.baetube.bottomsheetdialog.NotificationOptionFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.bottomsheetdialog.PlaylistVideoOptionManageFragment
+com.example.baetube.bottomsheetdialog.BaseOptionFragment <|-- com.example.baetube.bottomsheetdialog.PlaylistVideoOptionManageFragment
+com.example.baetube.recyclerview.viewholder.OnClickListener <|.. com.example.baetube.recyclerview.viewholder.VideoCheckableViewHolder
+com.example.baetube.recyclerview.viewholder.ViewHolder <|-- com.example.baetube.recyclerview.viewholder.VideoCheckableViewHolder
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.RecyclerViewSearchHistoryAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.RecyclerViewSearchHistoryAdapter
+com.google.gson.JsonSerializer <|.. com.example.baetube.GsonDateFormatAdapter
+com.google.gson.JsonDeserializer <|.. com.example.baetube.GsonDateFormatAdapter
+android.widget.ArrayAdapter <|-- com.example.baetube.Spinner.SpinnerDropdownAdapter
+com.example.baetube.bottomsheetdialog.OnClickListener <|.. com.example.baetube.bottomsheetdialog.SetCalendarFragment
+com.example.baetube.bottomsheetdialog.OnDateChangedListener <|.. com.example.baetube.bottomsheetdialog.SetCalendarFragment
+com.google.android.material.bottomsheet.BottomSheetDialogFragment <|-- com.example.baetube.bottomsheetdialog.SetCalendarFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.PlaylistDetailFragment
+com.example.baetube.fragment.OnClickListener <|.. com.example.baetube.fragment.PlaylistDetailFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.PlaylistDetailFragment
+com.example.baetube.recyclerview.viewholder.OnClickListener <|.. com.example.baetube.recyclerview.viewholder.StorageViewHolder
+com.example.baetube.recyclerview.viewholder.ViewHolder <|-- com.example.baetube.recyclerview.viewholder.StorageViewHolder
+com.example.baetube.fragment.upload.OnClickListener <|.. com.example.baetube.fragment.upload.UploadCommunityFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.upload.UploadCommunityFragment
+android.widget.VideoView <|-- com.example.baetube.CustomVideoView
+com.example.baetube.recyclerview.viewholder.ViewHolder <|-- com.example.baetube.recyclerview.viewholder.VoteViewHolder
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.AddStorageFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.AddStorageFragment
+okhttp3.Callback <|.. com.example.baetube.Callback.ReturnableCallback
+okhttp3.Callback <|.. com.example.baetube.Callback.LoginUserCallback
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.RecyclerViewCategoryAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.RecyclerViewCategoryAdapter
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.bottomsheetdialog.CommunityOptionFragment
+com.example.baetube.bottomsheetdialog.BaseOptionFragment <|-- com.example.baetube.bottomsheetdialog.CommunityOptionFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.set.SetVoteFragment
+com.example.baetube.fragment.set.OnClickListener <|.. com.example.baetube.fragment.set.SetVoteFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.set.SetVoteFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.RecyclerViewNestedReplyAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.RecyclerViewNestedReplyAdapter
+androidx.viewpager2.adapter.FragmentStateAdapter <|-- com.example.baetube.AnalysisPagerAdapter
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.RecyclerViewSubscribeAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.RecyclerViewSubscribeAdapter
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.ReclyclerViewVoteAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.ReclyclerViewVoteAdapter
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.RecyclerViewOptionAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.RecyclerViewOptionAdapter
+com.example.baetube.fragment.modify.OnClickListener <|.. com.example.baetube.fragment.modify.ModifyChannelInformationFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.modify.ModifyChannelInformationFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.SearchResultFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.SearchResultFragment
+com.example.baetube.fragment.upload.OnClickListener <|.. com.example.baetube.fragment.upload.UploadVideoInformationFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.upload.UploadVideoInformationFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.ReplyView
+com.example.baetube.OnClickListener <|.. com.example.baetube.ReplyView
+com.example.baetube.OnFocusChangeListener <|.. com.example.baetube.ReplyView
+com.example.baetube.OnClickListener <|.. com.example.baetube.DescriptionView
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.SubscribeDetailFragment
+com.example.baetube.fragment.OnClickListener <|.. com.example.baetube.fragment.SubscribeDetailFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.SubscribeDetailFragment
+com.example.baetube.recyclerview.viewholder.OnClickListener <|.. com.example.baetube.recyclerview.viewholder.ReplyViewHolder
+com.example.baetube.recyclerview.viewholder.ViewHolder <|-- com.example.baetube.recyclerview.viewholder.ReplyViewHolder
+com.example.baetube.TabConfigurationStrategy <|.. com.example.baetube.ChannelTabStrategy
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.upload.UploadVideoSelectFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.set.SetDescriptionFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.channel.ChannelManageVideoFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.channel.ChannelManageVideoFragment
+android.util.Property <|-- com.example.baetube.WidthProperty
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.recyclerview.adapter.RecyclerViewCommunityVoteAdapter
+com.example.baetube.recyclerview.adapter.Adapter <|-- com.example.baetube.recyclerview.adapter.RecyclerViewCommunityVoteAdapter
+com.example.baetube.recyclerview.viewholder.OnClickListener <|.. com.example.baetube.recyclerview.viewholder.SubscribeViewHolder
+com.example.baetube.recyclerview.viewholder.OnLongClickListener <|.. com.example.baetube.recyclerview.viewholder.SubscribeViewHolder
+com.example.baetube.recyclerview.viewholder.ViewHolder <|-- com.example.baetube.recyclerview.viewholder.SubscribeViewHolder
+com.example.baetube.fragment.OnFocusChangeListener <|.. com.example.baetube.fragment.SignInFragment
+com.example.baetube.fragment.OnClickListener <|.. com.example.baetube.fragment.SignInFragment
+com.example.baetube.fragment.OnCheckedChangeListener <|.. com.example.baetube.fragment.SignInFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.SignInFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.analysis.AnalysisViewFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.bottomsheetdialog.BaseOptionFragment
+com.google.android.material.bottomsheet.BottomSheetDialogFragment <|-- com.example.baetube.bottomsheetdialog.BaseOptionFragment
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.StorageFragment
+com.example.baetube.fragment.OnClickListener <|.. com.example.baetube.fragment.StorageFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.StorageFragment
+com.google.firebase.messaging.FirebaseMessagingService <|-- com.example.baetube.fcm.MessagingService
+com.example.baetube.OnRecyclerViewClickListener <|.. com.example.baetube.fragment.channel.ChannelCommunityFragment
+androidx.fragment.app.Fragment <|-- com.example.baetube.fragment.channel.ChannelCommunityFragment
+@enduml

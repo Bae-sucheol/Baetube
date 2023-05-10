@@ -11,12 +11,16 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.baetube.Callback.ReturnableCallback;
 import com.example.baetube.activity.MainActivity;
 import com.example.baetube.dto.NestedReplyDTO;
@@ -52,6 +56,13 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
     private RecyclerView recyclerViewNestedReply;
     private RecyclerViewNestedReplyAdapter nestedReplyAdapter;
     private ArrayList<RecyclerViewNestedReplyItem> nestedReplyList = new ArrayList<>();
+
+    private TextView replyChannelName;
+    private TextView replyDate;
+    private TextView replyComment;
+    private TextView replyLike;
+    private TextView replyHate;
+    private ImageView replyProfile;
 
     private EditText editReply;
     private EditText editNestedReply;
@@ -96,6 +107,13 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
         buttonBackNested = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_image_back);
         editNestedReply = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_edit_reply);
         editReply = view.findViewById(R.id.bottomsheetdialogfragment_reply_edit_reply);
+
+        replyChannelName = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_text_channel_name);
+        replyDate = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_text_date);
+        replyComment = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_text_comment);
+        replyLike = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_text_like);
+        replyHate = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_text_hate);
+        replyProfile = view.findViewById(R.id.bottomsheetdialogfragment_nested_reply_image_replier_profile);
 
         buttonClose.setOnClickListener(this);
         buttonCloseNested.setOnClickListener(this);
@@ -159,9 +177,9 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
 
     public void setRecyclerViewReply(List<ReplyDTO> replyItems)
     {
-        if(replyItems == null)
+        if(!replyItems.isEmpty())
         {
-            return;
+            clearReplyList();
         }
 
         for(int i = 0; i < replyItems.size(); i++)
@@ -183,9 +201,9 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
 
     public void setRecyclerViewNestedReply(List<NestedReplyDTO> nestedReplyItems)
     {
-        if(nestedReplyItems == null)
+        if(!nestedReplyItems.isEmpty())
         {
-            return;
+            clearNestedReplyList();
         }
 
         for(int i = 0; i < nestedReplyItems.size(); i++)
@@ -241,6 +259,7 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
         {
             case R.id.recyclerview_reply_layout_nested_reply :
 
+                setNestedReplyViewInit(position);
                 openNestedReply();
                 requestNestedReply(replyList.get(position).getReplyDTO().getReplyId());
                 ((MainActivity)context).setCurrentReplyData(replyList.get(position));
@@ -250,6 +269,7 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
             case R.id.recyclerview_reply_image_write_nested_reply :
 
                 // 댓글에 답글(대댓글)을 달기 위한 버튼.
+                setNestedReplyViewInit(position);
                 ((MainActivity)context).setCurrentReplyData(replyList.get(position));
                 openNestedReply();
                 editNestedReply.requestFocus();
@@ -293,6 +313,25 @@ public class ReplyView implements OnRecyclerViewClickListener, View.OnClickListe
     public void onCastVoteOption(VoteDTO voteData, boolean isCancel)
     {
 
+    }
+
+    private void setNestedReplyViewInit(int position)
+    {
+        RecyclerViewReplyItem item = replyList.get(position);
+        replyChannelName.setText(item.getReplyDTO().getName());
+        replyDate.setText(DateToStringUtil.dateToString(item.getReplyDTO().getDate()));
+        replyComment.setText(item.getReplyDTO().getComment());
+        replyLike.setText(item.getReplyDTO().getLike().toString());
+        replyHate.setText(item.getReplyDTO().getHate().toString());
+
+        Glide.with(context)
+                .asBitmap()
+                .load(context.getString(R.string.api_url_image_profile) + item.getReplyDTO().getProfile() + ".jpg") // or URI/path
+                .error(ContextCompat.getDrawable(context, R.drawable.ic_baseline_account_circle_24))
+                .override(replyProfile.getWidth(), replyProfile.getHeight())
+                .centerCrop()
+                .apply(new RequestOptions().circleCrop())
+                .into(replyProfile);
     }
 
     /**

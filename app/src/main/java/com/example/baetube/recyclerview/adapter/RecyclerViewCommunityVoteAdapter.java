@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -123,8 +122,8 @@ public class RecyclerViewCommunityVoteAdapter extends RecyclerView.Adapter<Commu
                 RecyclerViewVoteItem item = list.get(selectIndex);
                 item.getVoteDTO().setCount(item.getVoteDTO().getCount() - 1);
                 count.setText(String.format("%d개", item.getVoteDTO().getCount()));
-                percentage.setText(String.format("(%d%%)", getPercentage(item.getVoteDTO().getCount(), total)));
-                progressBar.setProgress(getPercentage(item.getVoteDTO().getCount(), total));
+                percentage.setText(String.format("(%d%%)", getPercentage(item.getVoteDTO().getCount(), total - 1)));
+                progressBar.setProgress(getPercentage(item.getVoteDTO().getCount(), total - 1));
 
                 selectedView = null;
                 selectIndex = 0;
@@ -139,8 +138,8 @@ public class RecyclerViewCommunityVoteAdapter extends RecyclerView.Adapter<Commu
             RecyclerViewVoteItem item = list.get(selectIndex);
             item.getVoteDTO().setCount(item.getVoteDTO().getCount() - 1);
             count.setText(String.format("%d개", item.getVoteDTO().getCount()));
-            percentage.setText(String.format("(%d%%)", getPercentage(item.getVoteDTO().getCount(), total)));
-            progressBar.setProgress(getPercentage(item.getVoteDTO().getCount(), total));
+            percentage.setText(String.format("(%d%%)", getPercentage(item.getVoteDTO().getCount(), total - 1)));
+            progressBar.setProgress(getPercentage(item.getVoteDTO().getCount(), total - 1));
         }
 
         ProgressBar progressBar = view.findViewById(R.id.progressbar);
@@ -154,8 +153,8 @@ public class RecyclerViewCommunityVoteAdapter extends RecyclerView.Adapter<Commu
         RecyclerViewVoteItem item = list.get(position);
         item.getVoteDTO().setCount(item.getVoteDTO().getCount() + 1);
         count.setText(String.format("%d개", item.getVoteDTO().getCount()));
-        percentage.setText(String.format("(%d%%)", getPercentage(item.getVoteDTO().getCount(), total)));
-        progressBar.setProgress(getPercentage(item.getVoteDTO().getCount(), total));
+        percentage.setText(String.format("(%d%%)", getPercentage(item.getVoteDTO().getCount(), total + 1)));
+        progressBar.setProgress(getPercentage(item.getVoteDTO().getCount(), total + 1));
 
         selectIndex = position;
         selectedView = view;
@@ -177,6 +176,6 @@ public class RecyclerViewCommunityVoteAdapter extends RecyclerView.Adapter<Commu
 
     private int getPercentage(int value, int total)
     {
-        return (int)((value / (double)total) * 100);
+        return (int)(((double)value / (double)total) * 100);
     }
 }

@@ -225,6 +225,7 @@ public class UploadActivity extends AppCompatActivity
             @Override
             public void onResponseUploadVideoRequest()
             {
+                System.out.println("업로드 요청");
                 /*
                  * 서버에 업로드를 요청.
                  * 1. 썸네일 이미지, 동영상 업로드. 업로드 후 관련 데이터를 받는다.
