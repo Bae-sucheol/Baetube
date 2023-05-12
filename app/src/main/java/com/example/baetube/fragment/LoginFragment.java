@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,6 +21,7 @@ import com.example.baetube.FragmentTagUtil;
 import com.example.baetube.OkHttpUtil;
 import com.example.baetube.OnCallbackResponseListener;
 import com.example.baetube.R;
+import com.example.baetube.SignInValidation;
 import com.example.baetube.activity.MainActivity;
 import com.example.baetube.dto.UserDTO;
 
@@ -95,14 +97,20 @@ public class LoginFragment extends Fragment implements View.OnClickListener
         {
             case R.id.fragment_login_button_login :
 
+                String email = editEmail.getText().toString();
+                String password = editPassword.getText().toString();
+
+                if(!SignInValidation.isEmail(email) || !SignInValidation.isPassword(password))
+                {
+                    Toast.makeText(getContext(), getString(R.string.toast_warning_login_validation_fail), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 // 로그인 버튼을 누르면 로그인 요청.
                 if(okHttpUtil == null)
                 {
                     okHttpUtil = new OkHttpUtil();
                 }
-
-                String email = editEmail.getText().toString();
-                String password = editPassword.getText().toString();
 
                 UserDTO user = new UserDTO();
                 user.setEmail(email);

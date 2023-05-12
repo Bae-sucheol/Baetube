@@ -59,7 +59,7 @@ public class ReturnableCallback implements Callback
     private static final String EXPIRED_ACCESS_TOKEN = "ExpiredAccessToken";
     private static final String EXPIRED_REFRESH_TOKEN = "ExpiredRefreshTokenException";
 
-    private static boolean isReissuingAccessToken = false;
+    private static boolean isReissuingToken = false;
 
     private OnCallbackResponseListener onCallbackResponseListener;
     private int type;
@@ -98,9 +98,10 @@ public class ReturnableCallback implements Callback
             onCallbackResponseListener.onExpiredAccessTokenResponse();
             return;
         }
-        else if(header.equals(EXPIRED_REFRESH_TOKEN))
+        else if(header.equals(EXPIRED_REFRESH_TOKEN) && !isReissuingToken)
         {
             onCallbackResponseListener.onExpiredRefreshTokenResponse();
+            isReissuingToken = true;
             return;
         }
 
@@ -216,7 +217,6 @@ public class ReturnableCallback implements Callback
 
             case CALLBACK_GENERATE_ACCESS_TOKEN :
                 onCallbackResponseListener.onGeneratedAccessTokenResponse(object);
-                isReissuingAccessToken = false;
                 break;
 
             case CALLBACK_SELECT_CHANNEL_DATA :
@@ -294,14 +294,14 @@ public class ReturnableCallback implements Callback
 
     }
 
-    public static boolean isReissuingAccessToken()
+    public static boolean isReissuingToken()
     {
-        return isReissuingAccessToken;
+        return isReissuingToken;
     }
 
-    public static void setIsReissuingAccessToken(boolean bool)
+    public static void setIsReissuingToken(boolean bool)
     {
-        isReissuingAccessToken = bool;
+        isReissuingToken = bool;
     }
 
     public int getType()

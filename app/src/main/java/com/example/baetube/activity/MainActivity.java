@@ -25,6 +25,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -1480,13 +1481,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             {
                 // 리프레시 토큰마저 만료되었다면 로그인 화면을 출력하여 로그인 후 토큰을 재발급 받을 수 있도록 한다.
 
-                if(!isCallLogin)
+                if(!ReturnableCallback.isReissuingToken())
                 {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.activity_main_layout, new LoginFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_LOGIN);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-                    isCallLogin = true;
+                    ReturnableCallback.setIsReissuingToken(true);
                 }
 
             }
@@ -1533,7 +1534,22 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                 try
                 {
-                    isCallLogin = false;
+           
+                    // 로그인 실패시 에러가 존재한다면. 따로 처리.
+                    if(object.equals("\"BadCredentialsException\""))
+                    {
+                        runOnUiThread(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                Toast.makeText(getApplicationContext(), getString(R.string.toast_warning_login_response_fail), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        return;
+                    }
+
                     // 로그인을 성공하면 accessToken, refreshToken을 반환하기 때문에 따로 핸들링
                     // Gson의 JsonParser를 사용하여 String을 파싱.
                     JsonParser parser = new JsonParser();
@@ -1566,6 +1582,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                     if(loginFragment != null && loginFragment.isVisible())
                     {
                         fragmentManager.popBackStack();
+                        ReturnableCallback.setIsReissuingToken(false);
                     }
 
                 }

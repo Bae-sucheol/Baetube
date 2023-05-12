@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -194,6 +195,65 @@ public class UploadActivity extends AppCompatActivity
 
     }
 
+    private boolean validVideoData()
+    {
+        if(selectedFile == null)
+        {
+            Toast.makeText(this, getString(R.string.toast_warning_file_not_selected), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(selectedImage == null)
+        {
+            Toast.makeText(this, getString(R.string.toast_warning_image_not_selected), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(videoInformation.getTitle() == null || videoInformation.getTitle().isEmpty())
+        {
+            Toast.makeText(this, getString(R.string.toast_warning_video_title), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(videoInformation.getInfo() == null || videoInformation.getInfo().isEmpty())
+        {
+            Toast.makeText(this, getString(R.string.toast_warning_video_info), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(videoInformation.getLocation() == null || videoInformation.getLocation().isEmpty())
+        {
+            Toast.makeText(this, getString(R.string.toast_warning_video_location), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(videoInformation.getCategoryId() == null)
+        {
+            Toast.makeText(this, getString(R.string.toast_warning_video_category), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(videoInformation.getAge() == null)
+        {
+            Toast.makeText(this, getString(R.string.toast_warning_video_age), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validCommunityData()
+    {
+
+        if(communityInformation.getTitle() == null || communityInformation.getTitle().isEmpty())
+        {
+            Toast.makeText(this, getString(R.string.toast_warning_community_title), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
     private void setOnUploadDataListener()
     {
         onUploadDataListener = new OnUploadDataListener()
@@ -225,7 +285,11 @@ public class UploadActivity extends AppCompatActivity
             @Override
             public void onResponseUploadVideoRequest()
             {
-                System.out.println("업로드 요청");
+                if(!validVideoData())
+                {
+                    return;
+                }
+
                 /*
                  * 서버에 업로드를 요청.
                  * 1. 썸네일 이미지, 동영상 업로드. 업로드 후 관련 데이터를 받는다.
@@ -264,6 +328,10 @@ public class UploadActivity extends AppCompatActivity
             @Override
             public void onResponseUploadCommunityRequest()
             {
+                if(!validCommunityData())
+                {
+                    return;
+                }
                 /*
                  * 서버에 업로드를 요청.
                  * 1. 커뮤니티 게시글에 이미지가 없다면 noneImage를 추가하여 서버단에서 처리할 수 있도록 한다.

@@ -2,7 +2,6 @@ package com.example.baetube;
 
 import android.content.Context;
 
-import com.example.baetube.Callback.ReturnableCallback;
 import com.example.baetube.dto.FileUploadDTO;
 import com.google.gson.GsonBuilder;
 
@@ -64,11 +63,6 @@ public class OkHttpUtil
 
     public void sendPostRequest(Object object, String url, Callback callback)
     {
-        if(checkReissuing(callback))
-        {
-            return;
-        }
-
         String content = createContent(object);
         Request request = createPostRequest(url, content);
 
@@ -101,22 +95,4 @@ public class OkHttpUtil
 
         okHttpClient.newCall(request).enqueue(callback);
     }
-
-    private boolean checkReissuing(Callback callback)
-    {
-        ReturnableCallback returnableCallback = (ReturnableCallback) callback;
-
-        if(returnableCallback.getType() == ReturnableCallback.CALLBACK_GENERATE_ACCESS_TOKEN)
-        {
-            if(ReturnableCallback.isReissuingAccessToken())
-            {
-                return true;
-            }
-
-            ReturnableCallback.setIsReissuingAccessToken(true);
-        }
-
-        return false;
-    }
-
 }

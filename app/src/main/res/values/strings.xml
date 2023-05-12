@@ -420,7 +420,16 @@
     * 토스트 메시지
     -->
     <string name="toast_warning_keywords">텍스트를 입력해주세요.</string>
-
+    <string name="toast_warning_file_not_selected">선택된 파일이 존재하지 않습니다.</string>
+    <string name="toast_warning_image_not_selected">선택된 이미지가 존재하지 않습니다.</string>
+    <string name="toast_warning_video_title">설정된 동영상 타이틀이 존재하지 않습니다.</string>
+    <string name="toast_warning_video_info">설정된 동영상 정보가 존재하지 않습니다.</string>
+    <string name="toast_warning_video_location">설정된 동영상 위치정보가 존재하지 않습니다.</string>
+    <string name="toast_warning_video_category">설정된 동영상 카테고리가 존재하지 않습니다.</string>
+    <string name="toast_warning_video_age">설정된 동영상 연령설정이 존재하지 않습니다.</string>
+    <string name="toast_warning_community_title">설정된 게시글 타이틀이 존재하지 않습니다.</string>
+    <string name="toast_warning_login_validation_fail">이메일과 비밀번호 양식이 일치하지 않습니다.</string>
+    <string name="toast_warning_login_response_fail">이메일과 비밀번호를 확인해주세요.</string>
 
     <!--
     * 배열

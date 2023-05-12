@@ -342,8 +342,8 @@ public class SearchResultFragment extends Fragment implements OnRecyclerViewClic
 
     }
 
-    /*
-    private void requestChannelData()
+
+    private void requestChannelDataKeywords()
     {
         String url = getString(R.string.api_url_search_channel) + keywords;
 
@@ -351,7 +351,7 @@ public class SearchResultFragment extends Fragment implements OnRecyclerViewClic
 
         okHttpUtil.sendGetRequest(url, mainVideoCallback);
     }
-     */
+
 
     public void setRecyclerViewChannel(List<ChannelDTO> channelList)
     {
@@ -427,7 +427,8 @@ public class SearchResultFragment extends Fragment implements OnRecyclerViewClic
                 {
                     recyclerViewChannel.setVisibility(View.VISIBLE);
                     recyclerViewVideo.setVisibility(View.GONE);
-                    ((MainActivity)getActivity()).requestChannelData();
+                    //((MainActivity)getActivity()).requestChannelData();
+                    requestChannelDataKeywords();
                 }
 
                 selectedPosition = position;
