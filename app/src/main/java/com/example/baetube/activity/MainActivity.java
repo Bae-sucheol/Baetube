@@ -1461,10 +1461,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 }
 
                 String url = getString(R.string.api_url_generate_access);
+                System.out.println("url " + url);
                 TokenInfoDTO tokenInfo = new TokenInfoDTO();
                 tokenInfo.setGrantType("Bearer");
                 tokenInfo.setAccessToken(PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_ACCESSKEY));
                 tokenInfo.setRefreshToken(PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_REFRESHKEY));
+
+                System.out.println("실행 : " + tokenInfo.getAccessToken());
+
+                System.out.println("실행.");
 
                 ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_GENERATE_ACCESS_TOKEN);
                 okHttpUtil.sendPostRequest(tokenInfo, url, returnableCallback);
@@ -1490,6 +1495,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             public void onGeneratedAccessTokenResponse(String object)
             {
                 // 리프레시 토큰이 유효하여 정상적으로 엑세스 토큰이 발급되었다면 엑세스 토큰을 저장해야 한다.
+
+                System.out.println("받았습니다!");
 
                 // Gson의 JsonParser를 사용하여 String을 파싱.
                 JsonParser parser = new JsonParser();

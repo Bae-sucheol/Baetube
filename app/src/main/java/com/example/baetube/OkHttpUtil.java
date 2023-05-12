@@ -77,11 +77,6 @@ public class OkHttpUtil
 
     public void sendGetRequest(String url, Callback callback)
     {
-        if(checkReissuing(callback))
-        {
-            return;
-        }
-
         Request request = createGetRequest(url);
 
         okHttpClient.newCall(request).enqueue(callback);
