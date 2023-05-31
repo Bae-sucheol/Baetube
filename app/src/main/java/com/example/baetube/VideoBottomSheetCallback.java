@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 public class VideoBottomSheetCallback extends BottomSheetBehavior.BottomSheetCallback implements OnBottomSheetInteractionListener, View.OnTouchListener

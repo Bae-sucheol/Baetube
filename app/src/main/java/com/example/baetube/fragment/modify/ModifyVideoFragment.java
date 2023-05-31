@@ -167,13 +167,23 @@ public class ModifyVideoFragment extends Fragment implements View.OnClickListene
 
         editTitle.setText(data.getTitle());
 
-        Glide.with(getContext())
-                .asBitmap()
-                .load(getContext().getString(R.string.api_url_image_thumbnail) + data.getThumbnail() + ".jpg") // or URI/path
-                .error(ContextCompat.getDrawable(getContext(),R.drawable.ic_baseline_account_circle_24))
-                .override(thumbnail.getWidth(), thumbnail.getHeight())
-                .centerCrop()
-                .into(thumbnail);
+        getActivity().runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Glide.with(getContext())
+                        .asBitmap()
+                        .load(getContext().getString(R.string.api_url_image_thumbnail) + data.getThumbnail() + ".jpg") // or URI/path
+                        .error(ContextCompat.getDrawable(getContext(),R.drawable.ic_baseline_account_circle_24))
+                        .override(thumbnail.getWidth(), thumbnail.getHeight())
+                        .centerCrop()
+                        .into(thumbnail);
+
+                description.setText(data.getInfo());
+            }
+        });
+
     }
 
     private void requestUpdateVideo()
@@ -347,8 +357,14 @@ public class ModifyVideoFragment extends Fragment implements View.OnClickListene
         switch (item.getItemId())
         {
             case android.R.id.home :
-                requestUpdateVideo();
+
+                if(this.isVisible())
+                {
+                    requestUpdateVideo();
+                }
+
                 getActivity().onBackPressed();
+
                 break;
         }
         return super.onOptionsItemSelected(item);

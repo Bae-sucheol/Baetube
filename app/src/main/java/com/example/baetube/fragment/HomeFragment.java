@@ -624,9 +624,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnRe
                 break;
             case R.id.recyclerview_video_image_option :
 
+                item = list.get(position);
+
                 VideoOptionFragment videoOptionFragment = new VideoOptionFragment(getContext());
                 videoOptionFragment.show(getParentFragmentManager(), videoOptionFragment.getTag());
-                ((MainActivity)getContext()).setManagedVideoItem(list.get(position));
+                ((MainActivity)getContext()).setManagedVideoItem(item);
 
                 break;
             case R.id.recyclerview_video_layout_information :

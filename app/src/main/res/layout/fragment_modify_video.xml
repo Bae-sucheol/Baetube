@@ -25,11 +25,10 @@
         android:id="@+id/fragment_modify_video_image_thumbnail"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="443dp"
         android:background="@color/top_menu_background"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="@string/res_ratio_wide"
         app:layout_constraintStart_toStartOf="@+id/fragment_modify_video_appbar"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_modify_video_appbar"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="1.0" />
 

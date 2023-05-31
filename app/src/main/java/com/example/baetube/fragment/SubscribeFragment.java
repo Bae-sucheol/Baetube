@@ -394,7 +394,6 @@ public class SubscribeFragment extends Fragment implements OnRecyclerViewClickLi
             @Override
             public void run()
             {
-                System.out.println("리사이클러뷰 업데이트 요청");
                 recyclerViewVideoAdapter.notifyDataSetChanged();
             }
         });

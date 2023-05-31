@@ -26,13 +26,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.baetube.Callback.ReturnableCallback;
 import com.example.baetube.OkHttpUtil;
 import com.example.baetube.OnCallbackResponseListener;
+import com.example.baetube.OnFragmentInteractionListener;
 import com.example.baetube.OnRecyclerViewClickListener;
 import com.example.baetube.R;
 import com.example.baetube.ViewType;
 import com.example.baetube.WidthProperty;
 import com.example.baetube.activity.MainActivity;
 import com.example.baetube.bottomsheetdialog.HistoryVideoOptionManageFragment;
-import com.example.baetube.bottomsheetdialog.VideoFragment;
 import com.example.baetube.dto.ChannelDTO;
 import com.example.baetube.dto.VideoDTO;
 import com.example.baetube.dto.VoteDTO;
@@ -58,6 +58,7 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
     private ConstraintLayout layoutSearch;
 
     private OnCallbackResponseListener onCallbackResponseListener;
+    private OnFragmentInteractionListener onFragmentInteractionListener;
 
     private OkHttpUtil okHttpUtil;
 
@@ -135,6 +136,8 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
         });
 
         requestHistoryVideo();
+
+        onFragmentInteractionListener = (OnFragmentInteractionListener) getContext();
 
         // Inflate the layout for this fragment
         return view;
@@ -220,8 +223,9 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
         {
             case R.id.recyclerview_video_image_thumbnail :
 
-                VideoFragment videoFragment = new VideoFragment(onCallbackResponseListener);
-                videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+                RecyclerViewVideoItem item = list.get(position);
+                //this.onVideoItemClick(item.getVideoDTO().getUrl());
+                onFragmentInteractionListener.onVideoItemClick(item);
 
                 break;
             case R.id.recyclerview_video_image_option :
@@ -233,8 +237,9 @@ public class HistoryDetailFragment extends Fragment implements OnRecyclerViewCli
                 break;
             case R.id.recyclerview_video_layout_information :
 
-                videoFragment = new VideoFragment(onCallbackResponseListener);
-                videoFragment.show(getParentFragmentManager(), videoFragment.getTag());
+                item = list.get(position);
+                //this.onVideoItemClick(item.getVideoDTO().getUrl());
+                onFragmentInteractionListener.onVideoItemClick(item);
 
                 break;
 

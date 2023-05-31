@@ -28,10 +28,10 @@ public class AddStorageDialogFragment extends BottomSheetDialogFragment implemen
     // 추가, 취소 버튼 뷰(clickable textView)
     private TextView buttonAdd;
     private TextView buttonClose;
-    // 투표 내용을 작성할 뷰
+    // 내용을 작성할 뷰
     private EditText comment;
 
-    // 추가할 투표 내용을 전달하기 위한 인터페이스
+    // 추가할 내용을 전달하기 위한 인터페이스
     private OnDialogInteractionListener onDialogInteractionListener;
 
     public AddStorageDialogFragment(OnDialogInteractionListener onDialogInteractionListener)

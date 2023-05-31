@@ -417,20 +417,6 @@ public class NotificationFragment extends Fragment implements OnRecyclerViewClic
             @Override
             public void onDeleteNotification()
             {
-                // 해당 리스트에서 아이템을 삭제한다.
-
-                // 동영상인 경우.
-                if(selectedPosition == 0)
-                {
-                    listVideo.remove(selectedNotificaiton);
-                }
-                else // 게시글인 경우
-                {
-                    listCommunity.remove(selectedNotificaiton);
-                }
-
-                recyclerViewNotificationAdapter.notifyItemRemoved(selectedNotificaiton);
-
                 // 서버에 해당 알림 삭제를 요청한다.
                 if(okHttpUtil == null)
                 {
@@ -450,6 +436,21 @@ public class NotificationFragment extends Fragment implements OnRecyclerViewClic
                 {
                     okHttpUtil.sendPostRequest(listCommunity.get(selectedNotificaiton).getNotificationDTO().getContentsId(), url, returnableCallback);
                 }
+
+                // 해당 리스트에서 아이템을 삭제한다.
+                // 동영상인 경우.
+                if(selectedPosition == 0)
+                {
+                    listVideo.remove(selectedNotificaiton);
+                }
+                else // 게시글인 경우
+                {
+                    listCommunity.remove(selectedNotificaiton);
+                }
+
+                recyclerViewNotificationAdapter.notifyItemRemoved(selectedNotificaiton);
+
+
             }
 
             @Override

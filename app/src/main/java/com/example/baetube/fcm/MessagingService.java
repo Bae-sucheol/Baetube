@@ -30,8 +30,6 @@ public class MessagingService extends FirebaseMessagingService
     {
         super.onNewToken(token);
 
-        System.out.println("토큰 발급");
-
         // SharedPreferences 에 fcm 토큰을 저장한다.
         PreferenceManager.setString(getApplicationContext(), PreferenceManager.PREFERENCES_FCM, token);
 

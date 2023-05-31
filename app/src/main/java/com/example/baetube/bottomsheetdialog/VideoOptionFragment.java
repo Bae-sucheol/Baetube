@@ -30,6 +30,7 @@ public class VideoOptionFragment extends BaseOptionFragment implements OnRecycle
         switch (position)
         {
             case 0 :
+                ((MainActivity)context).requestInsertPlaylistItem();
                 break;
 
             case 1 :
@@ -49,7 +50,7 @@ public class VideoOptionFragment extends BaseOptionFragment implements OnRecycle
     @Override
     public void onDismiss( DialogInterface dialog)
     {
-        ((MainActivity)context).setManagedVideoItem(null);
+        //((MainActivity)context).setManagedVideoItem(null);
         super.onDismiss(dialog);
     }
 

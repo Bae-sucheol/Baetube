@@ -44,24 +44,16 @@ public class AddPlaylistFragment extends BottomSheetDialogFragment implements Vi
     public AddPlaylistFragment(Context context, List<PlaylistDTO> playlistList)
     {
         this.context = context;
-        this.playlistList = playlistList;
+        this.playlistList = new ArrayList<>(playlistList);
 
         String reportTitle = context.getString(R.string.add_playlist_text_title);
         // 좋아요를 누른 동영상을 제외해야 하기 때문에 -1;
         String reportContents[] = new String[playlistList.size() - 1];
+        this.playlistList.remove(0);
 
-        int index = 0;
-
-        // 좋아요를 누른 동영상 재생목록을 삭제한다.
-        for (int i = 0; i < playlistList.size(); i++)
+        for (int i = 0; i < this.playlistList.size(); i++)
         {
-            if(playlistList.get(i).getVisible() == 3 && playlistList.get(i).getName().equals("좋아요를 누른 동영상"))
-            {
-                index = -1;
-                continue;
-            }
-
-            reportContents[i + index] = playlistList.get(i).getName();
+            reportContents[i] = this.playlistList.get(i).getName();
         }
 
         initDialog(reportTitle, reportContents);

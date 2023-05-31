@@ -64,6 +64,8 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
 
     private OkHttpUtil okHttpUtil;
 
+    private Integer currentPosition;
+
     public PlaylistDetailFragment(RecyclerViewPlaylistItem recyclerViewPlaylistItem , OnCallbackResponseListener onCallbackResponseListener)
     {
         this.recyclerViewPlaylistItem = recyclerViewPlaylistItem;
@@ -132,7 +134,7 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
 
                 ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
 
-                PlaylistItemDTO playlistItem = new PlaylistItemDTO(3, list.get(position).getVideoDTO().getVideoId());
+                PlaylistItemDTO playlistItem = new PlaylistItemDTO(recyclerViewPlaylistItem.getPlaylistDTO().getPlaylistId(), list.get(position).getVideoDTO().getVideoId());
 
                 okHttpUtil.sendPostRequest(playlistItem, url, returnableCallback);
 
@@ -187,7 +189,7 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
                 playlist.setPlaylistId(recyclerViewPlaylistItem.getPlaylistDTO().getPlaylistId());
                 playlist.setChannelId(recyclerViewPlaylistItem.getChannelDTO().getChannelId());
 
-                String url = "http://192.168.0.4:9090/Baetube_backEnd/api/playlist/update";
+                String url = getString(R.string.api_url_playlist_update);
 
                 ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
 
@@ -215,7 +217,7 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
         okHttpUtil = new OkHttpUtil();
 
         // 지금은 테스트용으로 임의의 값을 넣는다.
-        String url = "http://192.168.0.4:9090/Baetube_backEnd/api/video/playlist_video/3";
+        String url = getString(R.string.api_url_playlist_video) + recyclerViewPlaylistItem.getPlaylistDTO().getPlaylistId();
 
         ReturnableCallback mainVideoCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SELECT_PLAYLIST_VIDEO);
 
@@ -269,6 +271,7 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
             case R.id.recyclerview_video_layout_information :
 
                 item = list.get(position);
+                currentPosition = position;
                 onFragmentInteractionListener.onVideoItemClick(item);
 
                 break;
@@ -337,6 +340,17 @@ public class PlaylistDetailFragment extends Fragment implements OnRecyclerViewCl
                 break;
             default :
                 break;
+        }
+    }
+
+    public void requestPlayNextItem()
+    {
+        // 현재 재생중인 아이템의 포지션이 리스트의 마지막 보다 작다면 다음 아이템 재생이 가능.
+        if(currentPosition < list.size() - 1)
+        {
+            currentPosition++;
+            RecyclerViewVideoItem item = list.get(currentPosition);
+            onFragmentInteractionListener.onVideoItemClick(item);
         }
     }
 }

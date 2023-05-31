@@ -207,12 +207,12 @@ public class ChannelVideoFragment extends Fragment implements OnRecyclerViewClic
                         @Override
                         public int compare(RecyclerViewVideoItem o1, RecyclerViewVideoItem o2)
                         {
-                            // 최신순이기 때문에 videoId 기준으로 오름차순 정렬하면 된다.
-                            if(o1.getVideoDTO().getVideoId() < o2.getVideoDTO().getVideoId())
+                            // 최신순이기 때문에 videoId 기준으로 내림차순 정렬하면 된다.
+                            if(o1.getVideoDTO().getVideoId() > o2.getVideoDTO().getVideoId())
                             {
                                 return -1;
                             }
-                            else if(o1.getVideoDTO().getVideoId() > o2.getVideoDTO().getVideoId())
+                            else if(o1.getVideoDTO().getVideoId() < o2.getVideoDTO().getVideoId())
                             {
                                 return 1;
                             }

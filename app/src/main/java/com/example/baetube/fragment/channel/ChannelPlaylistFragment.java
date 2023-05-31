@@ -137,7 +137,7 @@ public class ChannelPlaylistFragment extends Fragment implements OnRecyclerViewC
                  */
                 PlaylistOptionFragment playlistOptionFragment = new PlaylistOptionFragment(getContext());
                 playlistOptionFragment.show(getParentFragmentManager(), playlistOptionFragment.getTag());
-
+                
                 break;
             case R.id.recyclerview_category_text_category :
 
@@ -225,6 +225,12 @@ public class ChannelPlaylistFragment extends Fragment implements OnRecyclerViewC
         for(int i = 0; i < playlistList.size(); i++)
         {
             RecyclerViewPlaylistItem item = new RecyclerViewPlaylistItem();
+
+            if(playlistList.get(i).getVisible() == 3)
+            {
+                continue;
+            }
+
             item.setPlaylistDTO(playlistList.get(i));
             item.setChannelDTO(channel);
 

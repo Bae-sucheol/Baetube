@@ -57,6 +57,24 @@ public class OkHttpUserTest
             }
 
             @Override
+            public void onExpiredAccessTokenResponse()
+            {
+
+            }
+
+            @Override
+            public void onExpiredRefreshTokenResponse()
+            {
+
+            }
+
+            @Override
+            public void onGeneratedAccessTokenResponse(String object)
+            {
+
+            }
+
+            @Override
             public void onLoginUserResponse(String object)
             {
                 // Gson의 JsonParser를 사용하여 String을 파싱.
@@ -198,6 +216,126 @@ public class OkHttpUserTest
 
             @Override
             public void onNestedReplyResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSignInResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectRelatedVideoResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSaveFCMTokenResponse(boolean result)
+            {
+
+            }
+
+            @Override
+            public void onSelectChannelDataResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onUpdateChannelResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectCommunityDataResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onUpdateCommunityResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectVideoDataResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onUpdateVideoResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectPlaylistDataResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onUpdatePlaylistResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectCategoryResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectSubscribersCommunityResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectVideoNotificationResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectCommunityNotificationResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectSearchVideoResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectSearchChannelResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectChannelDataAllResponse(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectNewNotifications(String object)
+            {
+
+            }
+
+            @Override
+            public void onSelectUserDataResponse(String object)
             {
 
             }

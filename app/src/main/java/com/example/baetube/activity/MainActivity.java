@@ -115,6 +115,7 @@ import com.example.baetube.recyclerview.item.RecyclerViewVideoItem;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.RenderersFactory;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
@@ -283,6 +284,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         //String filePaths[] = uri.getPath().split(":", 2);
 
                         //File file = new File(filePaths[1]);
+                        //File file = new File(getRealPathFromURI(uri));
+
                         File file = new File(getRealPathFromURI(uri));
 
                         ModifyChannelInformationFragment modifyChannelInformationFragment = (ModifyChannelInformationFragment) fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_MODIFY_CHANNEL_INFORMATION);
@@ -557,6 +560,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             @Override
             public void onHeightChanged(int height)
             {
+                if(playerScreenMode == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+                {
+                    layoutKeyboardEdit.setVisibility(View.GONE);
+                    keyboardEditInput.setText(null);
+                    return;
+                }
+
                 if(height == 0)
                 {
                     layoutKeyboardEdit.setVisibility(View.GONE);
@@ -582,9 +592,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                     Fragment loginFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_LOGIN);
                     Fragment signInFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_SIGN_IN);
+                    Fragment modifyVideoFragment = fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_MODIFY_VIDEO);
 
 
-                    if(loginFragment != null || signInFragment != null)
+                    if(loginFragment != null || signInFragment != null || modifyVideoFragment != null)
                     {
                         layoutKeyboardEdit.setVisibility(View.GONE);
                         keyboardEditInput.setText(null);
@@ -862,7 +873,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                     relatedVideoRecyclerView.setVisibility(View.GONE);
 
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
                 }
                 else // 랜드스케이프 모드(가로 모드)인 경우 세로 모드로 바꿔줘야 한다.
                 {
@@ -1018,7 +1028,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         String url = getString(R.string.api_url_contents_delete);
         ContentsDTO contents = new ContentsDTO(managedVideoItem.getVideoDTO().getContentsId(), 0);
 
-
         ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
 
         okHttpUtil.sendPostRequest(contents, url, returnableCallback);
@@ -1081,6 +1090,17 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         String url = getString(R.string.api_url_fcm_save);
         ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_SAVE_FCM_TOKEN);
         okHttpUtil.sendPostRequest(token, url, returnableCallback);
+    }
+
+    public void requestInsertPlaylistItem()
+    {
+        String url = getString(R.string.api_url_playlist_insert_later) + PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_CHANNEL_SEQUENCE);
+
+        ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_NONE);
+
+        okHttpUtil.sendPostRequest(managedVideoItem.getVideoDTO().getVideoId(), url, returnableCallback);
+
+        setManagedVideoItem(null);
     }
 
     private void setBottomSheetVideoInfo(VideoDTO video, ChannelDTO channel)
@@ -1252,6 +1272,46 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 .setTrackSelector(trackSelector)
                 .setBandwidthMeter(defaultBandwidthMeter)
                 .build();
+        exoPlayer.addListener(new Player.Listener()
+        {
+            @Override
+            public void onPlaybackStateChanged(int playbackState) {
+
+                switch (playbackState) {
+
+                    case Player.STATE_IDLE: // 1
+                        //재생 실패
+                        break;
+                    case Player.STATE_BUFFERING: // 2
+                        // 재생 준비
+                        break;
+                    case Player.STATE_READY: // 3
+                        // 재생 준비 완료
+                        break;
+                    case Player.STATE_ENDED: // 4
+                        // 재생 마침
+
+                        if(exoPlayer.getContentPosition() < 1000)
+                        {
+                            return;
+                        }
+
+                        PlaylistDetailFragment playlistDetailFragment = (PlaylistDetailFragment) fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_PLAYLIST_DETAIL);
+                        // 재생목록에서 재생중 동영상이 끝났다면 다음 재생목록 아이템을 실행해야 한다.
+                        if(playlistDetailFragment != null)
+                        {
+                            playlistDetailFragment.requestPlayNextItem();
+                        }
+
+                        break;
+                    default:
+
+                        break;
+                }
+            }
+
+
+        });
 
         exoPlayer.prepare();
     }
@@ -1263,9 +1323,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         playerUrl = url;
         currentPlayerResolution = resolution;
 
-        // 주소(url)을 하드코딩이 아니라 xml로 따로 저장해야한다.
         MediaSource mediaSource = new HlsMediaSource.Factory(new DefaultHttpDataSource.Factory().setUserAgent(userAgent))
-                .createMediaSource(MediaItem.fromUri(getString(R.string.api_url_hls) + url + "/" + resolution + "/" + url + ".m3u8"));
+                .createMediaSource(new MediaItem.Builder().setUri(getString(R.string.api_url_hls) + url + "/" + resolution + "/" + url + ".m3u8").build());
         exoPlayer.setMediaSource(mediaSource);
 
         exoPlayer.setPlayWhenReady(true);
@@ -1308,7 +1367,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     public void commitModifyVideoFragment(Integer videoId)
     {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.activity_main_layout, new ModifyVideoFragment(onCallbackResponseListener, videoId));
+        fragmentTransaction.replace(R.id.activity_main_layout, new ModifyVideoFragment(onCallbackResponseListener, videoId), FragmentTagUtil.FRAGMENT_TAG_MODIFY_VIDEO);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
@@ -1462,15 +1521,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 }
 
                 String url = getString(R.string.api_url_generate_access);
-                System.out.println("url " + url);
                 TokenInfoDTO tokenInfo = new TokenInfoDTO();
                 tokenInfo.setGrantType("Bearer");
                 tokenInfo.setAccessToken(PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_ACCESSKEY));
                 tokenInfo.setRefreshToken(PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_REFRESHKEY));
-
-                System.out.println("실행 : " + tokenInfo.getAccessToken());
-
-                System.out.println("실행.");
 
                 ReturnableCallback returnableCallback = new ReturnableCallback(onCallbackResponseListener, ReturnableCallback.CALLBACK_GENERATE_ACCESS_TOKEN);
                 okHttpUtil.sendPostRequest(tokenInfo, url, returnableCallback);
@@ -1483,6 +1537,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                 if(!ReturnableCallback.isReissuingToken())
                 {
+
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.activity_main_layout, new LoginFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_LOGIN);
                     fragmentTransaction.addToBackStack(null);
@@ -1496,8 +1551,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             public void onGeneratedAccessTokenResponse(String object)
             {
                 // 리프레시 토큰이 유효하여 정상적으로 엑세스 토큰이 발급되었다면 엑세스 토큰을 저장해야 한다.
-
-                System.out.println("받았습니다!");
 
                 // Gson의 JsonParser를 사용하여 String을 파싱.
                 JsonParser parser = new JsonParser();
@@ -1581,9 +1634,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                     if(loginFragment != null && loginFragment.isVisible())
                     {
-                        fragmentManager.popBackStack();
+                        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         ReturnableCallback.setIsReissuingToken(false);
                     }
+
+                    fragmentManager.beginTransaction().replace(R.id.activity_main_layout, new HomeFragment(onCallbackResponseListener), FragmentTagUtil.FRAGMENT_TAG_HOME).addToBackStack(null).commit();
 
                 }
                 catch (JsonParseException e) // 파싱에 실패했다면 로그인이 실패했다는 것.
@@ -2405,10 +2460,28 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 JsonElement element = parser.parse(object);
 
                 // arts, profile을 가져온다.
-                String arts = element.getAsJsonObject().get("arts").getAsString();
-                String profile = element.getAsJsonObject().get("profile").getAsString();
+                String arts;
+                String profile;
 
-                if(arts != null && !arts.isEmpty())
+                try
+                {
+                    arts = element.getAsJsonObject().get("arts").getAsString();
+                }
+                catch (NullPointerException e)
+                {
+                    arts = null;
+                }
+
+                try
+                {
+                    profile = element.getAsJsonObject().get("profile").getAsString();
+                }
+                catch (NullPointerException e)
+                {
+                    profile = null;
+                }
+
+                if(arts != null)
                 {
                     FileUploadDTO fileUpload = new FileUploadDTO(new File(PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_ARTS)),
                             FileUploadDTO.TYPE_IMAGE, FileUploadDTO.PURPOSE_ARTS, arts);
@@ -2419,7 +2492,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                     okHttpUtil.sendFileRequest(fileUpload, returnableCallback);
                 }
 
-                if(profile != null && !profile.isEmpty())
+                if(profile != null)
                 {
                     FileUploadDTO fileUpload = new FileUploadDTO(new File(PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_PROFILE)),
                             FileUploadDTO.TYPE_IMAGE, FileUploadDTO.PURPOSE_PROFILE, profile);
@@ -2489,10 +2562,18 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 JsonParser parser = new JsonParser();
                 JsonElement element = parser.parse(object);
 
-                // thumbnail을 가져온다.
-                String thumbnail = element.getAsJsonObject().get("thumbnail").getAsString();
+                // arts, profile을 가져온다.
+                String thumbnail;
+                try
+                {
+                    thumbnail = element.getAsJsonObject().get("thumbnail").getAsString();
+                }
+                catch (NullPointerException e)
+                {
+                    thumbnail = null;
+                }
 
-                if(thumbnail != null && !thumbnail.isEmpty())
+                if(thumbnail != null)
                 {
                     FileUploadDTO fileUpload = new FileUploadDTO(new File(PreferenceManager.getString(getApplicationContext(), PreferenceManager.PREFERENCES_THUMBNAIL)),
                             FileUploadDTO.TYPE_IMAGE, FileUploadDTO.PURPOSE_THUMBNAIL, thumbnail);
@@ -2845,8 +2926,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             @Override
             public void onSelectUserDataResponse(String object)
             {
-                System.out.println("유저 정보를 받았습니다.");
-
                 UserDTO user = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create().fromJson(object, UserDTO.class);
 
                 ModifyUserInformationFragment modifyUserInformationFragment = (ModifyUserInformationFragment) fragmentManager.findFragmentByTag(FragmentTagUtil.FRAGMENT_TAG_MODIFY_USER_INFORMATION);
@@ -2912,9 +2991,18 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     private String getRealPathFromURI(Uri contentUri)
     {
+
         if (contentUri.getPath().startsWith("/storage"))
         {
             return contentUri.getPath();
+        }
+
+        if (contentUri.getPath().startsWith("/document"))
+        {
+            String path = contentUri.getPath().replace("/document", "");
+            path = path.replace("raw:", "");
+
+            return path;
         }
 
         String id = DocumentsContract.getDocumentId(contentUri).split(":")[1];

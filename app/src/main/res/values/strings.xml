@@ -415,7 +415,8 @@
     <string name="api_url_user_update">http://192.168.0.4:9090/Baetube_backEnd/api/user/update</string>
     <string name="api_url_vote_cancel">http://192.168.0.4:9090/Baetube_backEnd/api/vote/cancel</string>
     <string name="api_url_vote_cast">http://192.168.0.4:9090/Baetube_backEnd/api/vote/cast</string>
-
+    <string name="api_url_playlist_insert_later">http://192.168.0.4:9090/Baetube_backEnd/api/playlist/item/insert/later/</string>
+    <string name="api_url_playlist_video">http://192.168.0.4:9090/Baetube_backEnd/api/video/playlist_video/</string>
     <!--
     * 토스트 메시지
     -->
@@ -620,6 +621,14 @@
     <string-array name="category_search_result">
         <item>동영상</item>
         <item>채널</item>
+    </string-array>
+
+    <!--
+    * 채널 동영상 관리 카테고리
+    -->
+    <string-array name="category_channel_manage_video">
+        <item>최신순</item>
+        <item>가나다순</item>
     </string-array>
 
 </resources>
