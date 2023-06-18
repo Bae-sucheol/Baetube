@@ -246,12 +246,7 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
                 break;
             case R.id.fragment_channel_home_image_analysis :
 
-                fragmentManager = getParentFragment().getParentFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.activity_main_layout, new ChannelAnalysisFragment());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-
+                
                 break;
             case R.id.fragment_channel_home_image_modify_channel :
 
