@@ -2992,12 +2992,14 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private String getRealPathFromURI(Uri contentUri)
     {
 
+        System.out.println("contentUri.getPath() : " + contentUri.getPath());
+
         if (contentUri.getPath().startsWith("/storage"))
         {
             return contentUri.getPath();
         }
 
-        if (contentUri.getPath().startsWith("/document"))
+        if (contentUri.getPath().contains("raw:"))
         {
             String path = contentUri.getPath().replace("/document", "");
             path = path.replace("raw:", "");

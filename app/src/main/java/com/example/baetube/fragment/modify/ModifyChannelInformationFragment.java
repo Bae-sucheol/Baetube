@@ -226,6 +226,8 @@ public class ModifyChannelInformationFragment extends Fragment implements View.O
 
     public void setImage(File file)
     {
+        System.err.println("================파일 경로 : " + file.getAbsolutePath() + " =================");
+
         if(isSelectedArts)
         {
             Glide.with(getContext()).asBitmap().load(file.getAbsolutePath()).override(arts.getWidth(), arts.getHeight()).centerCrop()
@@ -254,6 +256,7 @@ public class ModifyChannelInformationFragment extends Fragment implements View.O
                         @Override
                         public void onResourceReady( Bitmap resource, @Nullable Transition<? super Bitmap> transition)
                         {
+                            System.err.println("=============프로필 설정했습니다.=========");
                             profile.setImageBitmap(resource);
                             currentChannelData.setProfile(file.getPath());
                             PreferenceManager.setString(getContext().getApplicationContext(), PreferenceManager.PREFERENCES_PROFILE, file.getPath());

@@ -8,12 +8,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.baetube.FragmentTagUtil;
 import com.example.baetube.OkHttpUtil;
 import com.example.baetube.OnCallbackResponseListener;
@@ -43,6 +46,7 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
 
     private OnFragmentInteractionListener onFragmentInteractionListener;
 
+    private ImageView arts;
     private ImageView profile;
     private ImageView expand;
     private ImageView channelAnalysis;
@@ -84,6 +88,7 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
         recyclerViewVideoAdapter.setOnRecyclerViewClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        arts = view. findViewById(R.id.fragment_channel_home_image_art);
         profile = view.findViewById(R.id.fragment_channel_home_image_profile);
         expand = view.findViewById(R.id.fragment_channel_home_image_expand);
         channelAnalysis = view.findViewById(R.id.fragment_channel_home_image_analysis);
@@ -198,6 +203,23 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
                 {
                     layoutManage.setVisibility(View.GONE);
                 }
+
+                Glide.with(getContext())
+                        .asBitmap()
+                        .load(getContext().getString(R.string.api_url_image_arts) + channel.getArts() + ".jpg") // or URI/path
+                        .error(ContextCompat.getDrawable(getContext(),R.drawable.ic_baseline_account_circle_24))
+                        .override(arts.getWidth(), arts.getHeight())
+                        .centerCrop()
+                        .into(arts);
+
+                Glide.with(getContext())
+                        .asBitmap()
+                        .load(getContext().getString(R.string.api_url_image_profile) + channel.getProfile() + ".jpg")
+                        .error(ContextCompat.getDrawable(getContext(),R.drawable.ic_baseline_account_circle_24))
+                        .override(profile.getWidth(), profile.getHeight())
+                        .centerCrop()
+                        .apply(new RequestOptions().circleCrop())
+                        .into(profile);
             }
         });
 
@@ -246,7 +268,7 @@ public class ChannelHomeFragment extends Fragment implements OnRecyclerViewClick
                 break;
             case R.id.fragment_channel_home_image_analysis :
 
-                
+
                 break;
             case R.id.fragment_channel_home_image_modify_channel :
 
